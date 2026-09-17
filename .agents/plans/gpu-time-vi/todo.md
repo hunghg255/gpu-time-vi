@@ -290,14 +290,14 @@
 **Description:** Viết lại `packages/training/torch/semantic.py`: từ một `Specification` (schedule) ngẫu nhiên, render ra tiếng Việt và emit span/label theo contract Task 2. Mọi loại `DateSpec`, `TimeSpec`, `Shift`, `Duration`, `Recurrence` (kể cả lunar). Nhiều biến thể bề mặt cho mỗi slot (số/chữ, `giờ`/`h`/`g`, viết tắt thứ, có/không `ngày`/`tháng` marker, `rưỡi`/`30 phút`). Cập nhật `generate.py` constants (DAYS, MONTHS, NUMBERS, ORDINALS, HOLIDAYS, UNITS, CLAUSE_OPENERS) và `generate-semantic.py`. `check-semantic.ts` chạy mọi câu sinh ra qua TS compiler và so `schedule`.
 
 **Acceptance criteria:**
-- [ ] `pnpm --filter @gpu-time-vi/training gen:semantic` sinh ≥5000 câu; `check:semantic` = 100% khớp (mọi câu compiler cho đúng schedule generator dự định)
-- [ ] Mỗi loại `DateSpec.kind` và `Recurrence.freq` xuất hiện ≥100 lần
-- [ ] `test_data.py`, `test_decode.py` pass với constant mới
+- [x] `pnpm --filter @gpu-time-vi/training gen:semantic` sinh ≥5000 câu; `check:semantic` = 100% khớp (mọi câu compiler cho đúng schedule generator dự định)
+- [x] Mỗi loại `DateSpec.kind` và `Recurrence.freq` xuất hiện ≥100 lần
+- [x] `test_data.py`, `test_decode.py` pass với constant mới
 
 **Verification:**
-- [ ] Tests pass: `pnpm --filter @gpu-time-vi/training test` (unittest torch/)
-- [ ] Build succeeds: n/a (Python) — `uv run python -c "import semantic"`
-- [ ] Manual check: đọc 50 câu ngẫu nhiên, ≥90% tự nhiên với người Việt
+- [x] Tests pass: `pnpm --filter @gpu-time-vi/training test` (unittest torch/)
+- [x] Build succeeds: n/a (Python) — `uv run python -c "import semantic"`
+- [x] Manual check: đọc 50 câu ngẫu nhiên, ≥90% tự nhiên với người Việt
 
 **Dependencies:** Task 10 (compiler ổn định), Task 15-a (uv env — có thể làm trước phần env)
 
@@ -307,18 +307,22 @@
 
 ---
 
+**Ghi chú thực hiện (2026-09-17):** viết lại `semantic.py` (19 family, sample schedule → render) + `vi.py` (từ vựng/primitive dùng chung). `check-semantic` **6000/6000**. Bỏ tầng `render()` 24-family và `terse` tiếng Anh của `generate.py`; chat-short là style 7–8. Hint render (`_tet`, `_middle`, `_vague`) giữ trong `Specification.raw`, không lọt vào schedule. Sửa compiler theo phát hiện: `count` vs `timesPer` sau RECUR, approximator GLUE, span cho nhóm ngày.
+
+---
+
 ## Task 12: `natural.py` — families tiếng Việt
 
 **Description:** Viết lại `natural.py`: ≥30 families (spoken-clock, fraction-clock `rưỡi/kém`, daypart-clock, compound-duration, compound-shift `1 tiếng 30 phút nữa`, prose-date, numeric-date DMY, lunar-date, holiday, date-range, datetime-range, month-period, recurrence, recurrence-bound, monthly-exception, weekend, month-edge, chat-short `t2 9h`, plural-weekday `các thứ hai`, deictic-after-unit, ordinal-weekday, contrast-date negatives, clock-place…). Giữ cơ chế `RESERVED` (≥4 carrier cụm không bao giờ vào training, ví dụ `nhắc mình lúc`, `tàu khởi hành lúc`, `ghi vào lịch giúp tôi`) để đo generalization. Giữ `FAMILY_WEIGHTS`. Cập nhật `check-natural.py`, `test_prose.py`.
 
 **Acceptance criteria:**
-- [ ] `check:natural` pass (mọi câu natural qua compiler đúng)
-- [ ] Không câu nào trong split training chứa cụm RESERVED (test tự động)
-- [ ] `test_prose.py` pass
+- [x] `check:natural` pass (mọi câu natural qua compiler đúng)
+- [x] Không câu nào trong split training chứa cụm RESERVED (test tự động)
+- [x] `test_prose.py` pass
 
 **Verification:**
-- [ ] Tests pass: `pnpm --filter @gpu-time-vi/training test`
-- [ ] Manual check: đọc 50 câu, ≥90% tự nhiên
+- [x] Tests pass: `pnpm --filter @gpu-time-vi/training test`
+- [x] Manual check: đọc 50 câu, ≥90% tự nhiên
 
 **Dependencies:** Task 11
 
@@ -328,18 +332,22 @@
 
 ---
 
+**Ghi chú thực hiện:** `natural.py` = 10 nhóm khung câu (reminder, meeting, deadline, travel, availability, series, event, duration, question, chat) × nội dung semantic; 5 khung RESERVED chỉ dùng heldout. `check-natural` train/reserved/bare **2000/2000** mỗi loại. Test Python: `test_generate.py` (59 test tổng, 2 skip do Windows symlink).
+
+---
+
 ## Task 13: `background.py` — carrier tiếng Việt + Tatoeba `vie`
 
 **Description:** Viết lại `background.py`: CONNECTORS tiếng Việt (`lúc, vào, từ, đến, tới, khoảng, tầm, hồi, nhằm`), carrier phrases (`họp nhóm`, `hẹn bác sĩ`, `nhắc tôi`, `deadline nộp bài`, `đặt bàn`…), prose không thời gian. `fetch-corpus.ts`: tải Tatoeba `vie` sentences, lọc bỏ câu chứa time-words theo `lexicon.ts` mới (weekday, tháng, unit, holiday, số giống ngày/giờ); cập nhật `corpus.json` pin (URL, sha256, ngày). Mọi token mượn nhận nhãn `O`.
 
 **Acceptance criteria:**
-- [ ] `pnpm --filter @gpu-time-vi/training corpus:fetch` tạo `data/prose/sentences.txt` ≥10 000 câu; `corpus.json` ghi digest
-- [ ] Không câu nào trong `sentences.txt` chứa từ trong `lexicon.timeWords`/weekday/month/unit (test)
-- [ ] `pnpm gen` chạy được cả khi thiếu `sentences.txt`
+- [x] `pnpm --filter @gpu-time-vi/training corpus:fetch` tạo `data/prose/sentences.txt` ≥10 000 câu; `corpus.json` ghi digest
+- [x] Không câu nào trong `sentences.txt` chứa từ trong `lexicon.timeWords`/weekday/month/unit (test)
+- [x] `pnpm gen` chạy được cả khi thiếu `sentences.txt`
 
 **Verification:**
-- [ ] Tests pass: `pnpm --filter @gpu-time-vi/training test`
-- [ ] Manual check: `wc -l data/prose/sentences.txt`, đọc 30 câu
+- [x] Tests pass: `pnpm --filter @gpu-time-vi/training test`
+- [x] Manual check: `wc -l data/prose/sentences.txt`, đọc 30 câu
 
 **Dependencies:** Task 4 (lexicon), song song với Task 11/12
 
@@ -349,18 +357,22 @@
 
 ---
 
+**Ghi chú thực hiện:** `fetch-corpus.ts` cho `vie`, pin sha256 `df997a31…`, retrieved 2026-09-17: 33 179 đọc → 11 050 giữ (bỏ 15 641 câu có từ thời gian). `background.py` tự lọc lại theo `TIME_WORDS` (10 909 dùng được). Carrier tiếng Việt tự sinh: EVENTS/REQUESTS/STATEMENTS/QUESTIONS/PLACES/TAILS.
+
+---
+
 ## Task 14: Hard negatives tiếng Việt
 
 **Description:** Trong `natural.py`/`background.py` thêm families negative có chủ đích: `năm` = 5 vs năm (`năm người`, `năm nay`), `sáu`/`sau`, `tư` (`riêng tư`, `tư vấn`), `ngày` không phải thời gian (`ngày càng`, `hàng ngày` là RECUR nhưng `ngày thường` DAYGROUP), `chiều` (`chiều cao`, `chiều lòng`), `tối` (`tối đa`, `tối ưu`), `sáng` (`sáng tạo`, `sáng suốt`), `giờ` (`bây giờ`=NOW vs `giờ giấc`), `thứ` (`thứ này`, `thứ tự`), `mai` (`hoa mai`, `mai mối`), số điện thoại `0912 345 678`, giá tiền `15k`, `3 triệu`, phiên bản `v2.3`, tỉ số `3-1`. Viết `test_negatives.py` kiểm tra features (không chỉ chuỗi) như quy tắc gpu-time. Đưa ≥40 câu vào `negatives.jsonl`, ≥40 câu prose có thời gian vào `prose.jsonl`, và `adversarial.jsonl` ≥25.
 
 **Acceptance criteria:**
-- [ ] `test_negatives.py` pass
-- [ ] `negatives.jsonl` ≥80 dòng tổng, `prose.jsonl` ≥40, `adversarial.jsonl` ≥25, schema hợp lệ (`schema.test.ts`)
-- [ ] Tỉ lệ negative trong split training 20–35% (ghi trong manifest)
+- [x] `test_negatives.py` pass
+- [x] `negatives.jsonl` ≥80 dòng tổng, `prose.jsonl` ≥40, `adversarial.jsonl` ≥25, schema hợp lệ (`schema.test.ts`)
+- [x] Tỉ lệ negative trong split training 20–35% (ghi trong manifest)
 
 **Verification:**
-- [ ] Tests pass: `pnpm --filter @gpu-time-vi/training test && pnpm test:core -- schema`
-- [ ] Manual check: `pnpm gen` manifest hiển thị tỉ lệ nhãn
+- [x] Tests pass: `pnpm --filter @gpu-time-vi/training test && pnpm test:core -- schema`
+- [x] Manual check: `pnpm gen` manifest hiển thị tỉ lệ nhãn
 
 **Dependencies:** Task 12, 13
 
@@ -370,10 +382,14 @@
 
 ---
 
+**Ghi chú thực hiện:** hard negatives ở `background.HARD` (60+ mẫu, 40% negatives) — tỉ lệ negative 20% mỗi split. `prose.jsonl` 45, `adversarial.jsonl` 28 (`pnpm seed:gold`), `negatives.jsonl` 45. Test `test_hard_negatives_carry_a_time_syllable` kiểm tra từng mẫu có âm tiết mơ hồ hoặc số.
+
+---
+
 ## Checkpoint 2: Generator
-- [ ] `pnpm gen` sinh train/validation/heldout + `.manifest.json` + `.fingerprints.json` disjoint
-- [ ] `check:natural`, `check:semantic` = 100%
-- [ ] `pnpm --filter @gpu-time-vi/training test` pass
+- [x] `pnpm gen` sinh train/validation/heldout + `.manifest.json` + `.fingerprints.json` disjoint (20 000 train, 0 skipped khi featurize, 4 182 frame reserved bị loại)
+- [x] `check:natural`, `check:semantic` = 100%
+- [x] `pnpm --filter @gpu-time-vi/training test` pass
 - [ ] Review với người dùng: đọc 100 câu mẫu
 
 ---

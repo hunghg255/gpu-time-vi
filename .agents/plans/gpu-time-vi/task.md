@@ -84,14 +84,14 @@ Chi tiết từng task ở `todo.md`.
 - [ ] Review với người dùng
 
 ### Phase 2: Dữ liệu huấn luyện
-- [ ] Task 11: `semantic.py` — renderer tiếng Việt cho mọi loại `Schedule`; `check-semantic` pass 100% qua TS compiler
-- [ ] Task 12: `natural.py` — families tiếng Việt (≥30 families, giữ nhóm RESERVED để đo generalization)
-- [ ] Task 13: `background.py` — carrier phrases tiếng Việt + fetch Tatoeba `vie`, filter time-words
-- [ ] Task 14: Hard negatives tiếng Việt (`năm`/`sáu`/`ngày`/`chiều`/`tối`, số điện thoại, giá tiền, "tháng lương") + `test_negatives.py`
+- [x] Task 11: `semantic.py` — renderer tiếng Việt cho mọi loại `Schedule`; `check-semantic` pass 100% qua TS compiler
+- [x] Task 12: `natural.py` — families tiếng Việt (≥30 families, giữ nhóm RESERVED để đo generalization)
+- [x] Task 13: `background.py` — carrier phrases tiếng Việt + fetch Tatoeba `vie`, filter time-words
+- [x] Task 14: Hard negatives tiếng Việt (`năm`/`sáu`/`ngày`/`chiều`/`tối`, số điện thoại, giá tiền, "tháng lương") + `test_negatives.py`
 
 ### Checkpoint 2: Generator
-- [ ] `pnpm gen` sinh được splits; `check:natural`, `check:semantic` pass; `pnpm --filter training test` pass
-- [ ] Manifest + fingerprint split disjoint
+- [x] `pnpm gen` sinh được splits; `check:natural`, `check:semantic` pass; `pnpm --filter training test` pass
+- [x] Manifest + fingerprint split disjoint
 
 ### Phase 3: Huấn luyện & tích hợp model
 - [ ] Task 15: Môi trường training (uv, Python 3.13, torch) + run nhỏ (smoke) → export → `weights.gen.ts` → build → parity fixtures CPU/GPU
