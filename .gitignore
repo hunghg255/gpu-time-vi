@@ -31,3 +31,7 @@ todos/
 # Reference forks, kept locally for comparison only
 example/
 gpu-lexer-main/
+
+# Test/evaluation outputs
+packages/training/results/*
+!packages/training/results/README.md
