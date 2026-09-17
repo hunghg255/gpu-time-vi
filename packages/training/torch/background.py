@@ -293,6 +293,19 @@ HARD = [
     "sáng mắt ra chưa",
     "anh ấy sáu mươi ký",
     "tuổi tư",
+    "bàn {n} người",
+    "{n} người lớn và {n} trẻ em",
+    "nhóm năm người",
+    "đi ăn tối với khách",
+    "ăn sáng chưa",
+    "bữa trưa văn phòng",
+    "mời cơm tối",
+    "chín muồi rồi",
+    "chín chắn hơn",
+    "mã đơn {y}",
+    "mã sản phẩm {y}",
+    "biển số {n}{y}",
+    "xem lại chương {n} và {n}",
     "đội Hà Nội thắng {n}-0",
     "chị Thu gửi hàng rồi",
     "bạn Lan và bạn Trung đến",
@@ -307,7 +320,11 @@ def negative(rng: random.Random) -> str:
     _last_hard = rng.random() < 0.4
     if not _last_hard:
         return sentence(rng)
-    text = rng.choice(HARD).replace("{n}", rng.choice(NUMBERS))
+    text = (
+        rng.choice(HARD)
+        .replace("{n}", rng.choice(NUMBERS))
+        .replace("{y}", str(rng.randint(1990, 2035)))
+    )
     if rng.random() < 0.3:
         text = f"{rng.choice(NEUTRAL)}, {text}"
     return text

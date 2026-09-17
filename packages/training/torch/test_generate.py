@@ -103,7 +103,7 @@ class RendererTests(unittest.TestCase):
     def test_hard_negatives_carry_a_time_syllable(self):
         # A hard negative is only hard if it shares a syllable with time words.
         for template in background.HARD:
-            filled = template.replace("{n}", "5")
+            filled = template.replace("{n}", "5").replace("{y}", "2026")
             words = set(filled.lower().replace("/", " ").replace("-", " ").split())
             self.assertTrue(
                 words & (background.TIME_WORDS | background.NUMBER_WORDS)

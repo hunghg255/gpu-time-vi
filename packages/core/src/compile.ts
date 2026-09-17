@@ -301,7 +301,12 @@ function readClock(reader: Reader, pending?: Segment): ParsedClock {
   let minute = 0;
   let second: number | undefined;
   if (reader.role() === Role.MINUTE) minute = segmentNumber(reader.take());
-  if (reader.role() === Role.SECOND) second = segmentNumber(reader.take());
+  // "10:05:20": a second minute field after a colon is the seconds.
+  if (
+    reader.role() === Role.SECOND ||
+    (reader.role() === Role.MINUTE && reader.previous()?.text === ":")
+  )
+    second = segmentNumber(reader.take());
   while (reader.role() === Role.CLOCK_OFFSET) {
     const offset = reader.take();
     if (offset.text === "rưỡi") minute += 30;
@@ -492,8 +497,27 @@ function readDate(reader: Reader): DateState {
     case Role.WEEKDAY: {
       state.days = readWeekdays(reader.take());
       // "thứ hai và thứ tư", "thứ 2, 4"
-      while (reader.role() === Role.WEEKDAY)
-        state.days.push(...readWeekdays(reader.take(), true));
+      for (;;) {
+        if (reader.role() === Role.WEEKDAY) {
+          state.days.push(...readWeekdays(reader.take(), true));
+          continue;
+        }
+        // "thứ hai, tư, sáu": a bare day number after a join that the model
+        // read as a quantity or a day of the month.
+        const candidate = reader.peek();
+        if (
+          candidate &&
+          (candidate.role === Role.DOM || candidate.role === Role.NUM) &&
+          candidate.tokens.length === 1 &&
+          reader.previous()?.role === Role.JOIN &&
+          weekdayAfterThu(candidate.text)
+        ) {
+          reader.take();
+          state.days.push(weekdayAfterThu(candidate.text)!);
+          continue;
+        }
+        break;
+      }
       if (reader.role() === Role.ORD) {
         state.ordinal = ordinalValue(reader.take());
         if (reader.role() === Role.MONTH) {
@@ -522,6 +546,15 @@ function readDate(reader: Reader): DateState {
       if (!edge)
         fail(first(segment), "invalid-date", `Unknown edge ${segment.text}.`);
       state.edge = edge;
+      // "cuối tháng": a unit word the model left as glue still names the period.
+      const after = reader.segments[reader.index];
+      if (
+        after?.role === Role.GLUE &&
+        unitName(after.text) &&
+        reader.role() !== Role.MONTH &&
+        reader.role() !== Role.UNIT
+      )
+        after.role = Role.UNIT;
       if (reader.role() === Role.UNIT) {
         state.unit = readUnit(reader.take());
         state.modifier =
@@ -1062,6 +1095,21 @@ function compileClause(tokens: Token[], diagnostics: Diagnostic[]): Clause {
         } else setDate(readDate(reader));
         break;
       }
+      case Role.DOM:
+        if (
+          range === "start" &&
+          !start &&
+          next.tokens.length === 1 &&
+          reader.role(1) === Role.RANGE_END &&
+          reader.role(2) === Role.HOUR
+        ) {
+          // "từ 9 đến 5 giờ chiều": the bare number opens a clock window.
+          next.role = Role.HOUR;
+        } else {
+          setDate(readDate(reader));
+          break;
+        }
+      // falls through
       case Role.HOUR: {
         const clock = readClock(reader, pendingMeridiem);
         pendingMeridiem = undefined;
@@ -1433,7 +1481,14 @@ function splitExpressions(tokens: Token[]): Token[][] {
       expression[1]?.label === Role.NUM;
     while (expression[0] && skipped.has(expression[0].label) && !cue())
       expression.shift();
-    while (expression.length && skipped.has(expression.at(-1)!.label))
+    // Trailing glue that belongs to the last value ("8 giờ", "15h") stays in
+    // the span; connectors and joins go.
+    while (
+      expression.length &&
+      (expression.at(-1)!.label !== Role.GLUE
+        ? skipped.has(expression.at(-1)!.label)
+        : filler.has(key(expression.at(-1)!.text)))
+    )
       expression.pop();
     return expression.length > 0;
   });

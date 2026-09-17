@@ -245,7 +245,7 @@
 {"id":"grammar-245","family":"recurrence-bound","text":"mỗi ngày tới thứ sáu","schedule":{"clauses":[{"recurrence":{"freq":"daily","interval":1,"until":{"kind":"weekday","days":["FR"]}}}]}}
 {"id":"grammar-246","family":"recurrence-bound","text":"mỗi thứ hai trong 10 tuần","schedule":{"clauses":[{"recurrence":{"freq":"weekly","interval":1,"byDay":["MO"],"span":{"amount":10,"unit":"week"}}}]}}
 {"id":"grammar-247","family":"recurrence-bound","text":"mỗi thứ hai, 6 lần","schedule":{"clauses":[{"recurrence":{"freq":"weekly","interval":1,"byDay":["MO"],"count":6}}]}}
-{"id":"grammar-248","family":"recurrence-bound","text":"hàng ngày từ nay đến cuối tháng","schedule":{"clauses":[{"recurrence":{"freq":"daily","interval":1,"start":{"kind":"now"},"until":{"kind":"relativeUnit","unit":"month","modifier":"this","edge":"end"}}}]}}
+{"id":"grammar-248","family":"recurrence-bound","text":"hàng ngày từ nay đến cuối tháng","schedule":{"clauses":[{"recurrence":{"freq":"daily","interval":1,"start":{"kind":"relativeDay","offset":0},"until":{"kind":"relativeUnit","unit":"month","modifier":"this","edge":"end"}}}]}}
 {"id":"grammar-249","family":"recurrence-except","text":"mỗi ngày trừ chủ nhật","schedule":{"clauses":[{"recurrence":{"freq":"daily","interval":1,"except":[{"kind":"weekday","days":["SU"]}]}}]}}
 {"id":"grammar-250","family":"recurrence-except","text":"các ngày thường trừ thứ sáu","schedule":{"clauses":[{"recurrence":{"freq":"weekly","interval":1,"byDay":["MO","TU","WE","TH","FR"],"except":[{"kind":"weekday","days":["FR"]}]}}]}}
 {"id":"grammar-251","family":"recurrence-except","text":"mỗi ngày ngoại trừ cuối tuần","schedule":{"clauses":[{"recurrence":{"freq":"daily","interval":1,"except":[{"kind":"dayGroup","group":"weekend"}]}}]}}

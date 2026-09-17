@@ -324,7 +324,7 @@ const roles: Record<string, string> = {
   "mỗi ngày tới thứ sáu": "REC UNIT BE WD WD",
   "mỗi thứ hai trong 10 tuần": "REC WD WD DUR NUM UNIT",
   "mỗi thứ hai, 6 lần": "REC WD WD J NUM TM",
-  "hàng ngày từ nay đến cuối tháng": "REC UNIT BS NOW BE EDGE UNIT",
+  "hàng ngày từ nay đến cuối tháng": "REC UNIT BS RD BE EDGE UNIT",
   // recurrence-except
   "mỗi ngày trừ chủ nhật": "REC UNIT EX WD WD",
   "các ngày thường trừ thứ sáu": "REC DG DG EX WD WD",

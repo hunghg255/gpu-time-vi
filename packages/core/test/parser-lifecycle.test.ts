@@ -51,7 +51,7 @@ describe.skipIf(!promotedModel)("parser lifecycle", () => {
         { kind: "relativeDay", offset: 0 },
         { kind: "relativeDay", offset: 1 },
         { kind: "relativeDay", offset: -1 },
-        { kind: "bây giờ" },
+        { kind: "now" },
       ]);
       expect(gpu.inferMany).toHaveBeenCalledTimes(1);
     } finally {

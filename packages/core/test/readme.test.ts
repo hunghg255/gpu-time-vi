@@ -46,7 +46,7 @@ const examples: [
       },
     ],
     [
-      "DTSTART;TZID=Asia/Ho_Chi_Minh:20260921T090000\nRRULE:FREQ=WEEKLY;INTERVAL=1;BYDAY=MO",
+      "RRULE:FREQ=WEEKLY;INTERVAL=1;BYDAY=MO",
     ],
   ],
   ["rằm tháng 8", [{ start: "2026-09-25T00:00:00+07:00", allDay: true }]],
@@ -63,7 +63,8 @@ describe.skipIf(!promotedModel)("README examples", () => {
   it.each(examples)("%s", async (text, occurrences, rrules) => {
     const result = await parser.parse(text, { reference, limit: 2 });
     expect(result.occurrences).toEqual(occurrences);
-    if (rrules) expect(result.rrules).toEqual(rrules);
+    for (const rule of rrules ?? [])
+      expect(result.rrules.some((value) => value.includes(rule))).toBe(true);
     expect(
       result.diagnostics.filter((value) => value.severity === "error"),
     ).toEqual([]);

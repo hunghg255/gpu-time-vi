@@ -584,7 +584,7 @@ example(
   "recurrence-bound",
   "hàng ngày từ nay đến cuối tháng",
   recurrence("daily", {
-    start: { kind: "now" },
+    start: relative(0),
     until: unit("month", "this", "end"),
   }),
 );

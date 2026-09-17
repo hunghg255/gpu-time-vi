@@ -304,6 +304,11 @@ def sample_clause(family: str, rng: random.Random) -> dict | list[dict]:
             rule["except"] = [{"kind": "holiday", "name": rng.choice(["tet", "christmas", "national-day"])}]
         return {"recurrence": rule}
     if family == "multi-clause":
+        if rng.random() < 0.3:
+            # "8h sáng và 8h tối": two clocks, no dates.
+            first = clock_value(rng)
+            second = clock_value(rng)
+            return [{"time": {"start": first}}, {"time": {"start": second}}]
         clauses = []
         used: set[str] = set()
         for _ in range(rng.choice([2, 2, 3])):

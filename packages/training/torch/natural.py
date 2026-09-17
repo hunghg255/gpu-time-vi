@@ -116,6 +116,7 @@ FAMILIES: dict[str, tuple[list[str], list[str]]] = {
             "hội chợ diễn ra {}",
             "kỳ nghỉ của mình {}",
             "công ty nghỉ {}",
+            "cả nhà về quê ăn {}",
             "khai trương {}",
             "triển lãm mở cửa {}",
         ],
