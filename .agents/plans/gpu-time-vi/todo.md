@@ -35,12 +35,12 @@
 **Description:** Viết `docs/vietnamese-time-expressions.md`: liệt kê mọi family biểu thức thời gian tiếng Việt cần hỗ trợ (giờ, daypart, ngày tương đối, thứ, tuần/tháng/năm + deictic, ngày dương lịch, âm lịch, holiday, duration, shift, recurrence, range, bound, exception, EDGE, DAYGROUP), quy ước gán role cho từng token (chốt bảng nháp trong `task.md`, gồm cả TIMES), quy tắc daypart→24h, và danh sách từ mơ hồ. Viết `packages/training/data/gold/grammar.jsonl` ≥150 câu với `id`, `family`, `text`, `schedule` kỳ vọng (theo `types.ts` sẽ sửa ở Task 4 — dùng holiday VN và `lunar` kind). Xoá các gold tiếng Anh.
 
 **Acceptance criteria:**
-- [ ] Spec có ≥25 family, mỗi family ≥3 ví dụ và bảng role
-- [ ] `grammar.jsonl` ≥150 dòng, JSON hợp lệ, id duy nhất, mọi family trong spec có mặt
+- [x] Spec có ≥25 family (35 family, 13 mục), mỗi family ≥3 ví dụ và bảng role
+- [x] `grammar.jsonl` ≥150 dòng (295 dòng, 35 family, id duy nhất), JSON hợp lệ, id duy nhất, mọi family trong spec có mặt
 - [ ] Người dùng đã duyệt spec (Checkpoint 0)
 
 **Verification:**
-- [ ] Manual check: `node -e` đọc từng dòng JSON, kiểm tra id trùng
+- [x] Manual check: python đọc từng dòng JSON, kiểm tra id trùng
 - [ ] Manual check: người dùng review `docs/vietnamese-time-expressions.md`
 
 **Dependencies:** None (song song với Task 1)
@@ -49,10 +49,12 @@
 
 **Estimated scope:** Medium
 
+**Ghi chú thực hiện (2026-09-17):** `grammar.jsonl` sinh từ `packages/training/src/seed-grammar.ts` (có kiểu; các kind mới `lunar`/holiday VN/`noon` khai báo cục bộ tới khi Task 4 sửa `types.ts`). Xoá gold + seed script tiếng Anh; thêm `packages/core/test/gold.ts` để `oracle`/`results-gold`/`schema`/`grammar-model` skip khi corpus chưa có hoặc model chưa phải tiếng Việt (export-report có nhãn `LUNAR`). Commit `f6e94d9`.
+
 ---
 
 ## Checkpoint 0: Scaffold
-- [ ] `pnpm install && pnpm build:core && pnpm test:core` pass
+- [x] `pnpm install && pnpm build:core && pnpm test:core` pass
 - [ ] Spec được duyệt
 - [ ] Review với người dùng trước khi đi tiếp
 

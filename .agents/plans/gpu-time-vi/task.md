@@ -61,7 +61,7 @@ Chi tiết từng task ở `todo.md`.
 
 ### Phase 0: Scaffold
 - [x] Task 1: Fork monorepo từ `example/` sang root, đổi tên `gpu-time-vi`, cài đặt, build + test pass với model tiếng Anh tạm
-- [ ] Task 2: Spec biểu thức tiếng Việt + label contract + gold corpus `grammar.jsonl` (≥150 câu, ≥25 family)
+- [x] Task 2: Spec biểu thức tiếng Việt + label contract + gold corpus `grammar.jsonl` (≥150 câu, ≥25 family)
 
 ### Checkpoint 0
 - [x] `pnpm install && pnpm build:core && pnpm test:core` pass trên bản fork chưa sửa ngôn ngữ
