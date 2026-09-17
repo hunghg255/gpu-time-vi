@@ -26,18 +26,9 @@ describe.skipIf(!promotedModel)("gold corpora against the model", () => {
   afterAll(() => parser.dispose());
 
   // Gold is right, model is behind. Runs under it.fails so a retrain that
-  // closes one turns red and the id comes off the list.
-  // 034, 136 and 138 are one construction: "in N units" meaning how long a
-  // thing took, read as how far ahead it is. Three of its four gold rows are
-  // here; 138 has flipped in and out three times today, so treat the whole
-  // class as unstable rather than these ids as settled. 096 is a person named
-  // Wednesday, which the warm chain has never answered.
-  const knownGaps = new Set([
-    "negative-034",
-    "negative-096",
-    "negative-136",
-    "negative-138",
-  ]);
+  // closes one turns red and the id comes off the list. Empty until the first
+  // promoted Vietnamese model is scored.
+  const knownGaps = new Set<string>([]);
   const isGap = (example: Example) => knownGaps.has(example.id);
 
   const check = async (example: Example) => {
@@ -54,10 +45,10 @@ describe.skipIf(!promotedModel)("gold corpora against the model", () => {
   it.fails.each(examples.filter(isGap))("known gap — $id: $text", check);
 
   it.each([
-    ["27pm", "invalid-time"],
-    ["2:99pm", "invalid-time"],
+    ["27 giờ", "invalid-time"],
+    ["2 giờ 99", "invalid-time"],
     ["2026-13-01", "invalid-date"],
-    ["every Monday until", "invalid-bound"],
+    ["mỗi thứ hai cho đến", "invalid-bound"],
   ])("rejects malformed or ambiguous input: %s", async (text, code) => {
     const result = await parser.parse(text);
     expect(result.expressions).toHaveLength(1);
