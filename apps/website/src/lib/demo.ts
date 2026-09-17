@@ -29,6 +29,10 @@ export const examples: { use: string; text: string }[] = [
   { use: "Hẹn giờ", text: "20 phút nữa trong nửa tiếng" },
   { use: "Âm lịch", text: "mùng 1 Tết" },
   { use: "Trung thu", text: "rằm tháng 8" },
+  { use: "Chat", text: "ok dc, t2 9h nha :))" },
+  { use: "Can chi", text: "giờ Ngọ mùng 5 tháng 5 năm Bính Ngọ" },
+  { use: "Tuần sau nữa", text: "thứ sáu tuần sau nữa" },
+  { use: "Giờ văn phòng", text: "gửi báo cáo đầu giờ chiều mai" },
 ];
 
 const clock =

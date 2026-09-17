@@ -23,7 +23,7 @@ TIME_WORDS = frozenset(
     """giây phút giờ tiếng ngày hôm bữa tuần tháng năm quý sáng trưa chiều tối đêm khuya
     nay mai mốt kia kìa qua thứ cn hàng hằng mỗi tết âm rằm mùng mồng nhuận am pm
     lúc noel valentine giáng trung thu giỗ tổ đoan ngọ vu lan táo khánh
-    nửa giữa cuối đầu sau trước tới nữa cách kể sang""".split()
+    nửa giữa cuối đầu sau trước tới nữa cách kể sang hnay hqua trc weekend h""".split()
 )
 
 # Spoken numbers read as quantities next to a unit; alone they are nothing.
@@ -93,12 +93,26 @@ REQUESTS = [
     "bay ra Hà Nội",
     "sang văn phòng",
 ]
-LEADS = ["", "", "làm ơn", "giúp mình", "nhớ", "anh ơi", "em ơi", "sếp ơi", "mọi người ơi", "à", "ừm"]
+LEADS = ["", "", "làm ơn", "giúp mình", "nhớ", "anh ơi", "em ơi", "sếp ơi", "mọi người ơi", "à", "ừm", "ok", "oke", "okie", "ê", "alo", "dạ", "mn ơi", "e ơi", "a ơi"]
 PLACES = ["ở văn phòng", "tại quán cà phê", "ở Hà Nội", "ở Sài Gòn", "qua Zoom", "ở nhà", "tại công ty", "ở trường", "trên Teams", "ở phòng họp lớn", "ở Đà Nẵng", "tại bệnh viện"]
-TAILS = ["nhé", "nha", "được không", "được không ạ", "ạ", "nhớ đấy", "cho em", "giúp mình", "nếu tiện", "thì tốt", "đúng không", "nhá", "ok không", "nhé mọi người", "để bàn kế hoạch", "để chốt hợp đồng", "với chị Mai", "với cả team", "cùng cả nhà"]
+TAILS = ["nhé", "nha", "được không", "được không ạ", "ạ", "nhớ đấy", "cho em", "giúp mình", "nếu tiện", "thì tốt", "đúng không", "nhá", "ok không", "nhé mọi người", "để bàn kế hoạch", "để chốt hợp đồng", "với chị Mai", "với cả team", "cùng cả nhà", "nha :))", "nhaaa", "=))", "dc k", "đc ko", "hihi", "^^", "ok chưa", "nhé mn", "cho e", "nha bn", "vs cả team", "cx đc", "nhé :)", "ok?"]
 QUESTIONS = ["bạn rảnh", "anh có rảnh", "em có bận", "mình gặp nhau", "có kịp", "còn phòng", "ai đi", "mọi người có đi", "chị có nhà", "quán có mở cửa", "còn vé", "mình chốt"]
 STATEMENTS = ["mình rảnh", "anh bận", "em đi vắng", "cửa hàng mở cửa", "quán đóng cửa", "shop nghỉ", "văn phòng làm việc", "tôi sẽ về", "chúng ta gặp nhau", "khách sẽ đến", "hàng sẽ về", "kết quả sẽ có", "bên em giao hàng", "team sẽ demo", "xe khởi hành", "tàu chạy", "máy bay cất cánh", "cô giáo dạy bù"]
 NEUTRAL = [
+    "ok dc",
+    "k đi dc r",
+    "dc r nha",
+    "cx đc",
+    "mn ơi giúp e vs",
+    "t bận r",
+    "ê đi ăn k",
+    "hihi cảm ơn",
+    ":)) vui quá",
+    "=)) hài thật",
+    "oke luôn",
+    "sếp ơi e xin phép",
+    "a gửi e file vs",
+    "bn ơi check tin nhắn",
     "trời đẹp quá",
     "em thích ăn phở",
     "xe hỏng rồi",
@@ -251,6 +265,9 @@ HARD = [
     "phiên bản v{n}.3 đã phát hành",
     "thứ này rất tốt",
     "sắp xếp theo thứ tự",
+    "đây là lần thứ tám mình nhắc",
+    "anh ấy về thứ tám trong cuộc đua",
+    "chương thứ 8 hay nhất",
     "tôi {n} tuổi",
     "đầu tư vào giáo dục",
     "tư vấn miễn phí",

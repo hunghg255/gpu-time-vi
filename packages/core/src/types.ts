@@ -4,6 +4,11 @@ export type Weekday = "MO" | "TU" | "WE" | "TH" | "FR" | "SA" | "SU";
 export type Unit =
   "second" | "minute" | "hour" | "day" | "week" | "month" | "year";
 export type Modifier = "this" | "next" | "last";
+/**
+ * How many steps a `next` or `last` modifier takes: "tuần sau nữa" (the week
+ * after next) is `{ modifier: "next", distance: 2 }`. Omitted means one.
+ */
+export type Distance = number;
 export interface CalendarDate {
   year?: number;
   month?: number;
@@ -37,9 +42,14 @@ export type MonthRef =
 export type DateSpec =
   | { kind: "now" }
   | { kind: "relativeDay"; offset: number }
-  | { kind: "weekday"; days: Weekday[]; modifier?: Modifier }
+  | { kind: "weekday"; days: Weekday[]; modifier?: Modifier; distance?: Distance }
   | { kind: "weekdayRange"; from: Weekday; to: Weekday }
-  | { kind: "dayGroup"; group: "weekday" | "weekend"; modifier?: Modifier }
+  | {
+      kind: "dayGroup";
+      group: "weekday" | "weekend";
+      modifier?: Modifier;
+      distance?: Distance;
+    }
   | ({ kind: "calendar" } & CalendarDate)
   | {
       kind: "calendarRange";
@@ -60,6 +70,7 @@ export type DateSpec =
       kind: "relativeUnit";
       unit: Unit;
       modifier: Modifier;
+      distance?: Distance;
       edge?: "start" | "end";
     }
   | {
@@ -69,7 +80,17 @@ export type DateSpec =
       of: MonthRef;
       recurring?: boolean;
     }
-  | { kind: "holiday"; name: HolidayName }
+  | {
+      kind: "holiday";
+      name: HolidayName;
+      /**
+       * "Tết 2027", "Giáng sinh 2026": that year's holiday instead of the
+       * next one. Lunar holidays take the lunar year.
+       */
+      year?: number;
+      /** "Tết Bính Ngọ": a sexagenary year, as on lunar dates. */
+      cycle?: number;
+    }
   /**
    * A Vietnamese lunar calendar date. The resolver converts it with the
    * Vietnamese (UTC+7) lunar calendar; `leap` names the intercalary month.
@@ -80,6 +101,12 @@ export type DateSpec =
       month?: number;
       day?: number;
       leap?: boolean;
+      /**
+       * A sexagenary (can chi) year such as "Bính Ngọ": its position in the
+       * 60-year cycle, 0 = Giáp Tý. Resolves to the nearest such year around
+       * the reference (the coming one on a tie), unless `year` is also given.
+       */
+      cycle?: number;
     };
 export type DayPart = "morning" | "noon" | "afternoon" | "evening" | "night";
 export type ClockTime =

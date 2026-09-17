@@ -1,8 +1,38 @@
 {
-  "model": "d17a5b60817270b6d4205d19128a74187d49b341155450d8f237c61b60603053",
+  "model": "3713154d4dce638ff42a77eef205d477589aedf0fb9de85d02e7dfe0615271db",
   "generatedWeightsHashMatches": true,
   "matchingExportFiles": 5,
   "results": [
+    {
+      "checkpoint": "runs/warm7/best.pt",
+      "checkpointHashMatches": true,
+      "matchingSourceFiles": 10
+    },
+    {
+      "checkpoint": "runs/warm6/best.pt",
+      "checkpointHashMatches": true,
+      "matchingSourceFiles": 10
+    },
+    {
+      "checkpoint": "runs/warm5/best.pt",
+      "checkpointHashMatches": true,
+      "matchingSourceFiles": 10
+    },
+    {
+      "checkpoint": "runs/warm4/best.pt",
+      "checkpointHashMatches": true,
+      "matchingSourceFiles": 10
+    },
+    {
+      "checkpoint": "runs/warm3/best.pt",
+      "checkpointHashMatches": true,
+      "matchingSourceFiles": 10
+    },
+    {
+      "checkpoint": "runs/warm2/best.pt",
+      "checkpointHashMatches": true,
+      "matchingSourceFiles": 10
+    },
     {
       "checkpoint": "runs/warm1/best.pt",
       "checkpointHashMatches": true,

@@ -7,7 +7,7 @@ import {
   unit,
   vagueQuantities,
 } from "./lexicon.js";
-import type { Duration, PredictionToken as Token } from "./types.js";
+import type { Duration, PredictionToken as Token, Unit } from "./types.js";
 
 const skip = (tokens: Token[], index: number) =>
   tokens[index]?.kind === 3 ? index + 1 : index;
@@ -55,6 +55,11 @@ export function readNumber(tokens: Token[], index: number, label = Role.NUM) {
 }
 
 const clockUnits = new Set(["hour", "minute", "second"]);
+const halves: Partial<Record<Unit, { amount: number; unit: Unit }>> = {
+  day: { amount: 12, unit: "hour" },
+  month: { amount: 15, unit: "day" },
+  year: { amount: 6, unit: "month" },
+};
 
 /**
  * Read `NUM UNIT [rưỡi] [NUM UNIT]...` as one duration: "1 tiếng 30 phút",
@@ -92,10 +97,14 @@ export function readDuration(
       amount += 0.5;
       next = skip(tokens, next + 1);
     }
-    // Fractions of calendar days and longer need a policy of their own. Clock
+    // "nửa tháng", "nửa năm", "nửa ngày" have a conventional whole reading;
+    // other fractions of calendar units need a policy of their own. Clock
     // units are exact.
-    if (!Number.isInteger(amount) && !clockUnits.has(durationUnit)) return;
-    components.push({ amount, unit: durationUnit });
+    const half = amount === 0.5 ? halves[durationUnit] : undefined;
+    if (half) components.push(half);
+    else if (!Number.isInteger(amount) && !clockUnits.has(durationUnit))
+      return;
+    else components.push({ amount, unit: durationUnit });
     if (tokens[next]?.label !== Role.NUM) break;
     const following = readNumber(tokens, next).next;
     if (tokens[skip(tokens, following)]?.label !== Role.UNIT) break;

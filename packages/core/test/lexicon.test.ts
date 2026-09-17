@@ -59,7 +59,8 @@ it("reads weekdays in every spelling", () => {
   expect(weekday("chủ nhật")).toBe("SU");
   expect(weekday("CN")).toBe("SU");
   expect(weekday("chúa nhật")).toBe("SU");
-  expect(weekday("thứ 8")).toBeUndefined();
+  expect(weekday("thứ 8")).toBe("SU");
+  expect(weekday("thứ tám")).toBe("SU");
   expect(weekday("thứ 1")).toBeUndefined();
   expect(weekday("thứ")).toBeUndefined();
   expect(weekday("hai")).toBeUndefined();

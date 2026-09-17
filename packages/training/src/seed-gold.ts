@@ -282,6 +282,19 @@ a("cuối", "cuối cùng cũng xong, cuối tuần đi chơi", {
 });
 a("mixed", "3pm mai ok?", { date: relative(1), time: clock(15) });
 a("mixed", "meeting 10am thứ hai", { date: weekday("MO"), time: clock(10) });
+// Chat spellings next to their homographs: "h" alone is not an hour, "trc"
+// is only a modifier after a unit, "giờ" inside an office phrase is not a unit.
+a("chat", "sếp ơi e xin nghỉ hnay nha :))", { date: relative(0) });
+a("chat", "deadline cuối giờ chiều t6 nhé", {
+  date: weekday("FR"),
+  time: clock(17),
+});
+a("chat", "hqua e gửi r, tuần trc cx gửi", { date: relative(-1) }, {
+  date: unit("week", "last"),
+});
+a("giờ", "gọi trong giờ hành chính thôi nhé, ngoài giờ không ai nghe", {
+  time: window(8, 17),
+});
 
 writeFileSync(
   new URL("prose.jsonl", gold),

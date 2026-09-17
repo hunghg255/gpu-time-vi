@@ -28,6 +28,8 @@ import {
   modifiers,
   month as monthNumber,
   namedTimes,
+  namedWindows,
+  sexagenary,
   nowWords,
   number,
   relativeDays,
@@ -265,6 +267,7 @@ interface ParsedClock {
   meridiem?: string;
   token: Token;
 }
+const at = ([hour, minute]: [number, number]): ClockTime => ({ hour, minute });
 
 // Each part folds a twelve-hour reading onto the day; hours already past
 // twelve keep their value.
@@ -368,6 +371,8 @@ interface DateState {
   offset?: number;
   days?: Weekday[];
   modifier?: Modifier;
+  /** "tuần sau nữa": a second step in the modifier's direction. */
+  distance?: number;
   unit?: Unit;
   edge?: "start" | "end" | "middle";
   group?: "weekday" | "weekend";
@@ -376,12 +381,29 @@ interface DateState {
   year?: number;
   lunar?: boolean;
   leap?: boolean;
+  /** "năm Bính Ngọ": a sexagenary year, resolved near the reference. */
+  cycle?: number;
   holiday?: DateSpec & { kind: "holiday" };
   ordinal?: number;
   week?: number;
   /** "ngày 1 và 15": further days of the month after the first. */
   moreDays?: number[];
   token: Token;
+}
+
+// A modifier and, after "sau"/"trước", an optional "nữa" for one more step:
+// "tuần sau nữa" is the week after next, "tuần trước nữa" the week before last.
+function takeModifier(reader: Reader, state: DateState): void {
+  const segment = reader.take();
+  const stepped = segment.text.endsWith(" nữa");
+  state.modifier = readModifier(
+    stepped ? { ...segment, text: segment.text.slice(0, -4) } : segment,
+  );
+  if (stepped) {
+    if (state.modifier === "this")
+      fail(first(segment), "invalid-modifier", "Only sau/trước take nữa.");
+    state.distance = 2;
+  }
 }
 
 function readModifier(segment: Segment): Modifier {
@@ -394,6 +416,9 @@ function readModifier(segment: Segment): Modifier {
     );
   return value;
 }
+
+const distance = (state: DateState) =>
+  state.distance ? { distance: state.distance } : {};
 
 function readUnit(segment: Segment): Unit {
   const value = unitName(segment.text) ?? unitName(segment.tokens[0].text);
@@ -425,8 +450,15 @@ function readDate(reader: Reader): DateState {
         if (lunarMonthWords.has(next.text)) state.lunar = true;
         reader.take();
       } else if (next.role === Role.YEAR) {
-        if (state.year !== undefined) return;
-        state.year = segmentNumber(reader.take());
+        if (state.year !== undefined || state.cycle !== undefined) return;
+        const cycle = sexagenary(next.text);
+        if (cycle === undefined) state.year = segmentNumber(reader.take());
+        else {
+          // "năm Bính Ngọ": can chi names are lunar years.
+          reader.take();
+          state.cycle = cycle;
+          state.lunar = true;
+        }
       } else if (next.role === Role.LUNAR) {
         reader.take();
         state.lunar = true;
@@ -478,6 +510,13 @@ function readDate(reader: Reader): DateState {
         reader.take();
         reader.take();
       }
+      // "Tết Bính Ngọ", "Trung thu 2027": that year's holiday.
+      if (reader.role() === Role.YEAR) {
+        const year = reader.take();
+        const cycle = sexagenary(year.text);
+        if (cycle === undefined) state.holiday.year = segmentNumber(year);
+        else state.holiday.cycle = cycle;
+      }
       return state;
     }
     case Role.DAYGROUP: {
@@ -490,8 +529,7 @@ function readDate(reader: Reader): DateState {
           `Unknown day group ${segment.text}.`,
         );
       state.group = group;
-      if (reader.role() === Role.DEICTIC)
-        state.modifier = readModifier(reader.take());
+      if (reader.role() === Role.DEICTIC) takeModifier(reader, state);
       return state;
     }
     case Role.WEEKDAY: {
@@ -525,15 +563,14 @@ function readDate(reader: Reader): DateState {
           return state;
         }
       }
-      if (reader.role() === Role.DEICTIC)
-        state.modifier = readModifier(reader.take());
+      if (reader.role() === Role.DEICTIC) takeModifier(reader, state);
       else if (
         reader.role() === Role.UNIT &&
         ["week", "month"].includes(readUnit(reader.peek()!)) &&
         reader.role(1) === Role.DEICTIC
       ) {
         state.unit = readUnit(reader.take());
-        state.modifier = readModifier(reader.take());
+        takeModifier(reader, state);
       } else if (reader.role() === Role.UNIT && state.ordinal !== undefined) {
         // "thứ sáu cuối tháng": the month itself is the container.
         state.unit = readUnit(reader.take());
@@ -557,8 +594,8 @@ function readDate(reader: Reader): DateState {
         after.role = Role.UNIT;
       if (reader.role() === Role.UNIT) {
         state.unit = readUnit(reader.take());
-        state.modifier =
-          reader.role() === Role.DEICTIC ? readModifier(reader.take()) : "this";
+        if (reader.role() === Role.DEICTIC) takeModifier(reader, state);
+        else state.modifier = "this";
         return state;
       }
       if (reader.role() === Role.MONTH) {
@@ -573,7 +610,7 @@ function readDate(reader: Reader): DateState {
       if (reader.role(1) === Role.DEICTIC) {
         reader.take();
         state.unit = unit;
-        state.modifier = readModifier(reader.take());
+        takeModifier(reader, state);
         return state;
       }
       if (
@@ -602,8 +639,8 @@ function readDate(reader: Reader): DateState {
         reader.take();
         state.week = ordinalValue(reader.take());
         state.unit = readUnit(reader.take());
-        state.modifier =
-          reader.role() === Role.DEICTIC ? readModifier(reader.take()) : "this";
+        if (reader.role() === Role.DEICTIC) takeModifier(reader, state);
+        else state.modifier = "this";
         return state;
       }
       if (
@@ -645,7 +682,7 @@ function readDate(reader: Reader): DateState {
         reader.role(1) === Role.DEICTIC
       ) {
         state.unit = readUnit(reader.take());
-        state.modifier = readModifier(reader.take());
+        takeModifier(reader, state);
       }
       return state;
   }
@@ -690,6 +727,7 @@ function toDateSpec(state: DateState, recurring = false): DateSpec {
       kind: "dayGroup",
       group: state.group,
       ...(state.modifier ? { modifier: state.modifier } : {}),
+      ...distance(state),
     };
   if (state.days) {
     if (state.ordinal !== undefined) {
@@ -718,6 +756,7 @@ function toDateSpec(state: DateState, recurring = false): DateSpec {
       kind: "weekday",
       days: state.days,
       ...(state.modifier ? { modifier: state.modifier } : {}),
+      ...distance(state),
     };
   }
   if (state.week !== undefined && state.unit === "month") {
@@ -761,6 +800,7 @@ function toDateSpec(state: DateState, recurring = false): DateSpec {
         kind: "relativeUnit",
         unit: state.unit,
         modifier: state.modifier ?? "this",
+        ...distance(state),
         edge: state.edge,
       };
     }
@@ -791,6 +831,7 @@ function toDateSpec(state: DateState, recurring = false): DateSpec {
       kind: "relativeUnit",
       unit: state.unit,
       modifier: state.modifier!,
+      ...distance(state),
     };
   }
   validateCalendar(state);
@@ -799,6 +840,7 @@ function toDateSpec(state: DateState, recurring = false): DateSpec {
       kind: "lunar",
       ...calendarFields(state),
       ...(state.leap ? { leap: true } : {}),
+      ...(state.cycle === undefined ? {} : { cycle: state.cycle }),
     };
   return { kind: "calendar", ...calendarFields(state) };
 }
@@ -944,6 +986,12 @@ function compileClause(tokens: Token[], diagnostics: Diagnostic[]): Clause {
         break;
       case Role.BOUND_END:
         reader.take();
+        if (range === "start" && !rule.active && date && !date.holiday) {
+          // "từ 25/12/2026 đến 2/1/2027": nothing recurs, so "đến" closes
+          // the range the "từ" opened.
+          range = "end";
+          break;
+        }
         bound = "until";
         inclusiveBound = next.text.split(" ").includes("hết");
         rule.active = true;
@@ -1113,7 +1161,13 @@ function compileClause(tokens: Token[], diagnostics: Diagnostic[]): Clause {
       case Role.HOUR: {
         const clock = readClock(reader, pendingMeridiem);
         pendingMeridiem = undefined;
-        if (range === "end" || (start && range === "start")) {
+        if (
+          range === "end" ||
+          (start && range === "start") ||
+          (start && !end && endDate)
+        ) {
+          // "từ 17/8 2 giờ chiều đến 19/8 2 giờ chiều": the clock after the
+          // end date closes the span the start clock opened.
           if (!start)
             fail(clock.token, "invalid-time", "A range end needs a start.");
           end = clock;
@@ -1151,11 +1205,29 @@ function compileClause(tokens: Token[], diagnostics: Diagnostic[]): Clause {
         break;
       }
       case Role.TIME_NAMED: {
-        reader.take();
         const value = namedTimes[next.text];
-        if (!value)
+        const window = namedWindows[next.text];
+        if (!value && !window) {
+          // A bare "trưa" the model took for a named time is the day part.
+          if (dayParts[next.text]) {
+            next.role = Role.DAYPART;
+            break;
+          }
           fail(token, "invalid-time", `Unknown named time ${next.text}.`);
-        const clock: ParsedClock = { value: { named: value }, token };
+        }
+        reader.take();
+        if (window?.end) {
+          // "giờ hành chính": a conventional window, never a range edge.
+          if (start || range === "end")
+            fail(token, "invalid-time", "Only one start time is allowed.");
+          start = { value: at(window.start), token };
+          end = { value: at(window.end), token };
+          break;
+        }
+        const clock: ParsedClock = {
+          value: window ? at(window.start) : { named: value! },
+          token,
+        };
         if (range === "end" && start) {
           end = clock;
           range = undefined;
@@ -1379,6 +1451,11 @@ function compileClause(tokens: Token[], diagnostics: Diagnostic[]): Clause {
       if (date.days && endDate.days) {
         const range = weekdayRange(date.days[0], endDate.days[0]);
         clause.recurrence = { freq: "weekly", interval: 1, byDay: range };
+      } else if (start && end && from.day !== undefined && to.day !== undefined) {
+        // Each end has its own clock: one span from the first instant to
+        // the last, not a window repeated on every day between.
+        clause.date = toDateSpec({ ...date, ...from });
+        clause.endDate = toDateSpec({ ...endDate, ...to });
       } else {
         const lunar = date.lunar || endDate.lunar;
         clause.date = {

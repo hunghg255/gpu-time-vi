@@ -27,14 +27,14 @@ describe.skipIf(!promotedModel)("gold corpora against the model", () => {
 
   // Gold is right, model is behind. Runs under it.fails so a retrain that
   // closes one turns red and the id comes off the list. Recorded against the
-  // promoted model (run "warm1", fine-tuned from "full", 2026-09-17): weekday
-  // ranges and lists, spelled hours, seconds, "cuối tuần sau", "cn này", a few
-  // hard negatives, and sentence-initial capitals.
+  // promoted model (run "warm7", fine-tuned full → warm1 … warm7,
+  // 2026-09-17): weekday ranges and lists, spelled hours, seconds,
+  // "cuối tuần sau", a few hard negatives, and sentence-initial capitals.
   const knownGaps = new Set<string>([
     "adversarial-004",
-    "adversarial-010",
-    "adversarial-017",
     "adversarial-019",
+    "adversarial-031",
+    "adversarial-032",
     "grammar-051",
     "grammar-054",
     "grammar-067",
@@ -43,14 +43,12 @@ describe.skipIf(!promotedModel)("gold corpora against the model", () => {
     "grammar-088",
     "grammar-227",
     "grammar-252",
-    "grammar-285",
-    "grammar-288",
-    "grammar-299",
     "grammar-303",
-    "negative-037",
-    "prose-005",
-    "prose-014",
-    "prose-015",
+    "grammar-322",
+    "grammar-336",
+    "grammar-342",
+    "grammar-350",
+    "grammar-359",
     "prose-034",
     "prose-041",
     "prose-045",

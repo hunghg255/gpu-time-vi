@@ -138,6 +138,9 @@
             },
             "modifier": {
               "$ref": "#/$defs/Modifier"
+            },
+            "distance": {
+              "$ref": "#/$defs/Distance"
             }
           },
           "required": [
@@ -183,6 +186,9 @@
             },
             "modifier": {
               "$ref": "#/$defs/Modifier"
+            },
+            "distance": {
+              "$ref": "#/$defs/Distance"
             }
           },
           "required": [
@@ -296,6 +302,9 @@
             "modifier": {
               "$ref": "#/$defs/Modifier"
             },
+            "distance": {
+              "$ref": "#/$defs/Distance"
+            },
             "edge": {
               "type": "string",
               "enum": [
@@ -353,6 +362,16 @@
             },
             "name": {
               "$ref": "#/$defs/HolidayName"
+            },
+            "year": {
+              "type": "integer",
+              "description": "\"Tết 2027\", \"Giáng sinh 2026\": that year's holiday instead of the next one. Lunar holidays take the lunar year.",
+              "minimum": 1,
+              "maximum": 9999
+            },
+            "cycle": {
+              "type": "integer",
+              "description": "\"Tết Bính Ngọ\": a sexagenary year, as on lunar dates."
             }
           },
           "required": [
@@ -385,6 +404,10 @@
             },
             "leap": {
               "type": "boolean"
+            },
+            "cycle": {
+              "type": "integer",
+              "description": "A sexagenary (can chi) year such as \"Bính Ngọ\": its position in the 60-year cycle, 0 = Giáp Tý. Resolves to the nearest such year around the reference (the coming one on a tie), unless `year` is also given."
             }
           },
           "required": [
@@ -413,6 +436,10 @@
         "next",
         "last"
       ]
+    },
+    "Distance": {
+      "type": "integer",
+      "description": "How many steps a `next` or `last` modifier takes: \"tuần sau nữa\" (the week after next) is `{ modifier: \"next\", distance: 2 }`. Omitted means one."
     },
     "CalendarDate": {
       "type": "object",

@@ -69,7 +69,10 @@ function weekdayDate(
   modifier: Modifier | undefined,
   reference: Civil,
   options: ResolveOptions,
+  distance = 1,
 ): Civil {
+  // "thứ hai tuần sau nữa": the same day one more week along.
+  const extra = 7 * (distance - 1);
   const target = weekdays.indexOf(day);
   const current = dayOfWeek(reference);
   const future = (target - current + 7) % 7;
@@ -83,12 +86,18 @@ function weekdayDate(
     return addDays(weekBeginning(reference, options.weekStart), position);
   }
   if (modifier === "last") {
-    return addDays(startOfDay(reference), -((current - target + 7) % 7 || 7));
+    return addDays(
+      startOfDay(reference),
+      -((current - target + 7) % 7 || 7) - extra,
+    );
   }
   if (modifier === "next") {
     if (options.nextWeekday === "immediate")
-      return addDays(startOfDay(reference), future || 7);
-    return addDays(weekBeginning(reference, options.weekStart), 7 + position);
+      return addDays(startOfDay(reference), (future || 7) + extra);
+    return addDays(
+      weekBeginning(reference, options.weekStart),
+      7 + position + extra,
+    );
   }
   if (options.bareWeekday === "nearest") {
     return addDays(startOfDay(reference), future > 3 ? future - 7 : future);
@@ -143,7 +152,8 @@ function relativePeriod(
   if (spec.unit === "second") beginning = { ...reference };
 
   const offset =
-    spec.modifier === "next" ? 1 : spec.modifier === "last" ? -1 : 0;
+    (spec.modifier === "next" ? 1 : spec.modifier === "last" ? -1 : 0) *
+    (spec.distance ?? 1);
   const start = addCivil(beginning, offset, spec.unit);
   const end = addCivil(start, 1, spec.unit);
 
@@ -188,11 +198,28 @@ function nextLunarMonth(
  * A lunar date with missing fields names the next such date on or after
  * today, like a solar one. A month without a day is that month's first day.
  */
+// The nearest lunar year of a sexagenary name: Giáp Tý was 1984, so
+// year ≡ cycle + 4 (mod 60). Ties go to the coming one.
+function cycleYear(cycle: number, today: Civil): number {
+  const current = solarToLunar(today.day, today.month, today.year).year;
+  let year = current + ((((cycle + 4 - current) % 60) + 60) % 60);
+  if (year - current > 30) year -= 60;
+  return year;
+}
+
 function resolveLunar(
-  spec: { year?: number; month?: number; day?: number; leap?: boolean },
+  spec: {
+    year?: number;
+    month?: number;
+    day?: number;
+    leap?: boolean;
+    cycle?: number;
+  },
   today: Civil,
 ): LocalPeriod {
   const leap = spec.leap ?? false;
+  if (spec.year === undefined && spec.cycle !== undefined)
+    spec = { ...spec, year: cycleYear(spec.cycle, today) };
   if (spec.year !== undefined) {
     if (spec.month === undefined) {
       const start = lunarCivil(1, 1, spec.year, false, today);
@@ -272,7 +299,13 @@ export function resolveDates(
 
     case "weekday":
       return spec.days.map((day) => ({
-        start: weekdayDate(day, spec.modifier, reference, options),
+        start: weekdayDate(
+          day,
+          spec.modifier,
+          reference,
+          options,
+          spec.distance,
+        ),
       }));
 
     case "weekdayRange": {
@@ -287,11 +320,12 @@ export function resolveDates(
         spec.group === "weekend" ? weekdays.slice(5) : weekdays.slice(0, 5);
       if (spec.modifier) {
         let start = weekdayDate(selectedDays[0], "this", reference, options);
-        if (spec.modifier === "last") start = addDays(start, -7);
+        const extra = 7 * ((spec.distance ?? 1) - 1);
+        if (spec.modifier === "last") start = addDays(start, -7 - extra);
         if (spec.modifier === "next") {
           const upcoming =
             options.nextWeekday === "immediate" && utc(start) > utc(today);
-          if (!upcoming) start = addDays(start, 7);
+          start = addDays(start, (upcoming ? 0 : 7) + extra);
         }
         return selectedDays.map((_, index) => ({
           start: addDays(start, index),
@@ -363,22 +397,31 @@ export function resolveDates(
 
     case "holiday": {
       const entry = holidays[spec.name];
+      // "Tết 2027", "Tết Bính Ngọ": a named year pins the occurrence.
+      const named =
+        spec.year ?? (spec.cycle === undefined ? undefined : cycleYear(spec.cycle, today));
       if ("lunarMonth" in entry) {
         if (spec.name === "tet-eve") {
           // The last day of the lunar year: the day before the next Tết,
           // unless that is today.
           const current = solarToLunar(today.day, today.month, today.year);
-          for (const year of [current.year, current.year + 1]) {
+          const years = named === undefined ? [current.year, current.year + 1] : [named];
+          for (const year of years) {
             const eve = addDays(lunarCivil(1, 1, year, false, today), -1);
-            if (utc(eve) >= utc(today)) return [{ start: eve }];
+            if (named !== undefined || utc(eve) >= utc(today))
+              return [{ start: eve }];
           }
         }
         return [
-          resolveLunar({ month: entry.lunarMonth, day: entry.lunarDay }, today),
+          resolveLunar(
+            { year: named, month: entry.lunarMonth, day: entry.lunarDay },
+            today,
+          ),
         ];
       }
       const inYear = (year: number): Civil =>
         calendarDate({ year, month: entry[0], day: entry[1] }, reference);
+      if (named !== undefined) return [{ start: inYear(named) }];
       let date = inYear(reference.year);
       if (utc(date) < utc(today)) date = inYear(reference.year + 1);
       return [{ start: date }];

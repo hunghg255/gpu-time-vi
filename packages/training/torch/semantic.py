@@ -69,11 +69,25 @@ def clock_value(rng: random.Random, common: bool = True) -> dict:
 
 def sample_time(rng: random.Random) -> dict:
     draw = rng.random()
-    if draw < 0.65:
+    if draw < 0.62:
         return {"start": clock_value(rng)}
-    if draw < 0.85:
+    if draw < 0.82:
         return {"start": {"part": rng.choice(list(vi.PARTS))}}
-    return {"start": {"named": rng.choice(["noon", "midnight"])}}
+    if draw < 0.92:
+        return {"start": {"named": rng.choice(["noon", "midnight"])}}
+    return named_window(rng)
+
+
+def named_window(rng: random.Random) -> dict:
+    """"giờ hành chính", "đầu giờ chiều": a conventional clock or window."""
+    name = rng.choice(list(vi.NAMED_WINDOWS))
+    return {**vi.NAMED_WINDOWS[name][1], "_named": name}
+
+
+def step(date: dict, rng: random.Random) -> None:
+    """"tuần sau nữa": a second step along a next/last modifier, sometimes."""
+    if date.get("modifier") in ("next", "last") and rng.random() < 0.15:
+        date["distance"] = 2
 
 
 def sample_date(rng: random.Random, allow_modifier: bool = True) -> dict:
@@ -118,6 +132,7 @@ def sample_clause(family: str, rng: random.Random) -> dict | list[dict]:
         date: dict = {"kind": "weekday", "days": days}
         if rng.random() < 0.4:
             date["modifier"] = rng.choice(["this", "next", "next", "last"])
+            step(date, rng)
         clause = {"date": date}
         draw = rng.random()
         if draw < 0.4:
@@ -128,6 +143,7 @@ def sample_clause(family: str, rng: random.Random) -> dict | list[dict]:
     if family == "relative-unit":
         unit = rng.choice(["week", "week", "month", "month", "year"])
         date = {"kind": "relativeUnit", "unit": unit, "modifier": rng.choice(["this", "next", "next", "last"])}
+        step(date, rng)
         if rng.random() < 0.3:
             date["edge"] = rng.choice(["start", "end"])
         clause = {"date": date}
@@ -139,6 +155,7 @@ def sample_clause(family: str, rng: random.Random) -> dict | list[dict]:
             date = {"kind": "dayGroup", "group": "weekend"}
             if rng.random() < 0.5:
                 date["modifier"] = rng.choice(["this", "next", "last"])
+                step(date, rng)
             clause = {"date": date}
             if rng.random() < 0.4:
                 clause["time"] = {"start": clock_value(rng)}
@@ -212,6 +229,11 @@ def sample_clause(family: str, rng: random.Random) -> dict | list[dict]:
         return {"date": {"kind": "calendarRange", "from": {"month": month}, "to": {"month": other}}}
     if family == "holiday":
         clause = {"date": {"kind": "holiday", "name": rng.choice(vi.SOLAR_HOLIDAYS + vi.LUNAR_HOLIDAYS * 2)}}
+        draw = rng.random()
+        if draw < 0.08:
+            clause["date"]["year"] = rng.randint(2025, 2030)
+        elif draw < 0.14 and clause["date"]["name"] in vi.LUNAR_HOLIDAYS:
+            clause["date"]["cycle"] = rng.randrange(60)
         if rng.random() < 0.35:
             clause["time"] = sample_time(rng)
         return clause
@@ -226,10 +248,17 @@ def sample_clause(family: str, rng: random.Random) -> dict | list[dict]:
             date = {"kind": "lunar", "month": 12, "day": rng.choice([29, 30]), "_tet": True}
         elif draw < 0.7:
             date = {"kind": "lunar", "day": rng.choice([1, 15, 15, rng.randint(1, 10)])}
-        elif draw < 0.85:
+        elif draw < 0.8:
             date = {"kind": "lunar", "month": month}
-        else:
+        elif draw < 0.9:
             date = {"kind": "lunar", "year": rng.randint(2025, 2030), "month": month, "day": rng.randint(1, 28)}
+        elif draw < 0.97:
+            # "mùng 5 tháng 5 năm Bính Ngọ": a can chi year near the reference.
+            date = {"kind": "lunar", "cycle": rng.randrange(60), "month": month, "day": rng.randint(1, 28)}
+        else:
+            date = {"kind": "lunar", "cycle": rng.randrange(60)}
+        if "month" in date and "_tet" not in date and rng.random() < 0.08:
+            date["leap"] = True
         clause = {"date": date}
         if "day" in date and rng.random() < 0.25:
             clause["time"] = sample_time(rng)
@@ -241,7 +270,12 @@ def sample_clause(family: str, rng: random.Random) -> dict | list[dict]:
         draw = rng.random()
         if draw < 0.12 and unit in ("hour", "day", "week"):
             shift["components"] = [{"amount": rng.choice([15, 30, 45] if unit == "hour" else [1, 2, 3]), "unit": {"hour": "minute", "day": "hour", "week": "day"}[unit]}]
-        elif draw < 0.22:
+        elif draw < 0.16 and unit in ("hour", "day", "month"):
+            # "nửa ngày", "nửa tháng", "nửa năm" carry a conventional reading.
+            whole = {"hour": "day", "day": "month", "month": "year"}[unit]
+            shift["amount"] = {"day": 12, "month": 15, "year": 6}[whole]
+            shift["_half"] = whole
+        elif draw < 0.24:
             shift["approximate"] = True
             if rng.random() < 0.5:
                 # "vài"/"mấy" read as three.
@@ -416,6 +450,9 @@ def render_clause(clause: dict, s: Sentence, style: int, chat: bool) -> None:
 
 def render_time(time: dict, s: Sentence, style: int, chat: bool) -> None:
     r = s.rng
+    if time.get("_named"):
+        vi.named_window(s, time["_named"])
+        return
     start = time["start"]
     end = time.get("end")
     open_ = time.get("open")
@@ -427,7 +464,7 @@ def render_time(time: dict, s: Sentence, style: int, chat: bool) -> None:
         render_clock(start, s, style, chat)
         return
     if open_ == "start":
-        s.add("trước", "DIR_BEFORE")
+        s.add("trc" if chat and r.random() < 0.15 else "trước", "DIR_BEFORE")
         render_clock(end, s, style, chat)
         return
     if end:
@@ -466,19 +503,19 @@ def render_date(date: dict, s: Sentence, style: int, chat: bool, middle: bool = 
     r = s.rng
     kind = date["kind"]
     if kind == "now":
-        s.add(r.choice(["bây giờ", "hiện tại", "ngay bây giờ", "lúc này", "hiện giờ"]), "NOW")
+        s.add(r.choice(vi.NOW_WORDS), "NOW")
     elif kind == "relativeDay":
         vi.relative_day(s, date["offset"])
     elif kind == "weekday":
         vi.weekdays(s, date["days"])
         if "modifier" in date:
-            if r.random() < 0.6 or date["modifier"] == "last":
+            if r.random() < 0.6 or date["modifier"] == "last" or "distance" in date:
                 s.add(r.choice(["tuần"]), "UNIT")
-                vi.modifier(s, date["modifier"])
+                vi.modifier(s, date["modifier"], distance=date.get("distance"))
             else:
                 vi.modifier(s, date["modifier"])
     elif kind == "relativeUnit":
-        if "edge" not in date and date["modifier"] == "next" and r.random() < 0.15:
+        if "edge" not in date and date["modifier"] == "next" and "distance" not in date and r.random() < 0.15:
             # "sang tuần", "sang năm": the modifier leads.
             s.add("sang", "DEICTIC")
             s.add(r.choice(vi.UNIT_WORDS[date["unit"]][:1]), "UNIT")
@@ -488,11 +525,11 @@ def render_date(date: dict, s: Sentence, style: int, chat: bool, middle: bool = 
         s.add(r.choice(vi.UNIT_WORDS[date["unit"]][:1]), "UNIT")
         if "edge" in date and date["modifier"] == "this" and r.random() < 0.5:
             return
-        vi.modifier(s, date["modifier"], date["unit"])
+        vi.modifier(s, date["modifier"], date["unit"], distance=date.get("distance"))
     elif kind == "dayGroup":
         s.add(r.choice(vi.DAY_GROUPS[date["group"]]), "DAYGROUP")
         if "modifier" in date:
-            vi.modifier(s, date["modifier"])
+            vi.modifier(s, date["modifier"], distance=date.get("distance"))
     elif kind == "calendar":
         if middle:
             s.add("giữa", "EDGE")
@@ -568,7 +605,7 @@ def render_date(date: dict, s: Sentence, style: int, chat: bool, middle: bool = 
             s.glue("tháng")
             s.add(vi.month_name(r, to["month"]), "MONTH")
     elif kind == "holiday":
-        vi.holiday(s, date["name"])
+        vi.holiday(s, date["name"], date)
     else:
         raise ValueError(kind)
 
@@ -585,6 +622,11 @@ def render_shift(clause: dict, s: Sentence, style: int, chat: bool) -> None:
         if shift.get("_vague"):
             s.add(r.choice(["vài", "mấy"]), "NUM")
             vi.unit(s, shift["unit"])
+            return
+        if shift.get("_half"):
+            # "nửa tháng" is 15 days, "nửa năm" 6 months, "nửa ngày" 12 hours.
+            s.add("nửa", "NUM")
+            vi.unit(s, shift["_half"])
             return
         if approximate:
             s.add(r.choice(["khoảng", "tầm", "chừng", "độ"]))
@@ -611,7 +653,7 @@ def render_shift(clause: dict, s: Sentence, style: int, chat: bool) -> None:
     if direction == "after":
         s.add(r.choice(["nữa", "nữa", "sau", "tới"]) if anchor is None else "sau", "DIR_AFTER")
     else:
-        s.add("trước", "DIR_BEFORE")
+        s.add("trc" if chat and anchor is None and r.random() < 0.2 else "trước", "DIR_BEFORE")
     if anchor:
         render_date(anchor, s, style, chat)
         if time:

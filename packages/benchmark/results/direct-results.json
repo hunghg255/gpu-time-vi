@@ -1,8 +1,8 @@
 {
-  "model": "a84dea681b361148c942159c7eaf2816bba786820a98e22420d4562bd121302c",
-  "sourceSha256": "6231f77b442d1c3d42a4a2f5eccff110c19149c8426c80cdde06597e177475a5",
-  "total": 61,
-  "correct": 61,
+  "model": "3713154d4dce638ff42a77eef205d477589aedf0fb9de85d02e7dfe0615271db",
+  "sourceSha256": "3fe8c92b9043da13402ecb253f3c0f29e6f884fa00c7a7feedc1cc981e3e96ee",
+  "total": 75,
+  "correct": 75,
   "cases": [
     {
       "id": "result-001",
@@ -29,16 +29,16 @@
             "start": 0,
             "end": 7,
             "text": "hôm nay",
-            "confidence": 0.9974684119224548
+            "confidence": 0.7753180861473083
           }
         ],
         "truncated": false,
         "diagnostics": [],
         "backend": "cpu",
         "timings": {
-          "tokenizeMs": 1.780799999999985,
-          "inferMs": 2.786200000000008,
-          "resolveMs": 2.5039999999999907
+          "tokenizeMs": 1.8904999999999887,
+          "inferMs": 2.910000000000011,
+          "resolveMs": 5.5047
         }
       },
       "correct": true
@@ -68,16 +68,16 @@
             "start": 0,
             "end": 8,
             "text": "ngày mai",
-            "confidence": 0.9980801939964294
+            "confidence": 0.945458710193634
           }
         ],
         "truncated": false,
         "diagnostics": [],
         "backend": "cpu",
         "timings": {
-          "tokenizeMs": 0.10890000000000555,
-          "inferMs": 1.9429000000000087,
-          "resolveMs": 0.21659999999998547
+          "tokenizeMs": 0.1617999999999853,
+          "inferMs": 1.6510999999999996,
+          "resolveMs": 0.5304000000000002
         }
       },
       "correct": true
@@ -107,16 +107,16 @@
             "start": 0,
             "end": 7,
             "text": "hôm kia",
-            "confidence": 0.9995936751365662
+            "confidence": 0.9758225679397583
           }
         ],
         "truncated": false,
         "diagnostics": [],
         "backend": "cpu",
         "timings": {
-          "tokenizeMs": 0.0519999999999925,
-          "inferMs": 1.5910999999999973,
-          "resolveMs": 0.2464000000000084
+          "tokenizeMs": 0.09959999999999525,
+          "inferMs": 1.1826000000000079,
+          "resolveMs": 0.21690000000000964
         }
       },
       "correct": true
@@ -146,16 +146,16 @@
             "start": 0,
             "end": 15,
             "text": "3 giờ chiều mai",
-            "confidence": 0.9990283250808716
+            "confidence": 0.9630891680717468
           }
         ],
         "truncated": false,
         "diagnostics": [],
         "backend": "cpu",
         "timings": {
-          "tokenizeMs": 1.1810999999999865,
-          "inferMs": 4.175699999999992,
-          "resolveMs": 1.4446000000000083
+          "tokenizeMs": 1.551099999999991,
+          "inferMs": 2.267499999999984,
+          "resolveMs": 1.372399999999999
         }
       },
       "correct": true
@@ -187,16 +187,16 @@
             "start": 0,
             "end": 7,
             "text": "tối nay",
-            "confidence": 0.9121049642562866
+            "confidence": 0.7634216547012329
           }
         ],
         "truncated": false,
         "diagnostics": [],
         "backend": "cpu",
         "timings": {
-          "tokenizeMs": 0.07849999999999113,
-          "inferMs": 0.4228999999999985,
-          "resolveMs": 0.8150000000000119
+          "tokenizeMs": 0.0876999999999839,
+          "inferMs": 1.3462000000000103,
+          "resolveMs": 3.0926000000000045
         }
       },
       "correct": true
@@ -228,16 +228,16 @@
             "start": 0,
             "end": 7,
             "text": "đêm nay",
-            "confidence": 0.9429567456245422
+            "confidence": 0.8733140826225281
           }
         ],
         "truncated": false,
         "diagnostics": [],
         "backend": "cpu",
         "timings": {
-          "tokenizeMs": 0.16049999999999898,
-          "inferMs": 0.6049000000000007,
-          "resolveMs": 0.3581000000000074
+          "tokenizeMs": 0.46110000000001605,
+          "inferMs": 0.24389999999999645,
+          "resolveMs": 0.247099999999989
         }
       },
       "correct": true
@@ -269,16 +269,16 @@
             "start": 0,
             "end": 8,
             "text": "sáng mai",
-            "confidence": 0.9880965948104858
+            "confidence": 0.9223102331161499
           }
         ],
         "truncated": false,
         "diagnostics": [],
         "backend": "cpu",
         "timings": {
-          "tokenizeMs": 0.061800000000005184,
-          "inferMs": 0.7576999999999998,
-          "resolveMs": 0.556200000000004
+          "tokenizeMs": 0.028400000000004866,
+          "inferMs": 0.18850000000000477,
+          "resolveMs": 0.24219999999996844
         }
       },
       "correct": true
@@ -310,24 +310,16 @@
             "start": 0,
             "end": 8,
             "text": "trưa mai",
-            "confidence": 0.4845464527606964
+            "confidence": 0.7565363049507141
           }
         ],
         "truncated": false,
-        "diagnostics": [
-          {
-            "code": "low-confidence",
-            "message": "The model is uncertain about this expression.",
-            "start": 0,
-            "end": 4,
-            "severity": "warning"
-          }
-        ],
+        "diagnostics": [],
         "backend": "cpu",
         "timings": {
-          "tokenizeMs": 0.08050000000000068,
-          "inferMs": 0.6760000000000019,
-          "resolveMs": 0.439399999999992
+          "tokenizeMs": 0.021800000000013142,
+          "inferMs": 0.1922999999999888,
+          "resolveMs": 0.11999999999997613
         }
       },
       "correct": true
@@ -357,16 +349,16 @@
             "start": 0,
             "end": 7,
             "text": "thứ hai",
-            "confidence": 0.9988910555839539
+            "confidence": 0.6447692513465881
           }
         ],
         "truncated": false,
         "diagnostics": [],
         "backend": "cpu",
         "timings": {
-          "tokenizeMs": 0.10270000000001289,
-          "inferMs": 0.46760000000000446,
-          "resolveMs": 2.0471999999999753
+          "tokenizeMs": 0.028699999999986403,
+          "inferMs": 0.18389999999999418,
+          "resolveMs": 1.3979999999999961
         }
       },
       "correct": true
@@ -398,16 +390,16 @@
             "start": 0,
             "end": 11,
             "text": "tối thứ sáu",
-            "confidence": 0.987007737159729
+            "confidence": 0.7434485554695129
           }
         ],
         "truncated": false,
         "diagnostics": [],
         "backend": "cpu",
         "timings": {
-          "tokenizeMs": 0.07740000000001146,
-          "inferMs": 0.47860000000000014,
-          "resolveMs": 1.2828000000000372
+          "tokenizeMs": 0.053999999999973625,
+          "inferMs": 0.42320000000000846,
+          "resolveMs": 0.774799999999999
         }
       },
       "correct": true
@@ -437,16 +429,16 @@
             "start": 0,
             "end": 16,
             "text": "thứ hai tuần sau",
-            "confidence": 0.9984912276268005
+            "confidence": 0.6547972559928894
           }
         ],
         "truncated": false,
         "diagnostics": [],
         "backend": "cpu",
         "timings": {
-          "tokenizeMs": 0.2545000000000073,
-          "inferMs": 1.0720000000000027,
-          "resolveMs": 0.7840000000000202
+          "tokenizeMs": 0.09350000000000591,
+          "inferMs": 0.9287999999999954,
+          "resolveMs": 0.5246000000000208
         }
       },
       "correct": true
@@ -476,16 +468,16 @@
             "start": 0,
             "end": 16,
             "text": "thứ sáu tuần này",
-            "confidence": 0.998262882232666
+            "confidence": 0.7346367835998535
           }
         ],
         "truncated": false,
         "diagnostics": [],
         "backend": "cpu",
         "timings": {
-          "tokenizeMs": 0.056199999999989814,
-          "inferMs": 0.8229999999999791,
-          "resolveMs": 0.19080000000002428
+          "tokenizeMs": 0.057900000000017826,
+          "inferMs": 0.5278999999999883,
+          "resolveMs": 0.1682999999999879
         }
       },
       "correct": true
@@ -515,16 +507,24 @@
             "start": 0,
             "end": 17,
             "text": "thứ ba tuần trước",
-            "confidence": 0.9978547692298889
+            "confidence": 0.4352005124092102
           }
         ],
         "truncated": false,
-        "diagnostics": [],
+        "diagnostics": [
+          {
+            "code": "low-confidence",
+            "message": "The model is uncertain about this expression.",
+            "start": 0,
+            "end": 3,
+            "severity": "warning"
+          }
+        ],
         "backend": "cpu",
         "timings": {
-          "tokenizeMs": 0.10550000000000637,
-          "inferMs": 1.2229999999999848,
-          "resolveMs": 0.38630000000000564
+          "tokenizeMs": 0.060000000000002274,
+          "inferMs": 0.5383999999999958,
+          "resolveMs": 0.25910000000001787
         }
       },
       "correct": true
@@ -554,16 +554,16 @@
             "start": 0,
             "end": 11,
             "text": "cn tuần sau",
-            "confidence": 0.9930043816566467
+            "confidence": 0.8575769662857056
           }
         ],
         "truncated": false,
         "diagnostics": [],
         "backend": "cpu",
         "timings": {
-          "tokenizeMs": 0.07739999999998304,
-          "inferMs": 0.4130999999999858,
-          "resolveMs": 0.38040000000000873
+          "tokenizeMs": 0.026199999999988677,
+          "inferMs": 0.3106999999999971,
+          "resolveMs": 0.2873000000000161
         }
       },
       "correct": true
@@ -595,16 +595,16 @@
             "start": 0,
             "end": 8,
             "text": "tuần sau",
-            "confidence": 0.9984027147293091
+            "confidence": 0.9227116107940674
           }
         ],
         "truncated": false,
         "diagnostics": [],
         "backend": "cpu",
         "timings": {
-          "tokenizeMs": 0.01630000000000109,
-          "inferMs": 0.2850999999999999,
-          "resolveMs": 0.4245999999999981
+          "tokenizeMs": 0.01849999999998886,
+          "inferMs": 0.2009999999999934,
+          "resolveMs": 0.4497000000000355
         }
       },
       "correct": true
@@ -636,16 +636,16 @@
             "start": 0,
             "end": 9,
             "text": "tháng sau",
-            "confidence": 0.9872010946273804
+            "confidence": 0.9388155937194824
           }
         ],
         "truncated": false,
         "diagnostics": [],
         "backend": "cpu",
         "timings": {
-          "tokenizeMs": 0.054099999999976944,
-          "inferMs": 0.33029999999999404,
-          "resolveMs": 0.3066000000000031
+          "tokenizeMs": 0.030800000000027694,
+          "inferMs": 0.1921000000000106,
+          "resolveMs": 0.17149999999998045
         }
       },
       "correct": true
@@ -675,24 +675,16 @@
             "start": 0,
             "end": 10,
             "text": "cuối tháng",
-            "confidence": 0.3213782012462616
+            "confidence": 0.5133779644966125
           }
         ],
         "truncated": false,
-        "diagnostics": [
-          {
-            "code": "low-confidence",
-            "message": "The model is uncertain about this expression.",
-            "start": 0,
-            "end": 4,
-            "severity": "warning"
-          }
-        ],
+        "diagnostics": [],
         "backend": "cpu",
         "timings": {
-          "tokenizeMs": 0.04609999999999559,
-          "inferMs": 0.35870000000002733,
-          "resolveMs": 0.1817000000000064
+          "tokenizeMs": 0.02420000000000755,
+          "inferMs": 0.1886000000000081,
+          "resolveMs": 0.1027000000000271
         }
       },
       "correct": true
@@ -730,7 +722,7 @@
             "start": 0,
             "end": 9,
             "text": "cuối tuần",
-            "confidence": 0.3321899175643921
+            "confidence": 0.14919930696487427
           }
         ],
         "truncated": false,
@@ -745,9 +737,9 @@
         ],
         "backend": "cpu",
         "timings": {
-          "tokenizeMs": 0.015199999999992997,
-          "inferMs": 0.5335000000000036,
-          "resolveMs": 0.3710000000000093
+          "tokenizeMs": 0.00909999999998945,
+          "inferMs": 0.21790000000001442,
+          "resolveMs": 0.16970000000000596
         }
       },
       "correct": true
@@ -777,16 +769,16 @@
             "start": 0,
             "end": 5,
             "text": "15h30",
-            "confidence": 0.9947229623794556
+            "confidence": 0.9706052541732788
           }
         ],
         "truncated": false,
         "diagnostics": [],
         "backend": "cpu",
         "timings": {
-          "tokenizeMs": 0.10529999999999973,
-          "inferMs": 0.42919999999998026,
-          "resolveMs": 0.29939999999999145
+          "tokenizeMs": 0.04470000000000596,
+          "inferMs": 0.23500000000001364,
+          "resolveMs": 0.17780000000001905
         }
       },
       "correct": true
@@ -816,16 +808,16 @@
             "start": 0,
             "end": 12,
             "text": "3 giờ kém 15",
-            "confidence": 0.9841429591178894
+            "confidence": 0.8491261601448059
           }
         ],
         "truncated": false,
         "diagnostics": [],
         "backend": "cpu",
         "timings": {
-          "tokenizeMs": 0.02960000000001628,
-          "inferMs": 0.5748000000000104,
-          "resolveMs": 0.2476000000000056
+          "tokenizeMs": 0.020899999999983265,
+          "inferMs": 0.5506000000000029,
+          "resolveMs": 0.14599999999998658
         }
       },
       "correct": true
@@ -855,16 +847,16 @@
             "start": 0,
             "end": 10,
             "text": "12 giờ đêm",
-            "confidence": 0.9992561936378479
+            "confidence": 0.9255989193916321
           }
         ],
         "truncated": false,
         "diagnostics": [],
         "backend": "cpu",
         "timings": {
-          "tokenizeMs": 0.03300000000001546,
-          "inferMs": 1.690499999999986,
-          "resolveMs": 0.2630999999999801
+          "tokenizeMs": 0.022699999999986176,
+          "inferMs": 0.2483000000000004,
+          "resolveMs": 0.048699999999996635
         }
       },
       "correct": true
@@ -896,16 +888,16 @@
             "start": 0,
             "end": 13,
             "text": "từ 9h đến 17h",
-            "confidence": 0.9973094463348389
+            "confidence": 0.9701095819473267
           }
         ],
         "truncated": false,
         "diagnostics": [],
         "backend": "cpu",
         "timings": {
-          "tokenizeMs": 0.16270000000000095,
-          "inferMs": 1.4121999999999844,
-          "resolveMs": 1.0612000000000137
+          "tokenizeMs": 0.04390000000000782,
+          "inferMs": 0.4637000000000171,
+          "resolveMs": 0.2108000000000061
         }
       },
       "correct": true
@@ -937,16 +929,16 @@
             "start": 0,
             "end": 27,
             "text": "từ 8 giờ tối đến 12 giờ đêm",
-            "confidence": 0.9975836873054504
+            "confidence": 0.9071601629257202
           }
         ],
         "truncated": false,
         "diagnostics": [],
         "backend": "cpu",
         "timings": {
-          "tokenizeMs": 0.16650000000001342,
-          "inferMs": 1.6750999999999863,
-          "resolveMs": 0.537399999999991
+          "tokenizeMs": 0.024999999999977263,
+          "inferMs": 0.6665999999999883,
+          "resolveMs": 0.24190000000001532
         }
       },
       "correct": true
@@ -978,16 +970,16 @@
             "start": 0,
             "end": 13,
             "text": "sau 6 giờ tối",
-            "confidence": 0.9660142660140991
+            "confidence": 0.8047606348991394
           }
         ],
         "truncated": false,
         "diagnostics": [],
         "backend": "cpu",
         "timings": {
-          "tokenizeMs": 0.07420000000001892,
-          "inferMs": 0.915300000000002,
-          "resolveMs": 0.3397000000000219
+          "tokenizeMs": 0.02529999999998722,
+          "inferMs": 0.34550000000001546,
+          "resolveMs": 0.07689999999999486
         }
       },
       "correct": true
@@ -1021,16 +1013,16 @@
             "start": 0,
             "end": 13,
             "text": "trước 9h sáng",
-            "confidence": 0.9970929026603699
+            "confidence": 0.9738303422927856
           }
         ],
         "truncated": false,
         "diagnostics": [],
         "backend": "cpu",
         "timings": {
-          "tokenizeMs": 0.09299999999998931,
-          "inferMs": 1.538499999999999,
-          "resolveMs": 0.33910000000000196
+          "tokenizeMs": 0.011799999999993815,
+          "inferMs": 0.32680000000001996,
+          "resolveMs": 0.24459999999999127
         }
       },
       "correct": true
@@ -1060,16 +1052,16 @@
             "start": 5,
             "end": 7,
             "text": "15",
-            "confidence": 0.9997578859329224
+            "confidence": 0.9960153698921204
           }
         ],
         "truncated": false,
         "diagnostics": [],
         "backend": "cpu",
         "timings": {
-          "tokenizeMs": 0.06920000000002346,
-          "inferMs": 0.505500000000012,
-          "resolveMs": 1.8608000000000118
+          "tokenizeMs": 0.008699999999976171,
+          "inferMs": 0.4124999999999943,
+          "resolveMs": 0.40399999999999636
         }
       },
       "correct": true
@@ -1099,16 +1091,16 @@
             "start": 0,
             "end": 4,
             "text": "15/3",
-            "confidence": 0.9995352625846863
+            "confidence": 0.8375116586685181
           }
         ],
         "truncated": false,
         "diagnostics": [],
         "backend": "cpu",
         "timings": {
-          "tokenizeMs": 0.14330000000001064,
-          "inferMs": 0.3720000000000141,
-          "resolveMs": 0.6336000000000013
+          "tokenizeMs": 0.0408999999999935,
+          "inferMs": 0.22100000000000364,
+          "resolveMs": 0.2863000000000113
         }
       },
       "correct": true
@@ -1138,16 +1130,16 @@
             "start": 0,
             "end": 9,
             "text": "15/3/2026",
-            "confidence": 0.999721348285675
+            "confidence": 0.9944426417350769
           }
         ],
         "truncated": false,
         "diagnostics": [],
         "backend": "cpu",
         "timings": {
-          "tokenizeMs": 0.03159999999999741,
-          "inferMs": 0.49490000000000123,
-          "resolveMs": 0.32169999999999277
+          "tokenizeMs": 0.017499999999984084,
+          "inferMs": 0.3603999999999985,
+          "resolveMs": 0.23470000000000368
         }
       },
       "correct": true
@@ -1177,16 +1169,16 @@
             "start": 0,
             "end": 11,
             "text": "đầu tháng 3",
-            "confidence": 0.9903116822242737
+            "confidence": 0.8808320760726929
           }
         ],
         "truncated": false,
         "diagnostics": [],
         "backend": "cpu",
         "timings": {
-          "tokenizeMs": 0.05720000000002301,
-          "inferMs": 0.470799999999997,
-          "resolveMs": 0.39349999999998886
+          "tokenizeMs": 0.024900000000002365,
+          "inferMs": 0.2774000000000001,
+          "resolveMs": 0.12869999999998072
         }
       },
       "correct": true
@@ -1216,16 +1208,16 @@
             "start": 0,
             "end": 12,
             "text": "giữa tháng 3",
-            "confidence": 0.9797611236572266
+            "confidence": 0.8999223709106445
           }
         ],
         "truncated": false,
         "diagnostics": [],
         "backend": "cpu",
         "timings": {
-          "tokenizeMs": 0.05689999999998463,
-          "inferMs": 0.5134000000000185,
-          "resolveMs": 0.25430000000000064
+          "tokenizeMs": 0.0186000000000206,
+          "inferMs": 0.2477000000000089,
+          "resolveMs": 0.06669999999999732
         }
       },
       "correct": true
@@ -1257,16 +1249,16 @@
             "start": 0,
             "end": 30,
             "text": "từ ngày 10 đến ngày 15 tháng 3",
-            "confidence": 0.978715181350708
+            "confidence": 0.7485601305961609
           }
         ],
         "truncated": false,
         "diagnostics": [],
         "backend": "cpu",
         "timings": {
-          "tokenizeMs": 0.07910000000001105,
-          "inferMs": 1.2735000000000127,
-          "resolveMs": 0.6317000000000235
+          "tokenizeMs": 0.021500000000003183,
+          "inferMs": 0.6524000000000001,
+          "resolveMs": 0.17220000000000368
         }
       },
       "correct": true
@@ -1298,16 +1290,24 @@
             "start": 0,
             "end": 26,
             "text": "từ 25/12/2026 đến 2/1/2027",
-            "confidence": 0.9220320582389832
+            "confidence": 0.3975382447242737
           }
         ],
         "truncated": false,
-        "diagnostics": [],
+        "diagnostics": [
+          {
+            "code": "low-confidence",
+            "message": "The model is uncertain about this expression.",
+            "start": 0,
+            "end": 2,
+            "severity": "warning"
+          }
+        ],
         "backend": "cpu",
         "timings": {
-          "tokenizeMs": 0.0595000000000141,
-          "inferMs": 2.02170000000001,
-          "resolveMs": 0.45590000000001396
+          "tokenizeMs": 0.026699999999976853,
+          "inferMs": 1.2704999999999984,
+          "resolveMs": 0.42140000000000555
         }
       },
       "correct": true
@@ -1337,16 +1337,16 @@
             "start": 0,
             "end": 10,
             "text": "Giáng sinh",
-            "confidence": 0.9472545981407166
+            "confidence": 0.7594493627548218
           }
         ],
         "truncated": false,
         "diagnostics": [],
         "backend": "cpu",
         "timings": {
-          "tokenizeMs": 0.05690000000001305,
-          "inferMs": 0.2814000000000192,
-          "resolveMs": 0.5433999999999912
+          "tokenizeMs": 0.05500000000000682,
+          "inferMs": 0.28460000000001173,
+          "resolveMs": 0.46110000000001605
         }
       },
       "correct": true
@@ -1376,16 +1376,16 @@
             "start": 0,
             "end": 10,
             "text": "Quốc khánh",
-            "confidence": 0.9815720915794373
+            "confidence": 0.8663011193275452
           }
         ],
         "truncated": false,
         "diagnostics": [],
         "backend": "cpu",
         "timings": {
-          "tokenizeMs": 0.0589999999999975,
-          "inferMs": 0.3725000000000023,
-          "resolveMs": 0.3348000000000013
+          "tokenizeMs": 0.05349999999998545,
+          "inferMs": 0.26959999999999695,
+          "resolveMs": 0.2767000000000053
         }
       },
       "correct": true
@@ -1415,16 +1415,16 @@
             "start": 0,
             "end": 3,
             "text": "Tết",
-            "confidence": 0.9945202469825745
+            "confidence": 0.9800815582275391
           }
         ],
         "truncated": false,
         "diagnostics": [],
         "backend": "cpu",
         "timings": {
-          "tokenizeMs": 0.04290000000000305,
-          "inferMs": 0.1383000000000152,
-          "resolveMs": 1.7940000000000111
+          "tokenizeMs": 0.02719999999999345,
+          "inferMs": 0.10130000000000905,
+          "resolveMs": 1.0704000000000065
         }
       },
       "correct": true
@@ -1454,16 +1454,16 @@
             "start": 0,
             "end": 9,
             "text": "giao thừa",
-            "confidence": 0.9754197597503662
+            "confidence": 0.8993908762931824
           }
         ],
         "truncated": false,
         "diagnostics": [],
         "backend": "cpu",
         "timings": {
-          "tokenizeMs": 0.18000000000000682,
-          "inferMs": 0.33959999999999013,
-          "resolveMs": 0.35549999999997794
+          "tokenizeMs": 0.06400000000002137,
+          "inferMs": 0.2990000000000066,
+          "resolveMs": 0.24969999999999004
         }
       },
       "correct": true
@@ -1493,16 +1493,16 @@
             "start": 0,
             "end": 9,
             "text": "Trung thu",
-            "confidence": 0.9882627725601196
+            "confidence": 0.7166863083839417
           }
         ],
         "truncated": false,
         "diagnostics": [],
         "backend": "cpu",
         "timings": {
-          "tokenizeMs": 0.056199999999989814,
-          "inferMs": 0.3383000000000038,
-          "resolveMs": 0.2965000000000373
+          "tokenizeMs": 0.030100000000004457,
+          "inferMs": 0.2898999999999887,
+          "resolveMs": 0.2230000000000132
         }
       },
       "correct": true
@@ -1532,16 +1532,16 @@
             "start": 0,
             "end": 10,
             "text": "mùng 1 Tết",
-            "confidence": 0.9975090622901917
+            "confidence": 0.9848307371139526
           }
         ],
         "truncated": false,
         "diagnostics": [],
         "backend": "cpu",
         "timings": {
-          "tokenizeMs": 0.04069999999998686,
-          "inferMs": 0.49020000000001573,
-          "resolveMs": 0.27430000000001087
+          "tokenizeMs": 0.034199999999998454,
+          "inferMs": 0.4433999999999969,
+          "resolveMs": 0.24740000000002738
         }
       },
       "correct": true
@@ -1571,16 +1571,16 @@
             "start": 0,
             "end": 12,
             "text": "15/8 âm lịch",
-            "confidence": 0.9970971941947937
+            "confidence": 0.8832240700721741
           }
         ],
         "truncated": false,
         "diagnostics": [],
         "backend": "cpu",
         "timings": {
-          "tokenizeMs": 0.10020000000000095,
-          "inferMs": 1.0993999999999744,
-          "resolveMs": 0.31670000000002574
+          "tokenizeMs": 0.05539999999999168,
+          "inferMs": 0.5876999999999839,
+          "resolveMs": 0.24850000000000705
         }
       },
       "correct": true
@@ -1610,16 +1610,16 @@
             "start": 0,
             "end": 11,
             "text": "2 tiếng nữa",
-            "confidence": 0.9989586472511292
+            "confidence": 0.9171847701072693
           }
         ],
         "truncated": false,
         "diagnostics": [],
         "backend": "cpu",
         "timings": {
-          "tokenizeMs": 0.05920000000000414,
-          "inferMs": 0.5190000000000055,
-          "resolveMs": 0.6009000000000242
+          "tokenizeMs": 0.04769999999999186,
+          "inferMs": 0.8815999999999917,
+          "resolveMs": 1.2466000000000008
         }
       },
       "correct": true
@@ -1649,16 +1649,16 @@
             "start": 0,
             "end": 15,
             "text": "cách đây 3 ngày",
-            "confidence": 0.9643350839614868
+            "confidence": 0.6216756701469421
           }
         ],
         "truncated": false,
         "diagnostics": [],
         "backend": "cpu",
         "timings": {
-          "tokenizeMs": 0.03640000000001464,
-          "inferMs": 0.386099999999999,
-          "resolveMs": 0.19890000000003738
+          "tokenizeMs": 0.0765999999999849,
+          "inferMs": 0.5734999999999957,
+          "resolveMs": 0.649799999999999
         }
       },
       "correct": true
@@ -1688,16 +1688,16 @@
             "start": 0,
             "end": 19,
             "text": "1 tiếng 30 phút nữa",
-            "confidence": 0.981300950050354
+            "confidence": 0.5880831480026245
           }
         ],
         "truncated": false,
         "diagnostics": [],
         "backend": "cpu",
         "timings": {
-          "tokenizeMs": 0.0852000000000146,
-          "inferMs": 1.3588000000000022,
-          "resolveMs": 1.0030000000000143
+          "tokenizeMs": 0.050399999999996226,
+          "inferMs": 0.4808000000000163,
+          "resolveMs": 0.2545999999999822
         }
       },
       "correct": true
@@ -1727,23 +1727,23 @@
             "start": 0,
             "end": 14,
             "text": "2 ngày sau Tết",
-            "confidence": 0.9852707982063293
+            "confidence": 0.8623854517936707
           }
         ],
         "truncated": false,
         "diagnostics": [],
         "backend": "cpu",
         "timings": {
-          "tokenizeMs": 0.04570000000001073,
-          "inferMs": 0.6756000000000029,
-          "resolveMs": 0.48320000000001073
+          "tokenizeMs": 0.015500000000002956,
+          "inferMs": 0.3171000000000106,
+          "resolveMs": 0.21880000000001587
         }
       },
       "correct": true
     },
     {
       "id": "result-044",
-      "text": "2 tiếng trước trưa mai",
+      "text": "2 tiếng trước giữa trưa mai",
       "context": {
         "reference": "2026-09-17T09:00:00+07:00"
       },
@@ -1764,18 +1764,18 @@
         "spans": [
           {
             "start": 0,
-            "end": 22,
-            "text": "2 tiếng trước trưa mai",
-            "confidence": 0.764178991317749
+            "end": 27,
+            "text": "2 tiếng trước giữa trưa mai",
+            "confidence": 0.6578899621963501
           }
         ],
         "truncated": false,
         "diagnostics": [],
         "backend": "cpu",
         "timings": {
-          "tokenizeMs": 0.03720000000001278,
-          "inferMs": 0.8850999999999942,
-          "resolveMs": 0.4104000000000383
+          "tokenizeMs": 0.019499999999993634,
+          "inferMs": 0.5073999999999899,
+          "resolveMs": 0.18889999999998963
         }
       },
       "correct": true
@@ -1807,16 +1807,16 @@
             "start": 0,
             "end": 13,
             "text": "trong 2 tiếng",
-            "confidence": 0.9977984428405762
+            "confidence": 0.7590511441230774
           }
         ],
         "truncated": false,
         "diagnostics": [],
         "backend": "cpu",
         "timings": {
-          "tokenizeMs": 0.06340000000000146,
-          "inferMs": 1.1941000000000201,
-          "resolveMs": 0.3692999999999813
+          "tokenizeMs": 0.021700000000009823,
+          "inferMs": 0.3422999999999945,
+          "resolveMs": 0.06110000000001037
         }
       },
       "correct": true
@@ -1846,16 +1846,16 @@
             "start": 0,
             "end": 20,
             "text": "3 tuần kể từ bây giờ",
-            "confidence": 0.9205729365348816
+            "confidence": 0.558104395866394
           }
         ],
         "truncated": false,
         "diagnostics": [],
         "backend": "cpu",
         "timings": {
-          "tokenizeMs": 0.13400000000001455,
-          "inferMs": 0.930800000000005,
-          "resolveMs": 0.2768000000000086
+          "tokenizeMs": 0.03740000000001942,
+          "inferMs": 0.8157999999999959,
+          "resolveMs": 0.1676999999999964
         }
       },
       "correct": true
@@ -1893,16 +1893,16 @@
             "start": 0,
             "end": 24,
             "text": "thứ hai 9h và thứ tư 10h",
-            "confidence": 0.9958244562149048
+            "confidence": 0.7396743297576904
           }
         ],
         "truncated": false,
         "diagnostics": [],
         "backend": "cpu",
         "timings": {
-          "tokenizeMs": 0.0689000000000135,
-          "inferMs": 1.0962000000000103,
-          "resolveMs": 0.34039999999998827
+          "tokenizeMs": 0.04400000000001114,
+          "inferMs": 0.6870999999999867,
+          "resolveMs": 0.38090000000002533
         }
       },
       "correct": true
@@ -1934,16 +1934,16 @@
             "start": 0,
             "end": 22,
             "text": "sáng mai từ 8h đến 10h",
-            "confidence": 0.6864362359046936
+            "confidence": 0.5438236594200134
           }
         ],
         "truncated": false,
         "diagnostics": [],
         "backend": "cpu",
         "timings": {
-          "tokenizeMs": 0.023099999999999454,
-          "inferMs": 0.7084999999999866,
-          "resolveMs": 0.3200999999999681
+          "tokenizeMs": 0.019100000000008777,
+          "inferMs": 0.5725999999999942,
+          "resolveMs": 0.25679999999999836
         }
       },
       "correct": true
@@ -1973,16 +1973,16 @@
             "start": 0,
             "end": 25,
             "text": "mùng 1 Tết lúc 12 giờ đêm",
-            "confidence": 0.9971967339515686
+            "confidence": 0.86924147605896
           }
         ],
         "truncated": false,
         "diagnostics": [],
         "backend": "cpu",
         "timings": {
-          "tokenizeMs": 0.045199999999994134,
-          "inferMs": 1.1565000000000225,
-          "resolveMs": 0.1565999999999974
+          "tokenizeMs": 0.02729999999999677,
+          "inferMs": 0.6071000000000026,
+          "resolveMs": 0.17310000000000514
         }
       },
       "correct": true
@@ -2020,16 +2020,24 @@
             "start": 0,
             "end": 26,
             "text": "cuối tuần sau lúc 10h sáng",
-            "confidence": 0.9127510190010071
+            "confidence": 0.21752043068408966
           }
         ],
         "truncated": false,
-        "diagnostics": [],
+        "diagnostics": [
+          {
+            "code": "low-confidence",
+            "message": "The model is uncertain about this expression.",
+            "start": 0,
+            "end": 4,
+            "severity": "warning"
+          }
+        ],
         "backend": "cpu",
         "timings": {
-          "tokenizeMs": 0.025300000000015643,
-          "inferMs": 0.6096000000000004,
-          "resolveMs": 0.28180000000000405
+          "tokenizeMs": 0.019199999999983675,
+          "inferMs": 0.8406999999999982,
+          "resolveMs": 0.32169999999996435
         }
       },
       "correct": true
@@ -2074,16 +2082,24 @@
             "start": 0,
             "end": 11,
             "text": "mỗi thứ hai",
-            "confidence": 0.9991779923439026
+            "confidence": 0.46833500266075134
           }
         ],
         "truncated": true,
-        "diagnostics": [],
+        "diagnostics": [
+          {
+            "code": "low-confidence",
+            "message": "The model is uncertain about this expression.",
+            "start": 0,
+            "end": 3,
+            "severity": "warning"
+          }
+        ],
         "backend": "cpu",
         "timings": {
-          "tokenizeMs": 0.039600000000007185,
-          "inferMs": 0.2997000000000014,
-          "resolveMs": 1.0851999999999862
+          "tokenizeMs": 0.037800000000004275,
+          "inferMs": 0.2615999999999872,
+          "resolveMs": 1.4160000000000252
         }
       },
       "correct": true
@@ -2128,16 +2144,16 @@
             "start": 0,
             "end": 21,
             "text": "hàng ngày lúc 7h sáng",
-            "confidence": 0.9893415570259094
+            "confidence": 0.8697795271873474
           }
         ],
         "truncated": true,
         "diagnostics": [],
         "backend": "cpu",
         "timings": {
-          "tokenizeMs": 0.03170000000002915,
-          "inferMs": 0.5506000000000029,
-          "resolveMs": 0.3930000000000007
+          "tokenizeMs": 0.10939999999999372,
+          "inferMs": 0.8074000000000012,
+          "resolveMs": 0.48160000000001446
         }
       },
       "correct": true
@@ -2182,16 +2198,16 @@
             "start": 5,
             "end": 18,
             "text": "15 hàng tháng",
-            "confidence": 0.9977384805679321
+            "confidence": 0.9757020473480225
           }
         ],
         "truncated": true,
         "diagnostics": [],
         "backend": "cpu",
         "timings": {
-          "tokenizeMs": 0.014399999999994861,
-          "inferMs": 0.4633000000000038,
-          "resolveMs": 1.5715000000000146
+          "tokenizeMs": 0.021900000000016462,
+          "inferMs": 0.3323000000000036,
+          "resolveMs": 0.6516000000000304
         }
       },
       "correct": true
@@ -2236,16 +2252,24 @@
             "start": 0,
             "end": 27,
             "text": "thứ hai đầu tiên hàng tháng",
-            "confidence": 0.8268499374389648
+            "confidence": 0.09105479717254639
           }
         ],
         "truncated": true,
-        "diagnostics": [],
+        "diagnostics": [
+          {
+            "code": "low-confidence",
+            "message": "The model is uncertain about this expression.",
+            "start": 0,
+            "end": 3,
+            "severity": "warning"
+          }
+        ],
         "backend": "cpu",
         "timings": {
-          "tokenizeMs": 0.06759999999997035,
-          "inferMs": 0.8473999999999933,
-          "resolveMs": 1.4104999999999848
+          "tokenizeMs": 0.15680000000000405,
+          "inferMs": 0.5073999999999899,
+          "resolveMs": 1.2022999999999797
         }
       },
       "correct": true
@@ -2290,16 +2314,24 @@
             "start": 0,
             "end": 28,
             "text": "mỗi thứ hai đến hết tháng 12",
-            "confidence": 0.9911986589431763
+            "confidence": 0.09708435833454132
           }
         ],
         "truncated": true,
-        "diagnostics": [],
+        "diagnostics": [
+          {
+            "code": "low-confidence",
+            "message": "The model is uncertain about this expression.",
+            "start": 0,
+            "end": 3,
+            "severity": "warning"
+          }
+        ],
         "backend": "cpu",
         "timings": {
-          "tokenizeMs": 0.07800000000000296,
-          "inferMs": 1.241199999999992,
-          "resolveMs": 0.5555000000000234
+          "tokenizeMs": 0.047300000000007,
+          "inferMs": 0.9475000000000193,
+          "resolveMs": 0.2751999999999839
         }
       },
       "correct": true
@@ -2344,16 +2376,24 @@
             "start": 0,
             "end": 18,
             "text": "mỗi thứ hai, 6 lần",
-            "confidence": 0.9277317523956299
+            "confidence": 0.24871234595775604
           }
         ],
         "truncated": true,
-        "diagnostics": [],
+        "diagnostics": [
+          {
+            "code": "low-confidence",
+            "message": "The model is uncertain about this expression.",
+            "start": 0,
+            "end": 3,
+            "severity": "warning"
+          }
+        ],
         "backend": "cpu",
         "timings": {
-          "tokenizeMs": 0.1471000000000231,
-          "inferMs": 0.7823999999999955,
-          "resolveMs": 0.37760000000000105
+          "tokenizeMs": 0.09260000000000446,
+          "inferMs": 0.5911000000000115,
+          "resolveMs": 0.29869999999999663
         }
       },
       "correct": true
@@ -2398,16 +2438,24 @@
             "start": 0,
             "end": 21,
             "text": "mỗi ngày trừ chủ nhật",
-            "confidence": 0.9790512919425964
+            "confidence": 0.38212934136390686
           }
         ],
         "truncated": true,
-        "diagnostics": [],
+        "diagnostics": [
+          {
+            "code": "low-confidence",
+            "message": "The model is uncertain about this expression.",
+            "start": 0,
+            "end": 3,
+            "severity": "warning"
+          }
+        ],
         "backend": "cpu",
         "timings": {
-          "tokenizeMs": 0.059599999999988995,
-          "inferMs": 0.8442000000000007,
-          "resolveMs": 0.4060000000000059
+          "tokenizeMs": 0.05550000000002342,
+          "inferMs": 0.4169000000000267,
+          "resolveMs": 0.32439999999999714
         }
       },
       "correct": true
@@ -2452,7 +2500,7 @@
             "start": 0,
             "end": 31,
             "text": "hàng ngày từ nay đến cuối tháng",
-            "confidence": 0.4448757767677307
+            "confidence": 0.35619625449180603
           }
         ],
         "truncated": true,
@@ -2467,9 +2515,9 @@
         ],
         "backend": "cpu",
         "timings": {
-          "tokenizeMs": 0.026900000000011914,
-          "inferMs": 0.6525000000000034,
-          "resolveMs": 0.2412000000000205
+          "tokenizeMs": 0.023099999999999454,
+          "inferMs": 0.5826999999999884,
+          "resolveMs": 0.19999999999998863
         }
       },
       "correct": true
@@ -2500,16 +2548,16 @@
             "start": 0,
             "end": 20,
             "text": "ngày mai 3 giờ chiều",
-            "confidence": 0.9989452362060547
+            "confidence": 0.9570489525794983
           }
         ],
         "truncated": false,
         "diagnostics": [],
         "backend": "cpu",
         "timings": {
-          "tokenizeMs": 0.029100000000028103,
-          "inferMs": 0.47649999999998727,
-          "resolveMs": 0.24349999999998317
+          "tokenizeMs": 0.01849999999998886,
+          "inferMs": 0.7510000000000048,
+          "resolveMs": 0.3351000000000113
         }
       },
       "correct": true
@@ -2540,16 +2588,16 @@
             "start": 0,
             "end": 10,
             "text": "2 ngày nữa",
-            "confidence": 0.9954195022583008
+            "confidence": 0.9584789872169495
           }
         ],
         "truncated": false,
         "diagnostics": [],
         "backend": "cpu",
         "timings": {
-          "tokenizeMs": 0.017600000000015825,
-          "inferMs": 0.26779999999999404,
-          "resolveMs": 0.1646000000000356
+          "tokenizeMs": 0.022999999999967713,
+          "inferMs": 0.6040000000000134,
+          "resolveMs": 0.24879999999996016
         }
       },
       "correct": true
@@ -2580,16 +2628,592 @@
             "start": 0,
             "end": 12,
             "text": "24 tiếng nữa",
-            "confidence": 0.9969057440757751
+            "confidence": 0.8077718615531921
           }
         ],
         "truncated": false,
         "diagnostics": [],
         "backend": "cpu",
         "timings": {
-          "tokenizeMs": 0.024499999999989086,
-          "inferMs": 0.2857999999999947,
-          "resolveMs": 0.08199999999999363
+          "tokenizeMs": 0.03659999999999286,
+          "inferMs": 0.26900000000000546,
+          "resolveMs": 0.20320000000003802
+        }
+      },
+      "correct": true
+    },
+    {
+      "id": "result-062",
+      "text": "tuần sau nữa",
+      "context": {
+        "reference": "2026-09-17T09:00:00+07:00"
+      },
+      "occurrences": [
+        {
+          "start": "2026-09-28T00:00:00+07:00",
+          "end": "2026-10-05T00:00:00+07:00",
+          "allDay": true
+        }
+      ],
+      "actual": {
+        "occurrences": [
+          {
+            "start": "2026-09-28T00:00:00+07:00",
+            "allDay": true,
+            "end": "2026-10-05T00:00:00+07:00"
+          }
+        ],
+        "rrules": [],
+        "spans": [
+          {
+            "start": 0,
+            "end": 12,
+            "text": "tuần sau nữa",
+            "confidence": 0.9052510261535645
+          }
+        ],
+        "truncated": false,
+        "diagnostics": [],
+        "backend": "cpu",
+        "timings": {
+          "tokenizeMs": 0.01839999999998554,
+          "inferMs": 0.2592000000000212,
+          "resolveMs": 0.1022000000000105
+        }
+      },
+      "correct": true
+    },
+    {
+      "id": "result-063",
+      "text": "tuần trước nữa",
+      "context": {
+        "reference": "2026-09-17T09:00:00+07:00"
+      },
+      "occurrences": [
+        {
+          "start": "2026-08-31T00:00:00+07:00",
+          "end": "2026-09-07T00:00:00+07:00",
+          "allDay": true
+        }
+      ],
+      "actual": {
+        "occurrences": [
+          {
+            "start": "2026-08-31T00:00:00+07:00",
+            "allDay": true,
+            "end": "2026-09-07T00:00:00+07:00"
+          }
+        ],
+        "rrules": [],
+        "spans": [
+          {
+            "start": 0,
+            "end": 14,
+            "text": "tuần trước nữa",
+            "confidence": 0.8864425420761108
+          }
+        ],
+        "truncated": false,
+        "diagnostics": [],
+        "backend": "cpu",
+        "timings": {
+          "tokenizeMs": 0.01269999999999527,
+          "inferMs": 0.23499999999998522,
+          "resolveMs": 0.16240000000001942
+        }
+      },
+      "correct": true
+    },
+    {
+      "id": "result-064",
+      "text": "thứ hai tuần sau nữa",
+      "context": {
+        "reference": "2026-09-17T09:00:00+07:00"
+      },
+      "occurrences": [
+        {
+          "start": "2026-09-28T00:00:00+07:00",
+          "allDay": true
+        }
+      ],
+      "actual": {
+        "occurrences": [
+          {
+            "start": "2026-09-28T00:00:00+07:00",
+            "allDay": true
+          }
+        ],
+        "rrules": [],
+        "spans": [
+          {
+            "start": 0,
+            "end": 20,
+            "text": "thứ hai tuần sau nữa",
+            "confidence": 0.5879002213478088
+          }
+        ],
+        "truncated": false,
+        "diagnostics": [],
+        "backend": "cpu",
+        "timings": {
+          "tokenizeMs": 0.014599999999973079,
+          "inferMs": 0.3756999999999948,
+          "resolveMs": 0.09380000000001587
+        }
+      },
+      "correct": true
+    },
+    {
+      "id": "result-065",
+      "text": "thứ sáu tuần trước nữa",
+      "context": {
+        "reference": "2026-09-17T09:00:00+07:00"
+      },
+      "occurrences": [
+        {
+          "start": "2026-09-04T00:00:00+07:00",
+          "allDay": true
+        }
+      ],
+      "actual": {
+        "occurrences": [
+          {
+            "start": "2026-09-04T00:00:00+07:00",
+            "allDay": true
+          }
+        ],
+        "rrules": [],
+        "spans": [
+          {
+            "start": 0,
+            "end": 22,
+            "text": "thứ sáu tuần trước nữa",
+            "confidence": 0.6859813332557678
+          }
+        ],
+        "truncated": false,
+        "diagnostics": [],
+        "backend": "cpu",
+        "timings": {
+          "tokenizeMs": 0.013100000000036971,
+          "inferMs": 0.5511999999999944,
+          "resolveMs": 0.22129999999998518
+        }
+      },
+      "correct": true
+    },
+    {
+      "id": "result-066",
+      "text": "tháng sau nữa",
+      "context": {
+        "reference": "2026-09-17T09:00:00+07:00"
+      },
+      "occurrences": [
+        {
+          "start": "2026-11-01T00:00:00+07:00",
+          "end": "2026-12-01T00:00:00+07:00",
+          "allDay": true
+        }
+      ],
+      "actual": {
+        "occurrences": [
+          {
+            "start": "2026-11-01T00:00:00+07:00",
+            "allDay": true,
+            "end": "2026-12-01T00:00:00+07:00"
+          }
+        ],
+        "rrules": [],
+        "spans": [
+          {
+            "start": 0,
+            "end": 13,
+            "text": "tháng sau nữa",
+            "confidence": 0.9628496170043945
+          }
+        ],
+        "truncated": false,
+        "diagnostics": [],
+        "backend": "cpu",
+        "timings": {
+          "tokenizeMs": 0.02179999999998472,
+          "inferMs": 0.4048999999999978,
+          "resolveMs": 0.17809999999997217
+        }
+      },
+      "correct": true
+    },
+    {
+      "id": "result-067",
+      "text": "năm Bính Ngọ",
+      "context": {
+        "reference": "2026-09-17T09:00:00+07:00"
+      },
+      "occurrences": [
+        {
+          "start": "2026-02-17T00:00:00+07:00",
+          "end": "2027-02-06T00:00:00+07:00",
+          "allDay": true
+        }
+      ],
+      "actual": {
+        "occurrences": [
+          {
+            "start": "2026-02-17T00:00:00+07:00",
+            "allDay": true,
+            "end": "2027-02-06T00:00:00+07:00"
+          }
+        ],
+        "rrules": [],
+        "spans": [
+          {
+            "start": 0,
+            "end": 12,
+            "text": "năm Bính Ngọ",
+            "confidence": 0.8407419323921204
+          }
+        ],
+        "truncated": false,
+        "diagnostics": [],
+        "backend": "cpu",
+        "timings": {
+          "tokenizeMs": 0.06409999999999627,
+          "inferMs": 0.3427000000000078,
+          "resolveMs": 0.627600000000001
+        }
+      },
+      "correct": true
+    },
+    {
+      "id": "result-068",
+      "text": "rằm tháng giêng năm Đinh Mùi",
+      "context": {
+        "reference": "2026-09-17T09:00:00+07:00"
+      },
+      "occurrences": [
+        {
+          "start": "2027-02-20T00:00:00+07:00",
+          "allDay": true
+        }
+      ],
+      "actual": {
+        "occurrences": [
+          {
+            "start": "2027-02-20T00:00:00+07:00",
+            "allDay": true
+          }
+        ],
+        "rrules": [],
+        "spans": [
+          {
+            "start": 0,
+            "end": 28,
+            "text": "rằm tháng giêng năm Đinh Mùi",
+            "confidence": 0.9223281741142273
+          }
+        ],
+        "truncated": false,
+        "diagnostics": [],
+        "backend": "cpu",
+        "timings": {
+          "tokenizeMs": 0.09270000000000778,
+          "inferMs": 1.2506999999999948,
+          "resolveMs": 0.3189999999999884
+        }
+      },
+      "correct": true
+    },
+    {
+      "id": "result-069",
+      "text": "giờ Ngọ mai",
+      "context": {
+        "reference": "2026-09-17T09:00:00+07:00"
+      },
+      "occurrences": [
+        {
+          "start": "2026-09-18T11:00:00+07:00",
+          "end": "2026-09-18T13:00:00+07:00",
+          "allDay": false
+        }
+      ],
+      "actual": {
+        "occurrences": [
+          {
+            "start": "2026-09-18T11:00:00+07:00",
+            "allDay": false,
+            "end": "2026-09-18T13:00:00+07:00"
+          }
+        ],
+        "rrules": [],
+        "spans": [
+          {
+            "start": 0,
+            "end": 11,
+            "text": "giờ Ngọ mai",
+            "confidence": 0.7043941020965576
+          }
+        ],
+        "truncated": false,
+        "diagnostics": [],
+        "backend": "cpu",
+        "timings": {
+          "tokenizeMs": 0.022499999999979536,
+          "inferMs": 0.26670000000001437,
+          "resolveMs": 0.19379999999998176
+        }
+      },
+      "correct": true
+    },
+    {
+      "id": "result-070",
+      "text": "giờ Tý mai",
+      "context": {
+        "reference": "2026-09-17T09:00:00+07:00"
+      },
+      "occurrences": [
+        {
+          "start": "2026-09-18T23:00:00+07:00",
+          "end": "2026-09-19T01:00:00+07:00",
+          "allDay": false
+        }
+      ],
+      "actual": {
+        "occurrences": [
+          {
+            "start": "2026-09-18T23:00:00+07:00",
+            "allDay": false,
+            "end": "2026-09-19T01:00:00+07:00"
+          }
+        ],
+        "rrules": [],
+        "spans": [
+          {
+            "start": 0,
+            "end": 10,
+            "text": "giờ Tý mai",
+            "confidence": 0.49808451533317566
+          }
+        ],
+        "truncated": false,
+        "diagnostics": [
+          {
+            "code": "low-confidence",
+            "message": "The model is uncertain about this expression.",
+            "start": 0,
+            "end": 3,
+            "severity": "warning"
+          }
+        ],
+        "backend": "cpu",
+        "timings": {
+          "tokenizeMs": 0.03700000000003456,
+          "inferMs": 0.3748000000000218,
+          "resolveMs": 0.19920000000004734
+        }
+      },
+      "correct": true
+    },
+    {
+      "id": "result-071",
+      "text": "mùng 6 tháng 6 nhuận năm 2025",
+      "context": {
+        "reference": "2026-09-17T09:00:00+07:00"
+      },
+      "occurrences": [
+        {
+          "start": "2025-07-30T00:00:00+07:00",
+          "allDay": true
+        }
+      ],
+      "actual": {
+        "occurrences": [
+          {
+            "start": "2025-07-30T00:00:00+07:00",
+            "allDay": true
+          }
+        ],
+        "rrules": [],
+        "spans": [
+          {
+            "start": 0,
+            "end": 29,
+            "text": "mùng 6 tháng 6 nhuận năm 2025",
+            "confidence": 0.8341113924980164
+          }
+        ],
+        "truncated": false,
+        "diagnostics": [],
+        "backend": "cpu",
+        "timings": {
+          "tokenizeMs": 0.04819999999998004,
+          "inferMs": 0.6488999999999976,
+          "resolveMs": 0.602499999999992
+        }
+      },
+      "correct": true
+    },
+    {
+      "id": "result-072",
+      "text": "Tết năm Đinh Mùi",
+      "context": {
+        "reference": "2026-09-17T09:00:00+07:00"
+      },
+      "occurrences": [
+        {
+          "start": "2027-02-06T00:00:00+07:00",
+          "allDay": true
+        }
+      ],
+      "actual": {
+        "occurrences": [
+          {
+            "start": "2027-02-06T00:00:00+07:00",
+            "allDay": true
+          }
+        ],
+        "rrules": [],
+        "spans": [
+          {
+            "start": 0,
+            "end": 16,
+            "text": "Tết năm Đinh Mùi",
+            "confidence": 0.8676568865776062
+          }
+        ],
+        "truncated": false,
+        "diagnostics": [],
+        "backend": "cpu",
+        "timings": {
+          "tokenizeMs": 0.0438999999999794,
+          "inferMs": 0.40979999999998995,
+          "resolveMs": 0.24170000000000869
+        }
+      },
+      "correct": true
+    },
+    {
+      "id": "result-073",
+      "text": "Trung thu 2027",
+      "context": {
+        "reference": "2026-09-17T09:00:00+07:00"
+      },
+      "occurrences": [
+        {
+          "start": "2027-09-15T00:00:00+07:00",
+          "allDay": true
+        }
+      ],
+      "actual": {
+        "occurrences": [
+          {
+            "start": "2027-09-15T00:00:00+07:00",
+            "allDay": true
+          }
+        ],
+        "rrules": [],
+        "spans": [
+          {
+            "start": 0,
+            "end": 14,
+            "text": "Trung thu 2027",
+            "confidence": 0.8976573348045349
+          }
+        ],
+        "truncated": false,
+        "diagnostics": [],
+        "backend": "cpu",
+        "timings": {
+          "tokenizeMs": 0.02240000000003306,
+          "inferMs": 1.7249999999999943,
+          "resolveMs": 0.216700000000003
+        }
+      },
+      "correct": true
+    },
+    {
+      "id": "result-074",
+      "text": "giao thừa Đinh Mùi",
+      "context": {
+        "reference": "2026-09-17T09:00:00+07:00"
+      },
+      "occurrences": [
+        {
+          "start": "2027-02-05T00:00:00+07:00",
+          "allDay": true
+        }
+      ],
+      "actual": {
+        "occurrences": [
+          {
+            "start": "2027-02-05T00:00:00+07:00",
+            "allDay": true
+          }
+        ],
+        "rrules": [],
+        "spans": [
+          {
+            "start": 0,
+            "end": 18,
+            "text": "giao thừa Đinh Mùi",
+            "confidence": 0.698552131652832
+          }
+        ],
+        "truncated": false,
+        "diagnostics": [],
+        "backend": "cpu",
+        "timings": {
+          "tokenizeMs": 0.023400000000009413,
+          "inferMs": 0.35070000000001755,
+          "resolveMs": 0.10370000000000346
+        }
+      },
+      "correct": true
+    },
+    {
+      "id": "result-075",
+      "text": "từ 17/8/2027 2 giờ chiều đến 19/8/2027 2 giờ chiều",
+      "context": {
+        "reference": "2026-09-17T09:00:00+07:00"
+      },
+      "occurrences": [
+        {
+          "start": "2027-08-17T14:00:00+07:00",
+          "end": "2027-08-19T14:00:00+07:00",
+          "allDay": false
+        }
+      ],
+      "actual": {
+        "occurrences": [
+          {
+            "start": "2027-08-17T14:00:00+07:00",
+            "allDay": false,
+            "end": "2027-08-19T14:00:00+07:00"
+          }
+        ],
+        "rrules": [],
+        "spans": [
+          {
+            "start": 0,
+            "end": 50,
+            "text": "từ 17/8/2027 2 giờ chiều đến 19/8/2027 2 giờ chiều",
+            "confidence": 0.3350287973880768
+          }
+        ],
+        "truncated": false,
+        "diagnostics": [
+          {
+            "code": "low-confidence",
+            "message": "The model is uncertain about this expression.",
+            "start": 0,
+            "end": 2,
+            "severity": "warning"
+          }
+        ],
+        "backend": "cpu",
+        "timings": {
+          "tokenizeMs": 0.06980000000001496,
+          "inferMs": 1.2169999999999845,
+          "resolveMs": 0.3074999999999761
         }
       },
       "correct": true

@@ -26,3 +26,7 @@
 {"id":"adversarial-026","family":"cuối","text":"cuối cùng cũng xong, cuối tuần đi chơi","schedule":{"clauses":[{"date":{"kind":"dayGroup","group":"weekend"}}]}}
 {"id":"adversarial-027","family":"mixed","text":"3pm mai ok?","schedule":{"clauses":[{"date":{"kind":"relativeDay","offset":1},"time":{"start":{"hour":15,"minute":0}}}]}}
 {"id":"adversarial-028","family":"mixed","text":"meeting 10am thứ hai","schedule":{"clauses":[{"date":{"kind":"weekday","days":["MO"]},"time":{"start":{"hour":10,"minute":0}}}]}}
+{"id":"adversarial-029","family":"chat","text":"sếp ơi e xin nghỉ hnay nha :))","schedule":{"clauses":[{"date":{"kind":"relativeDay","offset":0}}]}}
+{"id":"adversarial-030","family":"chat","text":"deadline cuối giờ chiều t6 nhé","schedule":{"clauses":[{"date":{"kind":"weekday","days":["FR"]},"time":{"start":{"hour":17,"minute":0}}}]}}
+{"id":"adversarial-031","family":"chat","text":"hqua e gửi r, tuần trc cx gửi","schedule":{"clauses":[{"date":{"kind":"relativeDay","offset":-1}},{"date":{"kind":"relativeUnit","unit":"week","modifier":"last"}}]}}
+{"id":"adversarial-032","family":"giờ","text":"gọi trong giờ hành chính thôi nhé, ngoài giờ không ai nghe","schedule":{"clauses":[{"time":{"start":{"hour":8,"minute":0},"end":{"hour":17,"minute":0}}}]}}

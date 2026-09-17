@@ -427,7 +427,7 @@ example("anchored-shift", "1 tuần sau thứ hai", {
   ...shift(1, "week", "after"),
   date: weekday("MO"),
 });
-example("anchored-shift", "2 tiếng trước trưa mai", {
+example("anchored-shift", "2 tiếng trước giữa trưa mai", {
   ...shift(2, "hour", "before"),
   date: relative(1),
   time: named("noon"),
@@ -775,6 +775,139 @@ negative("thứ này rất tốt");
 negative("sáng tạo là chìa khoá");
 negative("tôi 30 tuổi");
 negative("đầu tư vào giáo dục");
+
+// 36. chat-slang — accented chat spellings (docs §4, §13)
+example("chat-slang", "hnay họp 3h", { date: relative(0), time: clock(3) });
+example("chat-slang", "hqua", { date: relative(-1) });
+example("chat-slang", "bây h", { date: { kind: "now" } });
+example("chat-slang", "tuần trc", { date: unit("week", "last") });
+example("chat-slang", "3 ngày trc", shift(3, "day", "before"));
+example("chat-slang", "weekend này", {
+  date: { kind: "dayGroup", group: "weekend", modifier: "this" },
+});
+example("chat-slang", "thứ2 tuần sau", { date: weekdayMod("next", "MO") });
+example("chat-slang", "ok dc, t2 9h nha :))", {
+  date: weekday("MO"),
+  time: clock(9),
+});
+example("chat-slang", "nửa tháng nữa", shift(15, "day", "after"));
+example("chat-slang", "nửa năm nữa", shift(6, "month", "after"));
+
+// 37. office-hours — conventional clocks (docs §3.4)
+example("office-hours", "giờ hành chính", { time: window(8, 17) });
+example("office-hours", "trong giờ làm việc", { time: window(8, 17) });
+example("office-hours", "đầu giờ sáng mai", {
+  date: relative(1),
+  time: clock(8),
+});
+example("office-hours", "đầu giờ chiều", { time: clock(13) });
+example("office-hours", "cuối giờ chiều nay", {
+  date: relative(0),
+  time: clock(17),
+});
+example("office-hours", "thứ hai cuối giờ", {
+  date: weekday("MO"),
+  time: clock(17),
+});
+example("office-hours", "giờ nghỉ trưa", { time: window(12, 13) });
+
+// chat-slang (2): "thứ tám" = chủ nhật
+example("chat-slang", "thứ tám", { date: weekday("SU") });
+example("chat-slang", "thứ 8 tuần sau", { date: weekdayMod("next", "SU") });
+example("chat-slang", "t8 đi chơi 9h", { date: weekday("SU"), time: clock(9) });
+
+// 38. modifier-distance — "nữa" after sau/trước steps once more (docs §4)
+example("modifier-distance", "tuần sau nữa", {
+  date: { ...unit("week", "next"), distance: 2 },
+});
+example("modifier-distance", "tuần trước nữa", {
+  date: { ...unit("week", "last"), distance: 2 },
+});
+example("modifier-distance", "tháng sau nữa", {
+  date: { ...unit("month", "next"), distance: 2 },
+});
+example("modifier-distance", "năm sau nữa", {
+  date: { ...unit("year", "next"), distance: 2 },
+});
+example("modifier-distance", "thứ hai tuần sau nữa", {
+  date: { ...weekdayMod("next", "MO"), distance: 2 },
+});
+example("modifier-distance", "cuối tuần sau nữa", {
+  date: { kind: "dayGroup", group: "weekend", modifier: "next", distance: 2 },
+});
+example("modifier-distance", "đầu tháng sau nữa", {
+  date: { ...unit("month", "next", "start"), distance: 2 },
+});
+example("modifier-distance", "thứ sáu tuần trước nữa", {
+  date: { ...weekdayMod("last", "FR"), distance: 2 },
+});
+example("modifier-distance", "họp 9h sáng thứ sáu tuần sau nữa", {
+  date: { ...weekdayMod("next", "FR"), distance: 2 },
+  time: clock(9),
+});
+
+// 39. lunar-extended — leap months, can chi years, branch hours (docs §6)
+example("lunar-extended", "mùng 5 tháng 4 nhuận", {
+  date: { kind: "lunar", month: 4, day: 5, leap: true },
+});
+example("lunar-extended", "tháng 6 nhuận năm 2025", {
+  date: { kind: "lunar", year: 2025, month: 6, leap: true },
+});
+example("lunar-extended", "năm Bính Ngọ", {
+  date: { kind: "lunar", cycle: 42 },
+});
+example("lunar-extended", "mùng 5 tháng 5 năm Bính Ngọ", {
+  date: { kind: "lunar", month: 5, day: 5, cycle: 42 },
+});
+example("lunar-extended", "rằm tháng giêng năm Đinh Mùi", {
+  date: { kind: "lunar", month: 1, day: 15, cycle: 43 },
+});
+example("lunar-extended", "giờ Ngọ", { time: window(11, 13) });
+example("lunar-extended", "giờ Ngọ mai", {
+  date: relative(1),
+  time: window(11, 13),
+});
+example("lunar-extended", "mùng 6 tháng 6 nhuận năm 2025", {
+  date: { kind: "lunar", year: 2025, month: 6, day: 6, leap: true },
+});
+example("lunar-extended", "giờ Tý mai", {
+  date: relative(1),
+  time: window(23, 1),
+});
+example("lunar-extended", "cúng giờ Dậu mùng 1", {
+  date: { kind: "lunar", day: 1 },
+  time: window(17, 19),
+});
+
+example("lunar-extended", "Tết Bính Ngọ", {
+  date: { kind: "holiday", name: "tet", cycle: 42 },
+});
+example("lunar-extended", "Tết năm Đinh Mùi", {
+  date: { kind: "holiday", name: "tet", cycle: 43 },
+});
+example("lunar-extended", "Trung thu 2027", {
+  date: { kind: "holiday", name: "mid-autumn", year: 2027 },
+});
+example("lunar-extended", "Giáng sinh 2026", {
+  date: { kind: "holiday", name: "christmas", year: 2026 },
+});
+example("lunar-extended", "giao thừa Đinh Mùi", {
+  date: { kind: "holiday", name: "tet-eve", cycle: 43 },
+});
+
+// date-range (2): each end with its own clock is one span
+example("date-range", "từ 17/8/2027 2 giờ chiều đến 19/8/2027 2 giờ chiều", {
+  date: calendar(8, 17, 2027),
+  endDate: calendar(8, 19, 2027),
+  time: window(14, 14),
+});
+
+// 40. negative — chat noise without a time
+negative("ok dc nha :))");
+negative("k đi dc r");
+negative("mn ơi giúp e vs");
+negative("đây là lần thứ tám mình nhắc");
+negative("tuổi Ngọ hợp tuổi Dần");
 
 writeFileSync(
   new URL("grammar.jsonl", gold),

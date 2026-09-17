@@ -129,6 +129,8 @@ const weekdayWords: Record<string, number> = {
   sáu: 4,
   bảy: 5,
   bẩy: 5,
+  // "thứ tám": playful Sunday, the day after "thứ bảy".
+  tám: 6,
 };
 /** "thứ hai", "thứ 2", "t2", "T2", "cn", "chủ nhật", "chúa nhật" → weekday. */
 export function weekday(text: string): Weekday | undefined {
@@ -139,7 +141,7 @@ export function weekday(text: string): Weekday | undefined {
   const value = /^\d$/.test(match[1])
     ? Number(match[1]) - 2
     : (weekdayWords[match[1]] ?? -1);
-  return value >= 0 && value <= 5 ? weekdays[value] : undefined;
+  return value >= 0 && value <= 6 ? weekdays[value] : undefined;
 }
 
 /** The weekday number that follows "thứ": "hai" → MO, "7" → SA. */
@@ -202,6 +204,7 @@ export const quarterWords = new Set(["quý"]);
 export const relativeDays: Record<string, number> = {
   "hôm nay": 0,
   nay: 0,
+  hnay: 0,
   "bữa nay": 0,
   "ngày hôm nay": 0,
   "ngày mai": 1,
@@ -212,6 +215,7 @@ export const relativeDays: Record<string, number> = {
   kia: 2,
   "ngày kìa": 3,
   "hôm qua": -1,
+  hqua: -1,
   qua: -1,
   "ngày hôm qua": -1,
   "hôm kia": -2,
@@ -219,6 +223,7 @@ export const relativeDays: Record<string, number> = {
 };
 export const nowWords = new Set([
   "bây giờ",
+  "bây h",
   "hiện tại",
   "ngay bây giờ",
   "hiện giờ",
@@ -246,11 +251,58 @@ export const dayParts: Record<string, DayPart> = {
 export const namedTimes: Record<string, "noon" | "midnight"> = {
   "nửa đêm": "midnight",
   "giữa đêm": "midnight",
-  trưa: "noon",
   "giữa trưa": "noon",
   "đúng trưa": "noon",
-  "chính ngọ": "noon",
 };
+const stems = "giáp ất bính đinh mậu kỷ canh tân nhâm quý".split(" ");
+const branches = "tý sửu dần mão thìn tỵ ngọ mùi thân dậu tuất hợi".split(" ");
+const branchVariants: Record<string, string> = { tí: "tý", mẹo: "mão", tị: "tỵ" };
+
+/**
+ * "Bính Ngọ" → 42, its position in the sexagenary cycle (0 = Giáp Tý).
+ * Undefined for pairs the cycle never produces, such as "Giáp Sửu".
+ */
+export function sexagenary(text: string): number | undefined {
+  const words = key(text).split(" ");
+  if (words.length !== 2) return undefined;
+  const stem = stems.indexOf(words[0]);
+  const branch = branches.indexOf(branchVariants[words[1]] ?? words[1]);
+  if (stem < 0 || branch < 0 || (stem - branch) % 2) return undefined;
+  for (let cycle = stem; cycle < 60; cycle += 10)
+    if (cycle % 12 === branch) return cycle;
+  return undefined;
+}
+
+/**
+ * Office-hour phrases with a conventional clock reading, and the twelve
+ * earthly-branch hours ("giờ Tý" is 23:00–01:00): "giờ hành chính" is
+ * 08:00–17:00, "đầu giờ chiều" 13:00. Conventions, not law; documented in
+ * docs/vietnamese-time-expressions.md so a reader can predict them.
+ */
+export const namedWindows: Record<
+  string,
+  { start: [number, number]; end?: [number, number] }
+> = Object.fromEntries(
+  (
+    "giờ hành chính,giờ làm việc=8-17;giờ nghỉ trưa=12-13;" +
+    "đầu giờ,đầu giờ sáng=8;cuối giờ sáng=11;đầu giờ chiều=13;" +
+    "cuối giờ,cuối giờ chiều,cuối giờ làm,hết giờ làm=17;" +
+    branches
+      .map((name, index) => `giờ ${name}=${(23 + 2 * index) % 24}-${(1 + 2 * index) % 24}`)
+      .join(";")
+  )
+    .split(";")
+    .flatMap((entry) => {
+      const [names, hours] = entry.split("=");
+      const [start, end] = hours.split("-").map(Number);
+      return names
+        .split(",")
+        .map((name) => [
+          name,
+          { start: [start, 0], ...(end ? { end: [end, 0] } : {}) },
+        ]);
+    }),
+);
 
 export const modifiers: Record<string, Modifier> = {
   này: "this",
@@ -263,6 +315,7 @@ export const modifiers: Record<string, Modifier> = {
   "sắp tới": "next",
   "tiếp theo": "next",
   trước: "last",
+  trc: "last",
   rồi: "last",
   qua: "last",
   ngoái: "last",
@@ -280,74 +333,43 @@ export const edges: Record<string, "start" | "end" | "middle"> = {
 
 export const dayGroups: Record<string, "weekday" | "weekend"> = {
   "cuối tuần": "weekend",
+  weekend: "weekend",
   "ngày thường": "weekday",
   "ngày làm việc": "weekday",
   "ngày trong tuần": "weekday",
   "ngày đi làm": "weekday",
 };
 
-export const holidayNames: Record<string, HolidayName> = {
-  // Solar
-  "tết dương lịch": "new-year",
-  "tết tây": "new-year",
-  "năm mới": "new-year",
-  "tết dương": "new-year",
-  valentine: "valentines",
-  valentines: "valentines",
-  "lễ tình nhân": "valentines",
-  "tình nhân": "valentines",
-  "quốc tế phụ nữ": "womens-day",
-  "phụ nữ quốc tế": "womens-day",
-  "giải phóng miền nam": "liberation-day",
-  "giải phóng": "liberation-day",
-  "thống nhất đất nước": "liberation-day",
-  "quốc tế lao động": "labour-day",
-  "lao động": "labour-day",
-  "quốc tế thiếu nhi": "childrens-day",
-  "thiếu nhi": "childrens-day",
-  "quốc khánh": "national-day",
-  "phụ nữ việt nam": "vn-womens-day",
-  "nhà giáo việt nam": "teachers-day",
-  "nhà giáo": "teachers-day",
-  "hiến chương nhà giáo": "teachers-day",
-  "giáng sinh": "christmas",
-  noel: "christmas",
-  "nô en": "christmas",
-  "nô-en": "christmas",
-  "đêm giáng sinh": "christmas-eve",
-  "đêm noel": "christmas-eve",
-  "giao thừa tây": "new-years-eve",
-  "giao thừa dương lịch": "new-years-eve",
-  // Lunar
-  tết: "tet",
-  "tết nguyên đán": "tet",
-  "tết âm lịch": "tet",
-  "tết ta": "tet",
-  "tết cổ truyền": "tet",
-  "tết âm": "tet",
-  "nguyên đán": "tet",
-  "giao thừa": "tet-eve",
-  "đêm giao thừa": "tet-eve",
-  "tết nguyên tiêu": "lantern-festival",
-  "nguyên tiêu": "lantern-festival",
-  "thượng nguyên": "lantern-festival",
-  "giỗ tổ": "hung-kings",
-  "giỗ tổ hùng vương": "hung-kings",
-  "hùng vương": "hung-kings",
-  "tết đoan ngọ": "doan-ngo",
-  "đoan ngọ": "doan-ngo",
-  "diệt sâu bọ": "doan-ngo",
-  "vu lan": "vu-lan",
-  "lễ vu lan": "vu-lan",
-  "xá tội vong nhân": "vu-lan",
-  "trung thu": "mid-autumn",
-  "tết trung thu": "mid-autumn",
-  "rằm trung thu": "mid-autumn",
-  "ông táo": "kitchen-gods",
-  "tết ông táo": "kitchen-gods",
-  "ông công ông táo": "kitchen-gods",
-  "táo quân": "kitchen-gods",
-};
+// Aliases per holiday, as one string: "name=alias,alias;name=...". Parsed
+// once at load; a table literal costs more of the size budget than this.
+export const holidayNames: Record<string, HolidayName> = Object.fromEntries(
+  (
+    "new-year=tết dương lịch,tết tây,năm mới,tết dương;" +
+    "valentines=valentine,valentines,lễ tình nhân,tình nhân;" +
+    "womens-day=quốc tế phụ nữ;" +
+    "liberation-day=giải phóng miền nam,giải phóng;" +
+    "labour-day=quốc tế lao động,lao động;" +
+    "childrens-day=quốc tế thiếu nhi,thiếu nhi;national-day=quốc khánh;" +
+    "vn-womens-day=phụ nữ việt nam;" +
+    "teachers-day=nhà giáo việt nam,nhà giáo;" +
+    "christmas=giáng sinh,noel,nô en;" +
+    "christmas-eve=đêm giáng sinh,đêm noel;" +
+    "new-years-eve=giao thừa tây,giao thừa dương lịch;" +
+    "tet=tết,tết nguyên đán,tết âm lịch,tết ta,tết cổ truyền,tết âm,nguyên đán;" +
+    "tet-eve=giao thừa,đêm giao thừa;" +
+    "lantern-festival=tết nguyên tiêu,nguyên tiêu;" +
+    "hung-kings=giỗ tổ,giỗ tổ hùng vương,hùng vương;" +
+    "doan-ngo=tết đoan ngọ,đoan ngọ;" +
+    "vu-lan=vu lan,lễ vu lan;" +
+    "mid-autumn=trung thu,tết trung thu,rằm trung thu;" +
+    "kitchen-gods=ông táo,tết ông táo,ông công ông táo,táo quân"
+  )
+    .split(";")
+    .flatMap((entry) => {
+      const [name, aliases] = entry.split("=");
+      return aliases.split(",").map((alias) => [alias, name as HolidayName]);
+    }),
+);
 /** Holidays fixed on the lunar calendar. */
 export const lunarHolidays = new Set<HolidayName>([
   "tet",
@@ -391,6 +413,8 @@ const timePhrases = new Set([
   ...Object.keys(dayGroups),
   ...Object.keys(holidayNames),
   ...Object.keys(namedTimes),
+  ...Object.keys(namedWindows),
+  ...nowWords,
   ...lunarWords,
   "thứ",
   "cn",

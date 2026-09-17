@@ -43,15 +43,15 @@ CHAT_UNITS = {"hour": "h", "minute": "p"}
 MODIFIERS = {
     "this": ["này", "này", "nay"],
     "next": ["sau", "tới", "sau", "kế", "kế tiếp", "sắp tới"],
-    "last": ["trước", "rồi", "qua", "vừa rồi", "vừa qua"],
+    "last": ["trước", "rồi", "qua", "vừa rồi", "vừa qua", "trc"],
 }
 YEAR_MODIFIERS = {"this": ["nay", "này"], "next": ["sau", "tới"], "last": ["ngoái", "trước", "rồi"]}
 RELATIVE_DAYS = {
-    0: ["hôm nay", "nay", "bữa nay", "ngày hôm nay"],
+    0: ["hôm nay", "nay", "bữa nay", "ngày hôm nay", "hnay"],
     1: ["ngày mai", "mai", "mai", "ngày mai"],
     2: ["ngày kia", "ngày mốt", "mốt"],
     3: ["ngày kìa"],
-    -1: ["hôm qua", "ngày hôm qua"],
+    -1: ["hôm qua", "ngày hôm qua", "hqua"],
     -2: ["hôm kia"],
     -3: ["hôm kìa"],
 }
@@ -62,9 +62,34 @@ PARTS = {
     "evening": ["tối", "tối", "buổi tối"],
     "night": ["đêm", "khuya", "ban đêm", "đêm khuya"],
 }
-NAMED = {"noon": ["giữa trưa", "đúng trưa", "trưa"], "midnight": ["nửa đêm", "giữa đêm"]}
+NAMED = {"noon": ["giữa trưa", "đúng trưa"], "midnight": ["nửa đêm", "giữa đêm"]}
+# Office-hour phrases with a conventional clock (lexicon.ts namedWindows).
+NAMED_WINDOWS: dict[str, tuple[list[str], dict]] = {
+    "office": (["giờ hành chính", "giờ làm việc"], {"start": {"hour": 8, "minute": 0}, "end": {"hour": 17, "minute": 0}}),
+    "lunch": (["giờ nghỉ trưa"], {"start": {"hour": 12, "minute": 0}, "end": {"hour": 13, "minute": 0}}),
+    "morning-start": (["đầu giờ sáng", "đầu giờ"], {"start": {"hour": 8, "minute": 0}}),
+    "morning-end": (["cuối giờ sáng"], {"start": {"hour": 11, "minute": 0}}),
+    "afternoon-start": (["đầu giờ chiều"], {"start": {"hour": 13, "minute": 0}}),
+    "afternoon-end": (["cuối giờ chiều", "cuối giờ", "cuối giờ làm", "hết giờ làm"], {"start": {"hour": 17, "minute": 0}}),
+}
+STEMS = "giáp ất bính đinh mậu kỷ canh tân nhâm quý".split()
+BRANCHES = "tý sửu dần mão thìn tỵ ngọ mùi thân dậu tuất hợi".split()
+# "giờ Tý" is 23:00–01:00, then every two hours around the clock.
+for _index, _branch in enumerate(BRANCHES):
+    NAMED_WINDOWS[f"branch-{_branch}"] = (
+        [f"giờ {_branch}", f"giờ {_branch.capitalize()}"],
+        {"start": {"hour": (23 + 2 * _index) % 24, "minute": 0}, "end": {"hour": (1 + 2 * _index) % 24, "minute": 0}},
+    )
+
+
+def sexagenary_name(cycle: int) -> str:
+    """Cycle position → "Bính Ngọ"; 0 is Giáp Tý."""
+    return f"{STEMS[cycle % 10]} {BRANCHES[cycle % 12]}"
+
+
+NOW_WORDS = ["bây giờ", "hiện tại", "ngay bây giờ", "lúc này", "hiện giờ", "bây h"]
 DAY_GROUPS = {
-    "weekend": ["cuối tuần"],
+    "weekend": ["cuối tuần", "cuối tuần", "weekend"],
     "weekday": ["ngày thường", "ngày làm việc", "ngày trong tuần", "ngày đi làm"],
 }
 HOLIDAYS = {
@@ -148,7 +173,8 @@ def weekday(s: Sentence, code: str, style: int | None = None) -> None:
     r = s.rng
     style = r.randrange(6) if style is None else style
     if code == "SU":
-        s.add(r.choice(["chủ nhật", "chủ nhật", "Chủ nhật", "CN", "cn"]), "WEEKDAY")
+        # "thứ tám"/"t8" is a joke name for Sunday that chat uses in earnest.
+        s.add(r.choice(["chủ nhật", "chủ nhật", "Chủ nhật", "CN", "cn", "thứ tám", "thứ 8", "t8"]), "WEEKDAY")
         return
     index = DAY_CODES.index(code)
     if style in (0, 1, 2):
@@ -190,7 +216,12 @@ def unit(s: Sentence, name: str, label: str = "UNIT", chat: bool = False) -> Non
     s.add(s.rng.choice(UNIT_WORDS[name]), label)
 
 
-def modifier(s: Sentence, value: str, for_unit: str | None = None) -> None:
+def modifier(s: Sentence, value: str, for_unit: str | None = None, distance: int | None = None) -> None:
+    if distance == 2:
+        # "tuần sau nữa", "tháng trước nữa": one more step, "nữa" stays DEICTIC.
+        s.add("sau" if value == "next" else "trước", "DEICTIC")
+        s.add("nữa", "DEICTIC")
+        return
     words = YEAR_MODIFIERS[value] if for_unit == "year" else MODIFIERS[value]
     s.add(s.rng.choice(words), "DEICTIC")
 
@@ -213,7 +244,12 @@ def named_time(s: Sentence, name: str) -> None:
     s.add(s.rng.choice(NAMED[name]), "TIME_NAMED")
 
 
-def holiday(s: Sentence, name: str) -> None:
+def named_window(s: Sentence, name: str) -> None:
+    s.add(s.rng.choice(NAMED_WINDOWS[name][0]), "TIME_NAMED")
+
+
+def holiday(s: Sentence, name: str, date: dict | None = None) -> None:
+    date = date or {}
     text = s.rng.choice(HOLIDAYS[name])
     if text.startswith(("ngày ", "lễ ")) and s.rng.random() < 0.5:
         head, tail = text.split(" ", 1)
@@ -223,7 +259,16 @@ def holiday(s: Sentence, name: str) -> None:
         s.add(text, "HOLIDAY")
     # "Tết này", "Giáng sinh năm nay": the holiday is always its next one.
     draw = s.rng.random()
-    if draw < 0.12:
+    if "year" in date or "cycle" in date:
+        # "Tết 2027", "Tết năm Bính Ngọ": that year's holiday.
+        if s.rng.random() < 0.5:
+            s.glue("năm")
+        if "cycle" in date:
+            name = sexagenary_name(date["cycle"])
+            s.add(name.title() if s.rng.random() < 0.7 else name, "YEAR")
+        else:
+            s.add(str(date["year"]), "YEAR")
+    elif draw < 0.12:
         s.add(s.rng.choice(["này", "tới", "sắp tới"]), "HOLIDAY")
     elif draw < 0.2:
         s.add("năm", "UNIT")
@@ -334,7 +379,9 @@ def calendar(s: Sentence, date: dict, style: int | None = None, lunar: bool = Fa
     r = s.rng
     style = r.randrange(6) if style is None else style
     day, month, year = date.get("day"), date.get("month"), date.get("year")
-    # Something must say "lunar": a marker word, mùng/rằm, or giêng/chạp.
+    cycle = date.get("cycle")
+    # Something must say "lunar": a marker word, mùng/rằm, giêng/chạp, a
+    # leap month or a can chi year.
     marker = lunar
     lunar_word = False
 
@@ -343,6 +390,25 @@ def calendar(s: Sentence, date: dict, style: int | None = None, lunar: bool = Fa
         name = month_name(r, month, lunar)
         lunar_word = name in ("giêng", "chạp")
         s.add(name, "MONTH", separator=separator)
+        if date.get("leap"):
+            # "tháng 4 nhuận": the leap word follows the month.
+            s.add("nhuận", "LUNAR")
+            lunar_word = True
+
+    def write_year() -> None:
+        nonlocal lunar_word
+        if cycle is not None:
+            s.glue("năm")
+            name = sexagenary_name(cycle)
+            s.add(name.title() if r.random() < 0.7 else name, "YEAR")
+            lunar_word = True
+        elif year is not None:
+            s.glue("năm")
+            s.add(str(year), "YEAR")
+
+    if cycle is not None and month is None and day is None:
+        write_year()
+        return
 
     if lunar and day is not None and day <= 10 and r.random() < 0.6:
         s.add(r.choice(["mùng", "mùng", "mồng"]), "LUNAR")
@@ -350,9 +416,7 @@ def calendar(s: Sentence, date: dict, style: int | None = None, lunar: bool = Fa
         if month is not None:
             s.glue("tháng")
             write_month()
-        if year is not None:
-            s.glue("năm")
-            s.add(str(year), "YEAR")
+        write_year()
         if marker and not lunar_word and month is not None and r.random() < 0.5:
             s.add(r.choice(LUNAR_MARKERS), "LUNAR")
         return
@@ -360,10 +424,11 @@ def calendar(s: Sentence, date: dict, style: int | None = None, lunar: bool = Fa
         s.add("rằm", "LUNAR")
         s.glue("tháng")
         write_month()
-        if year is not None:
-            s.glue("năm")
-            s.add(str(year), "YEAR")
+        write_year()
         return
+    if cycle is not None or date.get("leap"):
+        # Word styles only: "5 tháng 4 nhuận", "rằm tháng 7 năm Bính Ngọ".
+        style = 5
     if style <= 2 and day is not None and month is not None:
         separator = r.choice(["/", "/", "-", "."])
         s.add(str(day), "DOM")
@@ -390,9 +455,7 @@ def calendar(s: Sentence, date: dict, style: int | None = None, lunar: bool = Fa
         if month is not None:
             s.glue("tháng")
             write_month()
-        if year is not None:
-            s.glue("năm")
-            s.add(str(year), "YEAR")
+        write_year()
     if marker and not lunar_word:
         s.add(r.choice(LUNAR_MARKERS), "LUNAR")
 

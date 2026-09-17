@@ -1,5 +1,5 @@
 {
   "command": "pnpm --filter @gpu-time-vi/benchmark benchmark",
-  "elapsedSeconds": 82.4449664,
+  "elapsedSeconds": 102.22210869999999,
   "withinTenMinutes": true
 }

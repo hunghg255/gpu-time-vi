@@ -105,19 +105,34 @@ Giờ đã ≥ 13 thì buổi không đổi gì (`15h chiều` = 15:00). Mâu th
 
 `buổi` là GLUE. Thứ tự `DAYPART + REL_DAY` (`sáng mai`) và `REL_DAY + DAYPART` (`mai sáng`, hiếm) đều hợp lệ.
 
+### 3.4 Giờ hành chính (TIME_NAMED có quy ước)
+
+Cụm chỉ giờ làm việc mang một giờ quy ước; cả cụm gán TIME_NAMED (kể cả `giờ`, vốn là UNIT ở chỗ khác, và `đầu`/`cuối`, vốn là EDGE).
+
+| Biểu thức | Schedule |
+|---|---|
+| `giờ hành chính`, `giờ làm việc` | time 08:00–17:00 |
+| `giờ nghỉ trưa` | time 12:00–13:00 |
+| `đầu giờ`, `đầu giờ sáng` | time 08:00 |
+| `cuối giờ sáng` | time 11:00 |
+| `đầu giờ chiều` | time 13:00 |
+| `cuối giờ`, `cuối giờ chiều`, `cuối giờ làm`, `hết giờ làm` | time 17:00 |
+
+`đầu giờ chiều mai` = 13:00 ngày mai. Đây là quy ước văn phòng phổ biến, không phải giờ đo được; app cần giờ khác thì đọc `time.start` và thay.
+
 ## 4. Ngày tương đối, thứ, đơn vị + deictic
 
 | Biểu thức | Role | Schedule |
 |---|---|---|
-| `bây giờ`, `hiện tại`, `ngay bây giờ`, `ngay` | NOW(+) | `{kind:"now"}` |
-| `hôm nay`, `nay`, `bữa nay` | REL_DAY(+) | relativeDay 0 |
+| `bây giờ`, `hiện tại`, `ngay bây giờ`, `ngay`, `bây h` (chat) | NOW(+) | `{kind:"now"}` |
+| `hôm nay`, `nay`, `bữa nay`, `hnay` (chat) | REL_DAY(+) | relativeDay 0 |
 | `ngày mai`, `mai` | REL_DAY(+) | relativeDay 1 |
 | `ngày kia`, `ngày mốt`, `mốt` | REL_DAY(+) | relativeDay 2 |
 | `ngày kìa` | REL_DAY(+) | relativeDay 3 |
-| `hôm qua`, `qua` (chỉ khi sau DAYPART: `tối qua`) | REL_DAY(+) | relativeDay −1 |
+| `hôm qua`, `hqua` (chat), `qua` (chỉ khi sau DAYPART: `tối qua`) | REL_DAY(+) | relativeDay −1 |
 | `hôm kia` | REL_DAY(+) | relativeDay −2 |
 | `thứ hai`, `thứ 2`, `t2`, `T2` | WEEKDAY(+) | weekday [MO] |
-| `chủ nhật`, `CN`, `cn`, `chúa nhật` | WEEKDAY(+) | weekday [SU] |
+| `chủ nhật`, `CN`, `cn`, `chúa nhật`, `thứ tám`, `thứ 8`, `t8` (lóng) | WEEKDAY(+) | weekday [SU] |
 | `thứ hai và thứ tư` | WEEKDAY(+) JOIN WEEKDAY(+) | weekday [MO, WE] (một clause, `và` nối ngày → JOIN nhưng compiler gộp thành một `days` khi cả hai vế chỉ là WEEKDAY) |
 | `thứ hai tuần sau` | WEEKDAY(+) UNIT DEICTIC | weekday [MO] modifier next |
 | `thứ sáu tuần này` / `tuần trước` | … | modifier this / last |
@@ -126,16 +141,17 @@ Giờ đã ≥ 13 thì buổi không đổi gì (`15h chiều` = 15:00). Mâu th
 | `tuần này` | UNIT DEICTIC | relativeUnit week this |
 | `tuần trước`, `tuần rồi`, `tuần qua`, `tuần vừa rồi` | UNIT DEICTIC(+) | relativeUnit week last |
 | `tháng sau`, `tháng tới`, `tháng trước`, `tháng này` | UNIT DEICTIC | relativeUnit month … |
+| `tuần sau nữa`, `tháng trước nữa`, `thứ hai tuần sau nữa`, `cuối tuần sau nữa` | UNIT DEICTIC DEICTIC(`nữa`) | … modifier next/last, `distance: 2` (bước thêm một đơn vị cùng chiều; `nữa` sau DEICTIC là DEICTIC, sau NUM UNIT vẫn là DIR_AFTER) |
 | `năm sau`, `năm tới`, `năm ngoái`, `năm nay`, `năm trước` | UNIT DEICTIC | relativeUnit year … (`nay` với `năm` = this) |
 | `đầu tuần sau`, `cuối tháng này`, `giữa năm` | EDGE UNIT DEICTIC | relativeUnit … edge start/end (`giữa` → không có edge trong types; ghi diagnostic `unsupported-edge` và dùng `start`? → **Quyết định:** `giữa` chỉ hỗ trợ với `tháng X`: ngày 15) |
-| `cuối tuần` | DAYGROUP DAYGROUP | dayGroup weekend |
+| `cuối tuần`, `weekend` | DAYGROUP(+) | dayGroup weekend |
 | `cuối tuần này/sau/trước` | DAYGROUP DAYGROUP DEICTIC | dayGroup weekend modifier |
 | `ngày thường`, `ngày làm việc`, `ngày trong tuần` | DAYGROUP(+) | recurrence weekly byDay MO–FR (giống `weekdays`) |
 | `các ngày cuối tuần`, `cuối tuần` (số nhiều theo ngữ cảnh RECUR) | RECUR DAYGROUP(+) | recurrence weekly byDay SA,SU |
 | `thứ hai đầu tiên của tháng sau` | WEEKDAY(+) ORD(+) GLUE UNIT DEICTIC | ordinalWeekday 1 MO of relativeUnit month next |
 | `thứ sáu cuối cùng tháng 3` | WEEKDAY(+) ORD(+) GLUE MONTH | ordinalWeekday −1 FR of calendar month 3 |
 
-Modifier: `sau`/`tới`/`kế`/`kế tiếp` → next; `này`/`nay` → this; `trước`/`rồi`/`qua`/`ngoái`/`vừa rồi`/`vừa qua` → last.
+Modifier: `sau`/`tới`/`kế`/`kế tiếp` → next; `này`/`nay` → this; `trước`/`trc`/`rồi`/`qua`/`ngoái`/`vừa rồi`/`vừa qua` → last. `trc` là dạng chat của `trước` ở mọi vị trí (`tuần trc`, `3 ngày trc`).
 
 Lưu ý mơ hồ: `sau` vừa là DEICTIC (`tuần sau`) vừa là DIR_AFTER (`sau 2 tuần`). Quy tắc: `sau` **đứng trước** NUM UNIT → DIR_AFTER; `sau` **đứng sau** UNIT (không có NUM trước UNIT) → DEICTIC. `trước` tương tự với DIR_BEFORE.
 
@@ -193,6 +209,19 @@ Mọi biểu thức có LUNAR sinh `{ kind: "lunar", year?, month?, day?, leap? 
 
 Holiday dương lịch: `Tết dương lịch`/`Tết tây`/`năm mới` → new-year (1/1); `Valentine`/`lễ tình nhân` → valentines (14/2); `8/3`/`Quốc tế phụ nữ` → womens-day; `30/4`/`Giải phóng miền Nam` → liberation-day; `1/5`/`Quốc tế lao động` → labour-day; `2/9`/`Quốc khánh` → national-day; `20/10`/`Phụ nữ Việt Nam` → vn-womens-day; `20/11`/`Nhà giáo` → teachers-day; `Giáng sinh`/`Noel` → christmas; `đêm Giáng sinh` → christmas-eve; `giao thừa tây`/`31/12` → new-years-eve. Dạng số (`30/4`) luôn là calendar date, **không** phải holiday; chỉ dạng chữ mới là HOLIDAY.
 
+### 6.1 Tháng nhuận, can chi, giờ địa chi
+
+| Biểu thức | Role | Schedule |
+|---|---|---|
+| `mùng 5 tháng 4 nhuận`, `tháng 6 nhuận năm 2025` | … MONTH LUNAR(`nhuận`) … | lunar `leap: true`; năm không có tháng nhuận đó thì đọc như tháng thường |
+| `năm Bính Ngọ` | GLUE YEAR YEAR | lunar `cycle: 42` (vị trí trong vòng 60 năm, 0 = Giáp Tý); resolver chọn năm gần mốc nhất, hòa thì lấy năm sắp tới; `năm Bính Ngọ` một mình = cả năm âm (Tết → Tết) |
+| `mùng 5 tháng 5 năm Bính Ngọ` | LUNAR DOM GLUE MONTH GLUE YEAR YEAR | lunar month 5 day 5 cycle 42 |
+| `giờ Tý` … `giờ Hợi` | TIME_NAMED TIME_NAMED | cửa sổ 2 giờ: Tý 23–01, Sửu 01–03, Dần 03–05, Mão 05–07, Thìn 07–09, Tỵ 09–11, Ngọ 11–13, Mùi 13–15, Thân 15–17, Dậu 17–19, Tuất 19–21, Hợi 21–23 |
+
+| `Tết Bính Ngọ`, `Tết năm Đinh Mùi`, `Trung thu 2027`, `Giáng sinh 2026`, `giao thừa Đinh Mùi` | HOLIDAY(+) [GLUE] YEAR(+) | holiday `year` / `cycle`: đúng dịp lễ của năm đó, không cuộn tới; lễ âm lấy năm âm |
+
+Cặp can chi không tồn tại (`Giáp Sửu`) không phải YEAR. `tuổi Ngọ`, `mệnh Kim` không phải thời gian (O).
+
 ## 7. Duration, shift, recurrence, bounds, exceptions
 
 | Biểu thức | Role | Schedule |
@@ -203,6 +232,7 @@ Holiday dương lịch: `Tết dương lịch`/`Tết tây`/`năm mới` → new
 | `2 ngày sau Tết`, `3 ngày trước ngày 15/3` | NUM UNIT DIR_AFTER HOLIDAY / … | shift + date anchor |
 | `khoảng 2 tiếng nữa`, `tầm 3 ngày nữa` | O NUM UNIT DIR_AFTER | shift approximate |
 | `vài ngày nữa`, `mấy hôm nữa` | NUM UNIT DIR_AFTER | shift after 3 day approximate |
+| `nửa tháng nữa`, `nửa năm nữa`, `nửa ngày nữa` | NUM UNIT DIR_AFTER | shift after 15 day / 6 month / 12 hour (`nửa` + đơn vị lịch đọc theo quy ước; `1 tháng rưỡi` vẫn bị từ chối) |
 | `trong 2 tiếng`, `trong vòng 3 ngày`, `kéo dài 2 tuần`, `suốt 1 tiếng` | DUR(+) NUM UNIT | duration 2 hour |
 | `từ 9h đến 17h`, `9h-17h`, `9h tới 17h`, `từ 9 đến 5 giờ chiều` | RANGE_START HOUR GLUE RANGE_END HOUR GLUE | time 09:00–17:00 |
 | `từ 8 giờ tối đến 12 giờ đêm` | … | 20:00–00:00 |
@@ -249,7 +279,7 @@ Một `và` nối **hai WEEKDAY trần** (`thứ hai và thứ tư`) hoặc **ha
 | `chiều` | MERIDIEM / DAYPART | `chiều cao`, `chiều lòng`, `chiều dài` | Ngữ cảnh |
 | `tối` | MERIDIEM / DAYPART | `tối đa`, `tối ưu`, `tối thiểu` | Ngữ cảnh |
 | `sáng` | MERIDIEM / DAYPART | `sáng tạo`, `sáng suốt`, `sáng sủa` | Ngữ cảnh |
-| `trưa` | MERIDIEM / DAYPART / TIME_NAMED | — | `giữa trưa`/`đúng trưa` = TIME_NAMED |
+| `trưa` | MERIDIEM / DAYPART | — | Sau HOUR → MERIDIEM; một mình → DAYPART (cửa sổ 11–13), không bao giờ TIME_NAMED; `giữa trưa`/`đúng trưa` = TIME_NAMED 12:00 |
 | `mai` | REL_DAY | `hoa mai`, `mai mối`, `mai sau` | Ngữ cảnh |
 | `qua` | REL_DAY (`hôm qua`), DEICTIC (`tuần qua`) | `đi qua`, `qua đó` | Ngữ cảnh |
 | `kia` | REL_DAY (`ngày kia`) | `bên kia` | Ngữ cảnh |
@@ -335,3 +365,4 @@ Mọi token của một số ghép mang **cùng role** với số đó (`hai mư
 - `giữa` + UNIT không có `edge` tương ứng trong types → chỉ hỗ trợ `giữa tháng X` = ngày 15; `giữa tuần` = thứ tư (weekday WE, modifier this); `giữa năm` → diagnostic `unsupported-edge`.
 - Dạng số `30/4`, `2/9` là calendar date, không phải holiday.
 - `sau`/`trước` phân định DIR vs DEICTIC theo vị trí so với NUM UNIT (mục 4).
+- Tiếng lóng/chat có dấu được huấn luyện: `hnay`, `hqua`, `bây h`, `trc`, `weekend`, `thứ2`, `t2`, `9h`, `30p`, `:))`/`=))`/`ok`/`dc`/`k`/`nha` làm nền (O). Không nhận: `bh` (bây giờ hay bao giờ), `hn` (hôm nay hay Hà Nội), `th 3` (tháng hay thứ), `dl`; các cụm mơ hồ về lượng (`lát nữa`, `tí nữa`, `xíu nữa`, `hồi nãy`, `mai mốt`, `5h hơn`) không gán giờ. Không dấu vẫn ngoài phạm vi.

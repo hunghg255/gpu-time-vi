@@ -4,8 +4,8 @@
 // people to production with wrong dates.
 const pros = [
   ['Chạy tại chỗ, không máy chủ', 'Toàn bộ gói ~50 KB Brotli, không dependency runtime. Câu chữ của người dùng không rời khỏi trình duyệt hay tiến trình Node.'],
-  ['Hiểu tiếng Việt như người viết', 'Giờ kiểu "3 rưỡi chiều", "7 giờ kém 15 tối", ngày "15/3", thứ "t2"/"CN", "tuần sau", "cuối tháng", lặp "2 tuần một lần", "3 lần một tuần", giới hạn "đến hết tháng 12", loại trừ "trừ chủ nhật".'],
-  ['Âm lịch và ngày lễ Việt Nam', '"mùng 1 Tết", "rằm tháng 7", "23 tháng chạp", "Giỗ tổ", "Trung thu" giải ra ngày dương theo lịch chính thức (UTC+7), kể cả tháng nhuận.'],
+  ['Hiểu tiếng Việt như người viết', 'Giờ kiểu "3 rưỡi chiều", "7 giờ kém 15 tối", ngày "15/3", thứ "t2"/"CN", "tuần sau", "cuối tháng", lặp "2 tuần một lần", "3 lần một tuần", giới hạn "đến hết tháng 12", loại trừ "trừ chủ nhật". Chat có dấu: "hnay", "hqua", "tuần trc", "weekend này", "bây h", kèm "ok dc nha :))" xung quanh; giờ văn phòng: "giờ hành chính", "đầu giờ chiều", "cuối giờ".'],
+  ['Âm lịch và ngày lễ Việt Nam', '"mùng 1 Tết", "rằm tháng 7", "23 tháng chạp", "tháng 6 nhuận", "năm Bính Ngọ", "giờ Ngọ", "Giỗ tổ", "Trung thu" giải ra ngày dương theo lịch chính thức (UTC+7).'],
   ['Kết quả có cấu trúc, không chỉ một ngày', 'Trả về khoảng giờ có đầu–cuối, nhiều mệnh đề trong một câu, quy tắc lặp chuẩn RFC 5545 (RRULE) để đưa thẳng vào lịch, kèm vị trí trong câu và chẩn đoán khi từ chối.'],
   ['Số học lịch chính xác', 'Múi giờ, DST, "bây giờ" và giới hạn số lần do TypeScript tính sau khi mô hình chạy — không phải mô hình đoán.'],
   ['Nhanh khi cần xử lý nhiều', 'Với batch lớn, WebGPU chạy cả lô song song: 10 000 câu trong khoảng 1,6 giây trên máy văn phòng.'],
@@ -15,8 +15,8 @@ const cons = [
   ['Bắt buộc có dấu', '"ngay mai 3h chieu" không được hỗ trợ trong bản này; dấu thanh là cách mô hình phân biệt "sáu" với "sau".'],
   ['Là mô hình, nên có thể sai mà không báo', 'Độ chính xác trên bộ gold ~95%, nhưng cách nói lạ, tên riêng viết hoa hay câu dài nhiều mệnh đề có thể cho ngày sai với độ tin cậy cao. Luôn cho người dùng thấy và xác nhận ngày trước khi ghi lịch.'],
   ['Không dành cho văn bản dài', 'Thiết kế cho ô nhắc việc, tin nhắn, form lịch. Trích ngày từ hợp đồng, email dài hay tài liệu pháp lý không phải mục tiêu.'],
-  ['Một số cách nói còn mơ hồ với máy', '"họp 2 tiếng chiều mai" (2 tiếng hay 2 giờ chiều?), "mười lăm giờ" (15h hay 15 tiếng?), "thứ ba tuần trước" (thứ ba gần nhất đã qua). Các quy ước này được ghi trong tài liệu, không phải lúc nào cũng trùng ý người viết.'],
-  ['Chưa có tiếng Anh, can chi, giờ địa chi', 'Chỉ nhận "am/pm", "h", "p" lẫn trong câu Việt. Câu tiếng Anh đầy đủ, "năm Bính Ngọ", "giờ Tý" nằm ngoài phạm vi.'],
+  ['Một số cách nói còn mơ hồ với máy', '"họp 2 tiếng chiều mai" (2 tiếng hay 2 giờ chiều?), "mười lăm giờ" (15h hay 15 tiếng?), "thứ ba tuần trước" (thứ ba gần nhất đã qua). "đầu giờ chiều" = 13:00 là quy ước văn phòng. Các quy ước này được ghi trong tài liệu, không phải lúc nào cũng trùng ý người viết. Cố ý không đoán "lát nữa", "tí nữa", "mai mốt", "5h hơn" và các viết tắt hai nghĩa "bh", "hn", "th 3".'],
+  ['Chưa có tiếng Anh', 'Chỉ nhận "am/pm", "h", "p" lẫn trong câu Việt. Năm can chi ("Bính Ngọ", "Tết Đinh Mùi") lấy năm gần mốc nhất trong vòng 60 năm, không đoán thế kỷ.'],
   ['Cần WebGPU mới nhanh, và chỉ với batch', 'Một câu lẻ CPU vẫn nhanh hơn (dưới 1 ms) vì WebGPU tốn chi phí gửi lệnh. Safari/Firefox chưa có WebGPU thì tự chuyển sang CPU.'],
   ['Chưa đo trên người dùng thật', 'Không có bộ dữ liệu tiếng Việt gán nhãn sẵn để đối chiếu; điểm số hiện là trên câu tự sinh và bộ gold viết tay. Gửi câu sai cho dự án để cải thiện.'],
 ];
