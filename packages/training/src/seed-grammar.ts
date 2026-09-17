@@ -1,90 +1,29 @@
 import { writeFileSync } from "node:fs";
-import type {
-  Clause,
-  DateSpec,
-  DayPart,
-  HolidayName,
-  Recurrence,
-  TimeSpec,
-  Unit,
-  Weekday,
-} from "../../core/src/types.ts";
+import type { Clause } from "../../core/src/types.ts";
+import {
+  WEEKDAYS,
+  WEEKEND,
+  calendar,
+  clock,
+  duration,
+  holiday,
+  lunar,
+  named,
+  part,
+  range,
+  recurrence,
+  relative,
+  shift,
+  unit,
+  weekday,
+  weekdayMod,
+  window,
+} from "./gold-helpers.ts";
 
 // Authored Vietnamese grammar surface. Expected schedules are written from the
 // spec in docs/vietnamese-time-expressions.md, never from a parser.
 
 const gold = new URL("../data/gold/", import.meta.url);
-
-const clock = (hour: number, minute = 0): TimeSpec => ({
-  start: { hour, minute },
-});
-const named = (name: "noon" | "midnight"): TimeSpec => ({
-  start: { named: name },
-});
-const part = (name: DayPart): TimeSpec => ({ start: { part: name } });
-const window = (
-  start: number,
-  end: number,
-  startMinute = 0,
-  endMinute = 0,
-): TimeSpec => ({
-  start: { hour: start, minute: startMinute },
-  end: { hour: end, minute: endMinute },
-});
-const weekday = (...days: Weekday[]): DateSpec => ({ kind: "weekday", days });
-const weekdayMod = (
-  modifier: "this" | "next" | "last",
-  ...days: Weekday[]
-): DateSpec => ({ kind: "weekday", days, modifier });
-const relative = (offset: number): DateSpec => ({
-  kind: "relativeDay",
-  offset,
-});
-const unit = (
-  unit: Unit,
-  modifier: "this" | "next" | "last",
-  edge?: "start" | "end",
-): DateSpec => ({
-  kind: "relativeUnit",
-  unit,
-  modifier,
-  ...(edge ? { edge } : {}),
-});
-const shift = (
-  amount: number,
-  unit: Unit,
-  direction: "before" | "after",
-  extra: Partial<NonNullable<Clause["shift"]>> = {},
-): Clause => ({ shift: { amount, unit, direction, ...extra } });
-const duration = (amount: number, unit: Unit): Clause => ({
-  duration: { amount, unit },
-});
-const recurrence = (
-  freq: Recurrence["freq"],
-  extra: Partial<Recurrence> = {},
-): Clause => ({ recurrence: { freq, interval: 1, ...extra } });
-const calendar = (month: number, day?: number, year?: number): DateSpec => ({
-  kind: "calendar",
-  month,
-  ...(day === undefined ? {} : { day }),
-  ...(year === undefined ? {} : { year }),
-});
-const lunar = (month?: number, day?: number, year?: number): DateSpec => ({
-  kind: "lunar",
-  ...(month === undefined ? {} : { month }),
-  ...(day === undefined ? {} : { day }),
-  ...(year === undefined ? {} : { year }),
-});
-const holiday = (name: HolidayName): DateSpec => ({
-  kind: "holiday",
-  name,
-});
-const range = (
-  from: { month?: number; day?: number; year?: number },
-  to: { month?: number; day?: number; year?: number },
-): DateSpec => ({ kind: "calendarRange", from, to });
-const WEEKDAYS: Weekday[] = ["MO", "TU", "WE", "TH", "FR"];
-const WEEKEND: Weekday[] = ["SA", "SU"];
 
 const cases: {
   id: string;
@@ -718,7 +657,10 @@ example("combined", "cuối tuần sau lúc 10h sáng", {
   time: clock(10),
 });
 
-example("combined", "ngày mai 3 giờ chiều", { date: relative(1), time: clock(15) });
+example("combined", "ngày mai 3 giờ chiều", {
+  date: relative(1),
+  time: clock(15),
+});
 example("shift", "2 ngày nữa", shift(2, "day", "after"));
 example("shift", "24 tiếng nữa", shift(24, "hour", "after"));
 

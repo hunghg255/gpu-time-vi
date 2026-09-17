@@ -75,12 +75,12 @@ Chi tiết từng task ở `todo.md`.
 - [x] Task 7: Compiler — ngày dương lịch (ngày/tháng/năm, DMY numeric, tháng giêng/chạp), khoảng ngày, holiday dương lịch
 - [x] Task 8: Compiler — duration, shift, recurrence, TIMES, bounds, exceptions
 - [x] Task 9: Module âm lịch `lunar.ts` + resolver cho `lunar` DateSpec và holiday âm lịch
-- [ ] Task 10: Resolver — daypart windows VN, `results.jsonl` end-to-end, `negatives.jsonl`
+- [x] Task 10: Resolver — daypart windows VN, `results.jsonl` end-to-end, `negatives.jsonl`
 
 ### Checkpoint 1: Oracle
-- [ ] `oracle.test.ts` pass 100% trên `labels.jsonl` (≥120 câu có nhãn tay)
-- [ ] `results-gold.test.ts` pass (≥40 câu có context + occurrences kỳ vọng)
-- [ ] `pnpm check` (tsc) sạch; build không lỗi
+- [x] `oracle.test.ts` pass 100% trên `labels.jsonl` (288 câu có nhãn tay)
+- [x] `results-gold.test.ts` pass (61 câu)
+- [x] `pnpm check` (tsc) sạch; build không lỗi
 - [ ] Review với người dùng
 
 ### Phase 2: Dữ liệu huấn luyện

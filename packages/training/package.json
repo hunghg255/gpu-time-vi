@@ -18,7 +18,8 @@
     "evaluate:oracle": "tsx src/evaluate-oracle.ts",
     "seed:grammar": "tsx src/seed-grammar.ts",
     "test": "uv run --project . python -m unittest discover -s torch -p 'test_*.py'",
-    "seed:labels": "tsx src/seed-labels.ts"
+    "seed:labels": "tsx src/seed-labels.ts",
+    "seed:gold": "tsx src/seed-gold.ts"
   },
   "dependencies": {
     "gpu-time-vi": "workspace:*"

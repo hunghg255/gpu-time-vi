@@ -1,0 +1,45 @@
+{"id":"prose-001","family":"chat","text":"ok mai 9h mình họp nhé","schedule":{"clauses":[{"date":{"kind":"relativeDay","offset":1},"time":{"start":{"hour":9,"minute":0}}}]}}
+{"id":"prose-002","family":"chat","text":"t2 tuần sau em bay ra Hà Nội","schedule":{"clauses":[{"date":{"kind":"weekday","days":["MO"],"modifier":"next"}}]}}
+{"id":"prose-003","family":"chat","text":"chiều nay 3h qua văn phòng lấy hồ sơ nha","schedule":{"clauses":[{"date":{"kind":"relativeDay","offset":0},"time":{"start":{"hour":15,"minute":0}}}]}}
+{"id":"prose-004","family":"chat","text":"tối thứ sáu đi ăn không","schedule":{"clauses":[{"date":{"kind":"weekday","days":["FR"]},"time":{"start":{"part":"evening"}}}]}}
+{"id":"prose-005","family":"chat","text":"cn này về quê","schedule":{"clauses":[{"date":{"kind":"weekday","days":["SU"],"modifier":"this"}}]}}
+{"id":"prose-006","family":"chat","text":"khoảng 30 phút nữa anh tới","schedule":{"clauses":[{"shift":{"amount":30,"unit":"minute","direction":"after","approximate":true}}]}}
+{"id":"prose-007","family":"chat","text":"deadline 17h thứ tư nhé cả nhà","schedule":{"clauses":[{"date":{"kind":"weekday","days":["WE"]},"time":{"start":{"hour":17,"minute":0}}}]}}
+{"id":"prose-008","family":"chat","text":"sáng mai 8h30 họp ban giám đốc","schedule":{"clauses":[{"date":{"kind":"relativeDay","offset":1},"time":{"start":{"hour":8,"minute":30}}}]}}
+{"id":"prose-009","family":"chat","text":"hẹn 7 giờ tối mai ở quán cũ","schedule":{"clauses":[{"date":{"kind":"relativeDay","offset":1},"time":{"start":{"hour":19,"minute":0}}}]}}
+{"id":"prose-010","family":"chat","text":"15/3 nộp báo cáo quý","schedule":{"clauses":[{"date":{"kind":"calendar","month":3,"day":15}}]}}
+{"id":"prose-011","family":"email","text":"Cuộc họp sẽ diễn ra vào lúc 14h00 ngày 20/09/2026 tại phòng họp A.","schedule":{"clauses":[{"date":{"kind":"calendar","month":9,"day":20,"year":2026},"time":{"start":{"hour":14,"minute":0}}}]}}
+{"id":"prose-012","family":"email","text":"Vui lòng phản hồi trước 17h ngày mai.","schedule":{"clauses":[{"date":{"kind":"relativeDay","offset":1},"time":{"start":{"hour":0,"minute":0},"end":{"hour":17,"minute":0},"open":"start"}}]}}
+{"id":"prose-013","family":"email","text":"Hạn chót nộp hồ sơ là ngày 30 tháng 9 năm 2026.","schedule":{"clauses":[{"date":{"kind":"calendar","month":9,"day":30,"year":2026}}]}}
+{"id":"prose-014","family":"email","text":"Chúng tôi sẽ liên hệ lại với anh trong vòng 3 ngày làm việc.","schedule":{"clauses":[{"duration":{"amount":3,"unit":"day"}}]}}
+{"id":"prose-015","family":"email","text":"Lớp học diễn ra vào thứ hai, thứ tư và thứ sáu hàng tuần từ 19h đến 21h.","schedule":{"clauses":[{"recurrence":{"freq":"weekly","interval":1,"byDay":["MO","WE","FR"]},"time":{"start":{"hour":19,"minute":0},"end":{"hour":21,"minute":0}}}]}}
+{"id":"prose-016","family":"email","text":"Văn phòng nghỉ Tết từ 26 tháng chạp đến hết mùng 5 tháng giêng.","schedule":{"clauses":[{"date":{"kind":"calendarRange","from":{"month":12,"day":26},"to":{"month":1,"day":5},"lunar":true}}]}}
+{"id":"prose-017","family":"email","text":"Buổi đào tạo kéo dài 2 tiếng rưỡi.","schedule":{"clauses":[{"duration":{"amount":2.5,"unit":"hour"}}]}}
+{"id":"prose-018","family":"email","text":"Hệ thống bảo trì từ 23h đến 5h sáng.","schedule":{"clauses":[{"time":{"start":{"hour":23,"minute":0},"end":{"hour":5,"minute":0}}}]}}
+{"id":"prose-019","family":"email","text":"Lịch phỏng vấn của bạn: 9h30 sáng thứ ba tuần sau.","schedule":{"clauses":[{"date":{"kind":"weekday","days":["TU"],"modifier":"next"},"time":{"start":{"hour":9,"minute":30}}}]}}
+{"id":"prose-020","family":"email","text":"Tiền nhà thanh toán vào ngày 5 hàng tháng.","schedule":{"clauses":[{"recurrence":{"freq":"monthly","interval":1,"byMonthDay":[5]}}]}}
+{"id":"prose-021","family":"note","text":"nhắc mẹ uống thuốc 8h sáng và 8h tối","schedule":{"clauses":[{"time":{"start":{"hour":8,"minute":0}}},{"time":{"start":{"hour":20,"minute":0}}}]}}
+{"id":"prose-022","family":"note","text":"sinh nhật bà ngoại rằm tháng 7 âm lịch","schedule":{"clauses":[{"date":{"kind":"lunar","month":7,"day":15}}]}}
+{"id":"prose-023","family":"note","text":"giỗ ông nội mùng 10 tháng 3 âm","schedule":{"clauses":[{"date":{"kind":"lunar","month":3,"day":10}}]}}
+{"id":"prose-024","family":"note","text":"đổi dầu xe 3 tháng một lần","schedule":{"clauses":[{"recurrence":{"freq":"monthly","interval":3}}]}}
+{"id":"prose-025","family":"note","text":"khám thai 2 tuần một lần cho đến hết tháng 12","schedule":{"clauses":[{"recurrence":{"freq":"weekly","interval":2,"until":{"kind":"calendarPeriod","month":12,"edge":"end"}}}]}}
+{"id":"prose-026","family":"note","text":"đi bơi mỗi sáng thứ bảy lúc 6h","schedule":{"clauses":[{"recurrence":{"freq":"weekly","interval":1,"byDay":["SA"]},"time":{"start":{"hour":6,"minute":0}}}]}}
+{"id":"prose-027","family":"note","text":"trả sách thư viện cuối tháng","schedule":{"clauses":[{"date":{"kind":"relativeUnit","unit":"month","modifier":"this","edge":"end"}}]}}
+{"id":"prose-028","family":"note","text":"học phí đóng đầu tháng 10","schedule":{"clauses":[{"date":{"kind":"calendarPeriod","month":10,"edge":"start"}}]}}
+{"id":"prose-029","family":"note","text":"vé máy bay bay lúc 6 giờ 15 phút sáng ngày 2/9","schedule":{"clauses":[{"date":{"kind":"calendar","month":9,"day":2},"time":{"start":{"hour":6,"minute":15}}}]}}
+{"id":"prose-030","family":"note","text":"họp phụ huynh cuối tuần này","schedule":{"clauses":[{"date":{"kind":"dayGroup","group":"weekend","modifier":"this"}}]}}
+{"id":"prose-031","family":"speech","text":"Tôi sẽ gọi lại cho anh sau hai tiếng nữa.","schedule":{"clauses":[{"shift":{"amount":2,"unit":"hour","direction":"after"}}]}}
+{"id":"prose-032","family":"speech","text":"Chúng ta gặp nhau vào giữa trưa mai nhé.","schedule":{"clauses":[{"date":{"kind":"relativeDay","offset":1},"time":{"start":{"named":"noon"}}}]}}
+{"id":"prose-033","family":"speech","text":"Bố mẹ tôi cưới nhau cách đây ba mươi năm.","schedule":{"clauses":[{"shift":{"amount":30,"unit":"year","direction":"before"}}]}}
+{"id":"prose-034","family":"speech","text":"Cô ấy nghỉ phép từ thứ hai đến thứ tư.","schedule":{"clauses":[{"recurrence":{"freq":"weekly","interval":1,"byDay":["MO","TU","WE"]}}]}}
+{"id":"prose-035","family":"speech","text":"Con phải về nhà trước 10 giờ đêm.","schedule":{"clauses":[{"time":{"start":{"hour":0,"minute":0},"end":{"hour":22,"minute":0},"open":"start"}}]}}
+{"id":"prose-036","family":"speech","text":"Cửa hàng mở cửa từ 8 giờ sáng đến 10 giờ tối tất cả các ngày trong tuần.","schedule":{"clauses":[{"recurrence":{"freq":"weekly","interval":1,"byDay":["MO","TU","WE","TH","FR"]},"time":{"start":{"hour":8,"minute":0},"end":{"hour":22,"minute":0}}}]}}
+{"id":"prose-037","family":"speech","text":"Anh ấy sinh ngày 20 tháng 11 năm 1990.","schedule":{"clauses":[{"date":{"kind":"calendar","month":11,"day":20,"year":1990}}]}}
+{"id":"prose-038","family":"speech","text":"Kỳ nghỉ hè bắt đầu từ đầu tháng 6.","schedule":{"clauses":[{"date":{"kind":"calendarPeriod","month":6,"edge":"start"}}]}}
+{"id":"prose-039","family":"speech","text":"Trung thu cả nhà đi Hội An.","schedule":{"clauses":[{"date":{"kind":"holiday","name":"mid-autumn"}}]}}
+{"id":"prose-040","family":"speech","text":"Tết Dương lịch được nghỉ bù.","schedule":{"clauses":[{"date":{"kind":"holiday","name":"new-year"}}]}}
+{"id":"prose-041","family":"speech","text":"Mình tập gym ba lần một tuần.","schedule":{"clauses":[{"recurrence":{"freq":"weekly","interval":1,"timesPer":3}}]}}
+{"id":"prose-042","family":"speech","text":"Buổi lễ bắt đầu lúc chín giờ sáng chủ nhật.","schedule":{"clauses":[{"date":{"kind":"weekday","days":["SU"]},"time":{"start":{"hour":9,"minute":0}}}]}}
+{"id":"prose-043","family":"speech","text":"Chuyến tàu khởi hành lúc 21 giờ 45 phút.","schedule":{"clauses":[{"time":{"start":{"hour":21,"minute":45}}}]}}
+{"id":"prose-044","family":"speech","text":"Hôm kia tôi gặp cô ấy ở chợ.","schedule":{"clauses":[{"date":{"kind":"relativeDay","offset":-2}}]}}
+{"id":"prose-045","family":"speech","text":"Năm ngoái công ty tăng trưởng tốt.","schedule":{"clauses":[{"date":{"kind":"relativeUnit","unit":"year","modifier":"last"}}]}}

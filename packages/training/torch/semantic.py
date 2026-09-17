@@ -1,752 +1,717 @@
-"""Sample schedules first, then render their words and token supervision.
+"""Sample Vietnamese schedules first, then render their words and supervision.
 
-The expected AST comes from the sampled specification. Neither the browser
-parser nor a date recognizer supplies training labels or expected schedules.
+The expected schedule comes from the sampled specification. Neither the browser
+parser nor any external recognizer supplies labels. check-semantic.ts feeds the
+rendered spans through the real compiler and demands the same schedule back.
 """
 
 from __future__ import annotations
 
 import random
-import background
 from dataclasses import dataclass
 from typing import TYPE_CHECKING
+
+import background
+import vi
+from vi import DAY_CODES
 
 if TYPE_CHECKING:
     from generate import Sentence
 
-DAYS = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]
-DAY_CODES = ["MO", "TU", "WE", "TH", "FR", "SA", "SU"]
-MONTHS = [
-    "January",
-    "February",
-    "March",
-    "April",
-    "May",
-    "June",
-    "July",
-    "August",
-    "September",
-    "October",
-    "November",
-    "December",
-]
-NUMBERS = [
-    "zero",
-    "one",
-    "two",
-    "three",
-    "four",
-    "five",
-    "six",
-    "seven",
-    "eight",
-    "nine",
-    "ten",
-    "eleven",
-    "twelve",
-]
-ORDINALS = [
-    "first",
-    "second",
-    "third",
-    "fourth",
-    "fifth",
-    "sixth",
-    "seventh",
-    "eighth",
-    "ninth",
-    "tenth",
-    "eleventh",
-    "twelfth",
-]
-
-GENERAL_FAMILIES = [
+FAMILIES = [
     "now",
-    "clock",
-    "day-part",
+    "relative-day",
     "weekday",
+    "relative-unit",
     "day-group",
+    "clock",
     "time-window",
+    "open-clock",
+    "calendar",
+    "calendar-period",
     "date-range",
-    "weekday-range",
-    "duration",
-    "anchored-relative",
-    "recurrence",
-    "yearly",
-    "frequency-count",
-    "exceptions",
-    "recurrence-bounds",
     "holiday",
+    "lunar-date",
+    "shift",
+    "duration",
+    "recurrence",
+    "recurrence-bound",
+    "recurrence-except",
+    "multi-clause",
 ]
-HOLIDAYS = {
-    "christmas": "Christmas",
-    "christmas-eve": "Christmas Eve",
-    "new-year": "New Year's Day",
-    "new-years-eve": "New Year's Eve",
-    "halloween": "Halloween",
-    "valentines": "Valentine's Day",
-}
-
-
-def weekday_word(rng: random.Random, name: str) -> str:
-    """Every spelling lexicon.weekday() accepts: it lowercases, then drops a
-    trailing "." and a trailing "s", and matches the name or its first three."""
-    short = name[:3]
-    forms = [name, name.lower(), short, short.lower(), name + "s", name.lower() + "s"]
-    forms += {
-        "Tuesday": ["tues"],
-        "Wednesday": ["weds"],
-        "Thursday": ["thu", "thur", "thurs"],
-    }.get(name, [])
-    return rng.choice(forms)
-
-
-def month_word(rng: random.Random, index: int | None = None) -> str:
-    """Spellings lexicon.month() accepts: the name, its first three, "sept"."""
-    name = MONTHS[rng.randrange(12) if index is None else index]
-    short = name[:3]
-    # No trailing "." here: callers that want one add it as its own GLUE token,
-    # and a period inside a MONTH span is not a month.
-    forms = [name, name.lower(), short, short.lower()]
-    if name == "September":
-        forms += ["sept", "Sept"]
-    return rng.choice(forms)
+WEIGHTS = [1, 4, 5, 3, 2, 5, 3, 1, 5, 2, 2, 2, 3, 5, 2, 5, 2, 1, 2]
+UNITS = ["minute", "hour", "day", "week", "month", "year"]
+FREQ_OF = {"hour": "hourly", "day": "daily", "week": "weekly", "month": "monthly", "year": "yearly"}
 
 
 @dataclass
 class Specification:
     family: str
     schedule: dict
+    # The sampled clauses with rendering hints (keys starting with "_") that
+    # never reach the schedule.
+    raw: dict | None = None
 
 
-def sample(rng: random.Random) -> Specification:
-    family = rng.choice(
-        [
-            "calendar",
-            "relative",
-            "weekday-windows",
-            "monthly-days",
-            "relative-day",
-            "relative-unit",
-            "modified-group",
-            "weekday-points",
-            "bounded-weekday",
-            "monthly-ordinal",
-        ]
-        + GENERAL_FAMILIES
-    )
-    if family in GENERAL_FAMILIES:
-        return Specification(family, {"clauses": [sample_general(family, rng)]})
-    if family == "calendar":
-        date = {
-            "kind": "calendar",
-            "month": rng.randint(1, 12),
-            "day": rng.randint(1, 28),
-        }
-        if rng.random() < 0.65:
-            date["year"] = rng.randint(1990, 2040)
-        clause = {"date": date}
-    elif family == "relative":
-        clause = {
-            "shift": {
-                "amount": rng.choice([1, 2, 3, 5, 7, 10, 12, 15, 30, 90]),
-                "unit": rng.choice(["minute", "hour", "day", "week", "month", "year"]),
-                "direction": rng.choice(["before", "after"]),
-            }
-        }
-        if rng.random() < 0.35:
-            clause["date"] = {"kind": "relativeDay", "offset": rng.choice([-1, 0, 1])}
-        elif rng.random() < 0.3:
-            clause["date"] = {"kind": "now"}
-            clause["shift"]["direction"] = "after"
-    elif family == "relative-day":
-        clause = {"date": {"kind": "relativeDay", "offset": rng.choice([-1, 0, 1, 2])}}
-    elif family == "relative-unit":
-        date = {
-            "kind": "relativeUnit",
-            "unit": rng.choice(["week", "month", "year"]),
-            "modifier": rng.choice(["this", "next", "last"]),
-        }
-        if rng.random() < 0.65:
-            date["edge"] = rng.choice(["start", "end"])
-        clause = {"date": date}
-    elif family == "modified-group":
-        clause = {
-            "date": {
-                "kind": "dayGroup",
-                "group": "weekend",
-                "modifier": rng.choice(["this", "next", "last"]),
-            }
-        }
-    elif family == "bounded-weekday":
-        clause = {
-            "recurrence": {
-                "freq": "daily",
-                "interval": 1,
-                "until": {"kind": "weekday", "days": [rng.choice(DAY_CODES)]},
-            }
-        }
-    elif family == "weekday-points":
-        clauses = [
-            {
-                "date": {"kind": "weekday", "days": [day]},
-                "time": {"start": {"hour": rng.randint(1, 12), "minute": 0}},
-            }
-            for day in rng.sample(DAY_CODES, rng.randint(2, 4))
-        ]
-        return Specification(family, {"clauses": clauses})
-    elif family == "monthly-ordinal":
-        clause = {
-            "recurrence": {
-                "freq": "monthly",
-                "interval": 1,
-                "byDay": [rng.choice(DAY_CODES)],
-                "bySetPos": [rng.choice([-1, 1, 2, 3, 4, 5])],
-            }
-        }
-    elif family == "monthly-days":
-        clause = {
-            "recurrence": {
-                "freq": "monthly",
-                "interval": 1,
-                "byMonthDay": sorted(rng.sample(range(1, 29), rng.randint(1, 3))),
-            }
-        }
-    else:
-        clauses = []
-        for _ in range(rng.randint(1, 3)):
-            days = rng.sample(DAY_CODES, rng.randint(1, 3))
-            start = {"hour": rng.randint(0, 23), "minute": rng.choice([0, 15, 30, 45])}
-            end = {
-                "hour": (start["hour"] + rng.randint(1, 12)) % 24,
-                "minute": start["minute"],
-            }
-            clause = {"time": {"start": start, "end": end}}
-            if rng.random() < 0.35:
-                clause["recurrence"] = {
-                    "freq": "weekly",
-                    "interval": rng.randint(1, 4),
-                    "byDay": days,
-                }
-            else:
-                clause["date"] = {"kind": "weekday", "days": days}
-            clauses.append(clause)
-        return Specification(family, {"clauses": clauses})
-    return Specification(family, {"clauses": [clause]})
-
-
-def render(spec: Specification, sentence: Sentence, style: int) -> None:
-    rng = sentence.rng
-    if rng.random() < 0.4:
-        anchored = spec.family not in ("duration", "weekday-range", "relative")
-        sentence.add(background.prefix(rng, connector=anchored))
-    for index, clause in enumerate(spec.schedule["clauses"]):
-        if index and style % 2:
-            sentence.add(rng.choice(["and", ";", ",", "then"]), "JOIN")
-        sentence.clause()
-        if spec.family in GENERAL_FAMILIES:
-            render_general(clause, sentence, style)
-        elif spec.family == "calendar":
-            calendar(clause["date"], sentence, style)
-        elif spec.family == "relative":
-            relative(clause, sentence, style)
-        elif spec.family == "relative-day":
-            sentence.add(
-                {
-                    -1: "yesterday",
-                    0: "today",
-                    1: "tomorrow",
-                    2: "the day after tomorrow",
-                }[clause["date"]["offset"]],
-                "REL_DAY",
-            )
-        elif spec.family == "relative-unit":
-            date = clause["date"]
-            if date.get("edge"):
-                sentence.add(date["edge"], "EDGE")
-                sentence.add("of")
-            sentence.add(date["modifier"], "DEICTIC")
-            sentence.add(date["unit"], "UNIT")
-        elif spec.family == "modified-group":
-            sentence.add(clause["date"]["modifier"], "DEICTIC")
-            sentence.add("weekend", "DAYGROUP")
-        elif spec.family == "bounded-weekday":
-            sentence.add("every", "RECUR")
-            sentence.add("day", "UNIT")
-            sentence.add(rng.choice(["through", "until"]), "BOUND_END")
-            sentence.add(
-                DAYS[DAY_CODES.index(clause["recurrence"]["until"]["days"][0])],
-                "WEEKDAY",
-            )
-        elif spec.family == "weekday-points":
-            day = DAYS[DAY_CODES.index(clause["date"]["days"][0])]
-            sentence.add(day[:3] if style % 2 else day, "WEEKDAY")
-            sentence.add("at")
-            sentence.add(str(clause["time"]["start"]["hour"]), "HOUR")
-        elif spec.family == "monthly-ordinal":
-            rule = clause["recurrence"]
-            position = rule["bySetPos"][0]
-            sentence.add(
-                "last"
-                if position == -1
-                else ["first", "second", "third", "fourth", "fifth"][position - 1],
-                "ORD",
-            )
-            sentence.add(DAYS[DAY_CODES.index(rule["byDay"][0])], "WEEKDAY")
-            sentence.add("of")
-            if style % 2:
-                sentence.add("every", "RECUR")
-            else:
-                sentence.add("the")
-            sentence.add("month", "UNIT")
-        elif spec.family == "monthly-days":
-            days = clause["recurrence"]["byMonthDay"]
-            if style % 2:
-                sentence.add("every", "RECUR")
-                sentence.add("month", "UNIT")
-                sentence.add("on")
-            for position, day in enumerate(days):
-                if position:
-                    sentence.add("and")
-                ordinal(day, sentence)
-            if style % 2 == 0:
-                sentence.add("of")
-                sentence.add("each", "RECUR")
-                sentence.add("month", "UNIT")
-        else:
-            recurrence = clause.get("recurrence")
-            if recurrence:
-                interval = recurrence["interval"]
-                sentence.add(
-                    rng.choice(["every", "each"]) if interval == 1 else "every",
-                    "RECUR",
-                )
-                if interval == 2 and style % 2:
-                    sentence.add("other", "NUM")
-                elif interval > 1:
-                    sentence.quantity(interval)
-                    sentence.add("weeks", "UNIT")
-                    sentence.add("on")
-            days = recurrence["byDay"] if recurrence else clause["date"]["days"]
-            for position, day in enumerate(days):
-                if position and style % 3:
-                    sentence.add(rng.choice(["and", ",", "&"]), "JOIN")
-                name = DAYS[DAY_CODES.index(day)]
-                sentence.add(name[:3] if style % 2 else name, "WEEKDAY")
-            if style % 3 == 0:
-                sentence.add("from", "RANGE_START")
-            clock(clause["time"]["start"], sentence, style)
-            sentence.add("to" if style % 3 == 0 else "-", "RANGE_END")
-            clock(clause["time"]["end"], sentence, style)
-    if rng.random() < 0.2:
-        sentence.in_expression = False
-        sentence.add(rng.choice(["please", "for our team", "works for me"]))
-
-
-def ordinal(day: int, sentence: Sentence) -> None:
-    if day <= 12 and sentence.rng.random() < 0.3:
-        sentence.add(ORDINALS[day - 1], "DOM")
-        return
-    sentence.add(str(day), "DOM")
-    suffix = (
-        "th" if day in (11, 12, 13) else {1: "st", 2: "nd", 3: "rd"}.get(day % 10, "th")
-    )
-    sentence.add(suffix, separator="")
-
-
-def calendar(date: dict, sentence: Sentence, style: int) -> None:
-    year, month, day = date.get("year"), date["month"], date["day"]
-    separator = ["/", "-", "."][style % 3]
-    if style % 6 == 0 and year:
-        fields = [(year, "YEAR"), (month, "MONTH"), (day, "DOM")]
-    elif style % 6 < 4:
-        # Unambiguous day-first numeric examples do not contradict the default
-        # month-first labels on inputs such as 03/04. Locale overrides belong to
-        # the caller's dateOrder option, not to an unobservable training choice.
-        fields = (
-            [(day, "DOM"), (month, "MONTH")]
-            if day > 12 and style % 2
-            else [(month, "MONTH"), (day, "DOM")]
-        )
-        if year:
-            fields.append((year, "YEAR"))
-    else:
-        named = MONTHS[month - 1]
-        day_text = (
-            ORDINALS[day - 1] if day <= 12 and sentence.rng.random() < 0.5 else day
-        )
-        fields = (
-            [(named, "MONTH"), (day_text, "DOM")]
-            if style % 2
-            else [(day_text, "DOM"), (named, "MONTH")]
-        )
-        if year:
-            fields.append((year, "YEAR"))
-        separator = " "
-    for index, (value, label) in enumerate(fields):
-        if (
-            label == "MONTH"
-            and index
-            and fields[index - 1][1] == "DOM"
-            and separator == " "
-            and sentence.rng.random() < 0.5
-        ):
-            sentence.add("of")
-        if index and separator != " ":
-            sentence.add(separator, separator="")
-        sentence.add(str(value), label, separator="" if separator != " " else " ")
-
-
-def relative(clause: dict, sentence: Sentence, style: int) -> None:
-    shift = clause["shift"]
-    direction = shift["direction"]
-    label = "DIR_AFTER" if direction == "after" else "DIR_BEFORE"
-    prefix = style % 2 and not clause.get("date")
-    if prefix:
-        sentence.add("in" if direction == "after" else "before", label)
-    sentence.quantity_unit([shift["unit"]], shift["amount"])
-    if not prefix:
-        sentence.add(
-            ("from" if clause["date"]["kind"] == "now" else direction)
-            if clause.get("date")
-            else sentence.rng.choice(
-                ["after", "later"]
-                if direction == "after"
-                else ["before", "ago", "earlier"]
-            ),
-            label,
-        )
-    if clause.get("date"):
-        if clause["date"]["kind"] == "now":
-            sentence.add("now", "NOW")
-            return
-        render_date(clause["date"], sentence, style)
-        if clause.get("time"):
-            sentence.add("at")
-            clock(clause["time"]["start"], sentence, style)
-
-
-def clock(value: dict, sentence: Sentence, style: int) -> None:
-    if "named" in value:
-        sentence.add(value["named"], "TIME_NAMED")
-        return
-    if "part" in value:
-        sentence.add(value["part"], "DAYPART")
-        return
-    hour, minute = value["hour"], value["minute"]
-    meridiem = style % 2 == 0
-    display = hour % 12 or 12 if meridiem else hour
-    hour_text = (
-        NUMBERS[display]
-        if display <= 12 and style % 4 == 0 and minute == 0 and "second" not in value
-        else str(display)
-        if meridiem
-        else f"{display:02d}"
-    )
-    sentence.add(hour_text, "HOUR")
-    if minute or not meridiem or "second" in value:
-        sentence.add(":", separator="")
-        sentence.add(f"{minute:02d}", "MINUTE", separator="")
-    if "second" in value:
-        sentence.add(":", separator="")
-        sentence.add(f"{value['second']:02d}", "SECOND", separator="")
-    if meridiem:
-        if sentence.rng.random() < 0.25:
-            period = "morning" if hour < 12 else "afternoon" if hour < 18 else "evening"
-            article = "the " if sentence.rng.random() < 0.9 else ""
-            sentence.add(f"in {article}{period}", "MERIDIEM")
-            return
-        separator = (
-            " " if hour_text.isalpha() and not minute and "second" not in value else ""
-        )
-        sentence.add("pm" if hour >= 12 else "am", "MERIDIEM", separator=separator)
-
-
-def sample_clock(rng: random.Random) -> dict:
-    value = {"hour": rng.randint(0, 23), "minute": rng.choice([0, 15, 30, 45])}
-    if rng.random() < 0.2:
-        value["second"] = rng.randint(0, 59)
+def clean(value):
+    if isinstance(value, dict):
+        return {key: clean(item) for key, item in value.items() if not key.startswith("_")}
+    if isinstance(value, list):
+        return [clean(item) for item in value]
     return value
 
 
-def sample_general(family: str, rng: random.Random) -> dict:
+def clock_value(rng: random.Random, common: bool = True) -> dict:
+    hour = rng.randrange(24)
+    minute = rng.choice([0, 0, 0, 30, 15, 45, rng.randrange(60)]) if common else rng.randrange(60)
+    return {"hour": hour, "minute": minute}
+
+
+def sample_time(rng: random.Random) -> dict:
+    draw = rng.random()
+    if draw < 0.65:
+        return {"start": clock_value(rng)}
+    if draw < 0.85:
+        return {"start": {"part": rng.choice(list(vi.PARTS))}}
+    return {"start": {"named": rng.choice(["noon", "midnight"])}}
+
+
+def sample_date(rng: random.Random, allow_modifier: bool = True) -> dict:
+    """A one-off date used as an anchor or bound."""
+    draw = rng.random()
+    if draw < 0.3:
+        return {"kind": "relativeDay", "offset": rng.choice([0, 1, 1, 2, -1, -2])}
+    if draw < 0.55:
+        spec: dict = {"kind": "weekday", "days": [rng.choice(DAY_CODES)]}
+        if allow_modifier and rng.random() < 0.4:
+            spec["modifier"] = rng.choice(["this", "next", "last"])
+        return spec
+    if draw < 0.75:
+        month = rng.randint(1, 12)
+        date: dict = {"kind": "calendar", "month": month, "day": rng.randint(1, 28)}
+        if rng.random() < 0.3:
+            date["year"] = rng.randint(2024, 2032)
+        return date
+    if draw < 0.9:
+        return {"kind": "relativeUnit", "unit": rng.choice(["week", "month", "year"]), "modifier": rng.choice(["this", "next", "last"])}
+    return {"kind": "holiday", "name": rng.choice(vi.SOLAR_HOLIDAYS + vi.LUNAR_HOLIDAYS)}
+
+
+def sample(rng: random.Random) -> Specification:
+    family = rng.choices(FAMILIES, WEIGHTS)[0]
+    clause = sample_clause(family, rng)
+    raw = {"clauses": clause if family == "multi-clause" else [clause]}
+    return Specification(family, clean(raw), raw)
+
+
+def sample_clause(family: str, rng: random.Random) -> dict | list[dict]:
     if family == "now":
         return {"date": {"kind": "now"}}
-    if family == "holiday":
-        return {"date": {"kind": "holiday", "name": rng.choice(list(HOLIDAYS))}}
-    if family == "clock":
-        return {
-            "time": {
-                "start": rng.choice(
-                    [sample_clock(rng), {"named": "noon"}, {"named": "midnight"}]
-                )
-            }
-        }
-    if family == "day-part":
-        return {
-            "date": {"kind": "relativeDay", "offset": rng.choice([0, 1, -1])},
-            "time": {
-                "start": {
-                    "part": rng.choice(["morning", "afternoon", "evening", "night"])
-                }
-            },
-        }
+    if family == "relative-day":
+        clause: dict = {"date": {"kind": "relativeDay", "offset": rng.choice([0, 0, 1, 1, 1, 2, 2, 3, -1, -1, -2, -3])}}
+        if rng.random() < 0.6:
+            clause["time"] = sample_time(rng)
+        return clause
     if family == "weekday":
-        date = {"kind": "weekday", "days": rng.sample(DAY_CODES, rng.randint(1, 3))}
-        if rng.random() < 0.5:
-            date["modifier"] = rng.choice(["this", "next", "last"])
-        return {"date": date, "time": {"start": sample_clock(rng)}}
-    if family == "weekday-range":
-        start, end = rng.sample(DAY_CODES, 2)
-        return {"date": {"kind": "weekdayRange", "from": start, "to": end}}
-    if family == "day-group":
-        return {
-            "recurrence": {
-                "freq": "weekly",
-                "interval": 1,
-                "byDay": DAY_CODES[:5] if rng.random() < 0.5 else DAY_CODES[5:],
-            }
-        }
-    if family == "time-window":
-        start = sample_clock(rng)
-        return {
-            "time": {
-                "start": start,
-                "end": {
-                    "hour": (start["hour"] + rng.randint(1, 10)) % 24,
-                    "minute": start["minute"],
-                },
-            }
-        }
-    if family == "date-range":
-        month = rng.randint(1, 11)
-        year = rng.randint(2020, 2035)
-        return {
-            "date": {
-                "kind": "calendarRange",
-                "from": {"year": year, "month": month, "day": rng.randint(1, 14)},
-                "to": {
-                    "year": year,
-                    "month": month + rng.randint(0, 1),
-                    "day": rng.randint(15, 28),
-                },
-            }
-        }
-    if family == "duration":
-        clause = {
-            "duration": {
-                "amount": rng.choice([1, 2, 3, 6, 10, 30, 90]),
-                "unit": rng.choice(["minute", "hour", "day", "week"]),
-            }
-        }
-        if rng.random() < 0.5:
-            clause["date"] = {"kind": "relativeDay", "offset": rng.choice([0, 1])}
+        count = rng.choice([1, 1, 1, 2, 3])
+        days = sorted(rng.sample(DAY_CODES, count), key=DAY_CODES.index)
+        date: dict = {"kind": "weekday", "days": days}
+        if rng.random() < 0.4:
+            date["modifier"] = rng.choice(["this", "next", "next", "last"])
+        clause = {"date": date}
+        draw = rng.random()
+        if draw < 0.4:
+            clause["time"] = sample_time(rng)
+        elif draw < 0.55:
+            clause["time"] = window(rng)
         return clause
-    if family == "anchored-relative":
-        date = rng.choice(
-            [
-                {"kind": "weekday", "days": [rng.choice(DAY_CODES)]},
-                {"kind": "holiday", "name": rng.choice(list(HOLIDAYS))},
-                {
-                    "kind": "calendar",
-                    "month": rng.randint(1, 12),
-                    "day": rng.randint(1, 28),
-                },
-            ]
-        )
-        clause = {
-            "date": date,
-            "shift": {
-                "amount": rng.randint(1, 12),
-                "unit": rng.choice(["hour", "day", "week"]),
-                "direction": rng.choice(["before", "after"]),
-            },
-        }
+    if family == "relative-unit":
+        unit = rng.choice(["week", "week", "month", "month", "year"])
+        date = {"kind": "relativeUnit", "unit": unit, "modifier": rng.choice(["this", "next", "next", "last"])}
         if rng.random() < 0.3:
-            clause["time"] = {"start": {"named": "noon"}}
+            date["edge"] = rng.choice(["start", "end"])
+        clause = {"date": date}
+        if "edge" not in date and rng.random() < 0.3:
+            clause["time"] = {"start": clock_value(rng)}
         return clause
-    if family == "frequency-count":
-        return {
-            "recurrence": {
-                "freq": rng.choice(["daily", "weekly"]),
-                "interval": 1,
-                "timesPer": rng.randint(1, 6),
-            }
-        }
-    if family == "exceptions":
-        return {
-            "recurrence": {
-                "freq": "daily",
-                "interval": 1,
-                "except": [
-                    {
-                        "kind": "weekday",
-                        "days": rng.sample(DAY_CODES, rng.randint(1, 2)),
-                    }
-                ],
-            }
-        }
-    if family == "yearly":
-        return {
-            "recurrence": {
-                "freq": "yearly",
-                "interval": rng.randint(1, 3),
-                "byMonth": [rng.randint(1, 12)],
-                "byMonthDay": [rng.randint(1, 28)],
-            }
-        }
-    rule = {
-        "freq": rng.choice(["hourly", "daily", "weekly", "monthly", "yearly"]),
-        "interval": rng.randint(1, 4),
-    }
-    if rule["freq"] == "weekly" and rng.random() < 0.6:
-        rule["byDay"] = rng.sample(DAY_CODES, rng.randint(1, 3))
-    if family == "recurrence-bounds":
-        bound = rng.choice(["count", "span", "until", "start"])
-        if bound == "count":
-            rule[bound] = rng.randint(1, 12)
-        elif bound == "span":
-            rule[bound] = {"amount": rng.randint(1, 12), "unit": "week"}
-        elif bound == "start":
-            rule[bound] = {"kind": "relativeUnit", "unit": "week", "modifier": "next"}
+    if family == "day-group":
+        if rng.random() < 0.6:
+            date = {"kind": "dayGroup", "group": "weekend"}
+            if rng.random() < 0.5:
+                date["modifier"] = rng.choice(["this", "next", "last"])
+            clause = {"date": date}
+            if rng.random() < 0.4:
+                clause["time"] = {"start": clock_value(rng)}
+            return clause
+        return {"recurrence": {"freq": "weekly", "interval": 1, "byDay": DAY_CODES[:5]}}
+    if family == "clock":
+        return {"time": sample_time(rng)}
+    if family == "time-window":
+        clause = {"time": window(rng)}
+        if rng.random() < 0.4:
+            clause["date"] = sample_date(rng)
+        return clause
+    if family == "open-clock":
+        value = clock_value(rng)
+        if rng.random() < 0.5:
+            return {"time": {"start": value, "open": "end"}}
+        return {"time": {"start": {"hour": 0, "minute": 0}, "end": value, "open": "start"}}
+    if family == "calendar":
+        month = rng.randint(1, 12)
+        day = rng.randint(1, 28)
+        year = rng.randint(2024, 2032)
+        draw = rng.random()
+        if draw < 0.4:
+            date = {"kind": "calendar", "month": month, "day": day}
+        elif draw < 0.7:
+            date = {"kind": "calendar", "year": year, "month": month, "day": day}
+        elif draw < 0.8:
+            date = {"kind": "calendar", "day": day}
+        elif draw < 0.9:
+            date = {"kind": "calendar", "month": month}
+        elif draw < 0.95:
+            date = {"kind": "calendar", "year": year, "month": month}
         else:
-            rule[bound] = {
-                "kind": "calendar",
-                "month": rng.randint(1, 12),
-                "day": rng.randint(1, 28),
-            }
-    return {"recurrence": rule, "time": {"start": sample_clock(rng)}}
+            date = {"kind": "calendar", "year": year}
+        clause = {"date": date}
+        if "day" in date and rng.random() < 0.45:
+            clause["time"] = sample_time(rng)
+        return clause
+    if family == "calendar-period":
+        month = rng.randint(1, 12)
+        draw = rng.random()
+        if draw < 0.35:
+            return {"date": {"kind": "calendarPeriod", "month": month, "modifier": rng.choice(["next", "last"])}}
+        if draw < 0.7:
+            return {"date": {"kind": "calendarPeriod", "month": month, "edge": rng.choice(["start", "end"])}}
+        if draw < 0.85:
+            return {"date": {"kind": "calendarPeriod", "month": month, "week": rng.randint(1, 4)}}
+        return {"date": {"kind": "calendar", "month": month, "day": 15}, "_middle": True}
+    if family == "date-range":
+        month = rng.randint(1, 12)
+        first = rng.randint(1, 14)
+        last = rng.randint(first + 1, 28)
+        draw = rng.random()
+        if draw < 0.5:
+            return {"date": {"kind": "calendarRange", "from": {"month": month, "day": first}, "to": {"month": month, "day": last}}}
+        if draw < 0.8:
+            other = rng.randint(1, 12)
+            if other == month:
+                other = month % 12 + 1
+            return {"date": {"kind": "calendarRange", "from": {"month": month, "day": first}, "to": {"month": other, "day": last}}}
+        other = rng.randint(month, 12)
+        if other == month:
+            other = min(12, month + 1) if month < 12 else 12
+        if other == month:
+            return {"date": {"kind": "calendarRange", "from": {"month": 3, "day": first}, "to": {"month": 5, "day": last}}}
+        return {"date": {"kind": "calendarRange", "from": {"month": month}, "to": {"month": other}}}
+    if family == "holiday":
+        clause = {"date": {"kind": "holiday", "name": rng.choice(vi.SOLAR_HOLIDAYS + vi.LUNAR_HOLIDAYS * 2)}}
+        if rng.random() < 0.35:
+            clause["time"] = sample_time(rng)
+        return clause
+    if family == "lunar-date":
+        month = rng.randint(1, 12)
+        draw = rng.random()
+        if draw < 0.3:
+            date = {"kind": "lunar", "month": month, "day": rng.choice([1, 2, 3, 15, 15, rng.randint(1, 29)])}
+        elif draw < 0.45:
+            date = {"kind": "lunar", "month": 1, "day": rng.randint(1, 5), "_tet": True}
+        elif draw < 0.55:
+            date = {"kind": "lunar", "month": 12, "day": rng.choice([29, 30]), "_tet": True}
+        elif draw < 0.7:
+            date = {"kind": "lunar", "day": rng.choice([1, 15, 15, rng.randint(1, 10)])}
+        elif draw < 0.85:
+            date = {"kind": "lunar", "month": month}
+        else:
+            date = {"kind": "lunar", "year": rng.randint(2025, 2030), "month": month, "day": rng.randint(1, 28)}
+        clause = {"date": date}
+        if "day" in date and rng.random() < 0.25:
+            clause["time"] = sample_time(rng)
+        return clause
+    if family == "shift":
+        unit = rng.choice(["minute", "hour", "hour", "day", "day", "week", "month", "year"])
+        amount = rng.choice(AMOUNTS[unit])
+        shift: dict = {"amount": amount, "unit": unit, "direction": rng.choice(["after", "after", "before"])}
+        draw = rng.random()
+        if draw < 0.12 and unit in ("hour", "day", "week"):
+            shift["components"] = [{"amount": rng.choice([15, 30, 45] if unit == "hour" else [1, 2, 3]), "unit": {"hour": "minute", "day": "hour", "week": "day"}[unit]}]
+        elif draw < 0.22:
+            shift["approximate"] = True
+            if rng.random() < 0.5:
+                # "vài"/"mấy" read as three.
+                shift["amount"] = 3
+                shift["_vague"] = True
+        clause = {"shift": shift}
+        if rng.random() < 0.3:
+            clause["date"] = sample_date(rng)
+            if clause["date"]["kind"] in ("relativeDay", "weekday") and rng.random() < 0.4:
+                clause["time"] = {"start": clock_value(rng)} if rng.random() < 0.6 else {"start": {"named": rng.choice(["noon", "midnight"])}}
+        elif rng.random() < 0.1:
+            clause["date"] = {"kind": "now"}
+            shift["direction"] = "after"
+            shift.pop("approximate", None)
+            shift.pop("_vague", None)
+        return clause
+    if family == "duration":
+        unit = rng.choice(["minute", "hour", "hour", "day", "week", "month"])
+        amount = rng.choice(AMOUNTS[unit])
+        duration: dict = {"amount": amount, "unit": unit}
+        if unit == "hour" and rng.random() < 0.2:
+            duration["amount"] = amount + 0.5
+        elif unit in ("hour", "day") and rng.random() < 0.15:
+            duration["components"] = [{"amount": rng.choice([15, 30] if unit == "hour" else [2, 3, 6]), "unit": "minute" if unit == "hour" else "hour"}]
+        clause = {"duration": duration}
+        if rng.random() < 0.4:
+            clause["date"] = sample_date(rng)
+            if rng.random() < 0.5:
+                clause["time"] = {"start": clock_value(rng)}
+        return clause
+    if family == "recurrence":
+        return {"recurrence": sample_recurrence(rng), **({"time": {"start": clock_value(rng)}} if rng.random() < 0.35 else {})}
+    if family == "recurrence-bound":
+        rule = sample_recurrence(rng, simple=True)
+        draw = rng.random()
+        if draw < 0.3:
+            rule["start"] = sample_date(rng, allow_modifier=False)
+            if rule["start"]["kind"] == "weekday":
+                rule["start"] = {"kind": "relativeUnit", "unit": "week", "modifier": "next"}
+        elif draw < 0.65:
+            until = sample_date(rng, allow_modifier=False)
+            if until["kind"] == "relativeUnit":
+                until = {"kind": "relativeUnit", "unit": until["unit"], "modifier": "this", "edge": "end"}
+            if until["kind"] == "calendar" and rng.random() < 0.4:
+                until = {"kind": "calendarPeriod", "month": until["month"], "edge": "end"}
+            rule["until"] = until
+        elif draw < 0.85:
+            rule["span"] = {"amount": rng.choice([2, 3, 4, 6, 10, 12]), "unit": rng.choice(["week", "month"])}
+        else:
+            rule["count"] = rng.choice([3, 4, 5, 6, 8, 10])
+        return {"recurrence": rule}
+    if family == "recurrence-except":
+        rule = sample_recurrence(rng, simple=True)
+        draw = rng.random()
+        if draw < 0.6:
+            rule["except"] = [{"kind": "weekday", "days": [rng.choice(DAY_CODES)]}]
+        elif draw < 0.85:
+            rule["except"] = [{"kind": "dayGroup", "group": "weekend"}]
+        else:
+            rule["except"] = [{"kind": "holiday", "name": rng.choice(["tet", "christmas", "national-day"])}]
+        return {"recurrence": rule}
+    if family == "multi-clause":
+        clauses = []
+        used: set[str] = set()
+        for _ in range(rng.choice([2, 2, 3])):
+            day = rng.choice([code for code in DAY_CODES if code not in used])
+            used.add(day)
+            clauses.append({"date": {"kind": "weekday", "days": [day]}, "time": {"start": clock_value(rng)} if rng.random() < 0.6 else window(rng)})
+        return clauses
+    raise ValueError(family)
 
 
-def render_days(days: list[str], sentence: Sentence, style: int) -> None:
-    for index, day in enumerate(days):
+AMOUNTS = {
+    "minute": [5, 10, 15, 20, 30, 45, 90],
+    "hour": [1, 2, 2, 3, 4, 5, 6, 8, 12, 24],
+    "day": [1, 2, 2, 3, 3, 4, 5, 7, 10, 14],
+    "week": [1, 2, 2, 3, 4, 6],
+    "month": [1, 2, 3, 6],
+    "year": [1, 2, 5],
+}
+
+
+def window(rng: random.Random) -> dict:
+    start = rng.randrange(0, 22)
+    end = rng.randrange(start + 1, 24)
+    return {"start": {"hour": start, "minute": rng.choice([0, 0, 30])}, "end": {"hour": end, "minute": rng.choice([0, 0, 30])}}
+
+
+def sample_recurrence(rng: random.Random, simple: bool = False) -> dict:
+    draw = rng.random()
+    if draw < 0.3:
+        count = rng.choice([1, 1, 1, 2, 3])
+        return {"freq": "weekly", "interval": 1, "byDay": sorted(rng.sample(DAY_CODES, count), key=DAY_CODES.index)}
+    if draw < 0.5:
+        return {"freq": FREQ_OF[rng.choice(["day", "day", "week", "month", "year", "hour"])], "interval": 1}
+    if draw < 0.6:
+        return {"freq": FREQ_OF[rng.choice(["day", "week", "week", "month"])], "interval": rng.choice([2, 2, 3, 4])}
+    if simple or draw < 0.7:
+        return {"freq": "weekly", "interval": 1, "byDay": rng.choice([DAY_CODES[:5], DAY_CODES[5:]])}
+    if draw < 0.78:
+        return {"freq": rng.choice(["daily", "weekly"]), "interval": 1, "timesPer": rng.choice([2, 3, 4, 5])}
+    if draw < 0.88:
+        days = sorted(rng.sample(range(1, 29), rng.choice([1, 1, 2])))
+        return {"freq": "monthly", "interval": 1, "byMonthDay": days}
+    if draw < 0.95:
+        return {"freq": "monthly", "interval": 1, "byDay": [rng.choice(DAY_CODES)], "bySetPos": [rng.choice([1, 2, 3, -1])]}
+    return {"freq": "yearly", "interval": 1, "byMonth": [rng.randint(1, 12)], "byMonthDay": [rng.randint(1, 28)]}
+
+
+# ---------------------------------------------------------------------------
+# Rendering
+
+
+def render(spec: Specification, s: Sentence, style: int) -> None:
+    r = s.rng
+    chat = style in (7, 8)
+    lead = None if chat else background.prefix(r) if r.random() < 0.55 else None
+    if lead:
+        s.add(lead)
+    clauses = (spec.raw or spec.schedule)["clauses"]
+    for index, clause in enumerate(clauses):
         if index:
-            sentence.add("and", "JOIN")
-        name = DAYS[DAY_CODES.index(day)]
-        sentence.add(name[:3] if style % 2 else name, "WEEKDAY")
+            s.add(r.choice(["và", ",", ";", "còn", "rồi"]), "JOIN", separator="" if r.random() < 0.3 else " ")
+        s.clause()
+        render_clause(clause, s, style, chat)
 
 
-def render_date(date: dict, sentence: Sentence, style: int) -> None:
-    kind = date["kind"]
-    if kind == "now":
-        sentence.add("now", "NOW")
-    elif kind == "relativeDay":
-        sentence.add(
-            {-1: "yesterday", 0: "today", 1: "tomorrow", 2: "the day after tomorrow"}[
-                date["offset"]
-            ],
-            "REL_DAY",
-        )
-    elif kind == "weekday":
-        if date.get("modifier"):
-            sentence.add(date["modifier"], "DEICTIC")
-        render_days(date["days"], sentence, style)
-    elif kind == "weekdayRange":
-        sentence.add("from", "RANGE_START")
-        render_days([date["from"]], sentence, style)
-        sentence.add("to", "RANGE_END")
-        render_days([date["to"]], sentence, style)
-    elif kind == "holiday":
-        sentence.add(HOLIDAYS[date["name"]], "HOLIDAY")
-    elif kind == "calendar":
-        calendar(date, sentence, style)
-    elif kind == "calendarRange":
-        calendar(date["from"], sentence, 5)
-        # A dash reads as a range too, and "17 August 2013 2pm - 19 August 2013
-        # 2pm" is the shape a hyphen-only corpus never showed the model.
-        sentence.add(
-            sentence.rng.choice(["to", "to", "through", "-", "\u2013"]), "RANGE_END"
-        )
-        calendar(date["to"], sentence, 5)
-    elif kind == "relativeUnit":
-        if date.get("edge"):
-            sentence.add(date["edge"], "EDGE")
-            sentence.add("of")
-        sentence.add(date["modifier"], "DEICTIC")
-        sentence.add(date["unit"], "UNIT")
-    else:
-        raise ValueError(f"No date renderer for {kind}")
-
-
-def render_general(clause: dict, sentence: Sentence, style: int) -> None:
+def render_clause(clause: dict, s: Sentence, style: int, chat: bool) -> None:
+    r = s.rng
     if clause.get("shift"):
-        relative(clause, sentence, style)
+        render_shift(clause, s, style, chat)
         return
     rule = clause.get("recurrence")
+    date = clause.get("date")
+    time = clause.get("time")
+    duration = clause.get("duration")
     if rule:
-        if rule.get("timesPer"):
-            sentence.quantity(rule["timesPer"])
-            sentence.add("times", "TIMES")
-            sentence.add("per", "RECUR")
-            sentence.add("day" if rule["freq"] == "daily" else "week", "UNIT")
-        elif rule["interval"] == 1 and rule.get("byDay") in (
-            DAY_CODES[:5],
-            DAY_CODES[5:],
-        ):
-            sentence.add("every", "RECUR")
-            sentence.add(
-                "weekday" if rule["byDay"] == DAY_CODES[:5] else "weekend", "DAYGROUP"
-            )
-        else:
-            sentence.add("every", "RECUR")
-            if rule["interval"] > 1:
-                sentence.quantity(rule["interval"])
-            period = {
-                "hourly": "hour",
-                "daily": "day",
-                "weekly": "week",
-                "monthly": "month",
-                "yearly": "year",
-            }[rule["freq"]]
-            sentence.add(period + ("s" if rule["interval"] > 1 else ""), "UNIT")
-            if rule.get("byDay"):
-                sentence.add("on")
-                render_days(rule["byDay"], sentence, style)
-            if rule.get("byMonth"):
-                sentence.add("on")
-                sentence.add(MONTHS[rule["byMonth"][0] - 1], "MONTH")
-                sentence.quantity(rule["byMonthDay"][0], "DOM")
-    elif clause.get("date"):
-        render_date(clause["date"], sentence, style)
-    if clause.get("time"):
-        has_end = bool(clause["time"].get("end"))
-        if has_end and style % 3 == 0:
-            sentence.add("from", "RANGE_START")
-        elif has_end and style % 3 == 1:
-            sentence.add("between", "RANGE_START")
-        else:
-            sentence.add("at")
-        clock(clause["time"]["start"], sentence, style)
-        if has_end:
-            sentence.add(
-                "and"
-                if style % 3 == 1
-                else sentence.rng.choice(["to", "-", "–", "through"]),
-                "RANGE_END",
-            )
-            clock(clause["time"]["end"], sentence, style)
-    if rule:
-        for field, marker, label in [
-            ("start", "starting", "BOUND_START"),
-            ("until", "until", "BOUND_END"),
-        ]:
-            if rule.get(field):
-                sentence.add(marker, label)
-                render_date(rule[field], sentence, style)
-        if rule.get("count"):
-            sentence.add("for")
-            sentence.quantity(rule["count"])
-            sentence.add("occurrences", "COUNT")
-        if rule.get("except"):
-            sentence.add("except", "EXCEPT")
-            render_date(rule["except"][0], sentence, style)
-    duration = clause.get("duration") or (rule or {}).get("span")
+        render_recurrence(rule, s, style, chat, time)
+        if duration:
+            render_duration(duration, s, chat)
+        return
+    time_first = time and date and style % 3 == 0 and not clause.get("_middle")
+    if time_first:
+        render_time(time, s, style, chat)
+        render_date(date, s, style, chat, middle=bool(clause.get("_middle")))
+    else:
+        if date:
+            render_date(date, s, style, chat, middle=bool(clause.get("_middle")))
+        if time:
+            if date and r.random() < 0.6:
+                s.glue(r.choice(["lúc", "lúc", "vào", "vào lúc", "hồi"]))
+            render_time(time, s, style, chat)
     if duration:
-        sentence.add("for", "DUR")
-        next_duration = sentence.rng.random() < 0.3
-        if next_duration:
-            sentence.add("the")
-            sentence.add("next", "DEICTIC")
-        sentence.quantity_unit(
-            [duration["unit"]], duration["amount"], allow_article=not next_duration
+        render_duration(duration, s, chat)
+
+
+def render_time(time: dict, s: Sentence, style: int, chat: bool) -> None:
+    r = s.rng
+    start = time["start"]
+    end = time.get("end")
+    open_ = time.get("open")
+    if open_ == "end":
+        word, label = r.choice(
+            [("sau", "DIR_AFTER"), ("từ", "RANGE_START"), ("từ sau", "DIR_AFTER"), ("sau", "DIR_AFTER")]
         )
+        s.add(word, label)
+        render_clock(start, s, style, chat)
+        return
+    if open_ == "start":
+        s.add("trước", "DIR_BEFORE")
+        render_clock(end, s, style, chat)
+        return
+    if end:
+        opener = r.random()
+        if opener < 0.5:
+            s.add("từ", "RANGE_START")
+        elif opener < 0.6:
+            s.add("giữa", "RANGE_START")
+        # Both ends share a style, so a bare start never borrows the end's part.
+        pair = r.choice([0, 1, 2, 7]) if chat or r.random() < 0.5 else r.choice([3, 4, 5, 6, 8])
+        vi.clock(s, start["hour"], start["minute"], style=pair)
+        if opener < 0.5 or opener >= 0.6:
+            connector = r.choice(["đến", "đến", "tới", "-", "–"])
+        else:
+            connector = "và"
+        s.add(connector, "RANGE_END", separator="" if connector in ("-", "–") and chat else " ")
+        vi.clock(s, end["hour"], end["minute"], style=pair)
+        return
+    render_clock(start, s, style, chat)
+
+
+def render_clock(value: dict, s: Sentence, style: int, chat: bool) -> None:
+    if "named" in value:
+        vi.named_time(s, value["named"])
+        return
+    if "part" in value:
+        vi.day_part(s, value["part"])
+        return
+    if chat:
+        vi.clock(s, value["hour"], value["minute"], style=s.rng.choice([0, 1, 2, 7]))
+        return
+    vi.clock(s, value["hour"], value["minute"], part_first=style == 4 and s.rng.random() < 0.5)
+
+
+def render_date(date: dict, s: Sentence, style: int, chat: bool, middle: bool = False) -> None:
+    r = s.rng
+    kind = date["kind"]
+    if kind == "now":
+        s.add(r.choice(["bây giờ", "hiện tại", "ngay bây giờ", "lúc này", "hiện giờ"]), "NOW")
+    elif kind == "relativeDay":
+        vi.relative_day(s, date["offset"])
+    elif kind == "weekday":
+        vi.weekdays(s, date["days"])
+        if "modifier" in date:
+            if r.random() < 0.6 or date["modifier"] == "last":
+                s.add(r.choice(["tuần"]), "UNIT")
+                vi.modifier(s, date["modifier"])
+            else:
+                vi.modifier(s, date["modifier"])
+    elif kind == "relativeUnit":
+        if "edge" in date:
+            s.add(r.choice(["đầu", "đầu"]) if date["edge"] == "start" else r.choice(["cuối", "cuối"]), "EDGE")
+        s.add(r.choice(vi.UNIT_WORDS[date["unit"]][:1]), "UNIT")
+        if "edge" in date and date["modifier"] == "this" and r.random() < 0.5:
+            return
+        vi.modifier(s, date["modifier"], date["unit"])
+    elif kind == "dayGroup":
+        s.add(r.choice(vi.DAY_GROUPS[date["group"]]), "DAYGROUP")
+        if "modifier" in date:
+            vi.modifier(s, date["modifier"])
+    elif kind == "calendar":
+        if middle:
+            s.add("giữa", "EDGE")
+            s.glue("tháng")
+            s.add(vi.month_name(r, date["month"]), "MONTH")
+            return
+        vi.calendar(s, date, style=r.choice([0, 1, 2, 3, 4, 5]) if not chat else r.choice([0, 1, 2]))
+    elif kind == "lunar":
+        if date.get("_tet"):
+            if date["month"] == 1:
+                s.add(r.choice(["mùng", "mồng"]), "LUNAR")
+            s.add(str(date["day"]), "DOM")
+            s.add(r.choice(["Tết", "tết", "Tết"]), "HOLIDAY")
+            return
+        vi.calendar(s, date, lunar=True)
+    elif kind == "calendarPeriod":
+        if "edge" in date:
+            s.add("đầu" if date["edge"] == "start" else "cuối", "EDGE")
+            s.glue("tháng")
+            s.add(vi.month_name(r, date["month"]), "MONTH")
+        elif "week" in date:
+            s.add("tuần", "UNIT")
+            week = date["week"]
+            if week == 1 and r.random() < 0.5:
+                word = r.choice(["đầu", "đầu tiên"])
+                s.add(word, "EDGE" if word == "đầu" else "ORD")
+            else:
+                s.add(f"thứ {week}" if r.random() < 0.6 else f"thứ {vi.DAY_WORDS[week - 2] if week >= 2 else 'nhất'}", "ORD")
+            s.glue(r.choice(["của tháng", "tháng"]))
+            s.add(vi.month_name(r, date["month"]), "MONTH")
+        else:
+            s.glue("tháng")
+            s.add(vi.month_name(r, date["month"]), "MONTH")
+            s.add("năm", "UNIT")
+            vi.modifier(s, date["modifier"], "year")
+    elif kind == "calendarRange":
+        frm, to = date["from"], date["to"]
+        if r.random() < 0.7:
+            s.add("từ", "RANGE_START")
+        if "day" in frm:
+            if frm.get("month") == to.get("month") and r.random() < 0.5:
+                if r.random() < 0.5:
+                    s.glue("ngày")
+                s.add(str(frm["day"]), "DOM")
+            else:
+                vi.calendar(s, frm, style=r.choice([0, 1, 4, 5]))
+        else:
+            s.glue("tháng")
+            s.add(vi.month_name(r, frm["month"]), "MONTH")
+        connector = r.choice(["đến", "đến", "tới", "-", "–"])
+        s.add(connector, "RANGE_END")
+        if "day" in to:
+            vi.calendar(s, to, style=r.choice([0, 1, 4, 5]))
+        else:
+            s.glue("tháng")
+            s.add(vi.month_name(r, to["month"]), "MONTH")
+    elif kind == "holiday":
+        vi.holiday(s, date["name"])
+    else:
+        raise ValueError(kind)
+
+
+def render_shift(clause: dict, s: Sentence, style: int, chat: bool) -> None:
+    r = s.rng
+    shift = clause["shift"]
+    direction = shift["direction"]
+    approximate = shift.get("approximate")
+    anchor = clause.get("date")
+    time = clause.get("time")
+
+    def quantity() -> None:
+        if shift.get("_vague"):
+            s.add(r.choice(["vài", "mấy"]), "NUM")
+            vi.unit(s, shift["unit"])
+            return
+        if approximate:
+            s.add(r.choice(["khoảng", "tầm", "chừng", "độ"]))
+            vi.quantity_unit(s, shift["amount"], shift["unit"], chat=chat and shift["unit"] in vi.CHAT_UNITS)
+        else:
+            vi.quantity_unit(s, shift["amount"], shift["unit"], chat=chat and shift["unit"] in vi.CHAT_UNITS)
+        for component in shift.get("components", []):
+            vi.quantity_unit(s, component["amount"], component["unit"], chat=chat and component["unit"] in vi.CHAT_UNITS)
+
+    if anchor and anchor["kind"] == "now":
+        quantity()
+        s.add(r.choice(["kể từ", "tính từ", "từ"]), "DIR_AFTER")
+        s.add(r.choice(["bây giờ", "lúc này"]), "NOW")
+        return
+    if anchor is None and not chat and r.random() < 0.4:
+        # Direction first: "sau 2 tiếng", "cách đây 3 ngày".
+        if direction == "after":
+            s.add("sau", "DIR_AFTER")
+        else:
+            s.add(r.choice(["cách đây", "trước đây"]), "DIR_BEFORE")
+        quantity()
+        return
+    quantity()
+    if direction == "after":
+        s.add(r.choice(["nữa", "nữa", "sau", "tới"]) if anchor is None else "sau", "DIR_AFTER")
+    else:
+        s.add("trước", "DIR_BEFORE")
+    if anchor:
+        render_date(anchor, s, style, chat)
+        if time:
+            if r.random() < 0.5:
+                s.glue("lúc")
+            render_clock(time["start"], s, style, chat)
+
+
+def render_duration(duration: dict, s: Sentence, chat: bool) -> None:
+    r = s.rng
+    s.add(r.choice(["trong", "trong", "trong vòng", "kéo dài", "suốt"]), "DUR")
+    amount = duration["amount"]
+    half = amount != int(amount)
+    vi.quantity_unit(s, int(amount), duration["unit"], chat=chat and duration["unit"] in vi.CHAT_UNITS, half=half)
+    for component in duration.get("components", []):
+        vi.quantity_unit(s, component["amount"], component["unit"], chat=chat and component["unit"] in vi.CHAT_UNITS)
+
+
+def render_recurrence(rule: dict, s: Sentence, style: int, chat: bool, time: dict | None) -> None:
+    r = s.rng
+    freq = rule["freq"]
+    interval = rule.get("interval", 1)
+    period = {"hourly": "hour", "daily": "day", "weekly": "week", "monthly": "month", "yearly": "year"}[freq]
+    by_day = rule.get("byDay")
+    time_written = False
+
+    if rule.get("timesPer"):
+        if r.random() < 0.6:
+            vi.number(s, rule["timesPer"])
+            s.add("lần", "TIMES")
+            s.add(r.choice(["một", "mỗi", "/", "mỗi"]), "RECUR")
+            s.add(r.choice(vi.UNIT_WORDS[period][:1]), "UNIT")
+        else:
+            s.add(r.choice(vi.UNIT_WORDS[period][:1]), "UNIT")
+            vi.number(s, rule["timesPer"])
+            s.add("lần", "TIMES")
+    elif by_day in (DAY_CODES[:5], DAY_CODES[5:]) and interval == 1 and "bySetPos" not in rule:
+        group = "weekday" if by_day == DAY_CODES[:5] else "weekend"
+        # "cuối tuần" alone is one weekend; the series needs its marker. A
+        # bounded weekday series keeps it too so the bound reads as a span.
+        bounded = any(key in rule for key in ("start", "until", "span", "count", "except"))
+        if group == "weekend" or bounded or r.random() < 0.7:
+            s.add(r.choice(["mỗi", "các", "hàng", "vào các"]), "RECUR")
+        s.add(r.choice(vi.DAY_GROUPS[group]), "DAYGROUP")
+    elif rule.get("bySetPos"):
+        vi.weekday(s, by_day[0])
+        position = rule["bySetPos"][0]
+        if position == -1:
+            s.add(r.choice(["cuối cùng", "cuối"]), "ORD")
+        elif position == 1:
+            s.add(r.choice(["đầu tiên", "đầu", "thứ nhất"]), "ORD")
+        else:
+            s.add(f"thứ {position}" if r.random() < 0.5 else f"thứ {vi.DAY_WORDS[position - 2]}", "ORD")
+        s.add(r.choice(["hàng", "mỗi", "của mỗi"]), "RECUR")
+        s.add("tháng", "UNIT")
+    elif rule.get("byMonthDay") and freq == "monthly":
+        days = rule["byMonthDay"]
+        if r.random() < 0.5:
+            for index, day in enumerate(days):
+                if index:
+                    s.add(r.choice(["và", ","]), "JOIN")
+                elif r.random() < 0.8:
+                    s.glue("ngày")
+                s.add(str(day), "DOM")
+            s.add(r.choice(["hàng", "mỗi", "hằng"]), "RECUR")
+            s.add("tháng", "UNIT")
+        else:
+            s.add(r.choice(["mỗi", "hàng"]), "RECUR")
+            s.add("tháng", "UNIT")
+            for index, day in enumerate(days):
+                if index:
+                    s.add(r.choice(["và", ","]), "JOIN")
+                elif r.random() < 0.8:
+                    s.glue(r.choice(["ngày", "vào ngày"]))
+                s.add(str(day), "DOM")
+    elif rule.get("byMonth"):
+        day, month = rule["byMonthDay"][0], rule["byMonth"][0]
+        if r.random() < 0.5:
+            vi.calendar(s, {"month": month, "day": day}, style=r.choice([0, 4]))
+            s.add(r.choice(["hàng", "mỗi"]), "RECUR")
+            s.add("năm", "UNIT")
+        else:
+            s.add(r.choice(["hàng", "mỗi"]), "RECUR")
+            s.add("năm", "UNIT")
+            if r.random() < 0.5:
+                s.glue("vào")
+            vi.calendar(s, {"month": month, "day": day}, style=r.choice([0, 4]))
+    elif by_day:
+        if r.random() < 0.65:
+            s.add(r.choice(["mỗi", "mỗi", "các", "hàng", "vào các", "vào mỗi"]), "RECUR")
+            vi.weekdays(s, by_day)
+        else:
+            vi.weekdays(s, by_day)
+            if time and r.random() < 0.5:
+                write_time(time, s, style, chat)
+                time_written = True
+            s.add(r.choice(["hàng", "mỗi"]), "RECUR")
+            s.add("tuần", "UNIT")
+    elif interval > 1:
+        if r.random() < 0.5:
+            s.add("mỗi", "RECUR")
+            vi.number(s, interval)
+            s.add(r.choice(vi.UNIT_WORDS[period][:1]), "UNIT")
+        elif interval == 2 and r.random() < 0.3:
+            s.add("cách", "RECUR")
+            s.add(r.choice(vi.UNIT_WORDS[period][:1]), "UNIT")
+        else:
+            vi.number(s, interval)
+            s.add(r.choice(vi.UNIT_WORDS[period][:1]), "UNIT")
+            s.add(r.choice(["một", "1"]), "RECUR")
+            s.add("lần", "RECUR")
+    else:
+        s.add(r.choice(["mỗi", "hàng", "hằng", "mỗi"]), "RECUR")
+        s.add(r.choice(vi.UNIT_WORDS[period][:1]), "UNIT")
+
+    if time and not time_written:
+        if r.random() < 0.6:
+            s.glue(r.choice(["lúc", "vào lúc", "vào"]))
+        write_time(time, s, style, chat)
+
+    if rule.get("start"):
+        s.add(r.choice(["bắt đầu từ", "kể từ", "từ", "tính từ"]), "BOUND_START")
+        render_date(rule["start"], s, style, chat)
+    if rule.get("until"):
+        until = rule["until"]
+        if until["kind"] == "calendarPeriod":
+            s.add(r.choice(["đến hết", "cho đến hết", "tới hết"]), "BOUND_END")
+            s.glue("tháng")
+            s.add(vi.month_name(r, until["month"]), "MONTH")
+        else:
+            s.add(r.choice(["đến", "cho đến", "tới"]), "BOUND_END")
+            render_date(until, s, style, chat)
+    if rule.get("span"):
+        s.add(r.choice(["trong", "trong vòng"]), "DUR")
+        vi.quantity_unit(s, rule["span"]["amount"], rule["span"]["unit"])
+    if rule.get("count"):
+        s.add(",", "JOIN", separator="")
+        vi.number(s, rule["count"])
+        s.add(r.choice(["lần", "buổi"]), "TIMES")
+    if rule.get("except"):
+        s.add(r.choice(["trừ", "ngoại trừ", "trừ", "không kể"]), "EXCEPT")
+        for value in rule["except"]:
+            render_date(value, s, style, chat)
+
+
+def write_time(time: dict, s: Sentence, style: int, chat: bool) -> None:
+    render_time(time, s, style, chat)

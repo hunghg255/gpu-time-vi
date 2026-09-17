@@ -3,32 +3,50 @@ import { createHash } from "node:crypto";
 import { createReadStream } from "node:fs";
 import { mkdir, readFile, stat, writeFile } from "node:fs/promises";
 import { createInterface } from "node:readline";
+import { fileURLToPath } from "node:url";
 import { promisify } from "node:util";
 
 import {
+  dayGroups,
+  dayParts,
   holidayNames,
-  month,
+  key,
+  lunarWords,
+  mentionsTime,
+  namedTimes,
+  nowWords,
   quantities,
-  unit,
-  weekday,
+  relativeDays,
 } from "../../core/src/lexicon.ts";
 
+// Borrowed Vietnamese prose for background text. Every borrowed token is
+// labelled O, so any sentence that could carry a time expression is dropped:
+// the lexicon's time words, spoken numbers, and time-shaped digits all go.
 const execute = promisify(execFile);
 const dataRoot = new URL("../data/", import.meta.url);
 const manifest = JSON.parse(
   await readFile(new URL("corpus.json", dataRoot), "utf8"),
 );
-const { url, filter, selection } = manifest.prose;
+const { url, language, filter, selection } = manifest.prose;
 const downloads = new URL("downloads/", dataRoot);
 const prose = new URL("prose/", dataRoot);
 const archive = new URL(url.slice(url.lastIndexOf("/") + 1), downloads);
 const sentences = new URL("sentences.txt", prose);
 
-const allowedQuantities = new Set<string>(filter.allowedQuantityWords);
-const timeWords = new Set<string>([
+const timePhrases = new Set<string>([
   ...filter.additionalTimeWords,
   ...Object.keys(holidayNames),
+  ...Object.keys(relativeDays),
+  ...Object.keys(dayParts),
+  ...Object.keys(dayGroups),
+  ...Object.keys(namedTimes),
+  ...nowWords,
+  ...lunarWords,
+  ...Object.keys(quantities),
 ]);
+const longest = Math.max(
+  ...[...timePhrases].map((phrase) => phrase.split(" ").length),
+);
 
 await Promise.all([
   mkdir(downloads, { recursive: true }),
@@ -37,52 +55,43 @@ await Promise.all([
 
 if (!(await exists(archive))) {
   console.log(`fetch ${url}`);
-  await execute("curl", ["-f", "-sS", "-L", url, "-o", archive.pathname]);
+  await execute("curl", ["-f", "-sS", "-L", url, "-o", fileURLToPath(archive)]);
 }
 
 const sha256 = await digest(archive);
 if (manifest.prose.sha256 !== sha256) {
   throw new Error(
-    `${archive.pathname} is sha256 ${sha256}, pinned ${manifest.prose.sha256}. Tatoeba rebuilds the export weekly; re-pin sha256 and retrievedAt in data/corpus.json to accept it.`,
+    `${fileURLToPath(archive)} is sha256 ${sha256}, pinned ${manifest.prose.sha256}. Tatoeba rebuilds the export weekly; re-pin sha256 and retrievedAt in data/corpus.json to accept it.`,
   );
 }
 
-// Numbers are kept: prose containing a plain number is exactly what teaches the
-// model that a digit is not automatically a time. Only time-shaped ones go.
-const TIME_SHAPED = [
-  /\d{1,2}\s*:\s*\d{2}/,
-  /\b\d{1,2}\s*(?:am|pm|a\.m|p\.m)\b/i,
-  /\b\d{1,2}\s*[\/.-]\s*\d{1,2}\b/,
-  /\b(?:19|20)\d{2}/,
-  /\b\d{1,3}(?:st|nd|rd|th)\b/i,
-];
-
-function timeLikeNumber(text: string): boolean {
-  return TIME_SHAPED.some((pattern) => pattern.test(text));
-}
+const TIME_SHAPED = filter.timeShapedNumberPatterns.map(
+  (pattern: string) => new RegExp(pattern, "iu"),
+);
 
 const seen = new Set<string>();
 const kept: string[] = [];
 const dropped = { digits: 0, shape: 0, length: 0, timeWord: 0, duplicate: 0 };
 let read = 0;
 
-const decompress = spawn("bunzip2", ["-dc", archive.pathname], {
+const decompress = spawn("bunzip2", ["-dc", fileURLToPath(archive)], {
   stdio: ["ignore", "pipe", "inherit"],
 });
 for await (const line of createInterface({
   input: decompress.stdout,
   crlfDelay: Infinity,
 })) {
-  const [, language, text] = line.split("\t");
-  if (language !== "eng" || !text) continue;
+  const [, lang, raw] = line.split("\t");
+  if (lang !== language || !raw) continue;
+  const text = raw.normalize("NFC").trim();
   read++;
 
-  if (timeLikeNumber(text)) dropped.digits++;
+  if (TIME_SHAPED.some((pattern) => pattern.test(text))) dropped.digits++;
   else if (!/^\p{Lu}[\p{L}\p{M}\d ,.;:'"!?()-]*[.!?]$/u.test(text))
     dropped.shape++;
   else if (!withinLength(text)) dropped.length++;
   else if (hasTimeWord(text)) dropped.timeWord++;
-  else if (!seen.add(text.toLowerCase())) dropped.duplicate++;
+  else if (!seen.add(key(text))) dropped.duplicate++;
   else kept.push(text);
 }
 
@@ -96,7 +105,7 @@ console.log(`read ${read} sentences`);
 for (const [reason, count] of Object.entries(dropped))
   console.log(`  drop ${reason}: ${count}`);
 console.log(
-  `kept ${kept.length}, wrote ${selected.length} to ${sentences.pathname}`,
+  `kept ${kept.length}, wrote ${selected.length} to ${fileURLToPath(sentences)}`,
 );
 
 function withinLength(text: string) {
@@ -110,19 +119,16 @@ function withinLength(text: string) {
 }
 
 function hasTimeWord(text: string) {
-  for (const token of text.toLowerCase().match(/[\p{L}][\p{L}'’]*/gu) ?? []) {
-    // Apostrophes stay in the token for "o'clock", which let 88 possessives
-    // ("a full day's teaching", "a few minutes' walk") through unsplit.
-    const normalized = token.replace(/’/g, "'");
-    for (const word of [normalized, ...normalized.split("'")]) {
-      if (Object.hasOwn(quantities, word) && !allowedQuantities.has(word))
+  if (mentionsTime(text)) return true;
+  const words = key(text)
+    .split(/[^\p{L}\p{N}]+/u)
+    .filter((word) => word !== "");
+  return words.some((_, index) => {
+    for (let length = 1; length <= longest; length++)
+      if (timePhrases.has(words.slice(index, index + length).join(" ")))
         return true;
-      if (timeWords.has(word) || timeWords.has(word.replace(/s$/, "")))
-        return true;
-      if (weekday(word) || month(word) || unit(word)) return true;
-    }
-  }
-  return false;
+    return false;
+  });
 }
 
 async function exists(target: URL) {

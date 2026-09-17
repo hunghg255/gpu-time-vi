@@ -862,7 +862,9 @@ function compileClause(tokens: Token[], diagnostics: Diagnostic[]): Clause {
       : undefined;
     const loose =
       quantity.approximate ||
-      (before?.role === Role.O && approximately.has(before.text));
+      (before !== undefined &&
+        skipped.has(before.role) &&
+        approximately.has(before.text));
     const { duration: amount } = quantity;
     clause.shift = {
       amount: amount.amount,
@@ -1004,7 +1006,11 @@ function compileClause(tokens: Token[], diagnostics: Diagnostic[]): Clause {
       }
       case Role.UNIT: {
         // "tuần 3 lần", "mỗi tuần", "hàng ngày", "tháng sau"
-        if (reader.role(1) === Role.NUM && reader.role(2) === Role.TIMES) {
+        if (
+          !rule.active &&
+          reader.role(1) === Role.NUM &&
+          reader.role(2) === Role.TIMES
+        ) {
           const unit = readUnit(reader.take());
           const value = segmentNumber(reader.take());
           reader.take();
@@ -1231,6 +1237,12 @@ function compileClause(tokens: Token[], diagnostics: Diagnostic[]): Clause {
         "A recurrence needs a period or a day.",
       );
     if (count) recurrence.count = count.value;
+    // "ngày thường trong 2 tháng": a duration on a rule the day group implied
+    // bounds the series, as it would after "mỗi".
+    if (!rule.active && clause.duration && !clause.time) {
+      rule.span = clause.duration;
+      delete clause.duration;
+    }
     if (rule.start) recurrence.start = rule.start;
     if (rule.until) recurrence.until = rule.until;
     if (rule.span) recurrence.span = rule.span;

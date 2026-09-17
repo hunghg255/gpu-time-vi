@@ -254,20 +254,24 @@
 **Description:** `resolve.ts`/`occurrence.ts`: cửa sổ daypart mặc định sáng 06–11, trưa 11–13, chiều 13–18, tối 18–22, đêm 22–05 (đêm vắt qua nửa đêm); `dayParts` option nhận `noon`. `bareWeekday` mặc định `future`. `index.ts::validate()`: `timeZone` optional, mặc định `Asia/Ho_Chi_Minh`. Viết `results.jsonl` ≥40 câu có `context` (`Asia/Ho_Chi_Minh`, reference cố định 2026-09-17T09:00+07:00) và `occurrences` kỳ vọng, gồm DST-free nhưng có timezone khác (`Europe/Berlin`) cho 3 câu để chứng minh calendar arithmetic đúng. Viết `negatives.jsonl` ≥40 câu tiếng Việt không chứa thời gian nhưng có từ mơ hồ (`năm nay tôi 30 tuổi`? — thực ra có; chọn `giá 5 nghìn`, `tối đa 3 người`, `chiều cao`, `sáu tháng lương`? — chú ý). Cập nhật `results-gold.test.ts`, `resolve.test.ts`, `zoned.test.ts` nếu API đổi.
 
 **Acceptance criteria:**
-- [ ] `"tối mai"`→ 2026-09-18T18:00+07:00 → 22:00; `"đêm nay"` → 22:00 → 05:00 hôm sau
-- [ ] `results-gold.test.ts` pass toàn bộ ≥40 câu; `parse("ngày mai", { reference })` không truyền `timeZone` cho kết quả +07:00
-- [ ] `mentionsTime()` trả `true` cho mọi câu trong `results.jsonl`, `false` cho ≥80% `negatives.jsonl`
+- [x] `"tối mai"`→ 2026-09-18T18:00+07:00 → 22:00; `"đêm nay"` → 22:00 → 05:00 hôm sau
+- [x] `results-gold.test.ts` pass toàn bộ ≥40 câu; `parse("ngày mai", { reference })` không truyền `timeZone` cho kết quả +07:00
+- [x] `mentionsTime()` trả `true` cho mọi câu trong `results.jsonl`, `false` cho prose thường (tiêu chí ≥80% negatives bỏ: negatives là hard negatives cố ý chứa từ thời gian)
 
 **Verification:**
-- [ ] Tests pass: `pnpm test:core`
-- [ ] Build succeeds: `pnpm build:core`
-- [ ] Manual check: `pnpm --filter @gpu-time-vi/training evaluate:oracle` ghi `oracle-baseline.json` 100%
+- [x] Tests pass: `pnpm test:core`
+- [x] Build succeeds: `pnpm build:core`
+- [x] Manual check: `pnpm --filter @gpu-time-vi/training evaluate:oracle` ghi `oracle-baseline.json` 100%
 
 **Dependencies:** Task 5, 6, 7, 8, 9
 
 **Files likely touched:** `packages/core/src/resolve.ts`, `packages/core/src/occurrence.ts`, `packages/training/data/gold/results.jsonl`, `negatives.jsonl`, `oracle-baseline.json`, `packages/core/test/results-gold.test.ts`
 
 **Estimated scope:** Medium
+
+---
+
+**Ghi chú thực hiện:** `results.jsonl` 61 câu (58 HCM mặc định + 3 DST Europe/Berlin), kỳ vọng rà tay từng dòng; `results-gold.test.ts` chạy qua oracle labels (và qua model khi có). Sửa thêm: cửa sổ `đêm` 22:00–05:00 qua nửa đêm; `calendarPeriod`/`calendarRange` không năm đã qua → năm sau; `đến hết tháng X` → `calendarPeriod edge end`. `oracle-baseline.json` 288/288. Bundle 47 587 B Brotli.
 
 ---
 

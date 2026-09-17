@@ -1,0 +1,28 @@
+{"id":"adversarial-001","family":"năm","text":"họp lúc năm giờ chiều","schedule":{"clauses":[{"time":{"start":{"hour":17,"minute":0}}}]}}
+{"id":"adversarial-002","family":"năm","text":"tháng năm năm nay rất nóng","schedule":{"clauses":[{"date":{"kind":"calendarPeriod","month":5,"modifier":"this"}}]}}
+{"id":"adversarial-003","family":"năm","text":"năm giờ sáng thứ năm tuần sau","schedule":{"clauses":[{"date":{"kind":"weekday","days":["TH"],"modifier":"next"},"time":{"start":{"hour":5,"minute":0}}}]}}
+{"id":"adversarial-004","family":"năm","text":"cả năm chỉ được nghỉ năm ngày dịp Tết","schedule":{"clauses":[{"date":{"kind":"holiday","name":"tet"},"duration":{"amount":5,"unit":"day"}}]}}
+{"id":"adversarial-005","family":"chiều","text":"chiều thứ năm lúc hai giờ","schedule":{"clauses":[{"date":{"kind":"weekday","days":["TH"]},"time":{"start":{"hour":14,"minute":0}}}]}}
+{"id":"adversarial-006","family":"chiều","text":"chiều cao 1m70, hẹn chiều mai","schedule":{"clauses":[{"date":{"kind":"relativeDay","offset":1},"time":{"start":{"part":"afternoon"}}}]}}
+{"id":"adversarial-007","family":"tối","text":"tối đa 5 người, tối nay 7h","schedule":{"clauses":[{"date":{"kind":"relativeDay","offset":0},"time":{"start":{"hour":19,"minute":0}}}]}}
+{"id":"adversarial-008","family":"sáng","text":"sáng tạo hơn vào sáng thứ hai","schedule":{"clauses":[{"date":{"kind":"weekday","days":["MO"]},"time":{"start":{"part":"morning"}}}]}}
+{"id":"adversarial-009","family":"mai","text":"hoa mai nở, mai mình đi chợ","schedule":{"clauses":[{"date":{"kind":"relativeDay","offset":1}}]}}
+{"id":"adversarial-010","family":"thứ","text":"thứ này để thứ sáu tuần sau bàn","schedule":{"clauses":[{"date":{"kind":"weekday","days":["FR"],"modifier":"next"}}]}}
+{"id":"adversarial-011","family":"tư","text":"tư vấn lúc 4h chiều thứ tư","schedule":{"clauses":[{"date":{"kind":"weekday","days":["WE"]},"time":{"start":{"hour":16,"minute":0}}}]}}
+{"id":"adversarial-012","family":"ngày","text":"ngày càng bận, ngày mai còn bận hơn","schedule":{"clauses":[{"date":{"kind":"relativeDay","offset":1}}]}}
+{"id":"adversarial-013","family":"giờ","text":"giờ giấc thất thường, họp 3h chiều","schedule":{"clauses":[{"time":{"start":{"hour":15,"minute":0}}}]}}
+{"id":"adversarial-014","family":"số","text":"phòng 302 lúc 3h chiều","schedule":{"clauses":[{"time":{"start":{"hour":15,"minute":0}}}]}}
+{"id":"adversarial-015","family":"số","text":"gọi 0912 345 678 trước 5 giờ chiều","schedule":{"clauses":[{"time":{"start":{"hour":0,"minute":0},"end":{"hour":17,"minute":0},"open":"start"}}]}}
+{"id":"adversarial-016","family":"số","text":"giá 150k, giao hàng ngày mai","schedule":{"clauses":[{"date":{"kind":"relativeDay","offset":1}}]}}
+{"id":"adversarial-017","family":"số","text":"đơn 2026 giao 15/3","schedule":{"clauses":[{"date":{"kind":"calendar","month":3,"day":15}}]}}
+{"id":"adversarial-018","family":"số","text":"số 15 đường 3/2, hẹn 15/3","schedule":{"clauses":[{"date":{"kind":"calendar","month":3,"day":15}}]}}
+{"id":"adversarial-019","family":"số","text":"tỉ số 3-1 trận tối qua","schedule":{"clauses":[{"date":{"kind":"relativeDay","offset":-1},"time":{"start":{"part":"evening"}}}]}}
+{"id":"adversarial-020","family":"qua","text":"đi qua cầu rồi rẽ trái, hôm qua tôi làm vậy","schedule":{"clauses":[{"date":{"kind":"relativeDay","offset":-1}}]}}
+{"id":"adversarial-021","family":"kia","text":"bên kia đường, ngày kia gặp","schedule":{"clauses":[{"date":{"kind":"relativeDay","offset":2}}]}}
+{"id":"adversarial-022","family":"lần","text":"lần này họp mỗi thứ hai","schedule":{"clauses":[{"recurrence":{"freq":"weekly","interval":1,"byDay":["MO"]}}]}}
+{"id":"adversarial-023","family":"trước","text":"trước mặt mọi người, 3 ngày trước anh đã nói","schedule":{"clauses":[{"shift":{"amount":3,"unit":"day","direction":"before"}}]}}
+{"id":"adversarial-024","family":"sau","text":"sau lưng ai đó, 2 ngày sau mới biết","schedule":{"clauses":[{"shift":{"amount":2,"unit":"day","direction":"after"}}]}}
+{"id":"adversarial-025","family":"đầu","text":"đầu tư từ đầu tháng 3","schedule":{"clauses":[{"date":{"kind":"calendarPeriod","month":3,"edge":"start"}}]}}
+{"id":"adversarial-026","family":"cuối","text":"cuối cùng cũng xong, cuối tuần đi chơi","schedule":{"clauses":[{"date":{"kind":"dayGroup","group":"weekend"}}]}}
+{"id":"adversarial-027","family":"mixed","text":"3pm mai ok?","schedule":{"clauses":[{"date":{"kind":"relativeDay","offset":1},"time":{"start":{"hour":15,"minute":0}}}]}}
+{"id":"adversarial-028","family":"mixed","text":"meeting 10am thứ hai","schedule":{"clauses":[{"date":{"kind":"weekday","days":["MO"]},"time":{"start":{"hour":10,"minute":0}}}]}}

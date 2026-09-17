@@ -19,7 +19,7 @@ parser.add_argument(
 args = parser.parse_args()
 rng = random.Random(args.seed)
 args.out.parent.mkdir(parents=True, exist_ok=True)
-with args.out.open("w") as output:
+with args.out.open("w", encoding="utf-8") as output:
     for index in range(args.count):
         spec = sample(rng)
         sentence = Sentence(rng)

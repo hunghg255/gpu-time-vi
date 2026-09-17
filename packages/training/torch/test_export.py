@@ -37,7 +37,7 @@ class ExportTests(unittest.TestCase):
             self.addCleanup(patcher.stop)
 
     def tree(self, directory):
-        return {str(path.relative_to(directory)): path.read_bytes()
+        return {path.relative_to(directory).as_posix(): path.read_bytes()
                 for path in directory.rglob("*") if path.is_file()}
 
     def test_cli_defaults_follow_the_weights_destination(self):
@@ -97,7 +97,10 @@ class ExportTests(unittest.TestCase):
     def test_candidate_outputs_reject_aliases_and_snapshot_collisions(self):
         target = self.root / "candidate.ts"
         alias = self.root / "alias"
-        alias.symlink_to(self.training / "active", target_is_directory=True)
+        try:
+            alias.symlink_to(self.training / "active", target_is_directory=True)
+        except OSError as error:  # Windows without the symlink privilege
+            self.skipTest(f"symlinks unavailable: {error}")
         for report in (target, alias / "export-report.json", self.root / "candidate.ts.sources/report.json"):
             with self.subTest(report=report):
                 with self.assertRaises(ValueError):
