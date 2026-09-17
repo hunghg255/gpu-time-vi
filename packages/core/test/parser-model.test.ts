@@ -130,7 +130,7 @@ describe.skipIf(!promotedModel)("parser model", () => {
   it("ignores boundary whitespace during inference while preserving every source token", async () => {
     const parser = await defineParser({ backend: "cpu", tokens: true });
     try {
-      const source = " \ttoday\n";
+      const source = " \thôm nay\n";
       const plain = await parser.parse("hôm nay");
       const padded = await parser.parse(source);
       expect(padded.expressions[0].schedule).toEqual(
