@@ -22,23 +22,23 @@ Múi giờ mặc định là `Asia/Ho_Chi_Minh`; truyền `timeZone` để đổ
 
 ## Hỗ trợ
 
-| Loại                | Ví dụ                                                                                                                      |
-| ------------------- | -------------------------------------------------------------------------------------------------------------------------- |
-| Giờ                 | `3 giờ chiều`, `15h30`, `3 rưỡi`, `7 giờ kém 15 tối`, `3pm`, `ba giờ chiều`                                                |
-| Buổi                | `sáng mai`, `tối nay`, `chiều thứ sáu`, `nửa đêm`                                                                          |
-| Ngày tương đối      | `hôm nay`, `mai`, `ngày kia`, `hôm qua`, `tuần sau`, `cuối tháng`, `năm ngoái`                                             |
-| Thứ                 | `thứ hai`, `T2`, `CN`, `thứ hai tuần sau`, `cuối tuần này`                                                                 |
-| Ngày dương lịch     | `ngày 15 tháng 3`, `15/3/2026`, `2026-03-15`, `đầu tháng 3`, `từ 10 đến 15 tháng 3`                                        |
-| Âm lịch             | `mùng 1 Tết`, `rằm tháng giêng`, `15/8 âm lịch`, `23 tháng chạp`, `tháng 4 nhuận`, `năm Bính Ngọ`, `giờ Ngọ` (lịch Việt Nam, UTC+7) |
-| Ngày lễ             | `Tết`, `giao thừa`, `Trung thu`, `Giỗ tổ`, `Giáng sinh`, `Quốc khánh`, `Tết Bính Ngọ`, `Trung thu 2027`                     |
-| Dịch chuyển         | `2 tiếng nữa`, `cách đây 3 ngày`, `1 tiếng 30 phút nữa`, `2 ngày sau Tết`                                                  |
-| Thời lượng          | `trong 2 tiếng`, `kéo dài 2 tuần`                                                                                          |
-| Lặp                 | `mỗi thứ hai`, `hàng ngày lúc 7h`, `2 tuần một lần`, `3 lần một tuần`, `ngày 15 hàng tháng`, `thứ sáu cuối cùng mỗi tháng` |
-| Giới hạn / loại trừ | `mỗi thứ hai đến hết tháng 12`, `kể từ tuần sau`, `trong 10 tuần`, `6 lần`, `trừ chủ nhật`                                 |
-| Khoảng giờ          | `từ 9h đến 17h`, `9h-17h`, `sau 6 giờ tối`, `trước 9h sáng`                                                                |
-| Nhiều mệnh đề       | `thứ hai 9h và thứ tư 10h`                                                                                                 |
+| Loại                | Ví dụ                                                                                                                                        |
+| ------------------- | -------------------------------------------------------------------------------------------------------------------------------------------- |
+| Giờ                 | `3 giờ chiều`, `15h30`, `3 rưỡi`, `7 giờ kém 15 tối`, `3pm`, `ba giờ chiều`                                                                  |
+| Buổi                | `sáng mai`, `tối nay`, `chiều thứ sáu`, `nửa đêm`                                                                                            |
+| Ngày tương đối      | `hôm nay`, `mai`, `ngày kia`, `hôm qua`, `tuần sau`, `cuối tháng`, `năm ngoái`                                                               |
+| Thứ                 | `thứ hai`, `T2`, `CN`, `thứ hai tuần sau`, `cuối tuần này`                                                                                   |
+| Ngày dương lịch     | `ngày 15 tháng 3`, `15/3/2026`, `2026-03-15`, `đầu tháng 3`, `từ 10 đến 15 tháng 3`                                                          |
+| Âm lịch             | `mùng 1 Tết`, `rằm tháng giêng`, `15/8 âm lịch`, `23 tháng chạp`, `tháng 4 nhuận`, `năm Bính Ngọ`, `giờ Ngọ` (lịch Việt Nam, UTC+7)          |
+| Ngày lễ             | `Tết`, `giao thừa`, `Trung thu`, `Giỗ tổ`, `Giáng sinh`, `Quốc khánh`, `Tết Bính Ngọ`, `Trung thu 2027`                                      |
+| Dịch chuyển         | `2 tiếng nữa`, `cách đây 3 ngày`, `1 tiếng 30 phút nữa`, `2 ngày sau Tết`                                                                    |
+| Thời lượng          | `trong 2 tiếng`, `kéo dài 2 tuần`                                                                                                            |
+| Lặp                 | `mỗi thứ hai`, `hàng ngày lúc 7h`, `2 tuần một lần`, `3 lần một tuần`, `ngày 15 hàng tháng`, `thứ sáu cuối cùng mỗi tháng`                   |
+| Giới hạn / loại trừ | `mỗi thứ hai đến hết tháng 12`, `kể từ tuần sau`, `trong 10 tuần`, `6 lần`, `trừ chủ nhật`                                                   |
+| Khoảng giờ          | `từ 9h đến 17h`, `9h-17h`, `sau 6 giờ tối`, `trước 9h sáng`                                                                                  |
+| Nhiều mệnh đề       | `thứ hai 9h và thứ tư 10h`                                                                                                                   |
 | Chat có dấu         | `hnay`, `hqua`, `bây h`, `tuần trc`, `weekend này`, `thứ2`, `t2 9h`, `thứ 8` (= chủ nhật), `30p`, `nửa tháng nữa`; `ok dc nha :))` quanh câu |
-| Giờ văn phòng       | `giờ hành chính` (08–17), `đầu giờ chiều` (13:00), `cuối giờ` (17:00), `giờ nghỉ trưa` (12–13)                              |
+| Giờ văn phòng       | `giờ hành chính` (08–17), `đầu giờ chiều` (13:00), `cuối giờ` (17:00), `giờ nghỉ trưa` (12–13)                                               |
 
 Toàn bộ quy ước nằm trong [`docs/vietnamese-time-expressions.md`](docs/vietnamese-time-expressions.md). Chưa hỗ trợ: tiếng Việt **không dấu**, câu tiếng Anh. Cố ý không gán giờ cho các cụm mơ hồ về lượng (`lát nữa`, `tí nữa`, `mai mốt`, `5h hơn`) và các viết tắt hai nghĩa (`bh`, `hn`, `th 3`, `dl`).
 

@@ -256,7 +256,11 @@ export const namedTimes: Record<string, "noon" | "midnight"> = {
 };
 const stems = "giáp ất bính đinh mậu kỷ canh tân nhâm quý".split(" ");
 const branches = "tý sửu dần mão thìn tỵ ngọ mùi thân dậu tuất hợi".split(" ");
-const branchVariants: Record<string, string> = { tí: "tý", mẹo: "mão", tị: "tỵ" };
+const branchVariants: Record<string, string> = {
+  tí: "tý",
+  mẹo: "mão",
+  tị: "tỵ",
+};
 
 /**
  * "Bính Ngọ" → 42, its position in the sexagenary cycle (0 = Giáp Tý).
@@ -288,7 +292,10 @@ export const namedWindows: Record<
     "đầu giờ,đầu giờ sáng=8;cuối giờ sáng=11;đầu giờ chiều=13;" +
     "cuối giờ,cuối giờ chiều,cuối giờ làm,hết giờ làm=17;" +
     branches
-      .map((name, index) => `giờ ${name}=${(23 + 2 * index) % 24}-${(1 + 2 * index) % 24}`)
+      .map(
+        (name, index) =>
+          `giờ ${name}=${(23 + 2 * index) % 24}-${(1 + 2 * index) % 24}`,
+      )
       .join(";")
   )
     .split(";")
@@ -387,7 +394,10 @@ export function holiday(text: string): HolidayName | undefined {
   // to a holiday, which is always its next occurrence.
   const word = key(text)
     .replace(/^(ngày|lễ|dịp|kỳ nghỉ|nghỉ)\s+/, "")
-    .replace(/\s+(này|nay|năm nay|năm này|tới|sắp tới|sau|năm sau|năm tới)$/, "");
+    .replace(
+      /\s+(này|nay|năm nay|năm này|tới|sắp tới|sau|năm sau|năm tới)$/,
+      "",
+    );
   return holidayNames[word];
 }
 

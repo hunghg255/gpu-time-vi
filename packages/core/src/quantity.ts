@@ -102,8 +102,7 @@ export function readDuration(
     // units are exact.
     const half = amount === 0.5 ? halves[durationUnit] : undefined;
     if (half) components.push(half);
-    else if (!Number.isInteger(amount) && !clockUnits.has(durationUnit))
-      return;
+    else if (!Number.isInteger(amount) && !clockUnits.has(durationUnit)) return;
     else components.push({ amount, unit: durationUnit });
     if (tokens[next]?.label !== Role.NUM) break;
     const following = readNumber(tokens, next).next;

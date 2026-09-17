@@ -36,7 +36,10 @@ export const examples: { use: string; text: string }[] = [
   { use: "Cuối tháng", text: "cuối tháng này" },
   { use: "Chuyến đi", text: "từ 4/9 đến 8/9" },
   { use: "Nghỉ lễ", text: "nghỉ từ 30/4 đến hết 1/5" },
-  { use: "Nhiều ngày, có giờ", text: "từ 17/8/2027 2 giờ chiều đến 19/8/2027 2 giờ chiều" },
+  {
+    use: "Nhiều ngày, có giờ",
+    text: "từ 17/8/2027 2 giờ chiều đến 19/8/2027 2 giờ chiều",
+  },
   // Lặp lại
   { use: "Họp hằng ngày", text: "mỗi ngày thường lúc 9 giờ sáng" },
   { use: "Lịch học", text: "thứ 2 4 6 lúc 6h chiều" },

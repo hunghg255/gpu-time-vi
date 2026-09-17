@@ -10,7 +10,7 @@
 {"id": "result-010", "text": "tối thứ sáu", "context": {"reference": "2026-09-17T09:00:00+07:00"}, "occurrences": [{"start": "2026-09-18T18:00:00+07:00", "end": "2026-09-18T22:00:00+07:00", "allDay": false}]}
 {"id": "result-011", "text": "thứ hai tuần sau", "context": {"reference": "2026-09-17T09:00:00+07:00"}, "occurrences": [{"start": "2026-09-21T00:00:00+07:00", "allDay": true}]}
 {"id": "result-012", "text": "thứ sáu tuần này", "context": {"reference": "2026-09-17T09:00:00+07:00"}, "occurrences": [{"start": "2026-09-18T00:00:00+07:00", "allDay": true}]}
-{"id": "result-013", "text": "thứ ba tuần trước", "context": {"reference": "2026-09-17T09:00:00+07:00"}, "occurrences": [{"start": "2026-09-15T00:00:00+07:00", "allDay": true}]}
+{"id": "result-013", "text": "thứ ba tuần trước", "context": {"reference": "2026-09-17T09:00:00+07:00"}, "occurrences": [{"start": "2026-09-08T00:00:00+07:00", "allDay": true}]}
 {"id": "result-014", "text": "cn tuần sau", "context": {"reference": "2026-09-17T09:00:00+07:00"}, "occurrences": [{"start": "2026-09-27T00:00:00+07:00", "allDay": true}]}
 {"id": "result-015", "text": "tuần sau", "context": {"reference": "2026-09-17T09:00:00+07:00"}, "occurrences": [{"start": "2026-09-21T00:00:00+07:00", "end": "2026-09-28T00:00:00+07:00", "allDay": true}]}
 {"id": "result-016", "text": "tháng sau", "context": {"reference": "2026-09-17T09:00:00+07:00"}, "occurrences": [{"start": "2026-10-01T00:00:00+07:00", "end": "2026-11-01T00:00:00+07:00", "allDay": true}]}

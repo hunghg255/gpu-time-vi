@@ -16,8 +16,7 @@ const worker = {
   batches: [{ ms: 100 }, { ms: 900 }],
   outputs: [{ id: "result-001", occurrences: [occurrence] }],
 };
-const basename = (path: unknown) =>
-  String(path).split(/[\\/]/).pop() as string;
+const basename = (path: unknown) => String(path).split(/[\\/]/).pop() as string;
 
 it.each([40_000, 50_001])(
   "reports the actual release budget for a %i-byte artifact",
@@ -37,7 +36,12 @@ it.each([40_000, 50_001])(
       "size.json": {
         budgetBrotliBytes: 50_000,
         results: [
-          { bytes, gzipBytes: bytes, brotliBytes: bytes, weightsBrotliBytes: 1 },
+          {
+            bytes,
+            gzipBytes: bytes,
+            brotliBytes: bytes,
+            weightsBrotliBytes: 1,
+          },
         ],
       },
       "model-structure.json": {
@@ -65,7 +69,11 @@ it.each([40_000, 50_001])(
     vi.mocked(readFile).mockImplementation(async (path) => {
       const name = basename(path);
       if (name === "results.jsonl")
-        return JSON.stringify({ id: "result-001", context: {}, occurrences: [occurrence] });
+        return JSON.stringify({
+          id: "result-001",
+          context: {},
+          occurrences: [occurrence],
+        });
       if (!(name in artifacts)) throw new Error(`unexpected read ${name}`);
       return JSON.stringify(artifacts[name]);
     });

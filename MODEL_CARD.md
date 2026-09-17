@@ -41,7 +41,7 @@ Parity is a separate gate: 512 fixtures compare decoded int6 inference against P
 - Tone marks are required. The tokenizer keeps `sáu` and `sau` apart through the word hash; without marks they are the same word.
 - `sau` and `trước` are read as shifts before a quantity and as modifiers after a unit; sentences that break that order can flip meaning.
 - `cuối tuần` alone is one weekend; the series needs `mỗi`/`hàng`. `tháng giêng` and `tháng chạp` are lunar; `tháng 1` and `tháng 12` are solar. `mùng X hàng tháng` repeats on the solar calendar with a `lunar-ignored` warning.
-- A bare weekday resolves to the next such day, `thứ ba tuần trước` to the most recent Tuesday, and a clock alone that has passed today to tomorrow, following gpu-time's conventions.
+- A bare weekday resolves to the next such day, `thứ ba tuần trước` to the Tuesday of the previous calendar week (Monday-first), and a clock alone that has passed today to tomorrow, following gpu-time's conventions.
 - Lunar conversion follows the UTC+7 rule of the official Vietnamese calendar; Tết 2030 is 2 February in Vietnam and 3 February in China.
 - The middle of a year (`giữa năm`) has no fixed date and returns `unsupported-edge`.
 - Ambiguous numeric dates read day first (`3/4` is 3 April) unless the caller sets `dateOrder: "MDY"`.

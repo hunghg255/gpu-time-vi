@@ -15,9 +15,7 @@
           "maxItems": 128
         }
       },
-      "required": [
-        "clauses"
-      ],
+      "required": ["clauses"],
       "additionalProperties": false
     },
     "Clause": {
@@ -48,41 +46,31 @@
           "properties": {
             "date": {}
           },
-          "required": [
-            "date"
-          ]
+          "required": ["date"]
         },
         {
           "properties": {
             "time": {}
           },
-          "required": [
-            "time"
-          ]
+          "required": ["time"]
         },
         {
           "properties": {
             "shift": {}
           },
-          "required": [
-            "shift"
-          ]
+          "required": ["shift"]
         },
         {
           "properties": {
             "duration": {}
           },
-          "required": [
-            "duration"
-          ]
+          "required": ["duration"]
         },
         {
           "properties": {
             "recurrence": {}
           },
-          "required": [
-            "recurrence"
-          ]
+          "required": ["recurrence"]
         }
       ]
     },
@@ -96,9 +84,7 @@
               "const": "now"
             }
           },
-          "required": [
-            "kind"
-          ],
+          "required": ["kind"],
           "additionalProperties": false
         },
         {
@@ -114,10 +100,7 @@
               "maximum": 10000
             }
           },
-          "required": [
-            "kind",
-            "offset"
-          ],
+          "required": ["kind", "offset"],
           "additionalProperties": false
         },
         {
@@ -143,10 +126,7 @@
               "$ref": "#/$defs/Distance"
             }
           },
-          "required": [
-            "kind",
-            "days"
-          ],
+          "required": ["kind", "days"],
           "additionalProperties": false
         },
         {
@@ -163,11 +143,7 @@
               "$ref": "#/$defs/Weekday"
             }
           },
-          "required": [
-            "kind",
-            "from",
-            "to"
-          ],
+          "required": ["kind", "from", "to"],
           "additionalProperties": false
         },
         {
@@ -179,10 +155,7 @@
             },
             "group": {
               "type": "string",
-              "enum": [
-                "weekday",
-                "weekend"
-              ]
+              "enum": ["weekday", "weekend"]
             },
             "modifier": {
               "$ref": "#/$defs/Modifier"
@@ -191,10 +164,7 @@
               "$ref": "#/$defs/Distance"
             }
           },
-          "required": [
-            "kind",
-            "group"
-          ],
+          "required": ["kind", "group"],
           "additionalProperties": false
         },
         {
@@ -221,9 +191,7 @@
               "const": "calendar"
             }
           },
-          "required": [
-            "kind"
-          ]
+          "required": ["kind"]
         },
         {
           "type": "object",
@@ -243,11 +211,7 @@
               "description": "Both ends are lunar dates."
             }
           },
-          "required": [
-            "kind",
-            "from",
-            "to"
-          ],
+          "required": ["kind", "from", "to"],
           "additionalProperties": false
         },
         {
@@ -277,16 +241,10 @@
             },
             "edge": {
               "type": "string",
-              "enum": [
-                "start",
-                "end"
-              ]
+              "enum": ["start", "end"]
             }
           },
-          "required": [
-            "kind",
-            "month"
-          ],
+          "required": ["kind", "month"],
           "additionalProperties": false
         },
         {
@@ -307,17 +265,10 @@
             },
             "edge": {
               "type": "string",
-              "enum": [
-                "start",
-                "end"
-              ]
+              "enum": ["start", "end"]
             }
           },
-          "required": [
-            "kind",
-            "unit",
-            "modifier"
-          ],
+          "required": ["kind", "unit", "modifier"],
           "additionalProperties": false
         },
         {
@@ -345,12 +296,7 @@
               "type": "boolean"
             }
           },
-          "required": [
-            "kind",
-            "ordinal",
-            "day",
-            "of"
-          ],
+          "required": ["kind", "ordinal", "day", "of"],
           "additionalProperties": false
         },
         {
@@ -374,10 +320,7 @@
               "description": "\"Tết Bính Ngọ\": a sexagenary year, as on lunar dates."
             }
           },
-          "required": [
-            "kind",
-            "name"
-          ],
+          "required": ["kind", "name"],
           "additionalProperties": false
         },
         {
@@ -410,32 +353,18 @@
               "description": "A sexagenary (can chi) year such as \"Bính Ngọ\": its position in the 60-year cycle, 0 = Giáp Tý. Resolves to the nearest such year around the reference (the coming one on a tie), unless `year` is also given."
             }
           },
-          "required": [
-            "kind"
-          ],
+          "required": ["kind"],
           "additionalProperties": false
         }
       ]
     },
     "Weekday": {
       "type": "string",
-      "enum": [
-        "MO",
-        "TU",
-        "WE",
-        "TH",
-        "FR",
-        "SA",
-        "SU"
-      ]
+      "enum": ["MO", "TU", "WE", "TH", "FR", "SA", "SU"]
     },
     "Modifier": {
       "type": "string",
-      "enum": [
-        "this",
-        "next",
-        "last"
-      ]
+      "enum": ["this", "next", "last"]
     },
     "Distance": {
       "type": "integer",
@@ -464,15 +393,7 @@
     },
     "Unit": {
       "type": "string",
-      "enum": [
-        "second",
-        "minute",
-        "hour",
-        "day",
-        "week",
-        "month",
-        "year"
-      ]
+      "enum": ["second", "minute", "hour", "day", "week", "month", "year"]
     },
     "MonthRef": {
       "anyOf": [
@@ -494,9 +415,7 @@
               "maximum": 12
             }
           },
-          "required": [
-            "kind"
-          ],
+          "required": ["kind"],
           "additionalProperties": false
         },
         {
@@ -508,20 +427,13 @@
             },
             "unit": {
               "type": "string",
-              "enum": [
-                "month",
-                "year"
-              ]
+              "enum": ["month", "year"]
             },
             "modifier": {
               "$ref": "#/$defs/Modifier"
             }
           },
-          "required": [
-            "kind",
-            "unit",
-            "modifier"
-          ],
+          "required": ["kind", "unit", "modifier"],
           "additionalProperties": false
         }
       ]
@@ -566,9 +478,7 @@
           "description": "The bound is open in this direction. The opposite edge is a floor, not a real edge: \"after 6pm\" is `{ start: 18:00, open: \"end\" }`, which a reader can tell apart from \"at 6pm\", `{ start: 18:00 }`."
         }
       },
-      "required": [
-        "start"
-      ],
+      "required": ["start"],
       "additionalProperties": false
     },
     "ClockTime": {
@@ -592,10 +502,7 @@
               "maximum": 59
             }
           },
-          "required": [
-            "hour",
-            "minute"
-          ],
+          "required": ["hour", "minute"],
           "additionalProperties": false
         },
         {
@@ -603,15 +510,10 @@
           "properties": {
             "named": {
               "type": "string",
-              "enum": [
-                "noon",
-                "midnight"
-              ]
+              "enum": ["noon", "midnight"]
             }
           },
-          "required": [
-            "named"
-          ],
+          "required": ["named"],
           "additionalProperties": false
         },
         {
@@ -621,29 +523,18 @@
               "$ref": "#/$defs/DayPart"
             }
           },
-          "required": [
-            "part"
-          ],
+          "required": ["part"],
           "additionalProperties": false
         }
       ]
     },
     "DayPart": {
       "type": "string",
-      "enum": [
-        "morning",
-        "noon",
-        "afternoon",
-        "evening",
-        "night"
-      ]
+      "enum": ["morning", "noon", "afternoon", "evening", "night"]
     },
     "OpenBound": {
       "type": "string",
-      "enum": [
-        "start",
-        "end"
-      ]
+      "enum": ["start", "end"]
     },
     "Shift": {
       "type": "object",
@@ -664,10 +555,7 @@
         },
         "direction": {
           "type": "string",
-          "enum": [
-            "before",
-            "after"
-          ]
+          "enum": ["before", "after"]
         },
         "endAmount": {
           "type": "integer",
@@ -678,11 +566,7 @@
           "type": "boolean"
         }
       },
-      "required": [
-        "amount",
-        "unit",
-        "direction"
-      ],
+      "required": ["amount", "unit", "direction"],
       "additionalProperties": false
     },
     "Quantity": {
@@ -697,10 +581,7 @@
           "$ref": "#/$defs/Unit"
         }
       },
-      "required": [
-        "amount",
-        "unit"
-      ],
+      "required": ["amount", "unit"],
       "additionalProperties": false
     },
     "Duration": {
@@ -721,10 +602,7 @@
           "$ref": "#/$defs/Unit"
         }
       },
-      "required": [
-        "amount",
-        "unit"
-      ],
+      "required": ["amount", "unit"],
       "additionalProperties": false
     },
     "Recurrence": {
@@ -732,13 +610,7 @@
       "properties": {
         "freq": {
           "type": "string",
-          "enum": [
-            "hourly",
-            "daily",
-            "weekly",
-            "monthly",
-            "yearly"
-          ]
+          "enum": ["hourly", "daily", "weekly", "monthly", "yearly"]
         },
         "interval": {
           "type": "integer",
@@ -820,10 +692,7 @@
           "description": "A bound on the entire series, distinct from the duration of each occurrence."
         }
       },
-      "required": [
-        "freq",
-        "interval"
-      ],
+      "required": ["freq", "interval"],
       "additionalProperties": false
     }
   }

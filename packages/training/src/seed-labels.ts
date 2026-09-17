@@ -384,7 +384,7 @@ const roles: Record<string, string> = {
   "sáng mai 7h30": "DP RD H G MIN",
   // chat-slang
   "hnay họp 3h": "RD O H G",
-  "hqua": "RD",
+  hqua: "RD",
   "bây h": "NOW NOW",
   "tuần trc": "UNIT DE",
   "3 ngày trc": "NUM UNIT DB",
@@ -430,7 +430,8 @@ const roles: Record<string, string> = {
   "Trung thu 2027": "HOL HOL YR",
   "Giáng sinh 2026": "HOL HOL YR",
   "giao thừa Đinh Mùi": "HOL HOL YR YR",
-  "từ 17/8/2027 2 giờ chiều đến 19/8/2027 2 giờ chiều": "RS DOM G MON G YR H G MER RE DOM G MON G YR H G MER",
+  "từ 17/8/2027 2 giờ chiều đến 19/8/2027 2 giờ chiều":
+    "RS DOM G MON G YR H G MER RE DOM G MON G YR H G MER",
   "ok dc nha :))": "O O O O O O",
   "k đi dc r": "O O O O",
   "mn ơi giúp e vs": "O O O O O",

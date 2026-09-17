@@ -45,9 +45,7 @@ const examples: [
         allDay: false,
       },
     ],
-    [
-      "RRULE:FREQ=WEEKLY;INTERVAL=1;BYDAY=MO",
-    ],
+    ["RRULE:FREQ=WEEKLY;INTERVAL=1;BYDAY=MO"],
   ],
   ["rằm tháng 8", [{ start: "2026-09-25T00:00:00+07:00", allDay: true }]],
   ["cách đây 3 ngày", [{ start: "2026-09-14T09:00:00+07:00", allDay: false }]],

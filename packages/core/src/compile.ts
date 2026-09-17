@@ -1451,7 +1451,12 @@ function compileClause(tokens: Token[], diagnostics: Diagnostic[]): Clause {
       if (date.days && endDate.days) {
         const range = weekdayRange(date.days[0], endDate.days[0]);
         clause.recurrence = { freq: "weekly", interval: 1, byDay: range };
-      } else if (start && end && from.day !== undefined && to.day !== undefined) {
+      } else if (
+        start &&
+        end &&
+        from.day !== undefined &&
+        to.day !== undefined
+      ) {
         // Each end has its own clock: one span from the first instant to
         // the last, not a window repeated on every day between.
         clause.date = toDateSpec({ ...date, ...from });
@@ -1582,6 +1587,19 @@ function splitClauses(tokens: Token[]): Token[][] {
   return clauses;
 }
 
+// "hàng ngày 8h sáng và 8h tối": one recurrence said once covers every
+// time-only clause beside it. Clauses with their own date or rule keep them.
+function shareRecurrence(clauses: Clause[]): Clause[] {
+  const ruled = clauses.filter((clause) => clause.recurrence);
+  if (ruled.length !== 1 || clauses.length < 2) return clauses;
+  const rule = ruled[0].recurrence!;
+  return clauses.map((clause) =>
+    clause.recurrence || clause.date || clause.shift || !clause.time
+      ? clause
+      : { ...clause, recurrence: { ...rule } },
+  );
+}
+
 function compileExpression(text: string, tokens: Token[]): Expression {
   const start = tokens[0].start;
   const end = tokens.at(-1)!.end;
@@ -1590,8 +1608,10 @@ function compileExpression(text: string, tokens: Token[]): Expression {
 
   try {
     schedule = {
-      clauses: splitClauses(tokens).map((clause) =>
-        compileClause(clause, diagnostics),
+      clauses: shareRecurrence(
+        splitClauses(tokens).map((clause) =>
+          compileClause(clause, diagnostics),
+        ),
       ),
     };
   } catch (error) {

@@ -2,15 +2,15 @@
 
 `data/gold/` holds tracked, authored Vietnamese fixtures. Expected schedules come from the spec in `docs/vietnamese-time-expressions.md`, never from model predictions. These fixtures guide development, so they are not untouched test data. Each file is JSON Lines with an `id`, `text`, and expected `schedule`; a `null` schedule means no time expression is present.
 
-| file             | written by            | read by                                                  | status                  |
-| ---------------- | --------------------- | -------------------------------------------------------- | ----------------------- |
-| `grammar.jsonl`  | `pnpm seed:grammar`   | `grammar-model.test.ts`, `evaluate-model.ts`             | authored (Task 2)       |
-| `labels.jsonl`   | `pnpm seed:labels`    | `oracle.test.ts`, `schema.test.ts`, `evaluate:oracle`    | authored (288)          |
-| `results.jsonl`  | by hand               | `results-gold.test.ts`, `evaluate-results.ts`            | authored (61)           |
-| `negatives.jsonl`| by hand               | `grammar-model.test.ts`, `schema.test.ts`                | authored (45)           |
-| `prose.jsonl`    | `pnpm seed:gold`      | `grammar-model.test.ts`, `schema.test.ts`                | authored (45)           |
-| `adversarial.jsonl` | `pnpm seed:gold`   | `grammar-model.test.ts`, `schema.test.ts`                | authored (28)           |
-| `oracle-baseline.json` | `pnpm evaluate:oracle` | recorded baseline, not an input                    | 288/288                 |
+| file                   | written by             | read by                                               | status            |
+| ---------------------- | ---------------------- | ----------------------------------------------------- | ----------------- |
+| `grammar.jsonl`        | `pnpm seed:grammar`    | `grammar-model.test.ts`, `evaluate-model.ts`          | authored (Task 2) |
+| `labels.jsonl`         | `pnpm seed:labels`     | `oracle.test.ts`, `schema.test.ts`, `evaluate:oracle` | authored (288)    |
+| `results.jsonl`        | by hand                | `results-gold.test.ts`, `evaluate-results.ts`         | authored (61)     |
+| `negatives.jsonl`      | by hand                | `grammar-model.test.ts`, `schema.test.ts`             | authored (45)     |
+| `prose.jsonl`          | `pnpm seed:gold`       | `grammar-model.test.ts`, `schema.test.ts`             | authored (45)     |
+| `adversarial.jsonl`    | `pnpm seed:gold`       | `grammar-model.test.ts`, `schema.test.ts`             | authored (28)     |
+| `oracle-baseline.json` | `pnpm evaluate:oracle` | recorded baseline, not an input                       | 288/288           |
 
 `grammar.jsonl` is the authored grammar surface: 35 families, one line per surface form. `labels.jsonl` adds per-token labels and clause boundaries so `evaluate:oracle` can run the compiler on perfect tags and separate compiler bugs from model errors. `results.jsonl` is the only corpus with a resolution context and expected occurrences; it checks the resolver end to end with `Asia/Ho_Chi_Minh` as the default zone.
 

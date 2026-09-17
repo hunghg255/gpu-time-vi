@@ -91,15 +91,14 @@ try {
         rows: document.querySelectorAll("#demo-dates li").length,
         context: document.querySelector("#demo-context").textContent,
         font: getComputedStyle(document.querySelector("h1")).fontSize,
-        positions: [
-          "h1",
-          "#demo-result",
-          "#demo-context",
-          "footer",
-        ].map((selector) => {
-          const rect = document.querySelector(selector).getBoundingClientRect();
-          return [rect.x, rect.y, rect.width, rect.height];
-        }),
+        positions: ["h1", "#demo-result", "#demo-context", "footer"].map(
+          (selector) => {
+            const rect = document
+              .querySelector(selector)
+              .getBoundingClientRect();
+            return [rect.x, rect.y, rect.width, rect.height];
+          },
+        ),
         overflow: document.documentElement.scrollWidth > innerWidth,
       }));
     try {

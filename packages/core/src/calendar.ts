@@ -86,9 +86,11 @@ function weekdayDate(
     return addDays(weekBeginning(reference, options.weekStart), position);
   }
   if (modifier === "last") {
+    // "thứ ba tuần trước" names last calendar week's Tuesday, whether or not
+    // this week's has passed — the mirror of "tuần sau" below.
     return addDays(
-      startOfDay(reference),
-      -((current - target + 7) % 7 || 7) - extra,
+      weekBeginning(reference, options.weekStart),
+      position - 7 - extra,
     );
   }
   if (modifier === "next") {
@@ -399,13 +401,15 @@ export function resolveDates(
       const entry = holidays[spec.name];
       // "Tết 2027", "Tết Bính Ngọ": a named year pins the occurrence.
       const named =
-        spec.year ?? (spec.cycle === undefined ? undefined : cycleYear(spec.cycle, today));
+        spec.year ??
+        (spec.cycle === undefined ? undefined : cycleYear(spec.cycle, today));
       if ("lunarMonth" in entry) {
         if (spec.name === "tet-eve") {
           // The last day of the lunar year: the day before the next Tết,
           // unless that is today.
           const current = solarToLunar(today.day, today.month, today.year);
-          const years = named === undefined ? [current.year, current.year + 1] : [named];
+          const years =
+            named === undefined ? [current.year, current.year + 1] : [named];
           for (const year of years) {
             const eve = addDays(lunarCivil(1, 1, year, false, today), -1);
             if (named !== undefined || utc(eve) >= utc(today))

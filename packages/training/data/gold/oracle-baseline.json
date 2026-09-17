@@ -671,9 +671,7 @@
           {
             "date": {
               "kind": "weekday",
-              "days": [
-                "FR"
-              ]
+              "days": ["FR"]
             },
             "time": {
               "start": {
@@ -699,9 +697,7 @@
                 },
                 "date": {
                   "kind": "weekday",
-                  "days": [
-                    "FR"
-                  ]
+                  "days": ["FR"]
                 }
               }
             ]
@@ -719,9 +715,7 @@
           {
             "date": {
               "kind": "weekday",
-              "days": [
-                "MO"
-              ]
+              "days": ["MO"]
             }
           }
         ]
@@ -737,9 +731,7 @@
               {
                 "date": {
                   "kind": "weekday",
-                  "days": [
-                    "MO"
-                  ]
+                  "days": ["MO"]
                 }
               }
             ]
@@ -757,9 +749,7 @@
           {
             "date": {
               "kind": "weekday",
-              "days": [
-                "MO"
-              ]
+              "days": ["MO"]
             }
           }
         ]
@@ -775,9 +765,7 @@
               {
                 "date": {
                   "kind": "weekday",
-                  "days": [
-                    "MO"
-                  ]
+                  "days": ["MO"]
                 }
               }
             ]
@@ -795,9 +783,7 @@
           {
             "date": {
               "kind": "weekday",
-              "days": [
-                "MO"
-              ]
+              "days": ["MO"]
             }
           }
         ]
@@ -813,9 +799,7 @@
               {
                 "date": {
                   "kind": "weekday",
-                  "days": [
-                    "MO"
-                  ]
+                  "days": ["MO"]
                 }
               }
             ]
@@ -833,9 +817,7 @@
           {
             "date": {
               "kind": "weekday",
-              "days": [
-                "SA"
-              ]
+              "days": ["SA"]
             }
           }
         ]
@@ -851,9 +833,7 @@
               {
                 "date": {
                   "kind": "weekday",
-                  "days": [
-                    "SA"
-                  ]
+                  "days": ["SA"]
                 }
               }
             ]
@@ -871,9 +851,7 @@
           {
             "date": {
               "kind": "weekday",
-              "days": [
-                "WE"
-              ]
+              "days": ["WE"]
             }
           }
         ]
@@ -889,9 +867,7 @@
               {
                 "date": {
                   "kind": "weekday",
-                  "days": [
-                    "WE"
-                  ]
+                  "days": ["WE"]
                 }
               }
             ]
@@ -909,9 +885,7 @@
           {
             "date": {
               "kind": "weekday",
-              "days": [
-                "SU"
-              ]
+              "days": ["SU"]
             }
           }
         ]
@@ -927,9 +901,7 @@
               {
                 "date": {
                   "kind": "weekday",
-                  "days": [
-                    "SU"
-                  ]
+                  "days": ["SU"]
                 }
               }
             ]
@@ -947,9 +919,7 @@
           {
             "date": {
               "kind": "weekday",
-              "days": [
-                "SU"
-              ]
+              "days": ["SU"]
             }
           }
         ]
@@ -965,9 +935,7 @@
               {
                 "date": {
                   "kind": "weekday",
-                  "days": [
-                    "SU"
-                  ]
+                  "days": ["SU"]
                 }
               }
             ]
@@ -985,10 +953,7 @@
           {
             "date": {
               "kind": "weekday",
-              "days": [
-                "MO",
-                "WE"
-              ]
+              "days": ["MO", "WE"]
             }
           }
         ]
@@ -1004,10 +969,7 @@
               {
                 "date": {
                   "kind": "weekday",
-                  "days": [
-                    "MO",
-                    "WE"
-                  ]
+                  "days": ["MO", "WE"]
                 }
               }
             ]
@@ -1025,9 +987,7 @@
           {
             "date": {
               "kind": "weekday",
-              "days": [
-                "MO"
-              ],
+              "days": ["MO"],
               "modifier": "next"
             }
           }
@@ -1044,9 +1004,7 @@
               {
                 "date": {
                   "kind": "weekday",
-                  "days": [
-                    "MO"
-                  ],
+                  "days": ["MO"],
                   "modifier": "next"
                 }
               }
@@ -1065,9 +1023,7 @@
           {
             "date": {
               "kind": "weekday",
-              "days": [
-                "FR"
-              ],
+              "days": ["FR"],
               "modifier": "this"
             }
           }
@@ -1084,9 +1040,7 @@
               {
                 "date": {
                   "kind": "weekday",
-                  "days": [
-                    "FR"
-                  ],
+                  "days": ["FR"],
                   "modifier": "this"
                 }
               }
@@ -1105,9 +1059,7 @@
           {
             "date": {
               "kind": "weekday",
-              "days": [
-                "TU"
-              ],
+              "days": ["TU"],
               "modifier": "last"
             }
           }
@@ -1124,9 +1076,7 @@
               {
                 "date": {
                   "kind": "weekday",
-                  "days": [
-                    "TU"
-                  ],
+                  "days": ["TU"],
                   "modifier": "last"
                 }
               }
@@ -1145,9 +1095,7 @@
           {
             "date": {
               "kind": "weekday",
-              "days": [
-                "MO"
-              ],
+              "days": ["MO"],
               "modifier": "next"
             }
           }
@@ -1164,9 +1112,7 @@
               {
                 "date": {
                   "kind": "weekday",
-                  "days": [
-                    "MO"
-                  ],
+                  "days": ["MO"],
                   "modifier": "next"
                 }
               }
@@ -1185,9 +1131,7 @@
           {
             "date": {
               "kind": "weekday",
-              "days": [
-                "SU"
-              ],
+              "days": ["SU"],
               "modifier": "this"
             }
           }
@@ -1204,9 +1148,7 @@
               {
                 "date": {
                   "kind": "weekday",
-                  "days": [
-                    "SU"
-                  ],
+                  "days": ["SU"],
                   "modifier": "this"
                 }
               }
@@ -1225,9 +1167,7 @@
           {
             "date": {
               "kind": "weekday",
-              "days": [
-                "SU"
-              ],
+              "days": ["SU"],
               "modifier": "next"
             }
           }
@@ -1244,9 +1184,7 @@
               {
                 "date": {
                   "kind": "weekday",
-                  "days": [
-                    "SU"
-                  ],
+                  "days": ["SU"],
                   "modifier": "next"
                 }
               }
@@ -1958,13 +1896,7 @@
             "recurrence": {
               "freq": "weekly",
               "interval": 1,
-              "byDay": [
-                "MO",
-                "TU",
-                "WE",
-                "TH",
-                "FR"
-              ]
+              "byDay": ["MO", "TU", "WE", "TH", "FR"]
             }
           }
         ]
@@ -1981,13 +1913,7 @@
                 "recurrence": {
                   "freq": "weekly",
                   "interval": 1,
-                  "byDay": [
-                    "MO",
-                    "TU",
-                    "WE",
-                    "TH",
-                    "FR"
-                  ]
+                  "byDay": ["MO", "TU", "WE", "TH", "FR"]
                 }
               }
             ]
@@ -2006,13 +1932,7 @@
             "recurrence": {
               "freq": "weekly",
               "interval": 1,
-              "byDay": [
-                "MO",
-                "TU",
-                "WE",
-                "TH",
-                "FR"
-              ]
+              "byDay": ["MO", "TU", "WE", "TH", "FR"]
             }
           }
         ]
@@ -2029,13 +1949,7 @@
                 "recurrence": {
                   "freq": "weekly",
                   "interval": 1,
-                  "byDay": [
-                    "MO",
-                    "TU",
-                    "WE",
-                    "TH",
-                    "FR"
-                  ]
+                  "byDay": ["MO", "TU", "WE", "TH", "FR"]
                 }
               }
             ]
@@ -2054,13 +1968,7 @@
             "recurrence": {
               "freq": "weekly",
               "interval": 1,
-              "byDay": [
-                "MO",
-                "TU",
-                "WE",
-                "TH",
-                "FR"
-              ]
+              "byDay": ["MO", "TU", "WE", "TH", "FR"]
             }
           }
         ]
@@ -2077,13 +1985,7 @@
                 "recurrence": {
                   "freq": "weekly",
                   "interval": 1,
-                  "byDay": [
-                    "MO",
-                    "TU",
-                    "WE",
-                    "TH",
-                    "FR"
-                  ]
+                  "byDay": ["MO", "TU", "WE", "TH", "FR"]
                 }
               }
             ]
@@ -7510,9 +7412,7 @@
             },
             "date": {
               "kind": "weekday",
-              "days": [
-                "MO"
-              ]
+              "days": ["MO"]
             }
           }
         ]
@@ -7533,9 +7433,7 @@
                 },
                 "date": {
                   "kind": "weekday",
-                  "days": [
-                    "MO"
-                  ]
+                  "days": ["MO"]
                 }
               }
             ]
@@ -7812,9 +7710,7 @@
             "recurrence": {
               "freq": "weekly",
               "interval": 1,
-              "byDay": [
-                "MO"
-              ]
+              "byDay": ["MO"]
             }
           }
         ]
@@ -7831,9 +7727,7 @@
                 "recurrence": {
                   "freq": "weekly",
                   "interval": 1,
-                  "byDay": [
-                    "MO"
-                  ]
+                  "byDay": ["MO"]
                 }
               }
             ]
@@ -7852,9 +7746,7 @@
             "recurrence": {
               "freq": "weekly",
               "interval": 1,
-              "byDay": [
-                "MO"
-              ]
+              "byDay": ["MO"]
             }
           }
         ]
@@ -7871,9 +7763,7 @@
                 "recurrence": {
                   "freq": "weekly",
                   "interval": 1,
-                  "byDay": [
-                    "MO"
-                  ]
+                  "byDay": ["MO"]
                 }
               }
             ]
@@ -7892,9 +7782,7 @@
             "recurrence": {
               "freq": "weekly",
               "interval": 1,
-              "byDay": [
-                "MO"
-              ]
+              "byDay": ["MO"]
             }
           }
         ]
@@ -7911,9 +7799,7 @@
                 "recurrence": {
                   "freq": "weekly",
                   "interval": 1,
-                  "byDay": [
-                    "MO"
-                  ]
+                  "byDay": ["MO"]
                 }
               }
             ]
@@ -8482,10 +8368,7 @@
             "recurrence": {
               "freq": "weekly",
               "interval": 1,
-              "byDay": [
-                "MO",
-                "WE"
-              ]
+              "byDay": ["MO", "WE"]
             }
           }
         ]
@@ -8502,10 +8385,7 @@
                 "recurrence": {
                   "freq": "weekly",
                   "interval": 1,
-                  "byDay": [
-                    "MO",
-                    "WE"
-                  ]
+                  "byDay": ["MO", "WE"]
                 }
               }
             ]
@@ -8524,11 +8404,7 @@
             "recurrence": {
               "freq": "weekly",
               "interval": 1,
-              "byDay": [
-                "MO",
-                "WE",
-                "FR"
-              ]
+              "byDay": ["MO", "WE", "FR"]
             }
           }
         ]
@@ -8545,11 +8421,7 @@
                 "recurrence": {
                   "freq": "weekly",
                   "interval": 1,
-                  "byDay": [
-                    "MO",
-                    "WE",
-                    "FR"
-                  ]
+                  "byDay": ["MO", "WE", "FR"]
                 }
               }
             ]
@@ -8568,9 +8440,7 @@
             "recurrence": {
               "freq": "weekly",
               "interval": 1,
-              "byDay": [
-                "MO"
-              ]
+              "byDay": ["MO"]
             },
             "time": {
               "start": {
@@ -8599,9 +8469,7 @@
                 "recurrence": {
                   "freq": "weekly",
                   "interval": 1,
-                  "byDay": [
-                    "MO"
-                  ]
+                  "byDay": ["MO"]
                 }
               }
             ]
@@ -8666,10 +8534,7 @@
             "recurrence": {
               "freq": "weekly",
               "interval": 1,
-              "byDay": [
-                "SA",
-                "SU"
-              ]
+              "byDay": ["SA", "SU"]
             }
           }
         ]
@@ -8686,10 +8551,7 @@
                 "recurrence": {
                   "freq": "weekly",
                   "interval": 1,
-                  "byDay": [
-                    "SA",
-                    "SU"
-                  ]
+                  "byDay": ["SA", "SU"]
                 }
               }
             ]
@@ -8708,13 +8570,7 @@
             "recurrence": {
               "freq": "weekly",
               "interval": 1,
-              "byDay": [
-                "MO",
-                "TU",
-                "WE",
-                "TH",
-                "FR"
-              ]
+              "byDay": ["MO", "TU", "WE", "TH", "FR"]
             }
           }
         ]
@@ -8731,13 +8587,7 @@
                 "recurrence": {
                   "freq": "weekly",
                   "interval": 1,
-                  "byDay": [
-                    "MO",
-                    "TU",
-                    "WE",
-                    "TH",
-                    "FR"
-                  ]
+                  "byDay": ["MO", "TU", "WE", "TH", "FR"]
                 }
               }
             ]
@@ -8756,9 +8606,7 @@
             "recurrence": {
               "freq": "monthly",
               "interval": 1,
-              "byMonthDay": [
-                15
-              ]
+              "byMonthDay": [15]
             }
           }
         ]
@@ -8775,9 +8623,7 @@
                 "recurrence": {
                   "freq": "monthly",
                   "interval": 1,
-                  "byMonthDay": [
-                    15
-                  ]
+                  "byMonthDay": [15]
                 }
               }
             ]
@@ -8796,9 +8642,7 @@
             "recurrence": {
               "freq": "monthly",
               "interval": 1,
-              "byMonthDay": [
-                15
-              ]
+              "byMonthDay": [15]
             }
           }
         ]
@@ -8815,9 +8659,7 @@
                 "recurrence": {
                   "freq": "monthly",
                   "interval": 1,
-                  "byMonthDay": [
-                    15
-                  ]
+                  "byMonthDay": [15]
                 }
               }
             ]
@@ -8836,10 +8678,7 @@
             "recurrence": {
               "freq": "monthly",
               "interval": 1,
-              "byMonthDay": [
-                1,
-                15
-              ]
+              "byMonthDay": [1, 15]
             }
           }
         ]
@@ -8856,10 +8695,7 @@
                 "recurrence": {
                   "freq": "monthly",
                   "interval": 1,
-                  "byMonthDay": [
-                    1,
-                    15
-                  ]
+                  "byMonthDay": [1, 15]
                 }
               }
             ]
@@ -8878,12 +8714,8 @@
             "recurrence": {
               "freq": "monthly",
               "interval": 1,
-              "byDay": [
-                "MO"
-              ],
-              "bySetPos": [
-                1
-              ]
+              "byDay": ["MO"],
+              "bySetPos": [1]
             }
           }
         ]
@@ -8900,12 +8732,8 @@
                 "recurrence": {
                   "freq": "monthly",
                   "interval": 1,
-                  "byDay": [
-                    "MO"
-                  ],
-                  "bySetPos": [
-                    1
-                  ]
+                  "byDay": ["MO"],
+                  "bySetPos": [1]
                 }
               }
             ]
@@ -8924,12 +8752,8 @@
             "recurrence": {
               "freq": "monthly",
               "interval": 1,
-              "byDay": [
-                "FR"
-              ],
-              "bySetPos": [
-                -1
-              ]
+              "byDay": ["FR"],
+              "bySetPos": [-1]
             }
           }
         ]
@@ -8946,12 +8770,8 @@
                 "recurrence": {
                   "freq": "monthly",
                   "interval": 1,
-                  "byDay": [
-                    "FR"
-                  ],
-                  "bySetPos": [
-                    -1
-                  ]
+                  "byDay": ["FR"],
+                  "bySetPos": [-1]
                 }
               }
             ]
@@ -8970,12 +8790,8 @@
             "recurrence": {
               "freq": "yearly",
               "interval": 1,
-              "byMonth": [
-                3
-              ],
-              "byMonthDay": [
-                26
-              ]
+              "byMonth": [3],
+              "byMonthDay": [26]
             }
           }
         ]
@@ -8992,12 +8808,8 @@
                 "recurrence": {
                   "freq": "yearly",
                   "interval": 1,
-                  "byMonth": [
-                    3
-                  ],
-                  "byMonthDay": [
-                    26
-                  ]
+                  "byMonth": [3],
+                  "byMonthDay": [26]
                 }
               }
             ]
@@ -9016,12 +8828,8 @@
             "recurrence": {
               "freq": "yearly",
               "interval": 1,
-              "byMonth": [
-                3
-              ],
-              "byMonthDay": [
-                26
-              ]
+              "byMonth": [3],
+              "byMonthDay": [26]
             }
           }
         ]
@@ -9038,12 +8846,8 @@
                 "recurrence": {
                   "freq": "yearly",
                   "interval": 1,
-                  "byMonth": [
-                    3
-                  ],
-                  "byMonthDay": [
-                    26
-                  ]
+                  "byMonth": [3],
+                  "byMonthDay": [26]
                 }
               }
             ]
@@ -9062,9 +8866,7 @@
             "recurrence": {
               "freq": "monthly",
               "interval": 1,
-              "byMonthDay": [
-                -1
-              ]
+              "byMonthDay": [-1]
             }
           }
         ]
@@ -9081,9 +8883,7 @@
                 "recurrence": {
                   "freq": "monthly",
                   "interval": 1,
-                  "byMonthDay": [
-                    -1
-                  ]
+                  "byMonthDay": [-1]
                 }
               }
             ]
@@ -9102,9 +8902,7 @@
             "recurrence": {
               "freq": "weekly",
               "interval": 1,
-              "byDay": [
-                "MO"
-              ],
+              "byDay": ["MO"],
               "start": {
                 "kind": "calendar",
                 "month": 10,
@@ -9126,9 +8924,7 @@
                 "recurrence": {
                   "freq": "weekly",
                   "interval": 1,
-                  "byDay": [
-                    "MO"
-                  ],
+                  "byDay": ["MO"],
                   "start": {
                     "kind": "calendar",
                     "month": 10,
@@ -9196,9 +8992,7 @@
             "recurrence": {
               "freq": "weekly",
               "interval": 1,
-              "byDay": [
-                "MO"
-              ],
+              "byDay": ["MO"],
               "until": {
                 "kind": "calendarPeriod",
                 "month": 12,
@@ -9220,9 +9014,7 @@
                 "recurrence": {
                   "freq": "weekly",
                   "interval": 1,
-                  "byDay": [
-                    "MO"
-                  ],
+                  "byDay": ["MO"],
                   "until": {
                     "kind": "calendarPeriod",
                     "month": 12,
@@ -9246,9 +9038,7 @@
             "recurrence": {
               "freq": "weekly",
               "interval": 1,
-              "byDay": [
-                "MO"
-              ],
+              "byDay": ["MO"],
               "until": {
                 "kind": "calendar",
                 "month": 12
@@ -9269,9 +9059,7 @@
                 "recurrence": {
                   "freq": "weekly",
                   "interval": 1,
-                  "byDay": [
-                    "MO"
-                  ],
+                  "byDay": ["MO"],
                   "until": {
                     "kind": "calendar",
                     "month": 12
@@ -9294,9 +9082,7 @@
             "recurrence": {
               "freq": "weekly",
               "interval": 1,
-              "byDay": [
-                "MO"
-              ],
+              "byDay": ["MO"],
               "until": {
                 "kind": "calendar",
                 "month": 12,
@@ -9318,9 +9104,7 @@
                 "recurrence": {
                   "freq": "weekly",
                   "interval": 1,
-                  "byDay": [
-                    "MO"
-                  ],
+                  "byDay": ["MO"],
                   "until": {
                     "kind": "calendar",
                     "month": 12,
@@ -9346,9 +9130,7 @@
               "interval": 1,
               "until": {
                 "kind": "weekday",
-                "days": [
-                  "FR"
-                ]
+                "days": ["FR"]
               }
             }
           }
@@ -9368,9 +9150,7 @@
                   "interval": 1,
                   "until": {
                     "kind": "weekday",
-                    "days": [
-                      "FR"
-                    ]
+                    "days": ["FR"]
                   }
                 }
               }
@@ -9390,9 +9170,7 @@
             "recurrence": {
               "freq": "weekly",
               "interval": 1,
-              "byDay": [
-                "MO"
-              ],
+              "byDay": ["MO"],
               "span": {
                 "amount": 10,
                 "unit": "week"
@@ -9413,9 +9191,7 @@
                 "recurrence": {
                   "freq": "weekly",
                   "interval": 1,
-                  "byDay": [
-                    "MO"
-                  ],
+                  "byDay": ["MO"],
                   "span": {
                     "amount": 10,
                     "unit": "week"
@@ -9438,9 +9214,7 @@
             "recurrence": {
               "freq": "weekly",
               "interval": 1,
-              "byDay": [
-                "MO"
-              ],
+              "byDay": ["MO"],
               "count": 6
             }
           }
@@ -9458,9 +9232,7 @@
                 "recurrence": {
                   "freq": "weekly",
                   "interval": 1,
-                  "byDay": [
-                    "MO"
-                  ],
+                  "byDay": ["MO"],
                   "count": 6
                 }
               }
@@ -9535,9 +9307,7 @@
               "except": [
                 {
                   "kind": "weekday",
-                  "days": [
-                    "SU"
-                  ]
+                  "days": ["SU"]
                 }
               ]
             }
@@ -9559,9 +9329,7 @@
                   "except": [
                     {
                       "kind": "weekday",
-                      "days": [
-                        "SU"
-                      ]
+                      "days": ["SU"]
                     }
                   ]
                 }
@@ -9582,19 +9350,11 @@
             "recurrence": {
               "freq": "weekly",
               "interval": 1,
-              "byDay": [
-                "MO",
-                "TU",
-                "WE",
-                "TH",
-                "FR"
-              ],
+              "byDay": ["MO", "TU", "WE", "TH", "FR"],
               "except": [
                 {
                   "kind": "weekday",
-                  "days": [
-                    "FR"
-                  ]
+                  "days": ["FR"]
                 }
               ]
             }
@@ -9613,19 +9373,11 @@
                 "recurrence": {
                   "freq": "weekly",
                   "interval": 1,
-                  "byDay": [
-                    "MO",
-                    "TU",
-                    "WE",
-                    "TH",
-                    "FR"
-                  ],
+                  "byDay": ["MO", "TU", "WE", "TH", "FR"],
                   "except": [
                     {
                       "kind": "weekday",
-                      "days": [
-                        "FR"
-                      ]
+                      "days": ["FR"]
                     }
                   ]
                 }
@@ -9692,9 +9444,7 @@
             "recurrence": {
               "freq": "weekly",
               "interval": 1,
-              "byDay": [
-                "SA"
-              ],
+              "byDay": ["SA"],
               "except": [
                 {
                   "kind": "ordinalWeekday",
@@ -9724,9 +9474,7 @@
                 "recurrence": {
                   "freq": "weekly",
                   "interval": 1,
-                  "byDay": [
-                    "SA"
-                  ],
+                  "byDay": ["SA"],
                   "except": [
                     {
                       "kind": "ordinalWeekday",
@@ -9849,9 +9597,7 @@
           {
             "date": {
               "kind": "weekday",
-              "days": [
-                "MO"
-              ]
+              "days": ["MO"]
             },
             "time": {
               "start": {
@@ -9879,9 +9625,7 @@
                 },
                 "date": {
                   "kind": "weekday",
-                  "days": [
-                    "MO"
-                  ]
+                  "days": ["MO"]
                 }
               }
             ]
@@ -9899,9 +9643,7 @@
           {
             "date": {
               "kind": "weekday",
-              "days": [
-                "FR"
-              ],
+              "days": ["FR"],
               "modifier": "next"
             },
             "time": {
@@ -9930,9 +9672,7 @@
                 },
                 "date": {
                   "kind": "weekday",
-                  "days": [
-                    "FR"
-                  ],
+                  "days": ["FR"],
                   "modifier": "next"
                 }
               }
@@ -10045,9 +9785,7 @@
           {
             "date": {
               "kind": "weekday",
-              "days": [
-                "WE"
-              ]
+              "days": ["WE"]
             },
             "time": {
               "start": {
@@ -10075,9 +9813,7 @@
                 },
                 "date": {
                   "kind": "weekday",
-                  "days": [
-                    "WE"
-                  ]
+                  "days": ["WE"]
                 }
               }
             ]
@@ -10457,9 +10193,7 @@
           {
             "date": {
               "kind": "weekday",
-              "days": [
-                "MO"
-              ]
+              "days": ["MO"]
             },
             "time": {
               "start": {
@@ -10471,9 +10205,7 @@
           {
             "date": {
               "kind": "weekday",
-              "days": [
-                "WE"
-              ]
+              "days": ["WE"]
             },
             "time": {
               "start": {
@@ -10501,9 +10233,7 @@
                 },
                 "date": {
                   "kind": "weekday",
-                  "days": [
-                    "MO"
-                  ]
+                  "days": ["MO"]
                 }
               },
               {
@@ -10515,9 +10245,7 @@
                 },
                 "date": {
                   "kind": "weekday",
-                  "days": [
-                    "WE"
-                  ]
+                  "days": ["WE"]
                 }
               }
             ]
@@ -10535,9 +10263,7 @@
           {
             "date": {
               "kind": "weekday",
-              "days": [
-                "MO"
-              ]
+              "days": ["MO"]
             },
             "time": {
               "start": {
@@ -10549,9 +10275,7 @@
           {
             "date": {
               "kind": "weekday",
-              "days": [
-                "WE"
-              ]
+              "days": ["WE"]
             },
             "time": {
               "start": {
@@ -10563,9 +10287,7 @@
           {
             "date": {
               "kind": "weekday",
-              "days": [
-                "FR"
-              ]
+              "days": ["FR"]
             },
             "time": {
               "start": {
@@ -10593,9 +10315,7 @@
                 },
                 "date": {
                   "kind": "weekday",
-                  "days": [
-                    "MO"
-                  ]
+                  "days": ["MO"]
                 }
               },
               {
@@ -10607,9 +10327,7 @@
                 },
                 "date": {
                   "kind": "weekday",
-                  "days": [
-                    "WE"
-                  ]
+                  "days": ["WE"]
                 }
               },
               {
@@ -10621,9 +10339,7 @@
                 },
                 "date": {
                   "kind": "weekday",
-                  "days": [
-                    "FR"
-                  ]
+                  "days": ["FR"]
                 }
               }
             ]
@@ -10641,10 +10357,7 @@
           {
             "date": {
               "kind": "weekday",
-              "days": [
-                "SA",
-                "SU"
-              ]
+              "days": ["SA", "SU"]
             },
             "time": {
               "start": {
@@ -10660,9 +10373,7 @@
           {
             "date": {
               "kind": "weekday",
-              "days": [
-                "MO"
-              ]
+              "days": ["MO"]
             },
             "time": {
               "start": {
@@ -10698,10 +10409,7 @@
                 },
                 "date": {
                   "kind": "weekday",
-                  "days": [
-                    "SA",
-                    "SU"
-                  ]
+                  "days": ["SA", "SU"]
                 }
               },
               {
@@ -10717,9 +10425,7 @@
                 },
                 "date": {
                   "kind": "weekday",
-                  "days": [
-                    "MO"
-                  ]
+                  "days": ["MO"]
                 }
               }
             ]
@@ -10783,9 +10489,7 @@
           {
             "date": {
               "kind": "weekday",
-              "days": [
-                "MO"
-              ],
+              "days": ["MO"],
               "modifier": "next"
             },
             "time": {
@@ -10814,9 +10518,7 @@
                 },
                 "date": {
                   "kind": "weekday",
-                  "days": [
-                    "MO"
-                  ],
+                  "days": ["MO"],
                   "modifier": "next"
                 }
               }
@@ -10835,9 +10537,7 @@
           {
             "date": {
               "kind": "weekday",
-              "days": [
-                "FR"
-              ]
+              "days": ["FR"]
             },
             "time": {
               "start": {
@@ -10865,9 +10565,7 @@
                 },
                 "date": {
                   "kind": "weekday",
-                  "days": [
-                    "FR"
-                  ]
+                  "days": ["FR"]
                 }
               }
             ]
@@ -10886,9 +10584,7 @@
             "recurrence": {
               "freq": "weekly",
               "interval": 1,
-              "byDay": [
-                "WE"
-              ]
+              "byDay": ["WE"]
             },
             "time": {
               "start": {
@@ -10917,9 +10613,7 @@
                 "recurrence": {
                   "freq": "weekly",
                   "interval": 1,
-                  "byDay": [
-                    "WE"
-                  ]
+                  "byDay": ["WE"]
                 }
               }
             ]
@@ -11053,9 +10747,7 @@
           {
             "date": {
               "kind": "weekday",
-              "days": [
-                "SA"
-              ]
+              "days": ["SA"]
             },
             "time": {
               "start": {
@@ -11083,9 +10775,7 @@
                 },
                 "date": {
                   "kind": "weekday",
-                  "days": [
-                    "SA"
-                  ]
+                  "days": ["SA"]
                 }
               }
             ]
@@ -11175,9 +10865,7 @@
           {
             "date": {
               "kind": "weekday",
-              "days": [
-                "MO"
-              ]
+              "days": ["MO"]
             },
             "time": {
               "start": {
@@ -11205,9 +10893,7 @@
                 },
                 "date": {
                   "kind": "weekday",
-                  "days": [
-                    "MO"
-                  ]
+                  "days": ["MO"]
                 }
               }
             ]
@@ -11225,9 +10911,7 @@
           {
             "date": {
               "kind": "weekday",
-              "days": [
-                "SU"
-              ]
+              "days": ["SU"]
             },
             "time": {
               "start": {
@@ -11255,9 +10939,7 @@
                 },
                 "date": {
                   "kind": "weekday",
-                  "days": [
-                    "SU"
-                  ]
+                  "days": ["SU"]
                 }
               }
             ]
@@ -11367,9 +11049,7 @@
           {
             "date": {
               "kind": "weekday",
-              "days": [
-                "FR"
-              ],
+              "days": ["FR"],
               "modifier": "next"
             }
           }
@@ -11386,9 +11066,7 @@
               {
                 "date": {
                   "kind": "weekday",
-                  "days": [
-                    "FR"
-                  ],
+                  "days": ["FR"],
                   "modifier": "next"
                 }
               }

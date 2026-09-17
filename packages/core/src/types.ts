@@ -42,7 +42,12 @@ export type MonthRef =
 export type DateSpec =
   | { kind: "now" }
   | { kind: "relativeDay"; offset: number }
-  | { kind: "weekday"; days: Weekday[]; modifier?: Modifier; distance?: Distance }
+  | {
+      kind: "weekday";
+      days: Weekday[];
+      modifier?: Modifier;
+      distance?: Distance;
+    }
   | { kind: "weekdayRange"; from: Weekday; to: Weekday }
   | {
       kind: "dayGroup";

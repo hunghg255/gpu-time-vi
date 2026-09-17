@@ -289,9 +289,14 @@ a("chat", "deadline cuối giờ chiều t6 nhé", {
   date: weekday("FR"),
   time: clock(17),
 });
-a("chat", "hqua e gửi r, tuần trc cx gửi", { date: relative(-1) }, {
-  date: unit("week", "last"),
-});
+a(
+  "chat",
+  "hqua e gửi r, tuần trc cx gửi",
+  { date: relative(-1) },
+  {
+    date: unit("week", "last"),
+  },
+);
 a("giờ", "gọi trong giờ hành chính thôi nhé, ngoài giờ không ai nghe", {
   time: window(8, 17),
 });
