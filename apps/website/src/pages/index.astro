@@ -8,6 +8,7 @@ import { Demo } from '../components/Demo';
 import { Examples } from '../components/Examples';
 import { Pipeline } from '../components/Pipeline';
 import Model from '../components/Model.astro';
+import Benchmark from '../components/Benchmark.astro';
 
 const reference = new Date();
 const timeZone = 'Asia/Ho_Chi_Minh';
@@ -84,6 +85,12 @@ const canonical = new URL(Astro.url.pathname, Astro.site);
           <Model />
         </div>
         <p class="mx-auto mt-3 max-w-note text-center text-note leading-normal text-neutral-500">Mô hình chỉ làm bước 2. Tách token, lắp lịch và tính ngày là mã TypeScript thường, nên múi giờ, DST và âm lịch luôn chính xác</p>
+      </section>
+
+      <section class="mt-14" aria-labelledby="bench-title">
+        <h2 id="bench-title" class="text-heading font-medium">Số liệu</h2>
+        <p class="mx-auto mb-5 mt-1.5 max-w-note text-center text-note leading-normal text-neutral-500">Đọc từ kết quả của <code>pnpm benchmark</code>, không ghi tay. Thử luôn trên máy bạn ở cuối mục</p>
+        <Benchmark />
       </section>
 
       <section class="mt-14" aria-labelledby="use-title">

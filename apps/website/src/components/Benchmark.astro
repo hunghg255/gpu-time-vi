@@ -1,0 +1,105 @@
+---
+// Numbers read at build time from packages/benchmark/results/. Nothing here is
+// typed in by hand; run `pnpm benchmark` to refresh them.
+import { readFileSync, existsSync } from 'node:fs';
+import { fileURLToPath } from 'node:url';
+import { LiveBench } from './LiveBench';
+
+const results = new URL('../../../../packages/benchmark/results/', import.meta.url);
+const read = (name: string) => {
+  const path = fileURLToPath(new URL(name, results));
+  return existsSync(path) ? JSON.parse(readFileSync(path, 'utf8')) : undefined;
+};
+const size = read('size.json');
+const browser = read('browser.json');
+const structure = read('model-structure.json');
+const direct = read('direct-results.json');
+
+const format = (value: number, digits = 0) =>
+  value.toLocaleString('vi-VN', { maximumFractionDigits: digits, minimumFractionDigits: digits });
+const names: Record<string, string> = {
+  'gpu-time-vi-cpu': 'gpu-time-vi · CPU',
+  'gpu-time-vi-webgpu': 'gpu-time-vi · WebGPU',
+  'regex-vi': 'regex thủ công (baseline)',
+};
+const setNames: Record<string, string> = {
+  grammar: 'grammar · 310 dạng câu, 35 family',
+  labels: 'labels · nhãn tay',
+  prose: 'prose · câu chat/email/ghi chú',
+  adversarial: 'adversarial · từ mơ hồ, số kề bên',
+  negatives: 'negatives · không có thời gian',
+};
+const rows = (browser?.results ?? []).filter((r: any) => !r.error);
+---
+<div class="space-y-6">
+  {size && (
+    <div>
+      <h3 class="text-body font-medium">Kích thước gói</h3>
+      <p class="mt-0.5 text-note text-neutral-500">Toàn bộ thư viện — mô hình, shader WebGPU và bộ giải lịch — trong một file, không phụ thuộc runtime.</p>
+      <table class="mt-2 w-full text-body">
+        <tbody>
+          <tr class="border-t border-neutral-100"><td class="py-1.5">Brotli (như khi phát hành)</td><td class="py-1.5 text-right tabular-nums font-medium">{format(size.results[0].brotliBytes)} byte</td></tr>
+          <tr class="border-t border-neutral-100"><td class="py-1.5">Gzip</td><td class="py-1.5 text-right tabular-nums">{format(size.results[0].gzipBytes)} byte</td></tr>
+          <tr class="border-t border-neutral-100"><td class="py-1.5">Riêng trọng số mô hình (int6)</td><td class="py-1.5 text-right tabular-nums">{format(size.results[0].weightsBrotliBytes)} byte · {format(size.results[0].parameters)} tham số</td></tr>
+          <tr class="border-t border-neutral-100"><td class="py-1.5">Ngưỡng phát hành</td><td class="py-1.5 text-right tabular-nums">{format(size.budgetBrotliBytes)} byte Brotli</td></tr>
+        </tbody>
+      </table>
+    </div>
+  )}
+
+  {rows.length > 0 && (
+    <div>
+      <h3 class="text-body font-medium">Hiệu năng trình duyệt</h3>
+      <p class="mt-0.5 text-note text-neutral-500">Đo trên {browser.environment.browser}, {browser.environment.cpu}. Mỗi thư viện chạy trong một worker riêng; 10 lần khởi động, 100 mẫu câu đơn, batch lặp 4 lần lấy trung vị. Baseline regex chỉ hiểu vài dạng câu nên không so sánh được về tính năng, chỉ về tốc độ.</p>
+      <div class="mt-2 overflow-x-auto">
+        <table class="w-full min-w-[560px] text-body">
+          <thead class="text-label uppercase text-neutral-500">
+            <tr><th class="py-1.5 text-left font-medium">Thư viện</th><th class="py-1.5 text-right font-medium">Khởi tạo</th><th class="py-1.5 text-right font-medium">1 câu (p50)</th><th class="py-1.5 text-right font-medium">1 000 câu</th><th class="py-1.5 text-right font-medium">10 000 câu</th><th class="py-1.5 text-right font-medium">câu/giây</th></tr>
+          </thead>
+          <tbody>
+            {rows.map((r: any) => (
+              <tr class="border-t border-neutral-100 tabular-nums">
+                <td class="py-1.5">{names[r.library] ?? r.library}</td>
+                <td class="py-1.5 text-right">{format(r.result.initializationMs)} ms</td>
+                <td class="py-1.5 text-right">{format(r.result.single.p50Ms, 2)} ms</td>
+                <td class="py-1.5 text-right">{format(r.result.batches[0].ms)} ms</td>
+                <td class="py-1.5 text-right">{format(r.result.batches[1].ms)} ms</td>
+                <td class="py-1.5 text-right font-medium">{format(r.result.batches[1].inputsPerSecond)}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+      <p class="mt-2 text-note text-neutral-500">WebGPU trả công khi có nhiều câu: cả batch được tính song song trên GPU và chỉ đọc kết quả về một lần. Với một câu lẻ, CPU nhanh hơn vì không tốn chi phí gửi lệnh và đọc về.</p>
+    </div>
+  )}
+
+  {structure && (
+    <div>
+      <h3 class="text-body font-medium">Độ chính xác trên bộ gold</h3>
+      <p class="mt-0.5 text-note text-neutral-500">Khớp chính xác toàn bộ cấu trúc lịch qua gói đã build. Đây là bộ kiểm tra phát triển do tay viết, không phải độ chính xác trên người dùng thật.</p>
+      <table class="mt-2 w-full text-body">
+        <tbody>
+          {structure.results.map((s: any) => (
+            <tr class="border-t border-neutral-100">
+              <td class="py-1.5">{setNames[s.name] ?? s.name}</td>
+              <td class="py-1.5 text-right tabular-nums"><span class="font-medium">{format((100 * s.correct) / s.total, 1)}%</span> <span class="text-neutral-500">({s.correct}/{s.total})</span></td>
+            </tr>
+          ))}
+          {direct && (
+            <tr class="border-t border-neutral-100">
+              <td class="py-1.5">results · ngày giờ đã giải qua API công khai</td>
+              <td class="py-1.5 text-right tabular-nums"><span class="font-medium">{format((100 * direct.correct) / direct.total, 1)}%</span> <span class="text-neutral-500">({direct.correct}/{direct.total})</span></td>
+            </tr>
+          )}
+        </tbody>
+      </table>
+    </div>
+  )}
+
+  <div>
+    <h3 class="text-body font-medium">Chạy thử trên máy bạn</h3>
+    <p class="mt-0.5 text-note text-neutral-500">Phân tích 1 000 câu tiếng Việt bằng CPU rồi bằng WebGPU ngay trong trình duyệt này. Không gửi gì lên máy chủ.</p>
+    <LiveBench client:visible />
+  </div>
+</div>
