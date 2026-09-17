@@ -1,5 +1,12 @@
 import { useEffect, useRef, useState } from "react";
-import { demoDefault, format, kinds } from "../lib/demo";
+import {
+  demoDefault,
+  format,
+  horizonUntil,
+  horizons,
+  kinds,
+  type Horizon,
+} from "../lib/demo";
 import { Mark } from "./Mark";
 
 type Formatted = ReturnType<typeof format>;
@@ -9,6 +16,7 @@ export function Demo({ initial }: { initial: Formatted }) {
   const [text, setText] = useState(demoDefault);
   const [result, setResult] = useState(initial);
   const [busy, setBusy] = useState(false);
+  const [years, setYears] = useState<Horizon>(1);
   const input = useRef<HTMLInputElement>(null);
   const layer = useRef<HTMLDivElement>(null);
   const parser = useRef<Parser>(undefined);
@@ -23,7 +31,12 @@ export function Demo({ initial }: { initial: Formatted }) {
 
   async function parseWith(
     value: string,
-    context: { reference: string; timeZone: string; limit: number },
+    context: {
+      reference: string;
+      timeZone: string;
+      limit: number;
+      until: string;
+    },
   ) {
     if (!parser.current) {
       const { defineParser } = await import("gpu-time-vi");
@@ -57,9 +70,10 @@ export function Demo({ initial }: { initial: Formatted }) {
         reference: reference.toISOString(),
         timeZone: "Asia/Ho_Chi_Minh",
         limit: 1000,
+        until: horizonUntil(reference, years),
       });
       if (ticket !== seq.current) return;
-      setResult(format(parsed, reference, "Asia/Ho_Chi_Minh"));
+      setResult(format(parsed, reference, "Asia/Ho_Chi_Minh", years));
     } catch {
       if (ticket !== seq.current) return;
       setResult({
@@ -86,10 +100,10 @@ export function Demo({ initial }: { initial: Formatted }) {
 
   // The server already parsed the default phrase, so the first render skips a run.
   useEffect(() => {
-    if (text === demoDefault && seq.current === 0) return;
+    if (text === demoDefault && seq.current === 0 && years === 1) return;
     const timer = setTimeout(() => void run(text), 150);
     return () => clearTimeout(timer);
-  }, [text]);
+  }, [text, years]);
 
   return (
     <>
@@ -102,9 +116,23 @@ export function Demo({ initial }: { initial: Formatted }) {
           <span className="text-label font-medium uppercase text-neutral-500">
             Thử ngay
           </span>
-          <span className="text-[13px] text-neutral-400">
-            Gõ một ngày hoặc giờ bất kỳ
-          </span>
+          <label className="flex items-center gap-2 text-[13px] text-neutral-500">
+            <span>Xem trước</span>
+            <select
+              id="demo-horizon"
+              value={years}
+              onChange={(event) =>
+                setYears(Number(event.target.value) as Horizon)
+              }
+              className="rounded-md border border-neutral-200 bg-white px-2 py-1 text-[13px] text-neutral-700 outline-none focus-visible:border-black"
+            >
+              {horizons.map((value) => (
+                <option key={value} value={value}>
+                  {value} năm
+                </option>
+              ))}
+            </select>
+          </label>
         </div>
 
         <form

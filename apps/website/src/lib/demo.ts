@@ -137,7 +137,23 @@ export function highlight(text: string): Part[] {
   return parts;
 }
 
-export function format(result: ParseResult, reference: Date, timeZone: string) {
+/** The preview window the demo offers; the library default is one year. */
+export const horizons = [1, 3, 5] as const;
+export type Horizon = (typeof horizons)[number];
+
+/** An ISO instant `years` after the reference, for the `until` option. */
+export function horizonUntil(reference: Date, years: Horizon): string {
+  const until = new Date(reference);
+  until.setUTCFullYear(until.getUTCFullYear() + years);
+  return until.toISOString();
+}
+
+export function format(
+  result: ParseResult,
+  reference: Date,
+  timeZone: string,
+  years: Horizon = 1,
+) {
   const dateFormat = new Intl.DateTimeFormat("vi-VN", {
     timeZone,
     weekday: "short",
@@ -156,7 +172,7 @@ export function format(result: ParseResult, reference: Date, timeZone: string) {
     ? result.diagnostics.map((diagnostic) => diagnostic.message).join(" ")
     : result.occurrences.length
       ? repeating
-        ? `Lặp lại · ${result.occurrences.length} lần trong 12 tháng tới${result.truncated ? " (đã cắt bớt)" : ""}`
+        ? `Lặp lại · ${result.occurrences.length} lần trong ${years === 1 ? "12 tháng" : `${years} năm`} tới${result.truncated ? " (đã cắt bớt)" : ""}`
         : result.occurrences.length > 1
           ? `${result.occurrences.length} lần`
           : "Kết quả"
