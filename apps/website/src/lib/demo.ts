@@ -19,20 +19,55 @@ export const kinds: { kind: Kind; label: string }[] = [
 ];
 
 export const examples: { use: string; text: string }[] = [
+  // Nhắc việc, hẹn gặp
   { use: "Nhắc việc", text: "9h sáng mai" },
   { use: "Đặt bàn, giữa câu", text: "đặt bàn tối ngày 2 tháng 10 lúc 8 giờ" },
-  { use: "Họp hằng ngày", text: "mỗi ngày thường lúc 9 giờ sáng" },
-  { use: "Ca đêm", text: "thứ sáu từ 10 giờ tối đến 2 giờ sáng" },
-  { use: "Chuyến đi", text: "từ 4/9 đến 8/9" },
-  { use: "Ngày lương", text: "thứ sáu cuối cùng mỗi tháng" },
-  { use: "Hai tuần một lần", text: "2 tuần một lần vào trưa thứ sáu" },
+  { use: "Giờ kém", text: "7 giờ kém 15 tối" },
+  { use: "Cà phê cuối tuần", text: "cà phê sáng chủ nhật lúc 8h30" },
+  { use: "Chuyến bay", text: "bay lúc 6h15 sáng ngày 20 tháng 12" },
   { use: "Hẹn giờ", text: "20 phút nữa trong nửa tiếng" },
+  { use: "Khoảng", text: "khoảng 2 tiếng nữa" },
+  { use: "Tái khám", text: "khám lại sau 2 tuần" },
+  { use: "Quá khứ", text: "tối hôm qua lúc 9h" },
+  { use: "Tuần trước", text: "thứ ba tuần trước" },
+  // Deadline, giới hạn
+  { use: "Hạn nộp", text: "nộp báo cáo trước 5h chiều thứ sáu" },
+  { use: "Giờ văn phòng", text: "gửi báo cáo đầu giờ chiều mai" },
+  { use: "Cuối tháng", text: "cuối tháng này" },
+  { use: "Chuyến đi", text: "từ 4/9 đến 8/9" },
+  { use: "Nghỉ lễ", text: "nghỉ từ 30/4 đến hết 1/5" },
+  { use: "Nhiều ngày, có giờ", text: "từ 17/8/2027 2 giờ chiều đến 19/8/2027 2 giờ chiều" },
+  // Lặp lại
+  { use: "Họp hằng ngày", text: "mỗi ngày thường lúc 9 giờ sáng" },
+  { use: "Lịch học", text: "thứ 2 4 6 lúc 6h chiều" },
+  { use: "Lớp tối", text: "lịch học thứ 3 và thứ 5 từ 7h đến 9h tối" },
+  { use: "Ca đêm", text: "thứ sáu từ 10 giờ tối đến 2 giờ sáng" },
+  { use: "Uống thuốc", text: "uống thuốc 8h sáng và 8h tối hàng ngày" },
+  { use: "Ngày lương", text: "thứ sáu cuối cùng mỗi tháng" },
+  { use: "Tiền nhà", text: "ngày 5 hàng tháng trong 12 tháng" },
+  { use: "Hai tuần một lần", text: "2 tuần một lần vào trưa thứ sáu" },
+  { use: "Mỗi quý", text: "mỗi 3 tháng một lần" },
+  { use: "Tập gym", text: "tập gym 3 lần một tuần" },
+  { use: "Trừ chủ nhật", text: "mỗi ngày trừ chủ nhật" },
+  { use: "Đến hết", text: "mỗi thứ hai đến hết tháng 12" },
+  { use: "Sinh nhật", text: "sinh nhật 20/10 hàng năm" },
+  { use: "Hai mệnh đề", text: "thứ hai 9h và thứ tư 10h" },
+  // Âm lịch, ngày lễ
   { use: "Âm lịch", text: "mùng 1 Tết" },
   { use: "Trung thu", text: "rằm tháng 8" },
-  { use: "Chat", text: "ok dc, t2 9h nha :))" },
+  { use: "Ông Táo", text: "23 tháng chạp" },
+  { use: "Nghỉ Tết", text: "từ 27 tháng chạp đến mùng 6" },
+  { use: "Giỗ tổ", text: "Giỗ tổ" },
+  { use: "Giáng sinh", text: "Giáng sinh năm nay 7h tối" },
   { use: "Can chi", text: "giờ Ngọ mùng 5 tháng 5 năm Bính Ngọ" },
+  { use: "Tết năm sau", text: "Tết Đinh Mùi" },
+  { use: "Tháng nhuận", text: "mùng 6 tháng 6 nhuận năm 2025" },
+  // Chat, tiếng lóng
+  { use: "Chat", text: "ok dc, t2 9h nha :))" },
+  { use: "Xin nghỉ", text: "sếp ơi e xin nghỉ hnay nha :))" },
+  { use: "Thứ tám", text: "2h chiều thứ tám tuần này" },
   { use: "Tuần sau nữa", text: "thứ sáu tuần sau nữa" },
-  { use: "Giờ văn phòng", text: "gửi báo cáo đầu giờ chiều mai" },
+  { use: "Nửa tháng", text: "nửa tháng nữa" },
 ];
 
 const clock =
