@@ -115,7 +115,7 @@ export function Demo({ initial }: { initial: Formatted }) {
             void run(text);
           }}
         >
-          <div className="relative">
+          <div className="relative m-3 rounded-[10px] border-2 border-neutral-300 bg-white transition-colors focus-within:border-black focus-within:shadow-[0_0_0_3px_rgba(0,0,0,0.08)]">
             <div
               id="demo-highlight"
               ref={layer}
@@ -139,7 +139,8 @@ export function Demo({ initial }: { initial: Formatted }) {
                 if (layer.current && input.current)
                   layer.current.scrollLeft = input.current.scrollLeft;
               }}
-              className="relative m-0 w-full border-0 bg-transparent p-4 font-sans text-lg leading-7 tracking-[-0.2px] text-transparent caret-black outline-none focus-visible:outline-none"
+              placeholder="ví dụ: họp 3 giờ chiều thứ hai tuần sau"
+              className="relative m-0 w-full border-0 bg-transparent p-4 font-sans text-lg leading-7 tracking-[-0.2px] text-transparent caret-black outline-none placeholder:text-neutral-400 focus-visible:outline-none"
             />
           </div>
         </form>
