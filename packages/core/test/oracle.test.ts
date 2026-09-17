@@ -17,13 +17,11 @@ interface OracleCase {
 const cases = readGold<OracleCase>("labels");
 describe.skipIf(!cases.length)("oracle labels", () => {
   it.each(cases)("$id ($family): $text", (example) => {
-    const tokens = tokenize(example.text).map(
-      (token, index): Token => ({
-        ...token,
-        ...example.tokens[index],
-        score: 1,
-      }),
-    );
+    const tokens = tokenize(example.text).map((token, index): Token => ({
+      ...token,
+      ...example.tokens[index],
+      score: 1,
+    }));
     const expressions = compile(example.text, tokens);
     expect(expressions, "one expression").toHaveLength(1);
     expect(

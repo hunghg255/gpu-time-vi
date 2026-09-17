@@ -5,10 +5,9 @@ import type { RawToken } from "../src/types.js";
 
 import { promotedModel } from "./gold.ts";
 
-// English fixtures against the interim English weights. The Vietnamese
-// tokenizer moves their feature classes, so they wait for the Vietnamese
-// model and are rewritten in Vietnamese in Task 16.
-describe.skipIf(!promotedModel)("english fixtures", () => {
+// Batching, coalescing, disposal and fallback through a mocked GPU runtime.
+// The schedules come from the model, so this waits for a promoted one.
+describe.skipIf(!promotedModel)("parser lifecycle", () => {
   const createGPU = vi.hoisted(() => vi.fn());
   vi.mock("../src/model/gpu.js", () => ({ GPUModel: { create: createGPU } }));
 
@@ -41,9 +40,9 @@ describe.skipIf(!promotedModel)("english fixtures", () => {
     const parser = await defineParser({ backend: "webgpu" });
     try {
       const [first, batch, last] = await Promise.all([
-        parser.parse("today"),
-        parser.parseMany(["tomorrow", "yesterday"]),
-        parser.parse("now"),
+        parser.parse("hôm nay"),
+        parser.parseMany(["ngày mai", "hôm qua"]),
+        parser.parse("bây giờ"),
       ]);
       const dates = [first, ...batch, last].map(
         (result) => result.expressions[0].schedule?.clauses[0].date,
@@ -52,7 +51,7 @@ describe.skipIf(!promotedModel)("english fixtures", () => {
         { kind: "relativeDay", offset: 0 },
         { kind: "relativeDay", offset: 1 },
         { kind: "relativeDay", offset: -1 },
-        { kind: "now" },
+        { kind: "bây giờ" },
       ]);
       expect(gpu.inferMany).toHaveBeenCalledTimes(1);
     } finally {
@@ -70,7 +69,7 @@ describe.skipIf(!promotedModel)("english fixtures", () => {
     });
     createGPU.mockResolvedValue(gpu);
     const parser = await defineParser({ backend: "webgpu" });
-    const batch = parser.parseMany(["today", "tomorrow", "yesterday"]);
+    const batch = parser.parseMany(["hôm nay", "ngày mai", "hôm qua"]);
     const rejected = expect(batch).rejects.toThrow("disposed");
     await started.promise;
     parser.dispose();
@@ -87,10 +86,10 @@ describe.skipIf(!promotedModel)("english fixtures", () => {
     const parser = await defineParser({ backend: "webgpu", tokens: true });
     const cpu = await defineParser({ backend: "cpu", tokens: true });
     const texts = [
-      "one day after",
-      "Sat Sun 1pm-8pm Mon 10pm-12am",
-      "every other Tuesday until Dec",
-      "May I have your second opinion?",
+      "1 ngày nữa",
+      "thứ bảy chủ nhật từ 1 giờ đến 8 giờ tối và thứ hai từ 10 giờ tối đến 12 giờ đêm",
+      "mỗi thứ ba đến hết tháng 12",
+      "cảm ơn mọi người rất nhiều",
     ];
     try {
       const [actual, expected] = await Promise.all([
@@ -121,9 +120,9 @@ describe.skipIf(!promotedModel)("english fixtures", () => {
     });
     createGPU.mockResolvedValue(gpu);
     const parser = await defineParser({ backend: "webgpu" });
-    const first = parser.parse("tomorrow");
+    const first = parser.parse("ngày mai");
     await started.promise;
-    const second = parser.parse("yesterday");
+    const second = parser.parse("hôm qua");
     completed.resolve(inputs.map((tokens) => inferCPU(tokens)));
     const [a, b] = await Promise.all([first, second]);
     expect(a.expressions[0].schedule).toEqual({
@@ -140,12 +139,12 @@ describe.skipIf(!promotedModel)("english fixtures", () => {
     const gpu = runtime();
     createGPU.mockResolvedValue(gpu);
     const parser = await defineParser({ backend: "webgpu" });
-    const result = parser.parse("tomorrow");
+    const result = parser.parse("ngày mai");
     const rejected = expect(result).rejects.toThrow("disposed");
     parser.dispose();
     parser.dispose();
     await rejected;
-    await expect(parser.parse("today")).rejects.toThrow("disposed");
+    await expect(parser.parse("hôm nay")).rejects.toThrow("disposed");
     expect(gpu.inferMany).not.toHaveBeenCalled();
     expect(gpu.dispose).toHaveBeenCalledTimes(1);
   });
@@ -160,7 +159,7 @@ describe.skipIf(!promotedModel)("english fixtures", () => {
     });
     const parser = await defineParser({ backend: "auto" });
     let settled = false;
-    const result = parser.parse("tomorrow ".repeat(300));
+    const result = parser.parse("ngày mai ".repeat(300));
     const outcome = result.then(
       () => "resolved",
       (error: Error) => {
@@ -191,7 +190,7 @@ describe.skipIf(!promotedModel)("english fixtures", () => {
     });
     createGPU.mockResolvedValue(gpu);
     const parser = await defineParser({ backend: "auto" });
-    const result = parser.parse("tomorrow ".repeat(300));
+    const result = parser.parse("ngày mai ".repeat(300));
     const outcome = result.then(
       () => "resolved",
       (error: Error) => error.message,
@@ -208,9 +207,9 @@ describe.skipIf(!promotedModel)("english fixtures", () => {
     gpu.inferMany.mockResolvedValueOnce([]);
     createGPU.mockResolvedValue(gpu);
     const parser = await defineParser({ backend: "webgpu" });
-    await expect(parser.parse("tomorrow")).rejects.toThrow("predictions");
+    await expect(parser.parse("ngày mai")).rejects.toThrow("predictions");
     expect(
-      (await parser.parse("today")).expressions[0].schedule,
+      (await parser.parse("hôm nay")).expressions[0].schedule,
     ).not.toBeNull();
     parser.dispose();
   });
@@ -218,7 +217,7 @@ describe.skipIf(!promotedModel)("english fixtures", () => {
   it("reports automatic fallback and does not retry an unavailable backend on every call", async () => {
     createGPU.mockRejectedValue(new Error("WebGPU unavailable"));
     const parser = await defineParser({ backend: "auto" });
-    const result = await parser.parseMany(Array(32).fill("one day after"));
+    const result = await parser.parseMany(Array(32).fill("1 ngày nữa"));
     expect(
       result.every(
         (value) =>
@@ -229,7 +228,7 @@ describe.skipIf(!promotedModel)("english fixtures", () => {
     expect(result[0].expressions[0].schedule?.clauses[0].shift?.direction).toBe(
       "after",
     );
-    await parser.parseMany(Array(32).fill("tomorrow"));
+    await parser.parseMany(Array(32).fill("ngày mai"));
     expect(createGPU).toHaveBeenCalledTimes(1);
     parser.dispose();
     await expect(defineParser({ backend: "webgpu" })).rejects.toThrow(

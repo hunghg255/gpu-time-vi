@@ -4,18 +4,20 @@ import type { Clause } from "../src/types.js";
 
 import { promotedModel } from "./gold.ts";
 
-// English fixtures against the interim English weights. The Vietnamese
-// tokenizer moves their feature classes, so they wait for the Vietnamese
-// model and are rewritten in Vietnamese in Task 16.
-describe.skipIf(!promotedModel)("english fixtures", () => {
+// Windows, timezones, date order, whitespace and spans through the model.
+describe.skipIf(!promotedModel)("parser model", () => {
   it("preserves every clause when a schedule spans several inference windows", async () => {
-    const forms = ["Monday at 9am", "Tuesday at 10am", "Wednesday at 11am"];
+    const forms = [
+      "thứ hai lúc 9 giờ sáng",
+      "thứ ba lúc 10 giờ sáng",
+      "thứ tư lúc 11 giờ sáng",
+    ];
     const days = ["MO", "TU", "WE"] as const;
     const clauses: Clause[] = Array.from({ length: 40 }, (_, index) => ({
       date: { kind: "weekday", days: [days[index % 3]] },
       time: { start: { hour: 9 + (index % 3), minute: 0 } },
     }));
-    const text = clauses.map((_, index) => forms[index % 3]).join(" and ");
+    const text = clauses.map((_, index) => forms[index % 3]).join(" và ");
     const parser = await defineParser({ backend: "cpu", tokens: true });
     try {
       const result = await parser.parse(text);
@@ -31,7 +33,7 @@ describe.skipIf(!promotedModel)("english fixtures", () => {
   it("resolves one timezone-free prediction using each caller's timezone", async () => {
     const parser = await defineParser({ backend: "cpu" });
     try {
-      const result = await parser.parse("tomorrow at 3pm");
+      const result = await parser.parse("3 giờ chiều mai");
       const schedule = result.expressions[0].schedule!;
       expect(schedule).toEqual({
         clauses: [
@@ -42,14 +44,17 @@ describe.skipIf(!promotedModel)("english fixtures", () => {
         ],
       });
       const original = structuredClone(schedule);
-      const reference = "2026-09-09T00:30:00+06:00";
-      const dhaka = resolve(schedule, { reference, timeZone: "Asia/Dhaka" });
+      const reference = "2026-09-17T00:30:00+07:00";
+      const hanoi = resolve(schedule, {
+        reference,
+        timeZone: "Asia/Ho_Chi_Minh",
+      });
       const newYork = resolve(schedule, {
         reference,
         timeZone: "America/New_York",
       });
-      expect(dhaka.occurrences[0].start).toBe("2026-09-10T15:00:00+06:00");
-      expect(newYork.occurrences[0].start).toBe("2026-09-09T15:00:00-04:00");
+      expect(hanoi.occurrences[0].start).toBe("2026-09-18T15:00:00+07:00");
+      expect(newYork.occurrences[0].start).toBe("2026-09-17T15:00:00-04:00");
       expect(schedule).toEqual(original);
       expect(() =>
         resolve(schedule, { reference, timeZone: "not-a-zone" }),
@@ -61,7 +66,9 @@ describe.skipIf(!promotedModel)("english fixtures", () => {
 
   it("parses the user's shorthand using trained predictions, not oracle labels", async () => {
     const parser = await defineParser({ backend: "cpu", tokens: true });
-    const result = await parser.parse("Sat Sun 1pm-8pm Mon 10pm-12am");
+    const result = await parser.parse(
+      "thứ bảy chủ nhật từ 1 giờ đến 8 giờ tối và thứ hai từ 10 giờ tối đến 12 giờ đêm",
+    );
     expect(result.expressions).toHaveLength(1);
     expect(result.expressions[0].schedule).toEqual({
       clauses: [
@@ -79,15 +86,15 @@ describe.skipIf(!promotedModel)("english fixtures", () => {
       ],
     });
     const dates = resolve(result.expressions[0].schedule!, {
-      reference: "2026-09-09T12:00:00+06:00",
-      timeZone: "Asia/Dhaka",
+      reference: "2026-09-17T09:00:00+07:00",
+      timeZone: "Asia/Ho_Chi_Minh",
     });
     expect(dates.occurrences.map((occurrence) => occurrence.start)).toEqual([
-      "2026-09-12T13:00:00+06:00",
-      "2026-09-13T13:00:00+06:00",
-      "2026-09-14T22:00:00+06:00",
+      "2026-09-19T13:00:00+07:00",
+      "2026-09-20T13:00:00+07:00",
+      "2026-09-21T22:00:00+07:00",
     ]);
-    expect(dates.occurrences[2].end).toBe("2026-09-15T00:00:00+06:00");
+    expect(dates.occurrences[2].end).toBe("2026-09-22T00:00:00+07:00");
     parser.dispose();
   });
 
@@ -124,13 +131,13 @@ describe.skipIf(!promotedModel)("english fixtures", () => {
     const parser = await defineParser({ backend: "cpu", tokens: true });
     try {
       const source = " \ttoday\n";
-      const plain = await parser.parse("today");
+      const plain = await parser.parse("hôm nay");
       const padded = await parser.parse(source);
       expect(padded.expressions[0].schedule).toEqual(
         plain.expressions[0].schedule,
       );
       expect(padded.expressions[0].start).toBe(2);
-      expect(padded.expressions[0].end).toBe(7);
+      expect(padded.expressions[0].end).toBe(9);
       expect(padded.tokens?.map((token) => token.text).join("")).toBe(source);
       expect((await parser.parse(" \n\t")).expressions).toEqual([]);
     } finally {
@@ -142,14 +149,13 @@ describe.skipIf(!promotedModel)("english fixtures", () => {
     const { defineParser: defineResolvingParser } =
       await import("../src/index.js");
     const parser = await defineResolvingParser({ backend: "cpu" });
-    const text = "Dinner at 8 at Nobu";
+    const text = "ăn tối lúc 8 giờ ở Nobu";
     const result = await parser.parse(text, {
-      reference: "2026-09-14T12:00:00+06:00",
-      timeZone: "Asia/Dhaka",
+      reference: "2026-09-17T09:00:00+07:00",
     });
     expect(result.spans).toHaveLength(1);
     const [span] = result.spans;
-    expect(span.text).toBe("8");
+    expect(span.text).toBe("8 giờ");
     expect(text.slice(span.start, span.end)).toBe(span.text);
     parser.dispose();
   });
@@ -158,9 +164,8 @@ describe.skipIf(!promotedModel)("english fixtures", () => {
     const { defineParser: defineResolvingParser } =
       await import("../src/index.js");
     const parser = await defineResolvingParser({ backend: "cpu" });
-    const result = await parser.parse("Tom likes fish.", {
-      reference: "2026-09-14T12:00:00+06:00",
-      timeZone: "Asia/Dhaka",
+    const result = await parser.parse("Tom thích ăn cá.", {
+      reference: "2026-09-17T09:00:00+07:00",
     });
     expect(result.spans).toEqual([]);
     parser.dispose();
