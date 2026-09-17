@@ -32,6 +32,7 @@ const examples: Example[] = contents
 const parser = await defineParser({ backend: "cpu" });
 const families = new Map<string, { total: number; correct: number }>();
 const failures = [];
+let failuresTotal = 0;
 try {
   for (const example of examples) {
     const result = await parser.parse(example.text);
@@ -42,6 +43,7 @@ try {
     count.total++;
     count.correct += Number(correct);
     families.set(example.family, count);
+    if (!correct) failuresTotal++;
     if (!correct && failures.length < 100)
       failures.push({ ...example, actual: result.expressions });
   }
@@ -73,5 +75,9 @@ await writeFile(
     null,
     2,
   ) + "\n",
+);
+const correctTotal = examples.length - failuresTotal;
+console.log(
+  `Semantic evaluation: ${correctTotal}/${examples.length} exact schedules`,
 );
 console.table(Object.fromEntries(families));
