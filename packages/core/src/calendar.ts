@@ -327,11 +327,20 @@ export function resolveDates(
         year += spec.month <= reference.month ? 1 : 0;
       if (spec.year === undefined && spec.modifier === "last")
         year -= spec.month >= reference.month ? 1 : 0;
-      const beginning = calendarDate(
+      let beginning = calendarDate(
         { year, month: spec.month, day: 1 },
         reference,
       );
-      const end = addMonths(beginning, 1);
+      let end = addMonths(beginning, 1);
+      // Without a year or modifier, a month that has passed is next year's.
+      if (
+        spec.year === undefined &&
+        spec.modifier === undefined &&
+        utc(end) <= utc(today)
+      ) {
+        beginning = addMonths(beginning, 12);
+        end = addMonths(end, 12);
+      }
       if (spec.edge === "start") return [{ start: beginning }];
       if (spec.edge === "end") return [{ start: addDays(end, -1) }];
       if (spec.week !== undefined) {
@@ -427,6 +436,15 @@ export function resolveDates(
         throw new RangeError(
           "A date range must end on or after its start date.",
         );
+      // A range without any year that has fully passed is next year's.
+      if (
+        spec.from.year === undefined &&
+        spec.to.year === undefined &&
+        utc(addDays(end, 1)) <= utc(today)
+      )
+        return [
+          { start: addMonths(start, 12), end: addDays(addMonths(end, 12), 1) },
+        ];
 
       return [{ start, end: addDays(end, 1) }];
     }

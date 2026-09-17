@@ -376,13 +376,16 @@ export const lunarWords = new Set([
   "nhuận",
 ]);
 
-// Every word that makes a bare string look like it is about time. Used only
-// by `mentionsTime()`, which gates the no-expression warning.
-const timeWords = new Set([
+// Every phrase that makes a bare string look like it is about time. Used only
+// by `mentionsTime()`, which gates the no-expression warning. Multi-word
+// phrases match whole, so "đi làm" alone is not "ngày đi làm".
+const timePhrases = new Set([
   ...Object.keys(unitWords),
   ...Object.keys(dayParts),
   ...Object.keys(relativeDays),
   ...Object.keys(dayGroups),
+  ...Object.keys(holidayNames),
+  ...Object.keys(namedTimes),
   ...lunarWords,
   "thứ",
   "cn",
@@ -397,19 +400,20 @@ const timeWords = new Set([
   "hẹn",
   "lúc",
 ]);
-const timeSyllables = new Set(
-  [...timeWords].flatMap((phrase) => phrase.split(" ")),
+const longestPhrase = Math.max(
+  ...[...timePhrases].map((phrase) => phrase.split(" ").length),
 );
 
 /** A cheap check for input that mentions time but compiled to no expression. */
 export function mentionsTime(text: string): boolean {
-  const words = key(text).split(/[^\p{L}\p{N}]+/u);
-  return words.some(
-    (word) =>
-      word !== "" &&
-      (/\d/.test(word) ||
-        timeSyllables.has(word) ||
-        weekday(word) !== undefined ||
-        Object.hasOwn(holidayNames, word)),
-  );
+  const words = key(text)
+    .split(/[^\p{L}\p{N}]+/u)
+    .filter((word) => word !== "");
+  return words.some((word, index) => {
+    if (/\d/.test(word) || weekday(word) !== undefined) return true;
+    for (let length = 1; length <= longestPhrase; length++)
+      if (timePhrases.has(words.slice(index, index + length).join(" ")))
+        return true;
+    return false;
+  });
 }

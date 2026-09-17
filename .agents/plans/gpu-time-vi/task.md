@@ -70,11 +70,11 @@ Chi tiết từng task ở `todo.md`.
 ### Phase 1: Lớp ngôn ngữ, đường oracle (không cần model)
 - [x] Task 3: Tokenizer hỗ trợ chữ Việt (NFC, character class 43 lớp, `\p{Lu}`)
 - [x] Task 4: Lexicon + labels (`LUNAR`) + types (holiday VN, `lunar` DateSpec, `noon` DayPart) + quantity (đọc số tiếng Việt)
-- [ ] Task 5: Compiler — giờ/phút, `rưỡi`/`kém`, daypart/meridiem, TIME_NAMED
-- [ ] Task 6: Compiler — ngày tương đối, thứ, DAYGROUP, unit + deictic đứng sau, EDGE
-- [ ] Task 7: Compiler — ngày dương lịch (ngày/tháng/năm, DMY numeric, tháng giêng/chạp), khoảng ngày, holiday dương lịch
-- [ ] Task 8: Compiler — duration, shift, recurrence, TIMES, bounds, exceptions
-- [ ] Task 9: Module âm lịch `lunar.ts` + resolver cho `lunar` DateSpec và holiday âm lịch
+- [x] Task 5: Compiler — giờ/phút, `rưỡi`/`kém`, daypart/meridiem, TIME_NAMED
+- [x] Task 6: Compiler — ngày tương đối, thứ, DAYGROUP, unit + deictic đứng sau, EDGE
+- [x] Task 7: Compiler — ngày dương lịch (ngày/tháng/năm, DMY numeric, tháng giêng/chạp), khoảng ngày, holiday dương lịch
+- [x] Task 8: Compiler — duration, shift, recurrence, TIMES, bounds, exceptions
+- [x] Task 9: Module âm lịch `lunar.ts` + resolver cho `lunar` DateSpec và holiday âm lịch
 - [ ] Task 10: Resolver — daypart windows VN, `results.jsonl` end-to-end, `negatives.jsonl`
 
 ### Checkpoint 1: Oracle

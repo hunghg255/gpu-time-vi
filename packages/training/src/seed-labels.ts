@@ -319,6 +319,7 @@ const roles: Record<string, string> = {
   "mỗi thứ hai bắt đầu từ 1/10": "REC WD WD BS BS BS DOM G MON",
   "hàng tuần kể từ tuần sau": "REC UNIT BS BS UNIT DE",
   "mỗi thứ hai đến hết tháng 12": "REC WD WD BE BE G MON",
+  "mỗi thứ hai đến tháng 12": "REC WD WD BE G MON",
   "mỗi thứ hai cho đến 31/12": "REC WD WD BE BE DOM G MON",
   "mỗi ngày tới thứ sáu": "REC UNIT BE WD WD",
   "mỗi thứ hai trong 10 tuần": "REC WD WD DUR NUM UNIT",
@@ -342,6 +343,9 @@ const roles: Record<string, string> = {
   "mùng 1 Tết lúc 12 giờ đêm": "LUN DOM HOL O H G MER",
   "Giáng sinh lúc 7 giờ tối": "HOL HOL O H G MER",
   "cuối tuần sau lúc 10h sáng": "DG DG DE O H G MER",
+  "ngày mai 3 giờ chiều": "RD RD H G MER",
+  "2 ngày nữa": "NUM UNIT DA",
+  "24 tiếng nữa": "NUM UNIT DA",
   // multi-clause
   "thứ hai 9h và thứ tư 10h": "WD WD H G J |WD WD H G",
   "thứ hai 9h, thứ tư 10h, thứ sáu 11h": "WD WD H G J |WD WD H G J |WD WD H G",

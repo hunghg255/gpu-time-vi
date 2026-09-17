@@ -792,6 +792,7 @@ function compileClause(tokens: Token[], diagnostics: Diagnostic[]): Clause {
   let open: TimeSpec["open"] | undefined;
   let range: "start" | "end" | undefined;
   let bound: "start" | "until" | undefined;
+  let inclusiveBound = false;
   let except = false;
   let direction: Shift["direction"] | undefined;
   let directionToken: Token | undefined;
@@ -804,8 +805,22 @@ function compileClause(tokens: Token[], diagnostics: Diagnostic[]): Clause {
       rule.start = toDateSpec(state);
       bound = undefined;
     } else if (bound === "until") {
-      rule.until = toDateSpec(state);
+      const until = toDateSpec(state);
+      // "đến hết tháng 12" runs through the month; "đến tháng 12" stops at it.
+      rule.until =
+        inclusiveBound &&
+        until.kind === "calendar" &&
+        until.month !== undefined &&
+        until.day === undefined
+          ? {
+              kind: "calendarPeriod",
+              month: until.month,
+              ...(until.year === undefined ? {} : { year: until.year }),
+              edge: "end",
+            }
+          : until;
       bound = undefined;
+      inclusiveBound = false;
     } else if (except) {
       rule.except = [...(rule.except ?? []), toDateSpec(state, true)];
       except = false;
@@ -878,6 +893,7 @@ function compileClause(tokens: Token[], diagnostics: Diagnostic[]): Clause {
       case Role.BOUND_END:
         reader.take();
         bound = "until";
+        inclusiveBound = next.text.split(" ").includes("hết");
         rule.active = true;
         break;
       case Role.EXCEPT:

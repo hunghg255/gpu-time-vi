@@ -1,13 +1,13 @@
 import type { ClockTime, DayPart, ResolveOptions, TimeSpec } from "./types.js";
 
-// Vietnamese day parts. "đêm" runs past midnight; an end past 24:00 lands on
-// the next day.
+// Vietnamese day parts. "đêm" runs past midnight: an end before the start
+// lands on the next day.
 const defaultParts: Record<DayPart, [string, string]> = {
   morning: ["06:00", "11:00"],
   noon: ["11:00", "13:00"],
   afternoon: ["13:00", "18:00"],
   evening: ["18:00", "22:00"],
-  night: ["22:00", "29:00"],
+  night: ["22:00", "05:00"],
 };
 
 function configuredClock(value: string): ClockTime {

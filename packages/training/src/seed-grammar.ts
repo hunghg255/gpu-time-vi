@@ -611,6 +611,14 @@ example(
 example(
   "recurrence-bound",
   "mỗi thứ hai đến hết tháng 12",
+  recurrence("weekly", {
+    byDay: ["MO"],
+    until: { kind: "calendarPeriod", month: 12, edge: "end" },
+  }),
+);
+example(
+  "recurrence-bound",
+  "mỗi thứ hai đến tháng 12",
   recurrence("weekly", { byDay: ["MO"], until: calendar(12) }),
 );
 example(
@@ -709,6 +717,10 @@ example("combined", "cuối tuần sau lúc 10h sáng", {
   date: { kind: "dayGroup", group: "weekend", modifier: "next" },
   time: clock(10),
 });
+
+example("combined", "ngày mai 3 giờ chiều", { date: relative(1), time: clock(15) });
+example("shift", "2 ngày nữa", shift(2, "day", "after"));
+example("shift", "24 tiếng nữa", shift(24, "hour", "after"));
 
 // 32. multi-clause
 example(

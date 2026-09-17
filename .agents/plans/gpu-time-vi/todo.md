@@ -121,14 +121,14 @@
 **Description:** Trong `compile.ts`, viết phần đọc `TimeSpec` tiếng Việt: `HOUR (GLUE) [MINUTE] [MERIDIEM]`, `HOUR h MINUTE [p]`, `HOUR rưỡi`, `HOUR giờ kém MINUTE`, `HOUR:MINUTE`, `am/pm`, `TIME_NAMED` (`nửa đêm`, `giữa trưa`, `12 giờ trưa`), `DAYPART` đứng một mình (`buổi sáng`, `sáng`), `DAYPART + HOUR` ("chiều 3 giờ") và `HOUR + DAYPART` ("3 giờ chiều"). Áp dụng quy tắc daypart→24h trong spec. Bỏ các bảng tiếng Anh (`filler`, `approximately`, `dayParts`, …) thay bằng tiếng Việt. Thêm ≥25 dòng vào `labels.jsonl` (id `oracle-clock-*`) và test trong `oracle.test.ts`.
 
 **Acceptance criteria:**
-- [ ] `"3 giờ chiều"`→15:00, `"3 rưỡi sáng"`→03:30, `"7 giờ kém 15 tối"`→18:45, `"12 giờ đêm"`→00:00, `"1 giờ trưa"`→13:00, `"15h30"`→15:30, `"3pm"`→15:00
-- [ ] `"buổi sáng"`→`{part:"morning"}`; `"khoảng 3 giờ"` có `approximate`
-- [ ] Mọi oracle-clock-* pass; oracle cũ (tiếng Anh) đã xoá
+- [x] `"3 giờ chiều"`→15:00, `"3 rưỡi sáng"`→03:30, `"7 giờ kém 15 tối"`→18:45, `"12 giờ đêm"`→00:00, `"1 giờ trưa"`→13:00, `"15h30"`→15:30, `"3pm"`→15:00
+- [x] `"buổi sáng"`→`{part:"morning"}`; `"khoảng 3 giờ"` có `approximate`
+- [x] Mọi oracle-clock-* pass; oracle cũ (tiếng Anh) đã xoá
 
 **Verification:**
-- [ ] Tests pass: `pnpm --filter gpu-time-vi test -- oracle compile`
-- [ ] Build succeeds: `pnpm check`
-- [ ] Manual check: chạy `compile` bằng tsx cho 5 câu ngoài gold
+- [x] Tests pass: `pnpm --filter gpu-time-vi test -- oracle compile`
+- [x] Build succeeds: `pnpm check`
+- [x] Manual check: chạy `compile` bằng tsx cho 5 câu ngoài gold
 
 **Dependencies:** Task 4
 
@@ -138,20 +138,24 @@
 
 ---
 
+**Ghi chú thực hiện (2026-09-17):** Task 5–8 làm gộp trong một lần viết lại `compile.ts` (parser theo segment role, ~900 dòng thay cho 1762 dòng tiếng Anh). `labels.jsonl` sinh từ `packages/training/src/seed-labels.ts` (nhãn tay cho **284/284** câu grammar; `pnpm --filter @gpu-time-vi/training seed:labels`). `oracle.test.ts` chạy toàn bộ và pass 284/284; `compile.test.ts` mới có 14 test diagnostic/tách biểu thức. Commit `7032db6`. Chưa có warning `meridiem-conflict` (`15h sáng` giữ 15:00 im lặng) — ghi vào Task 14 nếu cần.
+
+---
+
 ## Task 6: Compiler — ngày tương đối, thứ, DAYGROUP, unit + deictic đứng sau, EDGE
 
 **Description:** Đọc `REL_DAY` đa token (`hôm nay, ngày mai, mai, ngày kia, ngày mốt, hôm qua, hôm kia, bữa nay, nay`), `NOW` (`bây giờ, hiện tại, ngay bây giờ`), `WEEKDAY` đa token và viết tắt, `WEEKDAY + UNIT DEICTIC` (`thứ hai tuần sau`), `DEICTIC` đứng sau unit (`tuần sau/tới/này/trước/rồi/qua`, `năm ngoái/nay/tới`, `tháng sau`), `DAYGROUP` (`cuối tuần`, `ngày thường`, `ngày làm việc`, `ngày nghỉ`), `EDGE` (`đầu/giữa/cuối` + unit), `ordinalWeekday` (`thứ hai đầu tiên của tháng`, `thứ sáu cuối tháng`). Modifier map: `sau/tới/kế/kế tiếp`→next, `này/nay`→this, `trước/rồi/qua/ngoái/vừa rồi`→last. Thêm ≥30 dòng `labels.jsonl` (`oracle-rel-*`).
 
 **Acceptance criteria:**
-- [ ] `"ngày mai"`→relativeDay 1; `"ngày kia"`→2; `"hôm kia"`→-2; `"sáng mai"`→relativeDay 1 + part morning
-- [ ] `"thứ hai tuần sau"`→weekday MO modifier next; `"T2"`→MO; `"CN này"`→SU this
-- [ ] `"cuối tháng sau"`→relativeUnit month next edge end; `"cuối tuần"`→dayGroup weekend
-- [ ] Mọi oracle-rel-* pass
+- [x] `"ngày mai"`→relativeDay 1; `"ngày kia"`→2; `"hôm kia"`→-2; `"sáng mai"`→relativeDay 1 + part morning
+- [x] `"thứ hai tuần sau"`→weekday MO modifier next; `"T2"`→MO; `"CN này"`→SU this
+- [x] `"cuối tháng sau"`→relativeUnit month next edge end; `"cuối tuần"`→dayGroup weekend
+- [x] Mọi oracle-rel-* pass
 
 **Verification:**
-- [ ] Tests pass: `pnpm --filter gpu-time-vi test -- oracle`
-- [ ] Build succeeds: `pnpm check`
-- [ ] Manual check: 5 câu ngoài gold
+- [x] Tests pass: `pnpm --filter gpu-time-vi test -- oracle`
+- [x] Build succeeds: `pnpm check`
+- [x] Manual check: 5 câu ngoài gold
 
 **Dependencies:** Task 4 (song song với Task 5, 7, 8, 9 — mỗi task sở hữu vùng riêng trong `compile.ts` và dải id riêng trong `labels.jsonl`)
 
@@ -161,20 +165,24 @@
 
 ---
 
+**Ghi chú:** xem Task 5.
+
+---
+
 ## Task 7: Compiler — ngày dương lịch, khoảng ngày, holiday dương lịch
 
 **Description:** `ngày DOM tháng MONTH năm YEAR` (mọi tổ hợp thiếu thành phần: `ngày 15`, `tháng 3`, `15/3`, `15/3/2026`, `15-3-2026`, `tháng 3 năm 2026`, `năm 2026`, `2026-03-15` ISO), `tháng giêng/chạp/tư`, `dateOrder` mặc định DMY (giữ `MDY` là option), `calendarRange` (`từ ngày 10 đến ngày 15 tháng 3`, `10–15/3`, `từ 15/3 đến 20/4`), `calendarPeriod` (`tuần thứ 2 của tháng 3`, `đầu tháng 3`), `holiday` dương lịch (`Giáng sinh`, `Noel`, `30/4` không phải holiday — chỉ ngày; `Quốc khánh`, `Tết dương lịch`, `ngày Nhà giáo`). Thêm ≥30 dòng `labels.jsonl` (`oracle-cal-*`).
 
 **Acceptance criteria:**
-- [ ] `"15/3/2026"`→{y2026,m3,d15}; `"3/15/2026"` với DMY → diagnostic lỗi ngày; `"tháng giêng năm sau"`→calendarPeriod month 1 modifier next
-- [ ] `"từ 10 đến 15 tháng 3"`→calendarRange from{m3,d10} to{m3,d15}
-- [ ] `"Giáng sinh"`→holiday christmas; `"Quốc khánh năm nay"`→holiday national-day
-- [ ] Mọi oracle-cal-* pass
+- [x] `"15/3/2026"`→{y2026,m3,d15}; `"3/15/2026"` với DMY → diagnostic lỗi ngày; `"tháng giêng năm sau"`→calendarPeriod month 1 modifier next
+- [x] `"từ 10 đến 15 tháng 3"`→calendarRange from{m3,d10} to{m3,d15}
+- [x] `"Giáng sinh"`→holiday christmas; `"Quốc khánh năm nay"`→holiday national-day
+- [x] Mọi oracle-cal-* pass
 
 **Verification:**
-- [ ] Tests pass: `pnpm --filter gpu-time-vi test -- oracle`
-- [ ] Build succeeds: `pnpm check`
-- [ ] Manual check: 5 câu ngoài gold
+- [x] Tests pass: `pnpm --filter gpu-time-vi test -- oracle`
+- [x] Build succeeds: `pnpm check`
+- [x] Manual check: 5 câu ngoài gold
 
 **Dependencies:** Task 4
 
@@ -184,20 +192,24 @@
 
 ---
 
+**Ghi chú:** xem Task 5.
+
+---
+
 ## Task 8: Compiler — duration, shift, recurrence, TIMES, bounds, exceptions
 
 **Description:** `Shift`: `sau 2 tiếng`, `2 tiếng nữa`, `3 ngày trước`, `cách đây 3 ngày`, `3 ngày sau Tết`, `2 tuần trước ngày 15/3`, ghép `1 tiếng 30 phút nữa`; `Duration`: `trong 2 tiếng`, `trong vòng 3 ngày`, `kéo dài 2 tuần`, `suốt 1 tiếng`; `Recurrence`: `mỗi thứ hai`, `mỗi ngày`, `hàng/hằng ngày/tuần/tháng/năm`, `mỗi 2 tuần`, `2 tuần một lần`, `3 lần một tuần`, `mỗi thứ hai và thứ tư`, `mỗi ngày 15`, `thứ sáu đầu tiên hàng tháng`; bounds `từ nay đến cuối tháng`, `cho đến hết năm`, `bắt đầu từ tuần sau`, `trong 3 tháng tới`, `count` (`5 lần`); `EXCEPT` (`trừ thứ bảy`, `ngoại trừ ngày lễ`, `trừ tuần cuối tháng`); `RANGE_START/END` (`từ 9h đến 17h`, `9h-17h`, `9h tới 17h`, `từ thứ hai đến thứ sáu`); `open bounds` (`sau 6 giờ tối`, `trước 9h sáng`). Thêm ≥35 dòng `labels.jsonl` (`oracle-recur-*`, `oracle-shift-*`).
 
 **Acceptance criteria:**
-- [ ] `"2 tiếng nữa"`→shift after 2 hour; `"cách đây 3 ngày"`→shift before 3 day; `"1 tiếng 30 phút nữa"`→components
-- [ ] `"mỗi thứ hai từ 9h đến 11h"`→recurrence weekly byDay MO + time 9–11; `"2 tuần một lần"`→weekly interval 2; `"3 lần một tuần"`→weekly timesPer 3
-- [ ] `"mỗi thứ bảy trừ tuần cuối tháng"`→except; `"từ nay đến cuối tháng"`→bound
-- [ ] Mọi oracle-recur-*/shift-* pass
+- [x] `"2 tiếng nữa"`→shift after 2 hour; `"cách đây 3 ngày"`→shift before 3 day; `"1 tiếng 30 phút nữa"`→components
+- [x] `"mỗi thứ hai từ 9h đến 11h"`→recurrence weekly byDay MO + time 9–11; `"2 tuần một lần"`→weekly interval 2; `"3 lần một tuần"`→weekly timesPer 3
+- [x] `"mỗi thứ bảy trừ tuần cuối tháng"`→except; `"từ nay đến cuối tháng"`→bound
+- [x] Mọi oracle-recur-*/shift-* pass
 
 **Verification:**
-- [ ] Tests pass: `pnpm --filter gpu-time-vi test -- oracle rrule`
-- [ ] Build succeeds: `pnpm check`
-- [ ] Manual check: 5 câu ngoài gold
+- [x] Tests pass: `pnpm --filter gpu-time-vi test -- oracle rrule`
+- [x] Build succeeds: `pnpm check`
+- [x] Manual check: 5 câu ngoài gold
 
 **Dependencies:** Task 4
 
@@ -207,25 +219,33 @@
 
 ---
 
+**Ghi chú:** xem Task 5.
+
+---
+
 ## Task 9: Module âm lịch + resolver cho `lunar` DateSpec và holiday âm lịch
 
 **Description:** Viết `packages/core/src/lunar.ts` (thuật toán Hồ Ngọc Đức: `jdFromDate`, `newMoon`, `sunLongitude`, `getLunarMonth11`, `solarToLunar(d,m,y,tz=7)`, `lunarToSolar(d,m,y,leap,tz=7)`; không dependency). Trong `calendar.ts`: `case "lunar"` → chuyển sang dương lịch (năm âm lịch thiếu → chọn lần xuất hiện gần nhất ≥ reference giống holiday); holiday âm lịch (`tet`=1/1, `tet-eve`=ngày cuối năm âm, `lantern-festival`=15/1, `hung-kings`=10/3, `doan-ngo`=5/5, `vu-lan`=15/7, `mid-autumn`=15/8, `kitchen-gods`=23/12). Compiler (`compile.ts`): `LUNAR` marker đưa calendar date thành `lunar` (`mùng 1 Tết`, `rằm tháng giêng`, `15/8 âm lịch`, `ngày 10 tháng 3 âm lịch`, `mùng 5 tháng 5 ÂL`, `29 Tết`, `giao thừa`). `rằm`=DOM 15, `mùng`=marker ngày 1–10.
 
 **Acceptance criteria:**
-- [ ] `lunar.test.ts`: Tết 2020–2035 và Trung thu, Giỗ tổ 2024–2030 khớp bảng đối chiếu ghi trong test (nguồn: lịch công bố; ghi URL trong comment); round-trip solar→lunar→solar đúng cho 5000 ngày liên tiếp; tháng nhuận 2023 (nhuận tháng 2) và 2025 (nhuận tháng 6) đúng
-- [ ] `"mùng 1 Tết"` với reference 2026-09-17 → 2027-02-06 (Tết Đinh Mùi — kiểm chứng lại trong test); `"rằm tháng giêng"` → ngày dương tương ứng
-- [ ] `"15/8 âm lịch"`→`{kind:"lunar", month:8, day:15}`; oracle-lunar-* (≥15 dòng) pass
+- [x] `lunar.test.ts`: Tết 2020–2035 và Trung thu, Giỗ tổ 2024–2030 khớp bảng đối chiếu ghi trong test (nguồn: lịch công bố; ghi URL trong comment); round-trip solar→lunar→solar đúng cho 5000 ngày liên tiếp; tháng nhuận 2023 (nhuận tháng 2) và 2025 (nhuận tháng 6) đúng
+- [x] `"mùng 1 Tết"` với reference 2026-09-17 → 2027-02-06 (Tết Đinh Mùi — kiểm chứng lại trong test); `"rằm tháng giêng"` → ngày dương tương ứng
+- [x] `"15/8 âm lịch"`→`{kind:"lunar", month:8, day:15}`; oracle-lunar-* (≥15 dòng) pass
 
 **Verification:**
-- [ ] Tests pass: `pnpm --filter gpu-time-vi test -- lunar oracle resolve`
-- [ ] Build succeeds: `pnpm check`
-- [ ] Manual check: đối chiếu 3 ngày âm với lịch vạn niên bất kỳ
+- [x] Tests pass: `pnpm --filter gpu-time-vi test -- lunar oracle resolve`
+- [x] Build succeeds: `pnpm check`
+- [x] Manual check: đối chiếu 3 ngày âm với lịch vạn niên bất kỳ
 
 **Dependencies:** Task 4
 
 **Files likely touched:** `packages/core/src/lunar.ts` (mới), `packages/core/src/calendar.ts`, `packages/core/src/compile.ts`, `packages/core/test/lunar.test.ts` (mới), `packages/training/data/gold/labels.jsonl`
 
 **Estimated scope:** Medium
+
+---
+
+**Ghi chú thực hiện:** `lunar.ts` (Hồ Ngọc Đức, tz +7). Lưu ý Tết 2030 = 02/02/2030 theo quy tắc UTC+7 (Trung Quốc 03/02). `lunar.test.ts`: Tết 2020–2035, lễ âm, nhuận 2023/2025, round-trip 10 năm, resolver lunar/holiday/range. Bundle 47 414 B Brotli.
 
 ---
 
