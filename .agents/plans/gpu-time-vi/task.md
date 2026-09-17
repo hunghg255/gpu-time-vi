@@ -68,8 +68,8 @@ Chi tiết từng task ở `todo.md`.
 - [ ] `docs/vietnamese-time-expressions.md` được duyệt bởi người dùng trước khi đi tiếp
 
 ### Phase 1: Lớp ngôn ngữ, đường oracle (không cần model)
-- [ ] Task 3: Tokenizer hỗ trợ chữ Việt (NFC, character class 43 lớp, `\p{Lu}`)
-- [ ] Task 4: Lexicon + labels (`LUNAR`) + types (holiday VN, `lunar` DateSpec, `noon` DayPart) + quantity (đọc số tiếng Việt)
+- [x] Task 3: Tokenizer hỗ trợ chữ Việt (NFC, character class 43 lớp, `\p{Lu}`)
+- [x] Task 4: Lexicon + labels (`LUNAR`) + types (holiday VN, `lunar` DateSpec, `noon` DayPart) + quantity (đọc số tiếng Việt)
 - [ ] Task 5: Compiler — giờ/phút, `rưỡi`/`kém`, daypart/meridiem, TIME_NAMED
 - [ ] Task 6: Compiler — ngày tương đối, thứ, DAYGROUP, unit + deictic đứng sau, EDGE
 - [ ] Task 7: Compiler — ngày dương lịch (ngày/tháng/năm, DMY numeric, tháng giêng/chạp), khoảng ngày, holiday dương lịch

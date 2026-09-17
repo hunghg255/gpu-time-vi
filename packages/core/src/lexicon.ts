@@ -246,6 +246,7 @@ export const dayParts: Record<string, DayPart> = {
 export const namedTimes: Record<string, "noon" | "midnight"> = {
   "nửa đêm": "midnight",
   "giữa đêm": "midnight",
+  trưa: "noon",
   "giữa trưa": "noon",
   "đúng trưa": "noon",
   "chính ngọ": "noon",

@@ -67,21 +67,23 @@
 **Description:** Sửa `packages/core/src/tokenizer.ts`: NFC-normalize input đầu `tokenize()` (giữ offset đúng — nếu độ dài đổi sau NFC thì tokenize trên bản NFC và map offset về bản gốc, hoặc yêu cầu caller đưa NFC và ghi rõ; chọn cách 1). `characterClass()` mới: bỏ dấu thanh (NFD, strip U+0300–U+036F trừ ˘ ̂ ̛ ), map 26 chữ Latin → 0–25, {ă, â, đ, ê, ô, ơ, ư} → 26–32, chữ số → 33–42, punctuation → 43–63 (21 lớp). Uppercase flags dùng `\p{Lu}`. Consonant-skeleton hash: bỏ mọi nguyên âm (a e i o u y kèm biến thể). Giữ `featureRows` 580 rows và layout bit y nguyên. Cập nhật `test/tokenizer.test.ts` với các case tiếng Việt.
 
 **Acceptance criteria:**
-- [ ] `"sáu"`, `"sau"`, `"sâu"` có `identity` khác nhau; `"Sáu"` và `"sáu"` cùng hash nhưng khác flags
-- [ ] `"15h30"` → 3 token; `"T2"` → 2 token; `"chủ nhật"` → 3 token (kể cả space); `"ngày 15/3"` đúng offset
-- [ ] Input NFD (`"ngày"` dạng decomposed) cho cùng features như NFC và offset tính trên chuỗi gốc
-- [ ] Mọi giá trị `featureRows()` < 580 với 1000 chuỗi tiếng Việt ngẫu nhiên (fuzz test)
+- [x] `"sáu"`, `"sau"`, `"sâu"` có `identity` khác nhau; `"Sáu"` và `"sáu"` cùng hash nhưng khác flags
+- [x] `"15h30"` → 3 token; `"T2"` → 2 token; `"chủ nhật"` → 3 token (kể cả space); `"ngày 15/3"` đúng offset
+- [x] Input NFD (`"ngày"` dạng decomposed) cho cùng features như NFC và offset tính trên chuỗi gốc
+- [x] Mọi giá trị (fuzz 10 000 chuỗi) `featureRows()` < 580 với 1000 chuỗi tiếng Việt ngẫu nhiên (fuzz test)
 
 **Verification:**
-- [ ] Tests pass: `pnpm --filter gpu-time-vi test -- tokenizer`
-- [ ] Build succeeds: `pnpm build:core`
-- [ ] Manual check: in `featureRows` cho "3 giờ chiều mai" và đối chiếu bảng lớp
+- [x] Tests pass: `pnpm --filter gpu-time-vi test -- tokenizer`
+- [x] Build succeeds: `pnpm build:core`
+- [x] Manual check: in `featureRows` cho "3 giờ chiều mai" và đối chiếu bảng lớp
 
 **Dependencies:** Task 1
 
 **Files likely touched:** `packages/core/src/tokenizer.ts`, `packages/core/test/tokenizer.test.ts`
 
 **Estimated scope:** Small
+
+**Ghi chú thực hiện:** commit `07ac9c1`. Bit flag 7 giờ đánh dấu chữ `h/g/p` dính sau số (`15h30`). Các test dùng model tiếng Anh (`natural-language`, `results`, `parser-model`, `parser-lifecycle`) được gate bằng `vietnameseModel` vì feature class đã đổi; viết lại bằng tiếng Việt ở Task 10/16.
 
 ---
 
@@ -95,20 +97,22 @@
 - Regenerate `schema/schedule.schema.json` (`pnpm schema`).
 
 **Acceptance criteria:**
-- [ ] `number("hai mươi mốt")`/`readNumber` trả 21; `"mười lăm"`=15; `"tư"`=4; `"năm"`=5 (compiler sẽ phân biệt bằng role)
-- [ ] `weekday("t2")`="MO", `weekday("cn")`="SU", `weekday("chủ nhật")`="SU"; `month("giêng")`=1, `month("chạp")`=12, `month("3")`=3
-- [ ] `holidayNames["tết"]`="tet"; schema regenerate không lỗi; `pnpm check` sạch
+- [x] `number("hai mươi mốt")`/`readNumber` trả 21; `"mười lăm"`=15; `"tư"`=4; `"năm"`=5 (compiler sẽ phân biệt bằng role)
+- [x] `weekday("t2")`="MO", `weekday("cn")`="SU", `weekday("chủ nhật")`="SU"; `month("giêng")`=1, `month("chạp")`=12, `month("3")`=3
+- [x] `holidayNames["tết"]`="tet"; schema regenerate không lỗi; `pnpm check` sạch
 
 **Verification:**
-- [ ] Tests pass: `pnpm --filter gpu-time-vi test -- lexicon quantity schema`
-- [ ] Build succeeds: `pnpm build:core && pnpm schema`
-- [ ] Manual check: `schedule.schema.json` chứa `"lunar"` và holiday VN
+- [x] Tests pass: `pnpm --filter gpu-time-vi test -- lexicon quantity schema`
+- [x] Build succeeds: `pnpm build:core && pnpm schema` (46 987 B Brotli, còn compile.ts tiếng Anh)
+- [x] Manual check: `schedule.schema.json` chứa `"lunar"` và holiday VN
 
 **Dependencies:** Task 3
 
 **Files likely touched:** `packages/core/src/labels.ts`, `types.ts`, `lexicon.ts`, `quantity.ts`, `schema/schedule.schema.json`, `test/lexicon.test.ts` (mới), `test/quantity.test.ts` (mới)
 
 **Estimated scope:** Medium
+
+**Ghi chú thực hiện:** thêm `childrens-day` (1/6). `timeZone` mặc định làm luôn ở `index.ts` (ParseContext.timeZone optional; ResolveOptions nội bộ vẫn bắt buộc). `test/compile.test.ts` và `english-compiler.test.ts` (tiếng Anh) đã xoá; test compiler tiếng Việt viết ở Task 5–8. `seed-grammar.ts` import thẳng types từ core.
 
 ---
 
