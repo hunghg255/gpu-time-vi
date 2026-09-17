@@ -56,7 +56,7 @@ export function Demo({ initial }: { initial: Formatted }) {
       const parsed = await parseWith(value.trim(), {
         reference: reference.toISOString(),
         timeZone: "Asia/Ho_Chi_Minh",
-        limit: 6,
+        limit: 1000,
       });
       if (ticket !== seq.current) return;
       setResult(format(parsed, reference, "Asia/Ho_Chi_Minh"));
@@ -158,7 +158,10 @@ export function Demo({ initial }: { initial: Formatted }) {
             >
               {result.status}
             </p>
-            <ul id="demo-dates" className="px-4 py-1.5 text-body">
+            <ul
+              id="demo-dates"
+              className="max-h-72 overflow-y-auto overscroll-contain px-4 py-1.5 text-body"
+            >
               {result.rows.map((row, index) => (
                 <li
                   key={index}

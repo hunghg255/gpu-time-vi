@@ -12,7 +12,7 @@ import Model from '../components/Model.astro';
 const reference = new Date();
 const timeZone = 'Asia/Ho_Chi_Minh';
 const initial = format(await parse(demoDefault, {
-  reference: reference.toISOString(), timeZone, limit: 6,
+  reference: reference.toISOString(), timeZone, limit: 1000,
 }), reference, timeZone);
 
 const title = 'gpu-time-vi — Tiếng Việt thành ngày giờ';

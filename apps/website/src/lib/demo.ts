@@ -114,11 +114,9 @@ export function format(result: ParseResult, reference: Date, timeZone: string) {
     ? result.diagnostics.map((diagnostic) => diagnostic.message).join(" ")
     : result.occurrences.length
       ? repeating
-        ? result.truncated
-          ? `Lặp lại · ${result.occurrences.length} lần đầu, còn nữa`
-          : `Lặp lại · ${result.occurrences.length} lần trong 12 tháng tới`
-        : result.truncated
-          ? `${result.occurrences.length} lần đầu, còn nữa`
+        ? `Lặp lại · ${result.occurrences.length} lần trong 12 tháng tới${result.truncated ? " (đã cắt bớt)" : ""}`
+        : result.occurrences.length > 1
+          ? `${result.occurrences.length} lần`
           : "Kết quả"
       : "Không tìm thấy ngày giờ. Thử một ngày hoặc một khoảng giờ.";
 
