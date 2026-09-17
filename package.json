@@ -1,0 +1,30 @@
+{
+  "name": "gpu-time-vi-monorepo",
+  "private": true,
+  "type": "module",
+  "packageManager": "pnpm@11.13.1",
+  "scripts": {
+    "test": "pnpm test:core && pnpm test:benchmark",
+    "test:core": "pnpm --filter gpu-time-vi test",
+    "test:training": "pnpm --filter @gpu-time-vi/training test",
+    "test:browser": "pnpm --filter gpu-time-vi test:browser",
+    "check": "pnpm -r check",
+    "build:core": "pnpm --filter gpu-time-vi build",
+    "size:gate": "pnpm --filter gpu-time-vi build:release",
+    "release": "bumpp packages/core/package.json --commit 'release: v%s' --tag 'v%s' --all",
+    "check:package": "pnpm --filter gpu-time-vi check:package",
+    "schema": "pnpm --filter gpu-time-vi schema",
+    "gen": "pnpm --filter @gpu-time-vi/training gen",
+    "train": "pnpm --filter @gpu-time-vi/training train",
+    "model:audit": "pnpm --filter @gpu-time-vi/training audit:model",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "test:benchmark": "pnpm --filter @gpu-time-vi/benchmark test",
+    "evaluate": "pnpm --filter @gpu-time-vi/benchmark evaluate:model"
+  },
+  "devDependencies": {
+    "bumpp": "12.3.0",
+    "prettier": "3.9.6",
+    "tsx": "4.23.13"
+  }
+}

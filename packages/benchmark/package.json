@@ -1,0 +1,19 @@
+{
+  "name": "@gpu-time-vi/benchmark",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "evaluate:model": "node --experimental-strip-types src/evaluate-model.ts",
+    "evaluate:results": "node --experimental-strip-types src/evaluate-results.ts",
+    "test": "pnpm --filter gpu-time-vi build && vitest run --passWithNoTests"
+  },
+  "dependencies": {
+    "gpu-time-vi": "workspace:*"
+  },
+  "devDependencies": {
+    "@types/node": "24.13.3",
+    "typescript": "5.9.3",
+    "vitest": "4.1.11"
+  }
+}
