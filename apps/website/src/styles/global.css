@@ -10,17 +10,17 @@
   --color-repeat: #e2dcfd;
   --color-duration: #cfefd8;
 
-  --text-label: 0.6875rem;
+  --text-label: 0.75rem;
   --text-label--letter-spacing: 0.08em;
-  --text-note: 0.8125rem;
-  --text-heading: 1.125rem;
+  --text-note: 0.9375rem;
+  --text-heading: 1.375rem;
   --text-heading--line-height: 1.35;
   --text-heading--letter-spacing: -0.32px;
-  --text-body: 0.875rem;
+  --text-body: 1rem;
   --text-body--line-height: 1.5;
   --text-body--letter-spacing: -0.1px;
 
-  --container-note: 440px;
+  --container-note: 620px;
 }
 
 ::selection {

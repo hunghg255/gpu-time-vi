@@ -102,7 +102,7 @@ export function Demo({ initial }: { initial: Formatted }) {
           <span className="text-label font-medium uppercase text-neutral-500">
             Thử ngay
           </span>
-          <span className="text-[11px] text-neutral-400">
+          <span className="text-[13px] text-neutral-400">
             Gõ một ngày hoặc giờ bất kỳ
           </span>
         </div>
@@ -120,7 +120,7 @@ export function Demo({ initial }: { initial: Formatted }) {
               id="demo-highlight"
               ref={layer}
               aria-hidden="true"
-              className="pointer-events-none absolute inset-y-0 left-0 right-0 m-0 select-none overflow-hidden whitespace-pre border-0 p-4 font-sans text-base leading-6.5 tracking-[-0.2px]"
+              className="pointer-events-none absolute inset-y-0 left-0 right-0 m-0 select-none overflow-hidden whitespace-pre border-0 p-4 font-sans text-lg leading-7 tracking-[-0.2px]"
             >
               <Mark text={text} />
             </div>
@@ -139,7 +139,7 @@ export function Demo({ initial }: { initial: Formatted }) {
                 if (layer.current && input.current)
                   layer.current.scrollLeft = input.current.scrollLeft;
               }}
-              className="relative m-0 w-full border-0 bg-transparent p-4 font-sans text-base leading-6.5 tracking-[-0.2px] text-transparent caret-black outline-none focus-visible:outline-none"
+              className="relative m-0 w-full border-0 bg-transparent p-4 font-sans text-lg leading-7 tracking-[-0.2px] text-transparent caret-black outline-none focus-visible:outline-none"
             />
           </div>
         </form>
@@ -154,13 +154,13 @@ export function Demo({ initial }: { initial: Formatted }) {
           >
             <p
               id="demo-status"
-              className="px-4 pt-2.5 text-[11px] text-neutral-400"
+              className="px-4 pt-2.5 text-[13px] text-neutral-400"
             >
               {result.status}
             </p>
             <ul
               id="demo-dates"
-              className="max-h-72 overflow-y-auto overscroll-contain px-4 py-1.5 text-body"
+              className="max-h-80 overflow-y-auto overscroll-contain px-4 py-1.5 text-body"
             >
               {result.rows.map((row, index) => (
                 <li

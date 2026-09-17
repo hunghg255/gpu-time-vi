@@ -3,7 +3,7 @@ import { Mark } from "./Mark";
 
 export function Examples() {
   return (
-    <ul className="grid gap-2 sm:grid-cols-2">
+    <ul className="grid gap-2 sm:grid-cols-2 lg:grid-cols-3">
       {examples.map((item) => (
         <li key={item.text}>
           <button
@@ -19,7 +19,7 @@ export function Examples() {
             <span className="block text-label font-medium uppercase text-neutral-500">
               {item.use}
             </span>
-            <span className="mt-1.5 block text-sm leading-[1.6] tracking-[-0.1px]">
+            <span className="mt-1.5 block text-base leading-[1.6] tracking-[-0.1px]">
               <Mark text={item.text} />
             </span>
           </button>

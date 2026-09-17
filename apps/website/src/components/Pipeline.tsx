@@ -241,7 +241,7 @@ export function Pipeline() {
               return (
                 <li
                   key={index}
-                  className="rounded-md border border-neutral-200 bg-white px-2 py-1 font-mono text-[11px] leading-tight"
+                  className="rounded-md border border-neutral-200 bg-white px-2 py-1 font-mono text-[13px] leading-tight"
                   title={`kiểu ${shape.kind} · độ dài bucket ${shape.length} · đầu “${shape.first}” · cuối “${shape.last}” · hash ${shape.hash} · khung phụ âm ${shape.skeleton}`}
                 >
                   <span className="block font-sans text-sm text-neutral-900">
@@ -280,7 +280,7 @@ export function Pipeline() {
                     <span className="block text-sm text-neutral-900">
                       {token.text}
                     </span>
-                    <span className="block font-mono text-[10px] leading-tight text-neutral-600">
+                    <span className="block font-mono text-[11px] leading-tight text-neutral-600">
                       {token.label}
                     </span>
                     <span className="block h-1 w-full overflow-hidden rounded bg-black/10">
@@ -289,7 +289,7 @@ export function Pipeline() {
                         style={{ width: `${Math.round(token.score * 100)}%` }}
                       />
                     </span>
-                    <span className="block font-mono text-[10px] text-neutral-500">
+                    <span className="block font-mono text-[11px] text-neutral-500">
                       {Math.round(token.score * 100)}%
                     </span>
                   </span>
@@ -298,7 +298,7 @@ export function Pipeline() {
             })}
           </ul>
           {rolesUsed.length > 0 && (
-            <dl className="mt-3 grid grid-cols-2 gap-x-4 gap-y-0.5 text-[11px] text-neutral-500 sm:grid-cols-3">
+            <dl className="mt-3 grid grid-cols-2 gap-x-4 gap-y-0.5 text-[13px] text-neutral-500 sm:grid-cols-3">
               {rolesUsed.map((label) => (
                 <div key={label} className="flex gap-1.5">
                   <dt className="font-mono text-neutral-700">{label}</dt>
@@ -317,11 +317,11 @@ export function Pipeline() {
           {parsed?.expressions.length ? (
             parsed.expressions.map((expression, index) => (
               <div key={index} className="mb-2 last:mb-0">
-                <pre className="overflow-x-auto rounded-md bg-neutral-900 p-3 font-mono text-[11px] leading-[1.6] text-neutral-200">
+                <pre className="overflow-x-auto rounded-md bg-neutral-900 p-3 font-mono text-[12.5px] leading-[1.6] text-neutral-200">
                   {JSON.stringify(expression.schedule, null, 2)}
                 </pre>
                 {expression.diagnostics.map((diagnostic, position) => (
-                  <p key={position} className="mt-1 text-[11px] text-amber-700">
+                  <p key={position} className="mt-1 text-[13px] text-amber-700">
                     {diagnostic.code}: {diagnostic.message}
                   </p>
                 ))}
@@ -340,7 +340,7 @@ export function Pipeline() {
           note="Chỉ ở bước cuối mới cần biết “bây giờ” là lúc nào và múi giờ nào. Ngày tương đối, thứ, DST, âm lịch (tính theo lịch Việt Nam, UTC+7) và giới hạn số lần đều được giải bằng số học lịch chính xác, không phải bằng mô hình."
         >
           {resolved?.occurrences.length ? (
-            <ul className="space-y-1 font-mono text-[12px]">
+            <ul className="space-y-1 font-mono text-[13px]">
               {resolved.occurrences.map((occurrence, index) => (
                 <li key={index} className="text-neutral-800">
                   {occurrence.start}
