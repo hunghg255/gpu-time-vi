@@ -1,0 +1,1621 @@
+{
+  "model": "98abca98bd30c848e25a124e49a3309d77c058ef48c27ff3a1dee63351bb7e55",
+  "environment": {
+    "browser": "153.0.8010.36",
+    "cpu": "11th Gen Intel(R) Core(TM) i5-1145G7 @ 2.60GHz",
+    "platform": "win32",
+    "osRelease": "10.0.19045",
+    "reference": "2026-09-17T09:00:00+07:00",
+    "timeZone": "Asia/Ho_Chi_Minh"
+  },
+  "method": "Dedicated worker per library; ten warmups; 100 single-input samples; fixed repeated four-input batches. Timings cover public parse calls, including gpu-time-vi date resolution and recurrence previews, excluding worker messaging and DOM. regex-vi is a hand-written floor with a fraction of the coverage, so its timings are not comparable feature for feature.",
+  "results": [
+    {
+      "library": "gpu-time-vi-cpu",
+      "result": {
+        "library": "gpu-time-vi-cpu",
+        "crossOriginIsolated": true,
+        "initializationMs": 81.88999998569489,
+        "firstParseMs": 41.330000042915344,
+        "single": {
+          "text": "thứ hai tuần sau lúc 2 giờ chiều",
+          "samples": 100,
+          "p50Ms": 0.9600000381469727,
+          "p95Ms": 1.3050000071525574
+        },
+        "batches": [
+          {
+            "size": 1000,
+            "ms": 793.6049999594688,
+            "p95Ms": 843.5950000286102,
+            "samples": 3,
+            "failures": 0,
+            "inputsPerSecond": 1260.0727062595022
+          },
+          {
+            "size": 10000,
+            "ms": 8318.360000014305,
+            "p95Ms": 8664.324999988079,
+            "samples": 3,
+            "failures": 0,
+            "inputsPerSecond": 1202.1600411598924
+          }
+        ],
+        "outputs": [
+          {
+            "id": "result-001",
+            "text": "hôm nay",
+            "occurrences": [],
+            "rrules": [],
+            "abstained": true
+          },
+          {
+            "id": "result-002",
+            "text": "ngày mai",
+            "occurrences": [],
+            "rrules": [],
+            "abstained": true
+          },
+          {
+            "id": "result-003",
+            "text": "hôm kia",
+            "occurrences": [],
+            "rrules": [],
+            "abstained": true
+          },
+          {
+            "id": "result-004",
+            "text": "3 giờ chiều mai",
+            "occurrences": [],
+            "rrules": [],
+            "abstained": true
+          },
+          {
+            "id": "result-005",
+            "text": "tối nay",
+            "occurrences": [],
+            "rrules": [],
+            "abstained": true
+          },
+          {
+            "id": "result-006",
+            "text": "đêm nay",
+            "occurrences": [],
+            "rrules": [],
+            "abstained": true
+          },
+          {
+            "id": "result-007",
+            "text": "sáng mai",
+            "occurrences": [],
+            "rrules": [],
+            "abstained": true
+          },
+          {
+            "id": "result-008",
+            "text": "trưa mai",
+            "occurrences": [],
+            "rrules": [],
+            "abstained": true
+          },
+          {
+            "id": "result-009",
+            "text": "thứ hai",
+            "occurrences": [],
+            "rrules": [],
+            "abstained": true
+          },
+          {
+            "id": "result-010",
+            "text": "tối thứ sáu",
+            "occurrences": [],
+            "rrules": [],
+            "abstained": true
+          },
+          {
+            "id": "result-011",
+            "text": "thứ hai tuần sau",
+            "occurrences": [],
+            "rrules": [],
+            "abstained": true
+          },
+          {
+            "id": "result-012",
+            "text": "thứ sáu tuần này",
+            "occurrences": [],
+            "rrules": [],
+            "abstained": true
+          },
+          {
+            "id": "result-013",
+            "text": "thứ ba tuần trước",
+            "occurrences": [],
+            "rrules": [],
+            "abstained": true
+          },
+          {
+            "id": "result-014",
+            "text": "cn tuần sau",
+            "occurrences": [],
+            "rrules": [],
+            "abstained": true
+          },
+          {
+            "id": "result-015",
+            "text": "tuần sau",
+            "occurrences": [],
+            "rrules": [],
+            "abstained": true
+          },
+          {
+            "id": "result-016",
+            "text": "tháng sau",
+            "occurrences": [],
+            "rrules": [],
+            "abstained": true
+          },
+          {
+            "id": "result-017",
+            "text": "cuối tháng",
+            "occurrences": [],
+            "rrules": [],
+            "abstained": true
+          },
+          {
+            "id": "result-018",
+            "text": "cuối tuần",
+            "occurrences": [],
+            "rrules": [],
+            "abstained": true
+          },
+          {
+            "id": "result-019",
+            "text": "15h30",
+            "occurrences": [],
+            "rrules": [],
+            "abstained": true
+          },
+          {
+            "id": "result-020",
+            "text": "3 giờ kém 15",
+            "occurrences": [],
+            "rrules": [],
+            "abstained": true
+          },
+          {
+            "id": "result-021",
+            "text": "12 giờ đêm",
+            "occurrences": [],
+            "rrules": [],
+            "abstained": true
+          },
+          {
+            "id": "result-022",
+            "text": "từ 9h đến 17h",
+            "occurrences": [],
+            "rrules": [],
+            "abstained": true
+          },
+          {
+            "id": "result-023",
+            "text": "từ 8 giờ tối đến 12 giờ đêm",
+            "occurrences": [],
+            "rrules": [],
+            "abstained": true
+          },
+          {
+            "id": "result-024",
+            "text": "sau 6 giờ tối",
+            "occurrences": [],
+            "rrules": [],
+            "abstained": true
+          },
+          {
+            "id": "result-025",
+            "text": "trước 9h sáng",
+            "occurrences": [],
+            "rrules": [],
+            "abstained": true
+          },
+          {
+            "id": "result-026",
+            "text": "ngày 15",
+            "occurrences": [],
+            "rrules": [],
+            "abstained": true
+          },
+          {
+            "id": "result-027",
+            "text": "15/3",
+            "occurrences": [],
+            "rrules": [],
+            "abstained": true
+          },
+          {
+            "id": "result-028",
+            "text": "15/3/2026",
+            "occurrences": [],
+            "rrules": [],
+            "abstained": true
+          },
+          {
+            "id": "result-029",
+            "text": "đầu tháng 3",
+            "occurrences": [],
+            "rrules": [],
+            "abstained": true
+          },
+          {
+            "id": "result-030",
+            "text": "giữa tháng 3",
+            "occurrences": [],
+            "rrules": [],
+            "abstained": true
+          },
+          {
+            "id": "result-031",
+            "text": "từ ngày 10 đến ngày 15 tháng 3",
+            "occurrences": [],
+            "rrules": [],
+            "abstained": true
+          },
+          {
+            "id": "result-032",
+            "text": "từ 25/12/2026 đến 2/1/2027",
+            "occurrences": [],
+            "rrules": [],
+            "abstained": true
+          },
+          {
+            "id": "result-033",
+            "text": "Giáng sinh",
+            "occurrences": [],
+            "rrules": [],
+            "abstained": true
+          },
+          {
+            "id": "result-034",
+            "text": "Quốc khánh",
+            "occurrences": [],
+            "rrules": [],
+            "abstained": true
+          },
+          {
+            "id": "result-035",
+            "text": "Tết",
+            "occurrences": [],
+            "rrules": [],
+            "abstained": true
+          },
+          {
+            "id": "result-036",
+            "text": "giao thừa",
+            "occurrences": [],
+            "rrules": [],
+            "abstained": true
+          },
+          {
+            "id": "result-037",
+            "text": "Trung thu",
+            "occurrences": [],
+            "rrules": [],
+            "abstained": true
+          },
+          {
+            "id": "result-038",
+            "text": "mùng 1 Tết",
+            "occurrences": [],
+            "rrules": [],
+            "abstained": true
+          },
+          {
+            "id": "result-039",
+            "text": "15/8 âm lịch",
+            "occurrences": [],
+            "rrules": [],
+            "abstained": true
+          },
+          {
+            "id": "result-040",
+            "text": "2 tiếng nữa",
+            "occurrences": [],
+            "rrules": [],
+            "abstained": true
+          },
+          {
+            "id": "result-041",
+            "text": "cách đây 3 ngày",
+            "occurrences": [],
+            "rrules": [],
+            "abstained": true
+          },
+          {
+            "id": "result-042",
+            "text": "1 tiếng 30 phút nữa",
+            "occurrences": [],
+            "rrules": [],
+            "abstained": true
+          },
+          {
+            "id": "result-043",
+            "text": "2 ngày sau Tết",
+            "occurrences": [],
+            "rrules": [],
+            "abstained": true
+          },
+          {
+            "id": "result-044",
+            "text": "2 tiếng trước trưa mai",
+            "occurrences": [],
+            "rrules": [],
+            "abstained": true
+          },
+          {
+            "id": "result-045",
+            "text": "trong 2 tiếng",
+            "occurrences": [],
+            "rrules": [],
+            "abstained": true
+          },
+          {
+            "id": "result-046",
+            "text": "3 tuần kể từ bây giờ",
+            "occurrences": [],
+            "rrules": [],
+            "abstained": true
+          },
+          {
+            "id": "result-047",
+            "text": "thứ hai 9h và thứ tư 10h",
+            "occurrences": [],
+            "rrules": [],
+            "abstained": true
+          },
+          {
+            "id": "result-048",
+            "text": "sáng mai từ 8h đến 10h",
+            "occurrences": [],
+            "rrules": [],
+            "abstained": true
+          },
+          {
+            "id": "result-049",
+            "text": "mùng 1 Tết lúc 12 giờ đêm",
+            "occurrences": [],
+            "rrules": [],
+            "abstained": true
+          },
+          {
+            "id": "result-050",
+            "text": "cuối tuần sau lúc 10h sáng",
+            "occurrences": [],
+            "rrules": [],
+            "abstained": true
+          },
+          {
+            "id": "result-051",
+            "text": "mỗi thứ hai",
+            "occurrences": [],
+            "rrules": [],
+            "abstained": true
+          },
+          {
+            "id": "result-052",
+            "text": "hàng ngày lúc 7h sáng",
+            "occurrences": [],
+            "rrules": [],
+            "abstained": true
+          },
+          {
+            "id": "result-053",
+            "text": "ngày 15 hàng tháng",
+            "occurrences": [],
+            "rrules": [],
+            "abstained": true
+          },
+          {
+            "id": "result-054",
+            "text": "thứ hai đầu tiên hàng tháng",
+            "occurrences": [],
+            "rrules": [],
+            "abstained": true
+          },
+          {
+            "id": "result-055",
+            "text": "mỗi thứ hai đến hết tháng 12",
+            "occurrences": [],
+            "rrules": [],
+            "abstained": true
+          },
+          {
+            "id": "result-056",
+            "text": "mỗi thứ hai, 6 lần",
+            "occurrences": [],
+            "rrules": [],
+            "abstained": true
+          },
+          {
+            "id": "result-057",
+            "text": "mỗi ngày trừ chủ nhật",
+            "occurrences": [],
+            "rrules": [],
+            "abstained": true
+          },
+          {
+            "id": "result-058",
+            "text": "hàng ngày từ nay đến cuối tháng",
+            "occurrences": [],
+            "rrules": [],
+            "abstained": true
+          },
+          {
+            "id": "result-059",
+            "text": "ngày mai 3 giờ chiều",
+            "occurrences": [],
+            "rrules": [],
+            "abstained": true
+          },
+          {
+            "id": "result-060",
+            "text": "2 ngày nữa",
+            "occurrences": [],
+            "rrules": [],
+            "abstained": true
+          },
+          {
+            "id": "result-061",
+            "text": "24 tiếng nữa",
+            "occurrences": [],
+            "rrules": [],
+            "abstained": true
+          }
+        ]
+      }
+    },
+    {
+      "library": "gpu-time-vi-webgpu",
+      "result": {
+        "library": "gpu-time-vi-webgpu",
+        "crossOriginIsolated": true,
+        "initializationMs": 333.2950000166893,
+        "firstParseMs": 18.389999985694885,
+        "single": {
+          "text": "thứ hai tuần sau lúc 2 giờ chiều",
+          "samples": 100,
+          "p50Ms": 4.1049999594688416,
+          "p95Ms": 5.745000004768372
+        },
+        "batches": [
+          {
+            "size": 1000,
+            "ms": 145.43000000715256,
+            "p95Ms": 152.11500000953674,
+            "samples": 3,
+            "failures": 0,
+            "inputsPerSecond": 6876.160351721226
+          },
+          {
+            "size": 10000,
+            "ms": 1348.800000011921,
+            "p95Ms": 1397.8400000333786,
+            "samples": 3,
+            "failures": 0,
+            "inputsPerSecond": 7413.997627455233
+          }
+        ],
+        "outputs": [
+          {
+            "id": "result-001",
+            "text": "hôm nay",
+            "occurrences": [],
+            "rrules": [],
+            "abstained": true
+          },
+          {
+            "id": "result-002",
+            "text": "ngày mai",
+            "occurrences": [],
+            "rrules": [],
+            "abstained": true
+          },
+          {
+            "id": "result-003",
+            "text": "hôm kia",
+            "occurrences": [],
+            "rrules": [],
+            "abstained": true
+          },
+          {
+            "id": "result-004",
+            "text": "3 giờ chiều mai",
+            "occurrences": [],
+            "rrules": [],
+            "abstained": true
+          },
+          {
+            "id": "result-005",
+            "text": "tối nay",
+            "occurrences": [],
+            "rrules": [],
+            "abstained": true
+          },
+          {
+            "id": "result-006",
+            "text": "đêm nay",
+            "occurrences": [],
+            "rrules": [],
+            "abstained": true
+          },
+          {
+            "id": "result-007",
+            "text": "sáng mai",
+            "occurrences": [],
+            "rrules": [],
+            "abstained": true
+          },
+          {
+            "id": "result-008",
+            "text": "trưa mai",
+            "occurrences": [],
+            "rrules": [],
+            "abstained": true
+          },
+          {
+            "id": "result-009",
+            "text": "thứ hai",
+            "occurrences": [],
+            "rrules": [],
+            "abstained": true
+          },
+          {
+            "id": "result-010",
+            "text": "tối thứ sáu",
+            "occurrences": [],
+            "rrules": [],
+            "abstained": true
+          },
+          {
+            "id": "result-011",
+            "text": "thứ hai tuần sau",
+            "occurrences": [],
+            "rrules": [],
+            "abstained": true
+          },
+          {
+            "id": "result-012",
+            "text": "thứ sáu tuần này",
+            "occurrences": [],
+            "rrules": [],
+            "abstained": true
+          },
+          {
+            "id": "result-013",
+            "text": "thứ ba tuần trước",
+            "occurrences": [],
+            "rrules": [],
+            "abstained": true
+          },
+          {
+            "id": "result-014",
+            "text": "cn tuần sau",
+            "occurrences": [],
+            "rrules": [],
+            "abstained": true
+          },
+          {
+            "id": "result-015",
+            "text": "tuần sau",
+            "occurrences": [],
+            "rrules": [],
+            "abstained": true
+          },
+          {
+            "id": "result-016",
+            "text": "tháng sau",
+            "occurrences": [],
+            "rrules": [],
+            "abstained": true
+          },
+          {
+            "id": "result-017",
+            "text": "cuối tháng",
+            "occurrences": [],
+            "rrules": [],
+            "abstained": true
+          },
+          {
+            "id": "result-018",
+            "text": "cuối tuần",
+            "occurrences": [],
+            "rrules": [],
+            "abstained": true
+          },
+          {
+            "id": "result-019",
+            "text": "15h30",
+            "occurrences": [],
+            "rrules": [],
+            "abstained": true
+          },
+          {
+            "id": "result-020",
+            "text": "3 giờ kém 15",
+            "occurrences": [],
+            "rrules": [],
+            "abstained": true
+          },
+          {
+            "id": "result-021",
+            "text": "12 giờ đêm",
+            "occurrences": [],
+            "rrules": [],
+            "abstained": true
+          },
+          {
+            "id": "result-022",
+            "text": "từ 9h đến 17h",
+            "occurrences": [],
+            "rrules": [],
+            "abstained": true
+          },
+          {
+            "id": "result-023",
+            "text": "từ 8 giờ tối đến 12 giờ đêm",
+            "occurrences": [],
+            "rrules": [],
+            "abstained": true
+          },
+          {
+            "id": "result-024",
+            "text": "sau 6 giờ tối",
+            "occurrences": [],
+            "rrules": [],
+            "abstained": true
+          },
+          {
+            "id": "result-025",
+            "text": "trước 9h sáng",
+            "occurrences": [],
+            "rrules": [],
+            "abstained": true
+          },
+          {
+            "id": "result-026",
+            "text": "ngày 15",
+            "occurrences": [],
+            "rrules": [],
+            "abstained": true
+          },
+          {
+            "id": "result-027",
+            "text": "15/3",
+            "occurrences": [],
+            "rrules": [],
+            "abstained": true
+          },
+          {
+            "id": "result-028",
+            "text": "15/3/2026",
+            "occurrences": [],
+            "rrules": [],
+            "abstained": true
+          },
+          {
+            "id": "result-029",
+            "text": "đầu tháng 3",
+            "occurrences": [],
+            "rrules": [],
+            "abstained": true
+          },
+          {
+            "id": "result-030",
+            "text": "giữa tháng 3",
+            "occurrences": [],
+            "rrules": [],
+            "abstained": true
+          },
+          {
+            "id": "result-031",
+            "text": "từ ngày 10 đến ngày 15 tháng 3",
+            "occurrences": [],
+            "rrules": [],
+            "abstained": true
+          },
+          {
+            "id": "result-032",
+            "text": "từ 25/12/2026 đến 2/1/2027",
+            "occurrences": [],
+            "rrules": [],
+            "abstained": true
+          },
+          {
+            "id": "result-033",
+            "text": "Giáng sinh",
+            "occurrences": [],
+            "rrules": [],
+            "abstained": true
+          },
+          {
+            "id": "result-034",
+            "text": "Quốc khánh",
+            "occurrences": [],
+            "rrules": [],
+            "abstained": true
+          },
+          {
+            "id": "result-035",
+            "text": "Tết",
+            "occurrences": [],
+            "rrules": [],
+            "abstained": true
+          },
+          {
+            "id": "result-036",
+            "text": "giao thừa",
+            "occurrences": [],
+            "rrules": [],
+            "abstained": true
+          },
+          {
+            "id": "result-037",
+            "text": "Trung thu",
+            "occurrences": [],
+            "rrules": [],
+            "abstained": true
+          },
+          {
+            "id": "result-038",
+            "text": "mùng 1 Tết",
+            "occurrences": [],
+            "rrules": [],
+            "abstained": true
+          },
+          {
+            "id": "result-039",
+            "text": "15/8 âm lịch",
+            "occurrences": [],
+            "rrules": [],
+            "abstained": true
+          },
+          {
+            "id": "result-040",
+            "text": "2 tiếng nữa",
+            "occurrences": [],
+            "rrules": [],
+            "abstained": true
+          },
+          {
+            "id": "result-041",
+            "text": "cách đây 3 ngày",
+            "occurrences": [],
+            "rrules": [],
+            "abstained": true
+          },
+          {
+            "id": "result-042",
+            "text": "1 tiếng 30 phút nữa",
+            "occurrences": [],
+            "rrules": [],
+            "abstained": true
+          },
+          {
+            "id": "result-043",
+            "text": "2 ngày sau Tết",
+            "occurrences": [],
+            "rrules": [],
+            "abstained": true
+          },
+          {
+            "id": "result-044",
+            "text": "2 tiếng trước trưa mai",
+            "occurrences": [],
+            "rrules": [],
+            "abstained": true
+          },
+          {
+            "id": "result-045",
+            "text": "trong 2 tiếng",
+            "occurrences": [],
+            "rrules": [],
+            "abstained": true
+          },
+          {
+            "id": "result-046",
+            "text": "3 tuần kể từ bây giờ",
+            "occurrences": [],
+            "rrules": [],
+            "abstained": true
+          },
+          {
+            "id": "result-047",
+            "text": "thứ hai 9h và thứ tư 10h",
+            "occurrences": [],
+            "rrules": [],
+            "abstained": true
+          },
+          {
+            "id": "result-048",
+            "text": "sáng mai từ 8h đến 10h",
+            "occurrences": [],
+            "rrules": [],
+            "abstained": true
+          },
+          {
+            "id": "result-049",
+            "text": "mùng 1 Tết lúc 12 giờ đêm",
+            "occurrences": [],
+            "rrules": [],
+            "abstained": true
+          },
+          {
+            "id": "result-050",
+            "text": "cuối tuần sau lúc 10h sáng",
+            "occurrences": [],
+            "rrules": [],
+            "abstained": true
+          },
+          {
+            "id": "result-051",
+            "text": "mỗi thứ hai",
+            "occurrences": [],
+            "rrules": [],
+            "abstained": true
+          },
+          {
+            "id": "result-052",
+            "text": "hàng ngày lúc 7h sáng",
+            "occurrences": [],
+            "rrules": [],
+            "abstained": true
+          },
+          {
+            "id": "result-053",
+            "text": "ngày 15 hàng tháng",
+            "occurrences": [],
+            "rrules": [],
+            "abstained": true
+          },
+          {
+            "id": "result-054",
+            "text": "thứ hai đầu tiên hàng tháng",
+            "occurrences": [],
+            "rrules": [],
+            "abstained": true
+          },
+          {
+            "id": "result-055",
+            "text": "mỗi thứ hai đến hết tháng 12",
+            "occurrences": [],
+            "rrules": [],
+            "abstained": true
+          },
+          {
+            "id": "result-056",
+            "text": "mỗi thứ hai, 6 lần",
+            "occurrences": [],
+            "rrules": [],
+            "abstained": true
+          },
+          {
+            "id": "result-057",
+            "text": "mỗi ngày trừ chủ nhật",
+            "occurrences": [],
+            "rrules": [],
+            "abstained": true
+          },
+          {
+            "id": "result-058",
+            "text": "hàng ngày từ nay đến cuối tháng",
+            "occurrences": [],
+            "rrules": [],
+            "abstained": true
+          },
+          {
+            "id": "result-059",
+            "text": "ngày mai 3 giờ chiều",
+            "occurrences": [],
+            "rrules": [],
+            "abstained": true
+          },
+          {
+            "id": "result-060",
+            "text": "2 ngày nữa",
+            "occurrences": [],
+            "rrules": [],
+            "abstained": true
+          },
+          {
+            "id": "result-061",
+            "text": "24 tiếng nữa",
+            "occurrences": [],
+            "rrules": [],
+            "abstained": true
+          }
+        ]
+      }
+    },
+    {
+      "library": "regex-vi",
+      "result": {
+        "library": "regex-vi",
+        "crossOriginIsolated": true,
+        "initializationMs": 10.639999985694885,
+        "firstParseMs": 0.800000011920929,
+        "single": {
+          "text": "thứ hai tuần sau lúc 2 giờ chiều",
+          "samples": 100,
+          "p50Ms": 0.009999990463256836,
+          "p95Ms": 0.014999985694885254
+        },
+        "batches": [
+          {
+            "size": 1000,
+            "ms": 6.444999992847443,
+            "p95Ms": 6.5,
+            "samples": 3,
+            "failures": 0,
+            "inputsPerSecond": 155159.03818615733
+          },
+          {
+            "size": 10000,
+            "ms": 62.12999999523163,
+            "p95Ms": 67.56000000238419,
+            "samples": 3,
+            "failures": 0,
+            "inputsPerSecond": 160952.84082999328
+          }
+        ],
+        "outputs": [
+          {
+            "id": "result-001",
+            "text": "hôm nay",
+            "occurrences": [
+              {
+                "start": "2026-09-17T00:00:00+07:00",
+                "allDay": true
+              }
+            ],
+            "rrules": null,
+            "abstained": false,
+            "limitation": "relative days, weekdays, numeric dates and clocks only"
+          },
+          {
+            "id": "result-002",
+            "text": "ngày mai",
+            "occurrences": [
+              {
+                "start": "2026-09-18T00:00:00+07:00",
+                "allDay": true
+              }
+            ],
+            "rrules": null,
+            "abstained": false,
+            "limitation": "relative days, weekdays, numeric dates and clocks only"
+          },
+          {
+            "id": "result-003",
+            "text": "hôm kia",
+            "occurrences": [
+              {
+                "start": "2026-09-15T00:00:00+07:00",
+                "allDay": true
+              }
+            ],
+            "rrules": null,
+            "abstained": false,
+            "limitation": "relative days, weekdays, numeric dates and clocks only"
+          },
+          {
+            "id": "result-004",
+            "text": "3 giờ chiều mai",
+            "occurrences": [
+              {
+                "start": "2026-09-17T03:00:00+07:00",
+                "allDay": false
+              }
+            ],
+            "rrules": null,
+            "abstained": false,
+            "limitation": "relative days, weekdays, numeric dates and clocks only"
+          },
+          {
+            "id": "result-005",
+            "text": "tối nay",
+            "occurrences": [],
+            "rrules": null,
+            "abstained": true,
+            "limitation": "relative days, weekdays, numeric dates and clocks only"
+          },
+          {
+            "id": "result-006",
+            "text": "đêm nay",
+            "occurrences": [],
+            "rrules": null,
+            "abstained": true,
+            "limitation": "relative days, weekdays, numeric dates and clocks only"
+          },
+          {
+            "id": "result-007",
+            "text": "sáng mai",
+            "occurrences": [],
+            "rrules": null,
+            "abstained": true,
+            "limitation": "relative days, weekdays, numeric dates and clocks only"
+          },
+          {
+            "id": "result-008",
+            "text": "trưa mai",
+            "occurrences": [],
+            "rrules": null,
+            "abstained": true,
+            "limitation": "relative days, weekdays, numeric dates and clocks only"
+          },
+          {
+            "id": "result-009",
+            "text": "thứ hai",
+            "occurrences": [
+              {
+                "start": "2026-09-21T00:00:00+07:00",
+                "allDay": true
+              }
+            ],
+            "rrules": null,
+            "abstained": false,
+            "limitation": "relative days, weekdays, numeric dates and clocks only"
+          },
+          {
+            "id": "result-010",
+            "text": "tối thứ sáu",
+            "occurrences": [
+              {
+                "start": "2026-09-18T00:00:00+07:00",
+                "allDay": true
+              }
+            ],
+            "rrules": null,
+            "abstained": false,
+            "limitation": "relative days, weekdays, numeric dates and clocks only"
+          },
+          {
+            "id": "result-011",
+            "text": "thứ hai tuần sau",
+            "occurrences": [
+              {
+                "start": "2026-09-21T00:00:00+07:00",
+                "allDay": true
+              }
+            ],
+            "rrules": null,
+            "abstained": false,
+            "limitation": "relative days, weekdays, numeric dates and clocks only"
+          },
+          {
+            "id": "result-012",
+            "text": "thứ sáu tuần này",
+            "occurrences": [
+              {
+                "start": "2026-09-18T00:00:00+07:00",
+                "allDay": true
+              }
+            ],
+            "rrules": null,
+            "abstained": false,
+            "limitation": "relative days, weekdays, numeric dates and clocks only"
+          },
+          {
+            "id": "result-013",
+            "text": "thứ ba tuần trước",
+            "occurrences": [
+              {
+                "start": "2026-09-22T00:00:00+07:00",
+                "allDay": true
+              }
+            ],
+            "rrules": null,
+            "abstained": false,
+            "limitation": "relative days, weekdays, numeric dates and clocks only"
+          },
+          {
+            "id": "result-014",
+            "text": "cn tuần sau",
+            "occurrences": [],
+            "rrules": null,
+            "abstained": true,
+            "limitation": "relative days, weekdays, numeric dates and clocks only"
+          },
+          {
+            "id": "result-015",
+            "text": "tuần sau",
+            "occurrences": [],
+            "rrules": null,
+            "abstained": true,
+            "limitation": "relative days, weekdays, numeric dates and clocks only"
+          },
+          {
+            "id": "result-016",
+            "text": "tháng sau",
+            "occurrences": [],
+            "rrules": null,
+            "abstained": true,
+            "limitation": "relative days, weekdays, numeric dates and clocks only"
+          },
+          {
+            "id": "result-017",
+            "text": "cuối tháng",
+            "occurrences": [],
+            "rrules": null,
+            "abstained": true,
+            "limitation": "relative days, weekdays, numeric dates and clocks only"
+          },
+          {
+            "id": "result-018",
+            "text": "cuối tuần",
+            "occurrences": [],
+            "rrules": null,
+            "abstained": true,
+            "limitation": "relative days, weekdays, numeric dates and clocks only"
+          },
+          {
+            "id": "result-019",
+            "text": "15h30",
+            "occurrences": [
+              {
+                "start": "2026-09-17T15:30:00+07:00",
+                "allDay": false
+              }
+            ],
+            "rrules": null,
+            "abstained": false,
+            "limitation": "relative days, weekdays, numeric dates and clocks only"
+          },
+          {
+            "id": "result-020",
+            "text": "3 giờ kém 15",
+            "occurrences": [
+              {
+                "start": "2026-09-17T03:00:00+07:00",
+                "allDay": false
+              }
+            ],
+            "rrules": null,
+            "abstained": false,
+            "limitation": "relative days, weekdays, numeric dates and clocks only"
+          },
+          {
+            "id": "result-021",
+            "text": "12 giờ đêm",
+            "occurrences": [
+              {
+                "start": "2026-09-17T12:00:00+07:00",
+                "allDay": false
+              }
+            ],
+            "rrules": null,
+            "abstained": false,
+            "limitation": "relative days, weekdays, numeric dates and clocks only"
+          },
+          {
+            "id": "result-022",
+            "text": "từ 9h đến 17h",
+            "occurrences": [
+              {
+                "start": "2026-09-17T09:00:00+07:00",
+                "allDay": false
+              }
+            ],
+            "rrules": null,
+            "abstained": false,
+            "limitation": "relative days, weekdays, numeric dates and clocks only"
+          },
+          {
+            "id": "result-023",
+            "text": "từ 8 giờ tối đến 12 giờ đêm",
+            "occurrences": [
+              {
+                "start": "2026-09-17T08:00:00+07:00",
+                "allDay": false
+              }
+            ],
+            "rrules": null,
+            "abstained": false,
+            "limitation": "relative days, weekdays, numeric dates and clocks only"
+          },
+          {
+            "id": "result-024",
+            "text": "sau 6 giờ tối",
+            "occurrences": [
+              {
+                "start": "2026-09-17T06:00:00+07:00",
+                "allDay": false
+              }
+            ],
+            "rrules": null,
+            "abstained": false,
+            "limitation": "relative days, weekdays, numeric dates and clocks only"
+          },
+          {
+            "id": "result-025",
+            "text": "trước 9h sáng",
+            "occurrences": [
+              {
+                "start": "2026-09-17T09:00:00+07:00",
+                "allDay": false
+              }
+            ],
+            "rrules": null,
+            "abstained": false,
+            "limitation": "relative days, weekdays, numeric dates and clocks only"
+          },
+          {
+            "id": "result-026",
+            "text": "ngày 15",
+            "occurrences": [],
+            "rrules": null,
+            "abstained": true,
+            "limitation": "relative days, weekdays, numeric dates and clocks only"
+          },
+          {
+            "id": "result-027",
+            "text": "15/3",
+            "occurrences": [
+              {
+                "start": "2026-03-15T00:00:00+07:00",
+                "allDay": true
+              }
+            ],
+            "rrules": null,
+            "abstained": false,
+            "limitation": "relative days, weekdays, numeric dates and clocks only"
+          },
+          {
+            "id": "result-028",
+            "text": "15/3/2026",
+            "occurrences": [
+              {
+                "start": "2026-03-15T00:00:00+07:00",
+                "allDay": true
+              }
+            ],
+            "rrules": null,
+            "abstained": false,
+            "limitation": "relative days, weekdays, numeric dates and clocks only"
+          },
+          {
+            "id": "result-029",
+            "text": "đầu tháng 3",
+            "occurrences": [],
+            "rrules": null,
+            "abstained": true,
+            "limitation": "relative days, weekdays, numeric dates and clocks only"
+          },
+          {
+            "id": "result-030",
+            "text": "giữa tháng 3",
+            "occurrences": [],
+            "rrules": null,
+            "abstained": true,
+            "limitation": "relative days, weekdays, numeric dates and clocks only"
+          },
+          {
+            "id": "result-031",
+            "text": "từ ngày 10 đến ngày 15 tháng 3",
+            "occurrences": [],
+            "rrules": null,
+            "abstained": true,
+            "limitation": "relative days, weekdays, numeric dates and clocks only"
+          },
+          {
+            "id": "result-032",
+            "text": "từ 25/12/2026 đến 2/1/2027",
+            "occurrences": [
+              {
+                "start": "2026-12-25T00:00:00+07:00",
+                "allDay": true
+              }
+            ],
+            "rrules": null,
+            "abstained": false,
+            "limitation": "relative days, weekdays, numeric dates and clocks only"
+          },
+          {
+            "id": "result-033",
+            "text": "Giáng sinh",
+            "occurrences": [],
+            "rrules": null,
+            "abstained": true,
+            "limitation": "relative days, weekdays, numeric dates and clocks only"
+          },
+          {
+            "id": "result-034",
+            "text": "Quốc khánh",
+            "occurrences": [],
+            "rrules": null,
+            "abstained": true,
+            "limitation": "relative days, weekdays, numeric dates and clocks only"
+          },
+          {
+            "id": "result-035",
+            "text": "Tết",
+            "occurrences": [],
+            "rrules": null,
+            "abstained": true,
+            "limitation": "relative days, weekdays, numeric dates and clocks only"
+          },
+          {
+            "id": "result-036",
+            "text": "giao thừa",
+            "occurrences": [],
+            "rrules": null,
+            "abstained": true,
+            "limitation": "relative days, weekdays, numeric dates and clocks only"
+          },
+          {
+            "id": "result-037",
+            "text": "Trung thu",
+            "occurrences": [],
+            "rrules": null,
+            "abstained": true,
+            "limitation": "relative days, weekdays, numeric dates and clocks only"
+          },
+          {
+            "id": "result-038",
+            "text": "mùng 1 Tết",
+            "occurrences": [],
+            "rrules": null,
+            "abstained": true,
+            "limitation": "relative days, weekdays, numeric dates and clocks only"
+          },
+          {
+            "id": "result-039",
+            "text": "15/8 âm lịch",
+            "occurrences": [
+              {
+                "start": "2026-08-15T00:00:00+07:00",
+                "allDay": true
+              }
+            ],
+            "rrules": null,
+            "abstained": false,
+            "limitation": "relative days, weekdays, numeric dates and clocks only"
+          },
+          {
+            "id": "result-040",
+            "text": "2 tiếng nữa",
+            "occurrences": [],
+            "rrules": null,
+            "abstained": true,
+            "limitation": "relative days, weekdays, numeric dates and clocks only"
+          },
+          {
+            "id": "result-041",
+            "text": "cách đây 3 ngày",
+            "occurrences": [],
+            "rrules": null,
+            "abstained": true,
+            "limitation": "relative days, weekdays, numeric dates and clocks only"
+          },
+          {
+            "id": "result-042",
+            "text": "1 tiếng 30 phút nữa",
+            "occurrences": [],
+            "rrules": null,
+            "abstained": true,
+            "limitation": "relative days, weekdays, numeric dates and clocks only"
+          },
+          {
+            "id": "result-043",
+            "text": "2 ngày sau Tết",
+            "occurrences": [],
+            "rrules": null,
+            "abstained": true,
+            "limitation": "relative days, weekdays, numeric dates and clocks only"
+          },
+          {
+            "id": "result-044",
+            "text": "2 tiếng trước trưa mai",
+            "occurrences": [],
+            "rrules": null,
+            "abstained": true,
+            "limitation": "relative days, weekdays, numeric dates and clocks only"
+          },
+          {
+            "id": "result-045",
+            "text": "trong 2 tiếng",
+            "occurrences": [],
+            "rrules": null,
+            "abstained": true,
+            "limitation": "relative days, weekdays, numeric dates and clocks only"
+          },
+          {
+            "id": "result-046",
+            "text": "3 tuần kể từ bây giờ",
+            "occurrences": [],
+            "rrules": null,
+            "abstained": true,
+            "limitation": "relative days, weekdays, numeric dates and clocks only"
+          },
+          {
+            "id": "result-047",
+            "text": "thứ hai 9h và thứ tư 10h",
+            "occurrences": [
+              {
+                "start": "2026-09-21T09:00:00+07:00",
+                "allDay": false
+              }
+            ],
+            "rrules": null,
+            "abstained": false,
+            "limitation": "relative days, weekdays, numeric dates and clocks only"
+          },
+          {
+            "id": "result-048",
+            "text": "sáng mai từ 8h đến 10h",
+            "occurrences": [
+              {
+                "start": "2026-09-17T08:00:00+07:00",
+                "allDay": false
+              }
+            ],
+            "rrules": null,
+            "abstained": false,
+            "limitation": "relative days, weekdays, numeric dates and clocks only"
+          },
+          {
+            "id": "result-049",
+            "text": "mùng 1 Tết lúc 12 giờ đêm",
+            "occurrences": [
+              {
+                "start": "2026-09-17T12:00:00+07:00",
+                "allDay": false
+              }
+            ],
+            "rrules": null,
+            "abstained": false,
+            "limitation": "relative days, weekdays, numeric dates and clocks only"
+          },
+          {
+            "id": "result-050",
+            "text": "cuối tuần sau lúc 10h sáng",
+            "occurrences": [
+              {
+                "start": "2026-09-17T10:00:00+07:00",
+                "allDay": false
+              }
+            ],
+            "rrules": null,
+            "abstained": false,
+            "limitation": "relative days, weekdays, numeric dates and clocks only"
+          },
+          {
+            "id": "result-051",
+            "text": "mỗi thứ hai",
+            "occurrences": [
+              {
+                "start": "2026-09-21T00:00:00+07:00",
+                "allDay": true
+              }
+            ],
+            "rrules": null,
+            "abstained": false,
+            "limitation": "relative days, weekdays, numeric dates and clocks only"
+          },
+          {
+            "id": "result-052",
+            "text": "hàng ngày lúc 7h sáng",
+            "occurrences": [
+              {
+                "start": "2026-09-17T07:00:00+07:00",
+                "allDay": false
+              }
+            ],
+            "rrules": null,
+            "abstained": false,
+            "limitation": "relative days, weekdays, numeric dates and clocks only"
+          },
+          {
+            "id": "result-053",
+            "text": "ngày 15 hàng tháng",
+            "occurrences": [
+              {
+                "start": "2026-09-17T15:00:00+07:00",
+                "allDay": false
+              }
+            ],
+            "rrules": null,
+            "abstained": false,
+            "limitation": "relative days, weekdays, numeric dates and clocks only"
+          },
+          {
+            "id": "result-054",
+            "text": "thứ hai đầu tiên hàng tháng",
+            "occurrences": [
+              {
+                "start": "2026-09-21T00:00:00+07:00",
+                "allDay": true
+              }
+            ],
+            "rrules": null,
+            "abstained": false,
+            "limitation": "relative days, weekdays, numeric dates and clocks only"
+          },
+          {
+            "id": "result-055",
+            "text": "mỗi thứ hai đến hết tháng 12",
+            "occurrences": [
+              {
+                "start": "2026-09-21T00:00:00+07:00",
+                "allDay": true
+              }
+            ],
+            "rrules": null,
+            "abstained": false,
+            "limitation": "relative days, weekdays, numeric dates and clocks only"
+          },
+          {
+            "id": "result-056",
+            "text": "mỗi thứ hai, 6 lần",
+            "occurrences": [
+              {
+                "start": "2026-09-21T00:00:00+07:00",
+                "allDay": true
+              }
+            ],
+            "rrules": null,
+            "abstained": false,
+            "limitation": "relative days, weekdays, numeric dates and clocks only"
+          },
+          {
+            "id": "result-057",
+            "text": "mỗi ngày trừ chủ nhật",
+            "occurrences": [
+              {
+                "start": "2026-09-20T00:00:00+07:00",
+                "allDay": true
+              }
+            ],
+            "rrules": null,
+            "abstained": false,
+            "limitation": "relative days, weekdays, numeric dates and clocks only"
+          },
+          {
+            "id": "result-058",
+            "text": "hàng ngày từ nay đến cuối tháng",
+            "occurrences": [],
+            "rrules": null,
+            "abstained": true,
+            "limitation": "relative days, weekdays, numeric dates and clocks only"
+          },
+          {
+            "id": "result-059",
+            "text": "ngày mai 3 giờ chiều",
+            "occurrences": [
+              {
+                "start": "2026-09-17T03:00:00+07:00",
+                "allDay": false
+              }
+            ],
+            "rrules": null,
+            "abstained": false,
+            "limitation": "relative days, weekdays, numeric dates and clocks only"
+          },
+          {
+            "id": "result-060",
+            "text": "2 ngày nữa",
+            "occurrences": [],
+            "rrules": null,
+            "abstained": true,
+            "limitation": "relative days, weekdays, numeric dates and clocks only"
+          },
+          {
+            "id": "result-061",
+            "text": "24 tiếng nữa",
+            "occurrences": [],
+            "rrules": null,
+            "abstained": true,
+            "limitation": "relative days, weekdays, numeric dates and clocks only"
+          }
+        ]
+      }
+    }
+  ]
+}

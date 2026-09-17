@@ -17,6 +17,7 @@ export interface Adapter {
   dispose?(): void;
 }
 
-export const reference = "2026-09-09T12:00:00+06:00";
-export const timeZone = "Asia/Dhaka";
+// The same reference every gold resolution uses (a Thursday, 09:00 in Hanoi).
+export const reference = "2026-09-17T09:00:00+07:00";
+export const timeZone = "Asia/Ho_Chi_Minh";
 export const limit = 12;

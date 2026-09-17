@@ -1,0 +1,14 @@
+{
+  "method": "Gzip level 9, Brotli quality 11 over packages/core/dist/index.js, the same artifact the 50,000-byte release gate scores. weightsBrotliBytes is the weight module alone, from the export report.",
+  "budgetBrotliBytes": 50000,
+  "results": [
+    {
+      "library": "gpu-time-vi",
+      "bytes": 117677,
+      "gzipBytes": 58477,
+      "brotliBytes": 52111,
+      "weightsBrotliBytes": 27058,
+      "parameters": 38745
+    }
+  ]
+}
