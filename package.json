@@ -20,7 +20,9 @@
     "format": "prettier --write .",
     "format:check": "prettier --check .",
     "test:benchmark": "pnpm --filter @gpu-time-vi/benchmark test",
-    "evaluate": "pnpm --filter @gpu-time-vi/benchmark evaluate:model"
+    "evaluate": "pnpm --filter @gpu-time-vi/benchmark evaluate:model",
+    "test:website": "pnpm --filter @gpu-time-vi/website check",
+    "website:dev": "pnpm --filter @gpu-time-vi/website dev"
   },
   "devDependencies": {
     "bumpp": "12.3.0",
