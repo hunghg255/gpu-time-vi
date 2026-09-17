@@ -16,11 +16,7 @@
     "diagnose:semantic": "tsx --import ../core/scripts/register.mjs src/diagnose-semantic.ts",
     "audit:model": "tsx src/audit-model.ts",
     "evaluate:oracle": "tsx src/evaluate-oracle.ts",
-    "seed:gold": "tsx src/seed-gold.ts",
     "seed:grammar": "tsx src/seed-grammar.ts",
-    "seed:negatives": "tsx src/seed-negatives.ts",
-    "seed:prose": "tsx src/seed-prose.ts",
-    "seed:variations": "tsx src/grammar-variations.ts",
     "test": "uv run --project . python -m unittest discover -s torch -p 'test_*.py'"
   },
   "dependencies": {

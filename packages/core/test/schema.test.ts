@@ -1,10 +1,9 @@
 import { readFileSync } from "node:fs";
 import Ajv2020 from "ajv/dist/2020.js";
 import { expect, it } from "vitest";
+import { readGold } from "./gold.ts";
 
 const schemaPath = `${import.meta.dirname}/../schema/schedule.schema.json`;
-const goldPath = (name: string) =>
-  `${import.meta.dirname}/../../training/data/gold/${name}.jsonl`;
 
 it("validates schedule structure and rejects empty clauses or invalid clock components", () => {
   const schema = JSON.parse(readFileSync(schemaPath, "utf8"));
@@ -47,13 +46,14 @@ it("validates schedule structure and rejects empty clauses or invalid clock comp
   ).toBe(false);
 });
 
-it("accepts every hand-authored adversarial and oracle schedule", () => {
+it("accepts every hand-authored gold schedule", () => {
   const schema = JSON.parse(readFileSync(schemaPath, "utf8"));
   const validate = new Ajv2020({ strict: true }).compile(schema);
-  for (const file of ["adversarial", "user-cases", "labels", "chat"]) {
-    const records = readFileSync(goldPath(file), "utf8").trim().split("\n");
-    for (const line of records) {
-      const record = JSON.parse(line);
+  // grammar.jsonl already carries the lunar kind and Vietnamese holidays; it
+  // joins this list once the schema learns them in Task 4.
+  for (const file of ["adversarial", "labels", "prose", "negatives"]) {
+    for (const record of readGold<{ id: string; schedule: unknown }>(file)) {
+      if (record.schedule === null) continue;
       expect(
         validate(record.schedule),
         `${record.id}: ${JSON.stringify(validate.errors)}`,

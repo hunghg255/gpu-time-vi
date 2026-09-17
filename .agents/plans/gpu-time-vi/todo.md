@@ -11,20 +11,22 @@
 **Description:** Copy `example/{package.json,.gitignore,.prettierignore,.github,packages/core,packages/training,packages/benchmark}` lên root. Đổi tên gói core thành `gpu-time-vi`, scope nội bộ `@gpu-time-vi/*`. Xoá ngay những thứ chắc chắn không dùng: `packages/training/exports/*`, `packages/training/data/teacher`, `packages/training/src/harvest-*.ts`, `rescue-real.ts`, `correct-spans.ts`, `label-duration.ts`, `split-real.ts`, `torch/harvest.py`, `packages/benchmark/src/baselines/{chrono,compromise,recognizers,later,rrule}.ts`, `packages/benchmark/data/recognizers`, `english-compatibility*`. Giữ nguyên model tiếng Anh (`weights.gen.ts`, `active/`) để pipeline build/test còn chạy được. Thêm `example/` và `gpu-lexer-main/` vào `.gitignore` (giữ lại làm tham khảo, không xoá). `git init`.
 
 **Acceptance criteria:**
-- [ ] `packages/core/package.json` name = `gpu-time-vi`; không còn import nào trỏ tới file đã xoá
-- [ ] `pnpm install` (qua corepack, pnpm 11) thành công; `pnpm build:core` tạo `packages/core/dist`
-- [ ] `pnpm test:core` pass (vẫn là test tiếng Anh, chỉ để chứng minh pipeline sống)
+- [x] `packages/core/package.json` name = `gpu-time-vi`; không còn import nào trỏ tới file đã xoá
+- [x] `pnpm install` (qua corepack, pnpm 11) thành công; `pnpm build:core` tạo `packages/core/dist`
+- [x] `pnpm test:core` pass (vẫn là test tiếng Anh, chỉ để chứng minh pipeline sống)
 
 **Verification:**
-- [ ] Tests pass: `pnpm test:core`
-- [ ] Build succeeds: `pnpm build:core`
-- [ ] Manual check: `git status` sạch trừ file mới; `example/` không bị track
+- [x] Tests pass: `pnpm test:core` (992 pass, 4 expected fail)
+- [x] Build succeeds: `pnpm build:core` (45 561 B Brotli — chỉ dư ~4,4 KB tới gate)
+- [x] Manual check: `git status` sạch trừ file mới; `example/` không bị track
 
 **Dependencies:** None
 
 **Files likely touched:** `package.json`, `.gitignore`, `packages/core/package.json`, `packages/training/package.json`, `packages/benchmark/package.json`, `packages/benchmark/src/*.ts` (xoá baseline), `.github/workflows/ci.yml`
 
 **Estimated scope:** Medium (nhiều file nhưng cơ học)
+
+**Ghi chú thực hiện (2026-09-17):** benchmark package chỉ giữ `evaluate-model.ts`, `evaluate-results.ts`, `types.ts` vì `torch/export.py` gọi `evaluate-model.ts` khi promote; size/perf/report dựng lại ở Task 17. Thêm `.gitattributes` ép LF (hash `weights.gen.ts` sẽ hỏng nếu CRLF). `apps/*` tạm bỏ khỏi `pnpm-workspace.yaml` tới Task 19. Commit `afb4f9a`, `dac8dc7`.
 
 ---
 

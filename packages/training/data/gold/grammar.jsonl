@@ -1,115 +1,295 @@
-{"id":"grammar-001","family":"now-relative-day","text":"now","schedule":{"clauses":[{"date":{"kind":"now"}}]}}
-{"id":"grammar-002","family":"now-relative-day","text":"today","schedule":{"clauses":[{"date":{"kind":"relativeDay","offset":0}}]}}
-{"id":"grammar-003","family":"now-relative-day","text":"tonight","schedule":{"clauses":[{"date":{"kind":"relativeDay","offset":0}}]}}
-{"id":"grammar-004","family":"now-relative-day","text":"tomorrow","schedule":{"clauses":[{"date":{"kind":"relativeDay","offset":1}}]}}
-{"id":"grammar-005","family":"now-relative-day","text":"yesterday","schedule":{"clauses":[{"date":{"kind":"relativeDay","offset":-1}}]}}
-{"id":"grammar-006","family":"now-relative-day","text":"the day after tomorrow","schedule":{"clauses":[{"date":{"kind":"relativeDay","offset":2}}]}}
-{"id":"grammar-007","family":"relative-quantity","text":"1 day before","schedule":{"clauses":[{"shift":{"amount":1,"unit":"day","direction":"before"}}]}}
-{"id":"grammar-008","family":"relative-quantity","text":"10 days after","schedule":{"clauses":[{"shift":{"amount":10,"unit":"day","direction":"after"}}]}}
-{"id":"grammar-009","family":"relative-quantity","text":"in 90 minutes","schedule":{"clauses":[{"shift":{"amount":90,"unit":"minute","direction":"after"}}]}}
-{"id":"grammar-010","family":"relative-quantity","text":"3 weeks from now","schedule":{"clauses":[{"shift":{"amount":3,"unit":"week","direction":"after"},"date":{"kind":"now"}}]}}
-{"id":"grammar-011","family":"relative-quantity","text":"two months later","schedule":{"clauses":[{"shift":{"amount":2,"unit":"month","direction":"after"}}]}}
-{"id":"grammar-012","family":"relative-quantity","text":"5 days ago","schedule":{"clauses":[{"shift":{"amount":5,"unit":"day","direction":"before"}}]}}
-{"id":"grammar-013","family":"anchored-relative","text":"2 days before Friday","schedule":{"clauses":[{"shift":{"amount":2,"unit":"day","direction":"before"},"date":{"kind":"weekday","days":["FR"]}}]}}
-{"id":"grammar-014","family":"anchored-relative","text":"two hours before tomorrow at noon","schedule":{"clauses":[{"shift":{"amount":2,"unit":"hour","direction":"before"},"date":{"kind":"relativeDay","offset":1},"time":{"start":{"named":"noon"}}}]}}
-{"id":"grammar-015","family":"anchored-relative","text":"3 days after October 1","schedule":{"clauses":[{"shift":{"amount":3,"unit":"day","direction":"after"},"date":{"kind":"calendar","month":10,"day":1}}]}}
-{"id":"grammar-016","family":"anchored-relative","text":"a week before Christmas","schedule":{"clauses":[{"shift":{"amount":1,"unit":"week","direction":"before"},"date":{"kind":"holiday","name":"christmas"}}]}}
-{"id":"grammar-017","family":"relative-unit","text":"next week","schedule":{"clauses":[{"date":{"kind":"relativeUnit","unit":"week","modifier":"next"}}]}}
-{"id":"grammar-018","family":"relative-unit","text":"last month","schedule":{"clauses":[{"date":{"kind":"relativeUnit","unit":"month","modifier":"last"}}]}}
-{"id":"grammar-019","family":"relative-unit","text":"this weekend","schedule":{"clauses":[{"date":{"kind":"dayGroup","group":"weekend","modifier":"this"}}]}}
-{"id":"grammar-020","family":"relative-unit","text":"in one year","schedule":{"clauses":[{"shift":{"amount":1,"unit":"year","direction":"after"}}]}}
-{"id":"grammar-021","family":"relative-unit","text":"end of next month","schedule":{"clauses":[{"date":{"kind":"relativeUnit","unit":"month","modifier":"next","edge":"end"}}]}}
-{"id":"grammar-022","family":"weekday","text":"Monday","schedule":{"clauses":[{"date":{"kind":"weekday","days":["MO"]}}]}}
-{"id":"grammar-023","family":"weekday","text":"Mon","schedule":{"clauses":[{"date":{"kind":"weekday","days":["MO"]}}]}}
-{"id":"grammar-024","family":"weekday","text":"next Friday","schedule":{"clauses":[{"date":{"kind":"weekday","days":["FR"],"modifier":"next"}}]}}
-{"id":"grammar-025","family":"weekday","text":"this Monday","schedule":{"clauses":[{"date":{"kind":"weekday","days":["MO"],"modifier":"this"}}]}}
-{"id":"grammar-026","family":"weekday","text":"last Tuesday","schedule":{"clauses":[{"date":{"kind":"weekday","days":["TU"],"modifier":"last"}}]}}
-{"id":"grammar-027","family":"weekday","text":"Monday and Wednesday","schedule":{"clauses":[{"date":{"kind":"weekday","days":["MO","WE"]}}]}}
-{"id":"grammar-028","family":"day-group","text":"weekdays","schedule":{"clauses":[{"recurrence":{"freq":"weekly","interval":1,"byDay":["MO","TU","WE","TH","FR"]}}]}}
-{"id":"grammar-029","family":"day-group","text":"weekends","schedule":{"clauses":[{"recurrence":{"freq":"weekly","interval":1,"byDay":["SA","SU"]}}]}}
-{"id":"grammar-030","family":"day-group","text":"every weekday","schedule":{"clauses":[{"recurrence":{"freq":"weekly","interval":1,"byDay":["MO","TU","WE","TH","FR"]}}]}}
-{"id":"grammar-031","family":"day-group","text":"Mon-Fri","schedule":{"clauses":[{"recurrence":{"freq":"weekly","interval":1,"byDay":["MO","TU","WE","TH","FR"]}}]}}
-{"id":"grammar-032","family":"day-group","text":"Monday through Friday","schedule":{"clauses":[{"recurrence":{"freq":"weekly","interval":1,"byDay":["MO","TU","WE","TH","FR"]}}]}}
-{"id":"grammar-033","family":"clock","text":"2pm","schedule":{"clauses":[{"time":{"start":{"hour":14,"minute":0}}}]}}
-{"id":"grammar-034","family":"clock","text":"2 p.m.","schedule":{"clauses":[{"time":{"start":{"hour":14,"minute":0}}}]}}
-{"id":"grammar-035","family":"clock","text":"14:00","schedule":{"clauses":[{"time":{"start":{"hour":14,"minute":0}}}]}}
-{"id":"grammar-036","family":"clock","text":"2:30pm","schedule":{"clauses":[{"time":{"start":{"hour":14,"minute":30}}}]}}
-{"id":"grammar-037","family":"clock","text":"noon","schedule":{"clauses":[{"time":{"start":{"named":"noon"}}}]}}
-{"id":"grammar-038","family":"clock","text":"midnight","schedule":{"clauses":[{"time":{"start":{"named":"midnight"}}}]}}
-{"id":"grammar-039","family":"day-part","text":"morning","schedule":{"clauses":[{"time":{"start":{"part":"morning"}}}]}}
-{"id":"grammar-040","family":"day-part","text":"afternoon","schedule":{"clauses":[{"time":{"start":{"part":"afternoon"}}}]}}
-{"id":"grammar-041","family":"day-part","text":"evening","schedule":{"clauses":[{"time":{"start":{"part":"evening"}}}]}}
-{"id":"grammar-042","family":"day-part","text":"night","schedule":{"clauses":[{"time":{"start":{"part":"night"}}}]}}
-{"id":"grammar-043","family":"day-part","text":"Monday evening","schedule":{"clauses":[{"date":{"kind":"weekday","days":["MO"]},"time":{"start":{"part":"evening"}}}]}}
-{"id":"grammar-044","family":"day-part","text":"tomorrow morning","schedule":{"clauses":[{"date":{"kind":"relativeDay","offset":1},"time":{"start":{"part":"morning"}}}]}}
-{"id":"grammar-045","family":"explicit-date","text":"October 1","schedule":{"clauses":[{"date":{"kind":"calendar","month":10,"day":1}}]}}
-{"id":"grammar-046","family":"explicit-date","text":"Oct 1st","schedule":{"clauses":[{"date":{"kind":"calendar","month":10,"day":1}}]}}
-{"id":"grammar-047","family":"explicit-date","text":"1 October","schedule":{"clauses":[{"date":{"kind":"calendar","month":10,"day":1}}]}}
-{"id":"grammar-048","family":"explicit-date","text":"10/01","schedule":{"clauses":[{"date":{"kind":"calendar","month":10,"day":1}}]}}
-{"id":"grammar-049","family":"explicit-date","text":"2026-10-01","schedule":{"clauses":[{"date":{"kind":"calendar","month":10,"day":1,"year":2026}}]}}
-{"id":"grammar-050","family":"explicit-date","text":"October 1, 2027 at noon","schedule":{"clauses":[{"date":{"kind":"calendar","month":10,"day":1,"year":2027},"time":{"start":{"named":"noon"}}}]}}
-{"id":"grammar-051","family":"time-window","text":"10pm-12am","schedule":{"clauses":[{"time":{"start":{"hour":22,"minute":0},"end":{"hour":0,"minute":0}}}]}}
-{"id":"grammar-052","family":"time-window","text":"from 8 to 10pm","schedule":{"clauses":[{"time":{"start":{"hour":20,"minute":0},"end":{"hour":22,"minute":0}}}]}}
-{"id":"grammar-053","family":"time-window","text":"between 9am and noon","schedule":{"clauses":[{"time":{"start":{"hour":9,"minute":0},"end":{"named":"noon"}}}]}}
-{"id":"grammar-054","family":"time-window","text":"Monday 1pm-8pm","schedule":{"clauses":[{"date":{"kind":"weekday","days":["MO"]},"time":{"start":{"hour":13,"minute":0},"end":{"hour":20,"minute":0}}}]}}
-{"id":"grammar-055","family":"time-window","text":"9 to 5","schedule":{"clauses":[{"time":{"start":{"hour":9,"minute":0},"end":{"hour":17,"minute":0}}}]}}
-{"id":"grammar-056","family":"date-range","text":"June 11-16","schedule":{"clauses":[{"date":{"kind":"calendarRange","from":{"month":6,"day":11},"to":{"month":6,"day":16}}}]}}
-{"id":"grammar-057","family":"date-range","text":"26 July - 22 August","schedule":{"clauses":[{"date":{"kind":"calendarRange","from":{"month":7,"day":26},"to":{"month":8,"day":22}}}]}}
-{"id":"grammar-058","family":"date-range","text":"from Monday to Wednesday","schedule":{"clauses":[{"date":{"kind":"weekdayRange","from":"MO","to":"WE"}}]}}
-{"id":"grammar-059","family":"duration","text":"for 2 hours","schedule":{"clauses":[{"duration":{"amount":2,"unit":"hour"}}]}}
-{"id":"grammar-060","family":"duration","text":"for 90 minutes","schedule":{"clauses":[{"duration":{"amount":90,"unit":"minute"}}]}}
-{"id":"grammar-061","family":"duration","text":"for the next 10 days","schedule":{"clauses":[{"duration":{"amount":10,"unit":"day"}}]}}
-{"id":"grammar-062","family":"multi-clause","text":"Monday 10pm-12am and Saturday Sunday 1pm-8pm","schedule":{"clauses":[{"date":{"kind":"weekday","days":["MO"]},"time":{"start":{"hour":22,"minute":0},"end":{"hour":0,"minute":0}}},{"date":{"kind":"weekday","days":["SA","SU"]},"time":{"start":{"hour":13,"minute":0},"end":{"hour":20,"minute":0}}}]}}
-{"id":"grammar-063","family":"multi-clause","text":"Mon at 9, Wed at 10, Fri at 11","schedule":{"clauses":[{"date":{"kind":"weekday","days":["MO"]},"time":{"start":{"hour":9,"minute":0}}},{"date":{"kind":"weekday","days":["WE"]},"time":{"start":{"hour":10,"minute":0}}},{"date":{"kind":"weekday","days":["FR"]},"time":{"start":{"hour":11,"minute":0}}}]}}
-{"id":"grammar-064","family":"recurrence","text":"every Monday at 8pm","schedule":{"clauses":[{"recurrence":{"freq":"weekly","interval":1,"byDay":["MO"]},"time":{"start":{"hour":20,"minute":0}}}]}}
-{"id":"grammar-065","family":"recurrence","text":"each Tuesday","schedule":{"clauses":[{"recurrence":{"freq":"weekly","interval":1,"byDay":["TU"]}}]}}
-{"id":"grammar-066","family":"recurrence","text":"daily at noon","schedule":{"clauses":[{"recurrence":{"freq":"daily","interval":1},"time":{"start":{"named":"noon"}}}]}}
-{"id":"grammar-067","family":"recurrence","text":"weekly","schedule":{"clauses":[{"recurrence":{"freq":"weekly","interval":1}}]}}
-{"id":"grammar-068","family":"recurrence","text":"every 2 weeks on Tuesday","schedule":{"clauses":[{"recurrence":{"freq":"weekly","interval":2,"byDay":["TU"]}}]}}
-{"id":"grammar-069","family":"recurrence","text":"every other Friday","schedule":{"clauses":[{"recurrence":{"freq":"weekly","interval":2,"byDay":["FR"]}}]}}
-{"id":"grammar-070","family":"recurrence","text":"twice a week","schedule":{"clauses":[{"recurrence":{"freq":"weekly","interval":1,"timesPer":2}}]}}
-{"id":"grammar-071","family":"recurrence","text":"3 times a day","schedule":{"clauses":[{"recurrence":{"freq":"daily","interval":1,"timesPer":3}}]}}
-{"id":"grammar-072","family":"monthly-yearly","text":"every month on the 31st","schedule":{"clauses":[{"recurrence":{"freq":"monthly","interval":1,"byMonthDay":[31]}}]}}
-{"id":"grammar-073","family":"monthly-yearly","text":"the first Monday of every month","schedule":{"clauses":[{"recurrence":{"freq":"monthly","interval":1,"byDay":["MO"],"bySetPos":[1]}}]}}
-{"id":"grammar-074","family":"monthly-yearly","text":"last Friday of the month","schedule":{"clauses":[{"recurrence":{"freq":"monthly","interval":1,"byDay":["FR"],"bySetPos":[-1]}}]}}
-{"id":"grammar-075","family":"monthly-yearly","text":"1st and 15th of each month","schedule":{"clauses":[{"recurrence":{"freq":"monthly","interval":1,"byMonthDay":[1,15]}}]}}
-{"id":"grammar-076","family":"monthly-yearly","text":"every year on March 26","schedule":{"clauses":[{"recurrence":{"freq":"yearly","interval":1,"byMonth":[3],"byMonthDay":[26]}}]}}
-{"id":"grammar-077","family":"monthly-yearly","text":"annually","schedule":{"clauses":[{"recurrence":{"freq":"yearly","interval":1}}]}}
-{"id":"grammar-078","family":"bounds","text":"every Monday starting October 1","schedule":{"clauses":[{"recurrence":{"freq":"weekly","interval":1,"byDay":["MO"],"start":{"kind":"calendar","month":10,"day":1}}}]}}
-{"id":"grammar-079","family":"bounds","text":"every week from next week","schedule":{"clauses":[{"recurrence":{"freq":"weekly","interval":1,"start":{"kind":"relativeUnit","unit":"week","modifier":"next"}}}]}}
-{"id":"grammar-080","family":"bounds","text":"every Monday until December 31","schedule":{"clauses":[{"recurrence":{"freq":"weekly","interval":1,"byDay":["MO"],"until":{"kind":"calendar","month":12,"day":31}}}]}}
-{"id":"grammar-081","family":"bounds","text":"every Tuesday until Dec","schedule":{"clauses":[{"recurrence":{"freq":"weekly","interval":1,"byDay":["TU"],"until":{"kind":"calendar","month":12}}}]}}
-{"id":"grammar-082","family":"bounds","text":"every day through Friday","schedule":{"clauses":[{"recurrence":{"freq":"daily","interval":1,"until":{"kind":"weekday","days":["FR"]}}}]}}
-{"id":"grammar-083","family":"bounds","text":"every Monday for 6 times","schedule":{"clauses":[{"recurrence":{"freq":"weekly","interval":1,"byDay":["MO"],"count":6}}]}}
-{"id":"grammar-084","family":"bounds","text":"every Monday for 10 weeks","schedule":{"clauses":[{"recurrence":{"freq":"weekly","interval":1,"byDay":["MO"],"span":{"amount":10,"unit":"week"}}}]}}
-{"id":"grammar-085","family":"exceptions","text":"every weekday except Friday","schedule":{"clauses":[{"recurrence":{"freq":"weekly","interval":1,"byDay":["MO","TU","WE","TH","FR"],"except":[{"kind":"weekday","days":["FR"]}]}}]}}
-{"id":"grammar-086","family":"exceptions","text":"every day except Sundays","schedule":{"clauses":[{"recurrence":{"freq":"daily","interval":1,"except":[{"kind":"weekday","days":["SU"]}]}}]}}
-{"id":"grammar-087","family":"prose","text":"remind me to call Sam on Monday at 2pm","schedule":{"clauses":[{"date":{"kind":"weekday","days":["MO"]},"time":{"start":{"hour":14,"minute":0}}}]}}
-{"id":"grammar-088","family":"prose","text":"the meeting is every other Tuesday until Dec","schedule":{"clauses":[{"recurrence":{"freq":"weekly","interval":2,"byDay":["TU"],"until":{"kind":"calendar","month":12}}}]}}
-{"id":"grammar-089","family":"prose","text":"deadline: 3 days before Christmas","schedule":{"clauses":[{"shift":{"amount":3,"unit":"day","direction":"before"},"date":{"kind":"holiday","name":"christmas"}}]}}
-{"id":"grammar-090","family":"holiday","text":"Christmas","schedule":{"clauses":[{"date":{"kind":"holiday","name":"christmas"}}]}}
-{"id":"grammar-091","family":"holiday","text":"Christmas Eve","schedule":{"clauses":[{"date":{"kind":"holiday","name":"christmas-eve"}}]}}
-{"id":"grammar-092","family":"holiday","text":"New Year's Day","schedule":{"clauses":[{"date":{"kind":"holiday","name":"new-year"}}]}}
-{"id":"grammar-093","family":"holiday","text":"Halloween","schedule":{"clauses":[{"date":{"kind":"holiday","name":"halloween"}}]}}
-{"id":"grammar-094","family":"holiday","text":"Valentine's Day","schedule":{"clauses":[{"date":{"kind":"holiday","name":"valentines"}}]}}
-{"id":"grammar-095","family":"explicit-date","text":"October sixth","schedule":{"clauses":[{"date":{"kind":"calendar","month":10,"day":6}}]}}
-{"id":"grammar-096","family":"explicit-date","text":"twelfth of October","schedule":{"clauses":[{"date":{"kind":"calendar","month":10,"day":12}}]}}
-{"id":"grammar-097","family":"explicit-date","text":"February ninth, 2028","schedule":{"clauses":[{"date":{"kind":"calendar","month":2,"day":9,"year":2028}}]}}
-{"id":"grammar-098","family":"clock","text":"twelve pm","schedule":{"clauses":[{"time":{"start":{"hour":12,"minute":0}}}]}}
-{"id":"grammar-099","family":"clock","text":"eleven am","schedule":{"clauses":[{"time":{"start":{"hour":11,"minute":0}}}]}}
-{"id":"grammar-100","family":"time-window","text":"9am to 5","schedule":{"clauses":[{"time":{"start":{"hour":9,"minute":0},"end":{"hour":17,"minute":0}}}]}}
-{"id":"grammar-101","family":"time-window","text":"10 to 2am","schedule":{"clauses":[{"time":{"start":{"hour":22,"minute":0},"end":{"hour":2,"minute":0}}}]}}
-{"id":"grammar-102","family":"time-window","text":"8 to midnight","schedule":{"clauses":[{"time":{"start":{"hour":20,"minute":0},"end":{"named":"midnight"}}}]}}
-{"id":"grammar-103","family":"relative-quantity","text":"twelve minutes after","schedule":{"clauses":[{"shift":{"amount":12,"unit":"minute","direction":"after"}}]}}
-{"id":"grammar-104","family":"monthly-yearly","text":"every month on the seventh","schedule":{"clauses":[{"recurrence":{"freq":"monthly","interval":1,"byMonthDay":[7]}}]}}
-{"id":"grammar-105","family":"holiday","text":"Christmas Eve at noon","schedule":{"clauses":[{"date":{"kind":"holiday","name":"christmas-eve"},"time":{"start":{"named":"noon"}}}]}}
-{"id":"grammar-106","family":"clock-period","text":"two in the afternoon","schedule":{"clauses":[{"time":{"start":{"hour":14,"minute":0}}}]}}
-{"id":"grammar-107","family":"clock-period","text":"five in the morning","schedule":{"clauses":[{"time":{"start":{"hour":5,"minute":0}}}]}}
-{"id":"grammar-108","family":"clock-period","text":"seven in the evening","schedule":{"clauses":[{"time":{"start":{"hour":19,"minute":0}}}]}}
-{"id":"grammar-109","family":"clock-period","text":"twelve in the morning","schedule":{"clauses":[{"time":{"start":{"hour":0,"minute":0}}}]}}
-{"id":"grammar-110","family":"clock-period","text":"twelve in the afternoon","schedule":{"clauses":[{"time":{"start":{"hour":12,"minute":0}}}]}}
-{"id":"grammar-111","family":"clock-period","text":"2:30 in the afternoon","schedule":{"clauses":[{"time":{"start":{"hour":14,"minute":30}}}]}}
-{"id":"grammar-112","family":"clock-period","text":"tomorrow at eight in the morning","schedule":{"clauses":[{"date":{"kind":"relativeDay","offset":1},"time":{"start":{"hour":8,"minute":0}}}]}}
-{"id":"grammar-113","family":"clock-period","text":"every Monday at six in the evening","schedule":{"clauses":[{"recurrence":{"freq":"weekly","interval":1,"byDay":["MO"]},"time":{"start":{"hour":18,"minute":0}}}]}}
-{"id":"grammar-114","family":"clock-period","text":"from 5 to 7 in the evening","schedule":{"clauses":[{"time":{"start":{"hour":17,"minute":0},"end":{"hour":19,"minute":0}}}]}}
-{"id":"grammar-115","family":"clock-period","text":"from 9 in the morning to 5 in the afternoon","schedule":{"clauses":[{"time":{"start":{"hour":9,"minute":0},"end":{"hour":17,"minute":0}}}]}}
+{"id":"grammar-001","family":"now","text":"bây giờ","schedule":{"clauses":[{"date":{"kind":"now"}}]}}
+{"id":"grammar-002","family":"now","text":"hiện tại","schedule":{"clauses":[{"date":{"kind":"now"}}]}}
+{"id":"grammar-003","family":"now","text":"ngay bây giờ","schedule":{"clauses":[{"date":{"kind":"now"}}]}}
+{"id":"grammar-004","family":"relative-day","text":"hôm nay","schedule":{"clauses":[{"date":{"kind":"relativeDay","offset":0}}]}}
+{"id":"grammar-005","family":"relative-day","text":"nay","schedule":{"clauses":[{"date":{"kind":"relativeDay","offset":0}}]}}
+{"id":"grammar-006","family":"relative-day","text":"ngày mai","schedule":{"clauses":[{"date":{"kind":"relativeDay","offset":1}}]}}
+{"id":"grammar-007","family":"relative-day","text":"mai","schedule":{"clauses":[{"date":{"kind":"relativeDay","offset":1}}]}}
+{"id":"grammar-008","family":"relative-day","text":"ngày kia","schedule":{"clauses":[{"date":{"kind":"relativeDay","offset":2}}]}}
+{"id":"grammar-009","family":"relative-day","text":"ngày mốt","schedule":{"clauses":[{"date":{"kind":"relativeDay","offset":2}}]}}
+{"id":"grammar-010","family":"relative-day","text":"hôm qua","schedule":{"clauses":[{"date":{"kind":"relativeDay","offset":-1}}]}}
+{"id":"grammar-011","family":"relative-day","text":"hôm kia","schedule":{"clauses":[{"date":{"kind":"relativeDay","offset":-2}}]}}
+{"id":"grammar-012","family":"relative-day","text":"bữa nay","schedule":{"clauses":[{"date":{"kind":"relativeDay","offset":0}}]}}
+{"id":"grammar-013","family":"relative-day-part","text":"sáng mai","schedule":{"clauses":[{"date":{"kind":"relativeDay","offset":1},"time":{"start":{"part":"morning"}}}]}}
+{"id":"grammar-014","family":"relative-day-part","text":"tối nay","schedule":{"clauses":[{"date":{"kind":"relativeDay","offset":0},"time":{"start":{"part":"evening"}}}]}}
+{"id":"grammar-015","family":"relative-day-part","text":"chiều hôm qua","schedule":{"clauses":[{"date":{"kind":"relativeDay","offset":-1},"time":{"start":{"part":"afternoon"}}}]}}
+{"id":"grammar-016","family":"relative-day-part","text":"trưa mai","schedule":{"clauses":[{"date":{"kind":"relativeDay","offset":1},"time":{"start":{"part":"noon"}}}]}}
+{"id":"grammar-017","family":"relative-day-part","text":"đêm nay","schedule":{"clauses":[{"date":{"kind":"relativeDay","offset":0},"time":{"start":{"part":"night"}}}]}}
+{"id":"grammar-018","family":"relative-day-part","text":"tối thứ sáu","schedule":{"clauses":[{"date":{"kind":"weekday","days":["FR"]},"time":{"start":{"part":"evening"}}}]}}
+{"id":"grammar-019","family":"weekday","text":"thứ hai","schedule":{"clauses":[{"date":{"kind":"weekday","days":["MO"]}}]}}
+{"id":"grammar-020","family":"weekday","text":"thứ 2","schedule":{"clauses":[{"date":{"kind":"weekday","days":["MO"]}}]}}
+{"id":"grammar-021","family":"weekday","text":"t2","schedule":{"clauses":[{"date":{"kind":"weekday","days":["MO"]}}]}}
+{"id":"grammar-022","family":"weekday","text":"T7","schedule":{"clauses":[{"date":{"kind":"weekday","days":["SA"]}}]}}
+{"id":"grammar-023","family":"weekday","text":"thứ tư","schedule":{"clauses":[{"date":{"kind":"weekday","days":["WE"]}}]}}
+{"id":"grammar-024","family":"weekday","text":"chủ nhật","schedule":{"clauses":[{"date":{"kind":"weekday","days":["SU"]}}]}}
+{"id":"grammar-025","family":"weekday","text":"CN","schedule":{"clauses":[{"date":{"kind":"weekday","days":["SU"]}}]}}
+{"id":"grammar-026","family":"weekday","text":"thứ hai và thứ tư","schedule":{"clauses":[{"date":{"kind":"weekday","days":["MO","WE"]}}]}}
+{"id":"grammar-027","family":"weekday-deictic","text":"thứ hai tuần sau","schedule":{"clauses":[{"date":{"kind":"weekday","days":["MO"],"modifier":"next"}}]}}
+{"id":"grammar-028","family":"weekday-deictic","text":"thứ sáu tuần này","schedule":{"clauses":[{"date":{"kind":"weekday","days":["FR"],"modifier":"this"}}]}}
+{"id":"grammar-029","family":"weekday-deictic","text":"thứ ba tuần trước","schedule":{"clauses":[{"date":{"kind":"weekday","days":["TU"],"modifier":"last"}}]}}
+{"id":"grammar-030","family":"weekday-deictic","text":"thứ hai tới","schedule":{"clauses":[{"date":{"kind":"weekday","days":["MO"],"modifier":"next"}}]}}
+{"id":"grammar-031","family":"weekday-deictic","text":"chủ nhật này","schedule":{"clauses":[{"date":{"kind":"weekday","days":["SU"],"modifier":"this"}}]}}
+{"id":"grammar-032","family":"weekday-deictic","text":"cn tuần sau","schedule":{"clauses":[{"date":{"kind":"weekday","days":["SU"],"modifier":"next"}}]}}
+{"id":"grammar-033","family":"relative-unit","text":"tuần sau","schedule":{"clauses":[{"date":{"kind":"relativeUnit","unit":"week","modifier":"next"}}]}}
+{"id":"grammar-034","family":"relative-unit","text":"tuần tới","schedule":{"clauses":[{"date":{"kind":"relativeUnit","unit":"week","modifier":"next"}}]}}
+{"id":"grammar-035","family":"relative-unit","text":"tuần này","schedule":{"clauses":[{"date":{"kind":"relativeUnit","unit":"week","modifier":"this"}}]}}
+{"id":"grammar-036","family":"relative-unit","text":"tuần trước","schedule":{"clauses":[{"date":{"kind":"relativeUnit","unit":"week","modifier":"last"}}]}}
+{"id":"grammar-037","family":"relative-unit","text":"tuần rồi","schedule":{"clauses":[{"date":{"kind":"relativeUnit","unit":"week","modifier":"last"}}]}}
+{"id":"grammar-038","family":"relative-unit","text":"tháng sau","schedule":{"clauses":[{"date":{"kind":"relativeUnit","unit":"month","modifier":"next"}}]}}
+{"id":"grammar-039","family":"relative-unit","text":"tháng này","schedule":{"clauses":[{"date":{"kind":"relativeUnit","unit":"month","modifier":"this"}}]}}
+{"id":"grammar-040","family":"relative-unit","text":"tháng trước","schedule":{"clauses":[{"date":{"kind":"relativeUnit","unit":"month","modifier":"last"}}]}}
+{"id":"grammar-041","family":"relative-unit","text":"năm sau","schedule":{"clauses":[{"date":{"kind":"relativeUnit","unit":"year","modifier":"next"}}]}}
+{"id":"grammar-042","family":"relative-unit","text":"năm nay","schedule":{"clauses":[{"date":{"kind":"relativeUnit","unit":"year","modifier":"this"}}]}}
+{"id":"grammar-043","family":"relative-unit","text":"năm ngoái","schedule":{"clauses":[{"date":{"kind":"relativeUnit","unit":"year","modifier":"last"}}]}}
+{"id":"grammar-044","family":"relative-unit-edge","text":"đầu tuần sau","schedule":{"clauses":[{"date":{"kind":"relativeUnit","unit":"week","modifier":"next","edge":"start"}}]}}
+{"id":"grammar-045","family":"relative-unit-edge","text":"cuối tháng","schedule":{"clauses":[{"date":{"kind":"relativeUnit","unit":"month","modifier":"this","edge":"end"}}]}}
+{"id":"grammar-046","family":"relative-unit-edge","text":"cuối tháng sau","schedule":{"clauses":[{"date":{"kind":"relativeUnit","unit":"month","modifier":"next","edge":"end"}}]}}
+{"id":"grammar-047","family":"relative-unit-edge","text":"đầu năm sau","schedule":{"clauses":[{"date":{"kind":"relativeUnit","unit":"year","modifier":"next","edge":"start"}}]}}
+{"id":"grammar-048","family":"relative-unit-edge","text":"cuối năm nay","schedule":{"clauses":[{"date":{"kind":"relativeUnit","unit":"year","modifier":"this","edge":"end"}}]}}
+{"id":"grammar-049","family":"day-group","text":"cuối tuần","schedule":{"clauses":[{"date":{"kind":"dayGroup","group":"weekend"}}]}}
+{"id":"grammar-050","family":"day-group","text":"cuối tuần này","schedule":{"clauses":[{"date":{"kind":"dayGroup","group":"weekend","modifier":"this"}}]}}
+{"id":"grammar-051","family":"day-group","text":"cuối tuần sau","schedule":{"clauses":[{"date":{"kind":"dayGroup","group":"weekend","modifier":"next"}}]}}
+{"id":"grammar-052","family":"day-group","text":"ngày thường","schedule":{"clauses":[{"recurrence":{"freq":"weekly","interval":1,"byDay":["MO","TU","WE","TH","FR"]}}]}}
+{"id":"grammar-053","family":"day-group","text":"các ngày làm việc","schedule":{"clauses":[{"recurrence":{"freq":"weekly","interval":1,"byDay":["MO","TU","WE","TH","FR"]}}]}}
+{"id":"grammar-054","family":"day-group","text":"từ thứ hai đến thứ sáu","schedule":{"clauses":[{"recurrence":{"freq":"weekly","interval":1,"byDay":["MO","TU","WE","TH","FR"]}}]}}
+{"id":"grammar-055","family":"clock","text":"3 giờ","schedule":{"clauses":[{"time":{"start":{"hour":3,"minute":0}}}]}}
+{"id":"grammar-056","family":"clock","text":"15 giờ","schedule":{"clauses":[{"time":{"start":{"hour":15,"minute":0}}}]}}
+{"id":"grammar-057","family":"clock","text":"15h","schedule":{"clauses":[{"time":{"start":{"hour":15,"minute":0}}}]}}
+{"id":"grammar-058","family":"clock","text":"15h30","schedule":{"clauses":[{"time":{"start":{"hour":15,"minute":30}}}]}}
+{"id":"grammar-059","family":"clock","text":"15g30","schedule":{"clauses":[{"time":{"start":{"hour":15,"minute":30}}}]}}
+{"id":"grammar-060","family":"clock","text":"15:30","schedule":{"clauses":[{"time":{"start":{"hour":15,"minute":30}}}]}}
+{"id":"grammar-061","family":"clock","text":"15 giờ 30","schedule":{"clauses":[{"time":{"start":{"hour":15,"minute":30}}}]}}
+{"id":"grammar-062","family":"clock","text":"15 giờ 30 phút","schedule":{"clauses":[{"time":{"start":{"hour":15,"minute":30}}}]}}
+{"id":"grammar-063","family":"clock","text":"3 rưỡi","schedule":{"clauses":[{"time":{"start":{"hour":3,"minute":30}}}]}}
+{"id":"grammar-064","family":"clock","text":"3 giờ rưỡi","schedule":{"clauses":[{"time":{"start":{"hour":3,"minute":30}}}]}}
+{"id":"grammar-065","family":"clock","text":"3 giờ kém 15","schedule":{"clauses":[{"time":{"start":{"hour":2,"minute":45}}}]}}
+{"id":"grammar-066","family":"clock","text":"3h kém 15","schedule":{"clauses":[{"time":{"start":{"hour":2,"minute":45}}}]}}
+{"id":"grammar-067","family":"clock","text":"3 giờ hơn 10","schedule":{"clauses":[{"time":{"start":{"hour":3,"minute":10}}}]}}
+{"id":"grammar-068","family":"clock","text":"3pm","schedule":{"clauses":[{"time":{"start":{"hour":15,"minute":0}}}]}}
+{"id":"grammar-069","family":"clock","text":"3 pm","schedule":{"clauses":[{"time":{"start":{"hour":15,"minute":0}}}]}}
+{"id":"grammar-070","family":"clock","text":"10:05:20","schedule":{"clauses":[{"time":{"start":{"hour":10,"minute":5,"second":20}}}]}}
+{"id":"grammar-071","family":"clock-meridiem","text":"3 giờ chiều","schedule":{"clauses":[{"time":{"start":{"hour":15,"minute":0}}}]}}
+{"id":"grammar-072","family":"clock-meridiem","text":"3h chiều","schedule":{"clauses":[{"time":{"start":{"hour":15,"minute":0}}}]}}
+{"id":"grammar-073","family":"clock-meridiem","text":"7 giờ sáng","schedule":{"clauses":[{"time":{"start":{"hour":7,"minute":0}}}]}}
+{"id":"grammar-074","family":"clock-meridiem","text":"7 giờ tối","schedule":{"clauses":[{"time":{"start":{"hour":19,"minute":0}}}]}}
+{"id":"grammar-075","family":"clock-meridiem","text":"12 giờ trưa","schedule":{"clauses":[{"time":{"start":{"hour":12,"minute":0}}}]}}
+{"id":"grammar-076","family":"clock-meridiem","text":"1 giờ trưa","schedule":{"clauses":[{"time":{"start":{"hour":13,"minute":0}}}]}}
+{"id":"grammar-077","family":"clock-meridiem","text":"12 giờ đêm","schedule":{"clauses":[{"time":{"start":{"hour":0,"minute":0}}}]}}
+{"id":"grammar-078","family":"clock-meridiem","text":"11 giờ đêm","schedule":{"clauses":[{"time":{"start":{"hour":23,"minute":0}}}]}}
+{"id":"grammar-079","family":"clock-meridiem","text":"2 giờ đêm","schedule":{"clauses":[{"time":{"start":{"hour":2,"minute":0}}}]}}
+{"id":"grammar-080","family":"clock-meridiem","text":"3 rưỡi chiều","schedule":{"clauses":[{"time":{"start":{"hour":15,"minute":30}}}]}}
+{"id":"grammar-081","family":"clock-meridiem","text":"7 giờ kém 15 tối","schedule":{"clauses":[{"time":{"start":{"hour":18,"minute":45}}}]}}
+{"id":"grammar-082","family":"clock-meridiem","text":"chiều 3 giờ","schedule":{"clauses":[{"time":{"start":{"hour":15,"minute":0}}}]}}
+{"id":"grammar-083","family":"clock-meridiem","text":"sáng 7h","schedule":{"clauses":[{"time":{"start":{"hour":7,"minute":0}}}]}}
+{"id":"grammar-084","family":"clock-meridiem","text":"15h chiều","schedule":{"clauses":[{"time":{"start":{"hour":15,"minute":0}}}]}}
+{"id":"grammar-085","family":"clock-spelled","text":"ba giờ chiều","schedule":{"clauses":[{"time":{"start":{"hour":15,"minute":0}}}]}}
+{"id":"grammar-086","family":"clock-spelled","text":"mười lăm giờ","schedule":{"clauses":[{"time":{"start":{"hour":15,"minute":0}}}]}}
+{"id":"grammar-087","family":"clock-spelled","text":"bảy giờ rưỡi sáng","schedule":{"clauses":[{"time":{"start":{"hour":7,"minute":30}}}]}}
+{"id":"grammar-088","family":"clock-spelled","text":"hai mươi mốt giờ","schedule":{"clauses":[{"time":{"start":{"hour":21,"minute":0}}}]}}
+{"id":"grammar-089","family":"time-named","text":"nửa đêm","schedule":{"clauses":[{"time":{"start":{"named":"midnight"}}}]}}
+{"id":"grammar-090","family":"time-named","text":"giữa trưa","schedule":{"clauses":[{"time":{"start":{"named":"noon"}}}]}}
+{"id":"grammar-091","family":"time-named","text":"đúng trưa","schedule":{"clauses":[{"time":{"start":{"named":"noon"}}}]}}
+{"id":"grammar-092","family":"day-part","text":"buổi sáng","schedule":{"clauses":[{"time":{"start":{"part":"morning"}}}]}}
+{"id":"grammar-093","family":"day-part","text":"sáng","schedule":{"clauses":[{"time":{"start":{"part":"morning"}}}]}}
+{"id":"grammar-094","family":"day-part","text":"buổi trưa","schedule":{"clauses":[{"time":{"start":{"part":"noon"}}}]}}
+{"id":"grammar-095","family":"day-part","text":"chiều","schedule":{"clauses":[{"time":{"start":{"part":"afternoon"}}}]}}
+{"id":"grammar-096","family":"day-part","text":"buổi tối","schedule":{"clauses":[{"time":{"start":{"part":"evening"}}}]}}
+{"id":"grammar-097","family":"day-part","text":"đêm","schedule":{"clauses":[{"time":{"start":{"part":"night"}}}]}}
+{"id":"grammar-098","family":"day-part","text":"khuya","schedule":{"clauses":[{"time":{"start":{"part":"night"}}}]}}
+{"id":"grammar-099","family":"time-window","text":"từ 9h đến 17h","schedule":{"clauses":[{"time":{"start":{"hour":9,"minute":0},"end":{"hour":17,"minute":0}}}]}}
+{"id":"grammar-100","family":"time-window","text":"9h-17h","schedule":{"clauses":[{"time":{"start":{"hour":9,"minute":0},"end":{"hour":17,"minute":0}}}]}}
+{"id":"grammar-101","family":"time-window","text":"9h tới 17h","schedule":{"clauses":[{"time":{"start":{"hour":9,"minute":0},"end":{"hour":17,"minute":0}}}]}}
+{"id":"grammar-102","family":"time-window","text":"từ 9 đến 5 giờ chiều","schedule":{"clauses":[{"time":{"start":{"hour":9,"minute":0},"end":{"hour":17,"minute":0}}}]}}
+{"id":"grammar-103","family":"time-window","text":"từ 8 giờ tối đến 12 giờ đêm","schedule":{"clauses":[{"time":{"start":{"hour":20,"minute":0},"end":{"hour":0,"minute":0}}}]}}
+{"id":"grammar-104","family":"time-window","text":"từ 9 giờ sáng đến 11 giờ trưa","schedule":{"clauses":[{"time":{"start":{"hour":9,"minute":0},"end":{"hour":11,"minute":0}}}]}}
+{"id":"grammar-105","family":"time-window","text":"từ 14h30 đến 16h","schedule":{"clauses":[{"time":{"start":{"hour":14,"minute":30},"end":{"hour":16,"minute":0}}}]}}
+{"id":"grammar-106","family":"time-window","text":"giữa 9h và 10h","schedule":{"clauses":[{"time":{"start":{"hour":9,"minute":0},"end":{"hour":10,"minute":0}}}]}}
+{"id":"grammar-107","family":"open-clock","text":"sau 6 giờ tối","schedule":{"clauses":[{"time":{"start":{"hour":18,"minute":0},"open":"end"}}]}}
+{"id":"grammar-108","family":"open-clock","text":"trước 9h sáng","schedule":{"clauses":[{"time":{"start":{"hour":0,"minute":0},"end":{"hour":9,"minute":0},"open":"start"}}]}}
+{"id":"grammar-109","family":"open-clock","text":"từ 6 giờ tối","schedule":{"clauses":[{"time":{"start":{"hour":18,"minute":0},"open":"end"}}]}}
+{"id":"grammar-110","family":"calendar-date","text":"ngày 15","schedule":{"clauses":[{"date":{"kind":"calendar","day":15}}]}}
+{"id":"grammar-111","family":"calendar-date","text":"ngày 15 tháng 3","schedule":{"clauses":[{"date":{"kind":"calendar","month":3,"day":15}}]}}
+{"id":"grammar-112","family":"calendar-date","text":"15 tháng 3","schedule":{"clauses":[{"date":{"kind":"calendar","month":3,"day":15}}]}}
+{"id":"grammar-113","family":"calendar-date","text":"15/3","schedule":{"clauses":[{"date":{"kind":"calendar","month":3,"day":15}}]}}
+{"id":"grammar-114","family":"calendar-date","text":"15-3","schedule":{"clauses":[{"date":{"kind":"calendar","month":3,"day":15}}]}}
+{"id":"grammar-115","family":"calendar-date","text":"ngày 15 tháng 3 năm 2026","schedule":{"clauses":[{"date":{"kind":"calendar","month":3,"day":15,"year":2026}}]}}
+{"id":"grammar-116","family":"calendar-date","text":"15/3/2026","schedule":{"clauses":[{"date":{"kind":"calendar","month":3,"day":15,"year":2026}}]}}
+{"id":"grammar-117","family":"calendar-date","text":"15-3-2026","schedule":{"clauses":[{"date":{"kind":"calendar","month":3,"day":15,"year":2026}}]}}
+{"id":"grammar-118","family":"calendar-date","text":"15.3.2026","schedule":{"clauses":[{"date":{"kind":"calendar","month":3,"day":15,"year":2026}}]}}
+{"id":"grammar-119","family":"calendar-date","text":"2026-03-15","schedule":{"clauses":[{"date":{"kind":"calendar","month":3,"day":15,"year":2026}}]}}
+{"id":"grammar-120","family":"calendar-date","text":"ngày 1 tháng tư","schedule":{"clauses":[{"date":{"kind":"calendar","month":4,"day":1}}]}}
+{"id":"grammar-121","family":"calendar-date","text":"30/4","schedule":{"clauses":[{"date":{"kind":"calendar","month":4,"day":30}}]}}
+{"id":"grammar-122","family":"calendar-date","text":"2/9","schedule":{"clauses":[{"date":{"kind":"calendar","month":9,"day":2}}]}}
+{"id":"grammar-123","family":"calendar-month","text":"tháng 3","schedule":{"clauses":[{"date":{"kind":"calendar","month":3}}]}}
+{"id":"grammar-124","family":"calendar-month","text":"tháng tư","schedule":{"clauses":[{"date":{"kind":"calendar","month":4}}]}}
+{"id":"grammar-125","family":"calendar-month","text":"tháng 3 năm 2026","schedule":{"clauses":[{"date":{"kind":"calendar","month":3,"year":2026}}]}}
+{"id":"grammar-126","family":"calendar-month","text":"3/2026","schedule":{"clauses":[{"date":{"kind":"calendar","month":3,"year":2026}}]}}
+{"id":"grammar-127","family":"calendar-month","text":"tháng 3 năm sau","schedule":{"clauses":[{"date":{"kind":"calendarPeriod","month":3,"modifier":"next"}}]}}
+{"id":"grammar-128","family":"calendar-month","text":"tháng 12 năm ngoái","schedule":{"clauses":[{"date":{"kind":"calendarPeriod","month":12,"modifier":"last"}}]}}
+{"id":"grammar-129","family":"calendar-year","text":"năm 2026","schedule":{"clauses":[{"date":{"kind":"calendar","year":2026}}]}}
+{"id":"grammar-130","family":"calendar-year","text":"năm 2030","schedule":{"clauses":[{"date":{"kind":"calendar","year":2030}}]}}
+{"id":"grammar-131","family":"calendar-period","text":"đầu tháng 3","schedule":{"clauses":[{"date":{"kind":"calendarPeriod","month":3,"edge":"start"}}]}}
+{"id":"grammar-132","family":"calendar-period","text":"cuối tháng 12","schedule":{"clauses":[{"date":{"kind":"calendarPeriod","month":12,"edge":"end"}}]}}
+{"id":"grammar-133","family":"calendar-period","text":"giữa tháng 3","schedule":{"clauses":[{"date":{"kind":"calendar","month":3,"day":15}}]}}
+{"id":"grammar-134","family":"calendar-period","text":"tuần thứ 2 của tháng 3","schedule":{"clauses":[{"date":{"kind":"calendarPeriod","month":3,"week":2}}]}}
+{"id":"grammar-135","family":"calendar-period","text":"tuần đầu tháng 3","schedule":{"clauses":[{"date":{"kind":"calendarPeriod","month":3,"week":1}}]}}
+{"id":"grammar-136","family":"date-range","text":"từ ngày 10 đến ngày 15 tháng 3","schedule":{"clauses":[{"date":{"kind":"calendarRange","from":{"month":3,"day":10},"to":{"month":3,"day":15}}}]}}
+{"id":"grammar-137","family":"date-range","text":"10-15/3","schedule":{"clauses":[{"date":{"kind":"calendarRange","from":{"month":3,"day":10},"to":{"month":3,"day":15}}}]}}
+{"id":"grammar-138","family":"date-range","text":"từ 15/3 đến 20/4","schedule":{"clauses":[{"date":{"kind":"calendarRange","from":{"month":3,"day":15},"to":{"month":4,"day":20}}}]}}
+{"id":"grammar-139","family":"date-range","text":"từ tháng 3 đến tháng 5","schedule":{"clauses":[{"date":{"kind":"calendarRange","from":{"month":3},"to":{"month":5}}}]}}
+{"id":"grammar-140","family":"date-range","text":"từ 25/12/2026 đến 2/1/2027","schedule":{"clauses":[{"date":{"kind":"calendarRange","from":{"month":12,"day":25,"year":2026},"to":{"month":1,"day":2,"year":2027}}}]}}
+{"id":"grammar-141","family":"holiday-solar","text":"Giáng sinh","schedule":{"clauses":[{"date":{"kind":"holiday","name":"christmas"}}]}}
+{"id":"grammar-142","family":"holiday-solar","text":"Noel","schedule":{"clauses":[{"date":{"kind":"holiday","name":"christmas"}}]}}
+{"id":"grammar-143","family":"holiday-solar","text":"đêm Giáng sinh","schedule":{"clauses":[{"date":{"kind":"holiday","name":"christmas-eve"}}]}}
+{"id":"grammar-144","family":"holiday-solar","text":"Tết dương lịch","schedule":{"clauses":[{"date":{"kind":"holiday","name":"new-year"}}]}}
+{"id":"grammar-145","family":"holiday-solar","text":"Quốc khánh","schedule":{"clauses":[{"date":{"kind":"holiday","name":"national-day"}}]}}
+{"id":"grammar-146","family":"holiday-solar","text":"ngày Nhà giáo Việt Nam","schedule":{"clauses":[{"date":{"kind":"holiday","name":"teachers-day"}}]}}
+{"id":"grammar-147","family":"holiday-solar","text":"Quốc tế phụ nữ","schedule":{"clauses":[{"date":{"kind":"holiday","name":"womens-day"}}]}}
+{"id":"grammar-148","family":"holiday-solar","text":"lễ 30/4","schedule":{"clauses":[{"date":{"kind":"calendar","month":4,"day":30}}]}}
+{"id":"grammar-149","family":"holiday-solar","text":"Valentine","schedule":{"clauses":[{"date":{"kind":"holiday","name":"valentines"}}]}}
+{"id":"grammar-150","family":"holiday-lunar","text":"Tết","schedule":{"clauses":[{"date":{"kind":"holiday","name":"tet"}}]}}
+{"id":"grammar-151","family":"holiday-lunar","text":"Tết Nguyên Đán","schedule":{"clauses":[{"date":{"kind":"holiday","name":"tet"}}]}}
+{"id":"grammar-152","family":"holiday-lunar","text":"Tết âm lịch","schedule":{"clauses":[{"date":{"kind":"holiday","name":"tet"}}]}}
+{"id":"grammar-153","family":"holiday-lunar","text":"giao thừa","schedule":{"clauses":[{"date":{"kind":"holiday","name":"tet-eve"}}]}}
+{"id":"grammar-154","family":"holiday-lunar","text":"Trung thu","schedule":{"clauses":[{"date":{"kind":"holiday","name":"mid-autumn"}}]}}
+{"id":"grammar-155","family":"holiday-lunar","text":"Tết Trung thu","schedule":{"clauses":[{"date":{"kind":"holiday","name":"mid-autumn"}}]}}
+{"id":"grammar-156","family":"holiday-lunar","text":"Giỗ tổ Hùng Vương","schedule":{"clauses":[{"date":{"kind":"holiday","name":"hung-kings"}}]}}
+{"id":"grammar-157","family":"holiday-lunar","text":"Giỗ tổ","schedule":{"clauses":[{"date":{"kind":"holiday","name":"hung-kings"}}]}}
+{"id":"grammar-158","family":"holiday-lunar","text":"Tết Đoan Ngọ","schedule":{"clauses":[{"date":{"kind":"holiday","name":"doan-ngo"}}]}}
+{"id":"grammar-159","family":"holiday-lunar","text":"lễ Vu Lan","schedule":{"clauses":[{"date":{"kind":"holiday","name":"vu-lan"}}]}}
+{"id":"grammar-160","family":"holiday-lunar","text":"Tết ông Táo","schedule":{"clauses":[{"date":{"kind":"holiday","name":"kitchen-gods"}}]}}
+{"id":"grammar-161","family":"holiday-lunar","text":"Tết Nguyên tiêu","schedule":{"clauses":[{"date":{"kind":"holiday","name":"lantern-festival"}}]}}
+{"id":"grammar-162","family":"lunar-date","text":"mùng 1","schedule":{"clauses":[{"date":{"kind":"lunar","day":1}}]}}
+{"id":"grammar-163","family":"lunar-date","text":"mùng 1 Tết","schedule":{"clauses":[{"date":{"kind":"lunar","month":1,"day":1}}]}}
+{"id":"grammar-164","family":"lunar-date","text":"mùng 2 Tết","schedule":{"clauses":[{"date":{"kind":"lunar","month":1,"day":2}}]}}
+{"id":"grammar-165","family":"lunar-date","text":"30 Tết","schedule":{"clauses":[{"date":{"kind":"lunar","month":12,"day":30}}]}}
+{"id":"grammar-166","family":"lunar-date","text":"rằm","schedule":{"clauses":[{"date":{"kind":"lunar","day":15}}]}}
+{"id":"grammar-167","family":"lunar-date","text":"rằm tháng giêng","schedule":{"clauses":[{"date":{"kind":"lunar","month":1,"day":15}}]}}
+{"id":"grammar-168","family":"lunar-date","text":"rằm tháng 7","schedule":{"clauses":[{"date":{"kind":"lunar","month":7,"day":15}}]}}
+{"id":"grammar-169","family":"lunar-date","text":"rằm tháng 8","schedule":{"clauses":[{"date":{"kind":"lunar","month":8,"day":15}}]}}
+{"id":"grammar-170","family":"lunar-date","text":"15/8 âm lịch","schedule":{"clauses":[{"date":{"kind":"lunar","month":8,"day":15}}]}}
+{"id":"grammar-171","family":"lunar-date","text":"15/8 ÂL","schedule":{"clauses":[{"date":{"kind":"lunar","month":8,"day":15}}]}}
+{"id":"grammar-172","family":"lunar-date","text":"ngày 15 tháng 8 âm lịch","schedule":{"clauses":[{"date":{"kind":"lunar","month":8,"day":15}}]}}
+{"id":"grammar-173","family":"lunar-date","text":"mùng 10 tháng 3 âm lịch","schedule":{"clauses":[{"date":{"kind":"lunar","month":3,"day":10}}]}}
+{"id":"grammar-174","family":"lunar-date","text":"10/3 âm lịch","schedule":{"clauses":[{"date":{"kind":"lunar","month":3,"day":10}}]}}
+{"id":"grammar-175","family":"lunar-date","text":"tháng 7 âm lịch","schedule":{"clauses":[{"date":{"kind":"lunar","month":7}}]}}
+{"id":"grammar-176","family":"lunar-date","text":"tháng giêng","schedule":{"clauses":[{"date":{"kind":"lunar","month":1}}]}}
+{"id":"grammar-177","family":"lunar-date","text":"tháng chạp","schedule":{"clauses":[{"date":{"kind":"lunar","month":12}}]}}
+{"id":"grammar-178","family":"lunar-date","text":"23 tháng chạp","schedule":{"clauses":[{"date":{"kind":"lunar","month":12,"day":23}}]}}
+{"id":"grammar-179","family":"lunar-date","text":"mùng 5 tháng 5","schedule":{"clauses":[{"date":{"kind":"lunar","month":5,"day":5}}]}}
+{"id":"grammar-180","family":"lunar-date","text":"ngày 1 tháng 1 âm lịch năm 2027","schedule":{"clauses":[{"date":{"kind":"lunar","month":1,"day":1,"year":2027}}]}}
+{"id":"grammar-181","family":"shift","text":"sau 2 tiếng","schedule":{"clauses":[{"shift":{"amount":2,"unit":"hour","direction":"after"}}]}}
+{"id":"grammar-182","family":"shift","text":"2 tiếng nữa","schedule":{"clauses":[{"shift":{"amount":2,"unit":"hour","direction":"after"}}]}}
+{"id":"grammar-183","family":"shift","text":"2 tiếng sau","schedule":{"clauses":[{"shift":{"amount":2,"unit":"hour","direction":"after"}}]}}
+{"id":"grammar-184","family":"shift","text":"30 phút nữa","schedule":{"clauses":[{"shift":{"amount":30,"unit":"minute","direction":"after"}}]}}
+{"id":"grammar-185","family":"shift","text":"3 ngày trước","schedule":{"clauses":[{"shift":{"amount":3,"unit":"day","direction":"before"}}]}}
+{"id":"grammar-186","family":"shift","text":"cách đây 3 ngày","schedule":{"clauses":[{"shift":{"amount":3,"unit":"day","direction":"before"}}]}}
+{"id":"grammar-187","family":"shift","text":"2 tuần nữa","schedule":{"clauses":[{"shift":{"amount":2,"unit":"week","direction":"after"}}]}}
+{"id":"grammar-188","family":"shift","text":"3 tháng sau","schedule":{"clauses":[{"shift":{"amount":3,"unit":"month","direction":"after"}}]}}
+{"id":"grammar-189","family":"shift","text":"1 năm nữa","schedule":{"clauses":[{"shift":{"amount":1,"unit":"year","direction":"after"}}]}}
+{"id":"grammar-190","family":"shift","text":"1 tiếng 30 phút nữa","schedule":{"clauses":[{"shift":{"components":[{"amount":1,"unit":"hour"},{"amount":30,"unit":"minute"}],"amount":90,"unit":"minute","direction":"after"}}]}}
+{"id":"grammar-191","family":"shift","text":"khoảng 2 tiếng nữa","schedule":{"clauses":[{"shift":{"amount":2,"unit":"hour","direction":"after","approximate":true}}]}}
+{"id":"grammar-192","family":"shift","text":"vài ngày nữa","schedule":{"clauses":[{"shift":{"amount":3,"unit":"day","direction":"after","approximate":true}}]}}
+{"id":"grammar-193","family":"shift","text":"hai tuần trước","schedule":{"clauses":[{"shift":{"amount":2,"unit":"week","direction":"before"}}]}}
+{"id":"grammar-194","family":"shift","text":"2 ngày tới","schedule":{"clauses":[{"shift":{"amount":2,"unit":"day","direction":"after"}}]}}
+{"id":"grammar-195","family":"shift","text":"3 tuần kể từ bây giờ","schedule":{"clauses":[{"shift":{"amount":3,"unit":"week","direction":"after"},"date":{"kind":"now"}}]}}
+{"id":"grammar-196","family":"anchored-shift","text":"2 ngày sau Tết","schedule":{"clauses":[{"shift":{"amount":2,"unit":"day","direction":"after"},"date":{"kind":"holiday","name":"tet"}}]}}
+{"id":"grammar-197","family":"anchored-shift","text":"3 ngày trước 15/3","schedule":{"clauses":[{"shift":{"amount":3,"unit":"day","direction":"before"},"date":{"kind":"calendar","month":3,"day":15}}]}}
+{"id":"grammar-198","family":"anchored-shift","text":"1 tuần sau thứ hai","schedule":{"clauses":[{"shift":{"amount":1,"unit":"week","direction":"after"},"date":{"kind":"weekday","days":["MO"]}}]}}
+{"id":"grammar-199","family":"anchored-shift","text":"2 tiếng trước trưa mai","schedule":{"clauses":[{"shift":{"amount":2,"unit":"hour","direction":"before"},"date":{"kind":"relativeDay","offset":1},"time":{"start":{"named":"noon"}}}]}}
+{"id":"grammar-200","family":"duration","text":"trong 2 tiếng","schedule":{"clauses":[{"duration":{"amount":2,"unit":"hour"}}]}}
+{"id":"grammar-201","family":"duration","text":"trong vòng 3 ngày","schedule":{"clauses":[{"duration":{"amount":3,"unit":"day"}}]}}
+{"id":"grammar-202","family":"duration","text":"kéo dài 2 tuần","schedule":{"clauses":[{"duration":{"amount":2,"unit":"week"}}]}}
+{"id":"grammar-203","family":"duration","text":"suốt 1 tiếng","schedule":{"clauses":[{"duration":{"amount":1,"unit":"hour"}}]}}
+{"id":"grammar-204","family":"duration","text":"trong 90 phút","schedule":{"clauses":[{"duration":{"amount":90,"unit":"minute"}}]}}
+{"id":"grammar-205","family":"duration","text":"trong 2 tiếng rưỡi","schedule":{"clauses":[{"duration":{"components":[{"amount":2,"unit":"hour"},{"amount":30,"unit":"minute"}],"amount":150,"unit":"minute"}}]}}
+{"id":"grammar-206","family":"recurrence","text":"mỗi thứ hai","schedule":{"clauses":[{"recurrence":{"freq":"weekly","interval":1,"byDay":["MO"]}}]}}
+{"id":"grammar-207","family":"recurrence","text":"các thứ hai","schedule":{"clauses":[{"recurrence":{"freq":"weekly","interval":1,"byDay":["MO"]}}]}}
+{"id":"grammar-208","family":"recurrence","text":"thứ hai hàng tuần","schedule":{"clauses":[{"recurrence":{"freq":"weekly","interval":1,"byDay":["MO"]}}]}}
+{"id":"grammar-209","family":"recurrence","text":"mỗi ngày","schedule":{"clauses":[{"recurrence":{"freq":"daily","interval":1}}]}}
+{"id":"grammar-210","family":"recurrence","text":"hàng ngày","schedule":{"clauses":[{"recurrence":{"freq":"daily","interval":1}}]}}
+{"id":"grammar-211","family":"recurrence","text":"hằng ngày","schedule":{"clauses":[{"recurrence":{"freq":"daily","interval":1}}]}}
+{"id":"grammar-212","family":"recurrence","text":"hàng tuần","schedule":{"clauses":[{"recurrence":{"freq":"weekly","interval":1}}]}}
+{"id":"grammar-213","family":"recurrence","text":"mỗi tuần","schedule":{"clauses":[{"recurrence":{"freq":"weekly","interval":1}}]}}
+{"id":"grammar-214","family":"recurrence","text":"hàng tháng","schedule":{"clauses":[{"recurrence":{"freq":"monthly","interval":1}}]}}
+{"id":"grammar-215","family":"recurrence","text":"hàng năm","schedule":{"clauses":[{"recurrence":{"freq":"yearly","interval":1}}]}}
+{"id":"grammar-216","family":"recurrence","text":"mỗi giờ","schedule":{"clauses":[{"recurrence":{"freq":"hourly","interval":1}}]}}
+{"id":"grammar-217","family":"recurrence","text":"mỗi 2 tuần","schedule":{"clauses":[{"recurrence":{"freq":"weekly","interval":2}}]}}
+{"id":"grammar-218","family":"recurrence","text":"2 tuần một lần","schedule":{"clauses":[{"recurrence":{"freq":"weekly","interval":2}}]}}
+{"id":"grammar-219","family":"recurrence","text":"2 tuần 1 lần","schedule":{"clauses":[{"recurrence":{"freq":"weekly","interval":2}}]}}
+{"id":"grammar-220","family":"recurrence","text":"cách tuần","schedule":{"clauses":[{"recurrence":{"freq":"weekly","interval":2}}]}}
+{"id":"grammar-221","family":"recurrence","text":"cách ngày","schedule":{"clauses":[{"recurrence":{"freq":"daily","interval":2}}]}}
+{"id":"grammar-222","family":"recurrence","text":"3 lần một tuần","schedule":{"clauses":[{"recurrence":{"freq":"weekly","interval":1,"timesPer":3}}]}}
+{"id":"grammar-223","family":"recurrence","text":"3 lần/tuần","schedule":{"clauses":[{"recurrence":{"freq":"weekly","interval":1,"timesPer":3}}]}}
+{"id":"grammar-224","family":"recurrence","text":"2 lần một ngày","schedule":{"clauses":[{"recurrence":{"freq":"daily","interval":1,"timesPer":2}}]}}
+{"id":"grammar-225","family":"recurrence","text":"mỗi thứ hai và thứ tư","schedule":{"clauses":[{"recurrence":{"freq":"weekly","interval":1,"byDay":["MO","WE"]}}]}}
+{"id":"grammar-226","family":"recurrence","text":"thứ hai, tư, sáu hàng tuần","schedule":{"clauses":[{"recurrence":{"freq":"weekly","interval":1,"byDay":["MO","WE","FR"]}}]}}
+{"id":"grammar-227","family":"recurrence","text":"mỗi thứ hai lúc 8 giờ tối","schedule":{"clauses":[{"recurrence":{"freq":"weekly","interval":1,"byDay":["MO"]},"time":{"start":{"hour":20,"minute":0}}}]}}
+{"id":"grammar-228","family":"recurrence","text":"hàng ngày lúc 7h sáng","schedule":{"clauses":[{"recurrence":{"freq":"daily","interval":1},"time":{"start":{"hour":7,"minute":0}}}]}}
+{"id":"grammar-229","family":"recurrence","text":"mỗi cuối tuần","schedule":{"clauses":[{"recurrence":{"freq":"weekly","interval":1,"byDay":["SA","SU"]}}]}}
+{"id":"grammar-230","family":"recurrence","text":"mỗi ngày thường","schedule":{"clauses":[{"recurrence":{"freq":"weekly","interval":1,"byDay":["MO","TU","WE","TH","FR"]}}]}}
+{"id":"grammar-231","family":"recurrence-monthly-yearly","text":"ngày 15 hàng tháng","schedule":{"clauses":[{"recurrence":{"freq":"monthly","interval":1,"byMonthDay":[15]}}]}}
+{"id":"grammar-232","family":"recurrence-monthly-yearly","text":"mỗi tháng ngày 15","schedule":{"clauses":[{"recurrence":{"freq":"monthly","interval":1,"byMonthDay":[15]}}]}}
+{"id":"grammar-233","family":"recurrence-monthly-yearly","text":"ngày 1 và 15 hàng tháng","schedule":{"clauses":[{"recurrence":{"freq":"monthly","interval":1,"byMonthDay":[1,15]}}]}}
+{"id":"grammar-234","family":"recurrence-monthly-yearly","text":"thứ hai đầu tiên hàng tháng","schedule":{"clauses":[{"recurrence":{"freq":"monthly","interval":1,"byDay":["MO"],"bySetPos":[1]}}]}}
+{"id":"grammar-235","family":"recurrence-monthly-yearly","text":"thứ sáu cuối cùng mỗi tháng","schedule":{"clauses":[{"recurrence":{"freq":"monthly","interval":1,"byDay":["FR"],"bySetPos":[-1]}}]}}
+{"id":"grammar-236","family":"recurrence-monthly-yearly","text":"26/3 hàng năm","schedule":{"clauses":[{"recurrence":{"freq":"yearly","interval":1,"byMonth":[3],"byMonthDay":[26]}}]}}
+{"id":"grammar-237","family":"recurrence-monthly-yearly","text":"hàng năm vào ngày 26 tháng 3","schedule":{"clauses":[{"recurrence":{"freq":"yearly","interval":1,"byMonth":[3],"byMonthDay":[26]}}]}}
+{"id":"grammar-238","family":"recurrence-monthly-yearly","text":"cuối tháng hàng tháng","schedule":{"clauses":[{"recurrence":{"freq":"monthly","interval":1,"byMonthDay":[-1]}}]}}
+{"id":"grammar-239","family":"recurrence-bound","text":"mỗi thứ hai bắt đầu từ 1/10","schedule":{"clauses":[{"recurrence":{"freq":"weekly","interval":1,"byDay":["MO"],"start":{"kind":"calendar","month":10,"day":1}}}]}}
+{"id":"grammar-240","family":"recurrence-bound","text":"hàng tuần kể từ tuần sau","schedule":{"clauses":[{"recurrence":{"freq":"weekly","interval":1,"start":{"kind":"relativeUnit","unit":"week","modifier":"next"}}}]}}
+{"id":"grammar-241","family":"recurrence-bound","text":"mỗi thứ hai đến hết tháng 12","schedule":{"clauses":[{"recurrence":{"freq":"weekly","interval":1,"byDay":["MO"],"until":{"kind":"calendar","month":12}}}]}}
+{"id":"grammar-242","family":"recurrence-bound","text":"mỗi thứ hai cho đến 31/12","schedule":{"clauses":[{"recurrence":{"freq":"weekly","interval":1,"byDay":["MO"],"until":{"kind":"calendar","month":12,"day":31}}}]}}
+{"id":"grammar-243","family":"recurrence-bound","text":"mỗi ngày tới thứ sáu","schedule":{"clauses":[{"recurrence":{"freq":"daily","interval":1,"until":{"kind":"weekday","days":["FR"]}}}]}}
+{"id":"grammar-244","family":"recurrence-bound","text":"mỗi thứ hai trong 10 tuần","schedule":{"clauses":[{"recurrence":{"freq":"weekly","interval":1,"byDay":["MO"],"span":{"amount":10,"unit":"week"}}}]}}
+{"id":"grammar-245","family":"recurrence-bound","text":"mỗi thứ hai, 6 lần","schedule":{"clauses":[{"recurrence":{"freq":"weekly","interval":1,"byDay":["MO"],"count":6}}]}}
+{"id":"grammar-246","family":"recurrence-bound","text":"hàng ngày từ nay đến cuối tháng","schedule":{"clauses":[{"recurrence":{"freq":"daily","interval":1,"start":{"kind":"now"},"until":{"kind":"relativeUnit","unit":"month","modifier":"this","edge":"end"}}}]}}
+{"id":"grammar-247","family":"recurrence-except","text":"mỗi ngày trừ chủ nhật","schedule":{"clauses":[{"recurrence":{"freq":"daily","interval":1,"except":[{"kind":"weekday","days":["SU"]}]}}]}}
+{"id":"grammar-248","family":"recurrence-except","text":"các ngày thường trừ thứ sáu","schedule":{"clauses":[{"recurrence":{"freq":"weekly","interval":1,"byDay":["MO","TU","WE","TH","FR"],"except":[{"kind":"weekday","days":["FR"]}]}}]}}
+{"id":"grammar-249","family":"recurrence-except","text":"mỗi ngày ngoại trừ cuối tuần","schedule":{"clauses":[{"recurrence":{"freq":"daily","interval":1,"except":[{"kind":"dayGroup","group":"weekend"}]}}]}}
+{"id":"grammar-250","family":"recurrence-except","text":"mỗi thứ bảy trừ tuần cuối tháng","schedule":{"clauses":[{"recurrence":{"freq":"weekly","interval":1,"byDay":["SA"],"except":[{"kind":"ordinalWeekday","ordinal":-1,"day":"SA","of":{"kind":"relativeUnit","unit":"month","modifier":"this"},"recurring":true}]}}]}}
+{"id":"grammar-251","family":"combined","text":"3 giờ chiều mai","schedule":{"clauses":[{"date":{"kind":"relativeDay","offset":1},"time":{"start":{"hour":15,"minute":0}}}]}}
+{"id":"grammar-252","family":"combined","text":"mai 3 giờ chiều","schedule":{"clauses":[{"date":{"kind":"relativeDay","offset":1},"time":{"start":{"hour":15,"minute":0}}}]}}
+{"id":"grammar-253","family":"combined","text":"9h sáng thứ hai","schedule":{"clauses":[{"date":{"kind":"weekday","days":["MO"]},"time":{"start":{"hour":9,"minute":0}}}]}}
+{"id":"grammar-254","family":"combined","text":"thứ sáu tuần sau lúc 9h","schedule":{"clauses":[{"date":{"kind":"weekday","days":["FR"],"modifier":"next"},"time":{"start":{"hour":9,"minute":0}}}]}}
+{"id":"grammar-255","family":"combined","text":"15/3 lúc 14h","schedule":{"clauses":[{"date":{"kind":"calendar","month":3,"day":15},"time":{"start":{"hour":14,"minute":0}}}]}}
+{"id":"grammar-256","family":"combined","text":"tối mai 8 giờ","schedule":{"clauses":[{"date":{"kind":"relativeDay","offset":1},"time":{"start":{"hour":20,"minute":0}}}]}}
+{"id":"grammar-257","family":"combined","text":"chiều thứ tư lúc 2 giờ","schedule":{"clauses":[{"date":{"kind":"weekday","days":["WE"]},"time":{"start":{"hour":14,"minute":0}}}]}}
+{"id":"grammar-258","family":"combined","text":"ngày 20 tháng 11 lúc 7 giờ sáng","schedule":{"clauses":[{"date":{"kind":"calendar","month":11,"day":20},"time":{"start":{"hour":7,"minute":0}}}]}}
+{"id":"grammar-259","family":"combined","text":"sáng mai từ 8h đến 10h","schedule":{"clauses":[{"date":{"kind":"relativeDay","offset":1},"time":{"start":{"hour":8,"minute":0},"end":{"hour":10,"minute":0}}}]}}
+{"id":"grammar-260","family":"combined","text":"mùng 1 Tết lúc 12 giờ đêm","schedule":{"clauses":[{"date":{"kind":"lunar","month":1,"day":1},"time":{"start":{"hour":0,"minute":0}}}]}}
+{"id":"grammar-261","family":"combined","text":"Giáng sinh lúc 7 giờ tối","schedule":{"clauses":[{"date":{"kind":"holiday","name":"christmas"},"time":{"start":{"hour":19,"minute":0}}}]}}
+{"id":"grammar-262","family":"combined","text":"cuối tuần sau lúc 10h sáng","schedule":{"clauses":[{"date":{"kind":"dayGroup","group":"weekend","modifier":"next"},"time":{"start":{"hour":10,"minute":0}}}]}}
+{"id":"grammar-263","family":"multi-clause","text":"thứ hai 9h và thứ tư 10h","schedule":{"clauses":[{"date":{"kind":"weekday","days":["MO"]},"time":{"start":{"hour":9,"minute":0}}},{"date":{"kind":"weekday","days":["WE"]},"time":{"start":{"hour":10,"minute":0}}}]}}
+{"id":"grammar-264","family":"multi-clause","text":"thứ hai 9h, thứ tư 10h, thứ sáu 11h","schedule":{"clauses":[{"date":{"kind":"weekday","days":["MO"]},"time":{"start":{"hour":9,"minute":0}}},{"date":{"kind":"weekday","days":["WE"]},"time":{"start":{"hour":10,"minute":0}}},{"date":{"kind":"weekday","days":["FR"]},"time":{"start":{"hour":11,"minute":0}}}]}}
+{"id":"grammar-265","family":"multi-clause","text":"thứ bảy chủ nhật từ 1 giờ đến 8 giờ tối và thứ hai từ 10 giờ tối đến 12 giờ đêm","schedule":{"clauses":[{"date":{"kind":"weekday","days":["SA","SU"]},"time":{"start":{"hour":13,"minute":0},"end":{"hour":20,"minute":0}}},{"date":{"kind":"weekday","days":["MO"]},"time":{"start":{"hour":22,"minute":0},"end":{"hour":0,"minute":0}}}]}}
+{"id":"grammar-266","family":"prose","text":"nhắc tôi họp lúc 3 giờ chiều mai","schedule":{"clauses":[{"date":{"kind":"relativeDay","offset":1},"time":{"start":{"hour":15,"minute":0}}}]}}
+{"id":"grammar-267","family":"prose","text":"hẹn bác sĩ vào thứ hai tuần sau lúc 9h sáng","schedule":{"clauses":[{"date":{"kind":"weekday","days":["MO"],"modifier":"next"},"time":{"start":{"hour":9,"minute":0}}}]}}
+{"id":"grammar-268","family":"prose","text":"deadline nộp báo cáo là 17h thứ sáu","schedule":{"clauses":[{"date":{"kind":"weekday","days":["FR"]},"time":{"start":{"hour":17,"minute":0}}}]}}
+{"id":"grammar-269","family":"prose","text":"họp nhóm mỗi thứ tư lúc 2 giờ chiều","schedule":{"clauses":[{"recurrence":{"freq":"weekly","interval":1,"byDay":["WE"]},"time":{"start":{"hour":14,"minute":0}}}]}}
+{"id":"grammar-270","family":"prose","text":"cả nhà về quê ăn Tết","schedule":{"clauses":[{"date":{"kind":"holiday","name":"tet"}}]}}
+{"id":"grammar-271","family":"prose","text":"sinh nhật em ấy là ngày 20 tháng 11","schedule":{"clauses":[{"date":{"kind":"calendar","month":11,"day":20}}]}}
+{"id":"grammar-272","family":"prose","text":"tàu khởi hành lúc 6 giờ 15 sáng mai","schedule":{"clauses":[{"date":{"kind":"relativeDay","offset":1},"time":{"start":{"hour":6,"minute":15}}}]}}
+{"id":"grammar-273","family":"prose","text":"đặt bàn 4 người tối thứ bảy lúc 7 giờ","schedule":{"clauses":[{"date":{"kind":"weekday","days":["SA"]},"time":{"start":{"hour":19,"minute":0}}}]}}
+{"id":"grammar-274","family":"prose","text":"gọi lại cho anh sau 30 phút nữa","schedule":{"clauses":[{"shift":{"amount":30,"unit":"minute","direction":"after"}}]}}
+{"id":"grammar-275","family":"prose","text":"lớp yoga diễn ra 3 lần một tuần","schedule":{"clauses":[{"recurrence":{"freq":"weekly","interval":1,"timesPer":3}}]}}
+{"id":"grammar-276","family":"chat-short","text":"t2 9h","schedule":{"clauses":[{"date":{"kind":"weekday","days":["MO"]},"time":{"start":{"hour":9,"minute":0}}}]}}
+{"id":"grammar-277","family":"chat-short","text":"cn 3h chiều","schedule":{"clauses":[{"date":{"kind":"weekday","days":["SU"]},"time":{"start":{"hour":15,"minute":0}}}]}}
+{"id":"grammar-278","family":"chat-short","text":"mai 8h","schedule":{"clauses":[{"date":{"kind":"relativeDay","offset":1},"time":{"start":{"hour":8,"minute":0}}}]}}
+{"id":"grammar-279","family":"chat-short","text":"tối nay 8h","schedule":{"clauses":[{"date":{"kind":"relativeDay","offset":0},"time":{"start":{"hour":20,"minute":0}}}]}}
+{"id":"grammar-280","family":"chat-short","text":"t6 tuần sau","schedule":{"clauses":[{"date":{"kind":"weekday","days":["FR"],"modifier":"next"}}]}}
+{"id":"grammar-281","family":"chat-short","text":"15/3 14h","schedule":{"clauses":[{"date":{"kind":"calendar","month":3,"day":15},"time":{"start":{"hour":14,"minute":0}}}]}}
+{"id":"grammar-282","family":"chat-short","text":"2h nữa","schedule":{"clauses":[{"shift":{"amount":2,"unit":"hour","direction":"after"}}]}}
+{"id":"grammar-283","family":"chat-short","text":"sáng mai 7h30","schedule":{"clauses":[{"date":{"kind":"relativeDay","offset":1},"time":{"start":{"hour":7,"minute":30}}}]}}
+{"id":"grammar-284","family":"negative","text":"năm người đi ăn tối","schedule":null}
+{"id":"grammar-285","family":"negative","text":"chiều cao của anh ấy là 1m75","schedule":null}
+{"id":"grammar-286","family":"negative","text":"tối đa 3 người một phòng","schedule":null}
+{"id":"grammar-287","family":"negative","text":"hoa mai nở rộ","schedule":null}
+{"id":"grammar-288","family":"negative","text":"số 15 đường 3/2","schedule":null}
+{"id":"grammar-289","family":"negative","text":"giá 15k một ly","schedule":null}
+{"id":"grammar-290","family":"negative","text":"gọi số 0912 345 678","schedule":null}
+{"id":"grammar-291","family":"negative","text":"phiên bản v2.3 đã phát hành","schedule":null}
+{"id":"grammar-292","family":"negative","text":"thứ này rất tốt","schedule":null}
+{"id":"grammar-293","family":"negative","text":"sáng tạo là chìa khoá","schedule":null}
+{"id":"grammar-294","family":"negative","text":"tôi 30 tuổi","schedule":null}
+{"id":"grammar-295","family":"negative","text":"đầu tư vào giáo dục","schedule":null}

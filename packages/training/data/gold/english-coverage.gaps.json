@@ -1,5 +1,0 @@
-{
-  "note": "Cases the shipped model gets wrong, kept red on purpose. --require-all fails if a listed id starts passing, so a fix forces the id off this list. Never add an id to silence a new regression; add it only with the cause recorded in MODEL_CARD.md.",
-  "cause": "Empty. 'drinks at 9 at the bar' was the last entry: the correct reading sat second by 5.3 points until the model was trained on real English sentences that place a time before a location. See MODEL_CARD.md.",
-  "ids": []
-}

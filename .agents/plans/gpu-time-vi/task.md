@@ -60,11 +60,11 @@ Quy tắc daypart → 24h: `sáng` 1–11 giữ nguyên; `trưa` 11–12 giữ, 
 Chi tiết từng task ở `todo.md`.
 
 ### Phase 0: Scaffold
-- [ ] Task 1: Fork monorepo từ `example/` sang root, đổi tên `gpu-time-vi`, cài đặt, build + test pass với model tiếng Anh tạm
+- [x] Task 1: Fork monorepo từ `example/` sang root, đổi tên `gpu-time-vi`, cài đặt, build + test pass với model tiếng Anh tạm
 - [ ] Task 2: Spec biểu thức tiếng Việt + label contract + gold corpus `grammar.jsonl` (≥150 câu, ≥25 family)
 
 ### Checkpoint 0
-- [ ] `pnpm install && pnpm build:core && pnpm test:core` pass trên bản fork chưa sửa ngôn ngữ
+- [x] `pnpm install && pnpm build:core && pnpm test:core` pass trên bản fork chưa sửa ngôn ngữ
 - [ ] `docs/vietnamese-time-expressions.md` được duyệt bởi người dùng trước khi đi tiếp
 
 ### Phase 1: Lớp ngôn ngữ, đường oracle (không cần model)
