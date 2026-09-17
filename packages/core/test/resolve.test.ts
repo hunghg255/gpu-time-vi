@@ -956,7 +956,7 @@ it("uses anniversaries only for exact clocks on relative calendar periods", () =
     }),
   ).toEqual({
     start: "2026-09-14T06:00:00+06:00",
-    end: "2026-09-14T12:00:00+06:00",
+    end: "2026-09-14T11:00:00+06:00",
     allDay: false,
     clause: 0,
   });
@@ -1137,16 +1137,16 @@ it("shifts by elapsed seconds", () => {
   });
 });
 
-it("resolves thanksgiving as the fourth Thursday of November", () => {
+it("resolves a fixed national holiday in the next year once it has passed", () => {
   const schedule: Schedule = {
-    clauses: [{ date: { kind: "holiday", name: "thanksgiving" } }],
+    clauses: [{ date: { kind: "holiday", name: "national-day" } }],
   };
   expect(resolve(schedule, options).occurrences[0]).toMatchObject({
-    start: "2026-11-26T00:00:00+06:00",
+    start: "2027-09-02T00:00:00+06:00",
     allDay: true,
   });
   expect(
-    resolve(schedule, { ...options, reference: "2026-12-01T12:00:00+06:00" })
+    resolve(schedule, { ...options, reference: "2026-08-01T12:00:00+06:00" })
       .occurrences[0],
-  ).toMatchObject({ start: "2027-11-25T00:00:00+06:00", allDay: true });
+  ).toMatchObject({ start: "2026-09-02T00:00:00+06:00", allDay: true });
 });

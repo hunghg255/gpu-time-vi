@@ -1,74 +1,17 @@
 import { writeFileSync } from "node:fs";
 import type {
-  Clause as CoreClause,
-  DateSpec as CoreDateSpec,
-  Recurrence as CoreRecurrence,
-  TimeSpec as CoreTimeSpec,
+  Clause,
+  DateSpec,
+  DayPart,
+  HolidayName,
+  Recurrence,
+  TimeSpec,
   Unit,
   Weekday,
 } from "../../core/src/types.ts";
 
 // Authored Vietnamese grammar surface. Expected schedules are written from the
 // spec in docs/vietnamese-time-expressions.md, never from a parser.
-//
-// The `lunar` date kind, Vietnamese holiday names and the `noon` day part land
-// in core/src/types.ts in Task 4. Until then the additions are declared here so
-// this script type-checks against the planned contract. Replace these local
-// aliases with the core imports once Task 4 merges.
-type VietnameseHoliday =
-  | "new-year"
-  | "valentines"
-  | "womens-day"
-  | "liberation-day"
-  | "labour-day"
-  | "national-day"
-  | "vn-womens-day"
-  | "teachers-day"
-  | "christmas"
-  | "christmas-eve"
-  | "new-years-eve"
-  | "tet"
-  | "tet-eve"
-  | "lantern-festival"
-  | "hung-kings"
-  | "doan-ngo"
-  | "vu-lan"
-  | "mid-autumn"
-  | "kitchen-gods";
-type LunarDate = {
-  kind: "lunar";
-  year?: number;
-  month?: number;
-  day?: number;
-  leap?: boolean;
-};
-type DateSpec =
-  | Exclude<CoreDateSpec, { kind: "holiday" }>
-  | { kind: "holiday"; name: VietnameseHoliday }
-  | LunarDate;
-type DayPart = "morning" | "noon" | "afternoon" | "evening" | "night";
-type ClockTime =
-  | { hour: number; minute: number; second?: number }
-  | { named: "noon" | "midnight" }
-  | { part: DayPart };
-type TimeSpec = Omit<CoreTimeSpec, "start" | "end"> & {
-  start: ClockTime;
-  end?: ClockTime;
-};
-type Recurrence = Omit<CoreRecurrence, "until" | "start" | "except"> & {
-  until?: DateSpec;
-  start?: DateSpec;
-  except?: DateSpec[];
-};
-type Clause = Omit<
-  CoreClause,
-  "date" | "endDate" | "time" | "recurrence"
-> & {
-  date?: DateSpec;
-  endDate?: DateSpec;
-  time?: TimeSpec;
-  recurrence?: Recurrence;
-};
 
 const gold = new URL("../data/gold/", import.meta.url);
 
@@ -132,7 +75,7 @@ const lunar = (month?: number, day?: number, year?: number): DateSpec => ({
   ...(day === undefined ? {} : { day }),
   ...(year === undefined ? {} : { year }),
 });
-const holiday = (name: VietnameseHoliday): DateSpec => ({
+const holiday = (name: HolidayName): DateSpec => ({
   kind: "holiday",
   name,
 });
@@ -300,7 +243,9 @@ example("clock", "3h kém 15", { time: clock(2, 45) });
 example("clock", "3 giờ hơn 10", { time: clock(3, 10) });
 example("clock", "3pm", { time: clock(15) });
 example("clock", "3 pm", { time: clock(15) });
-example("clock", "10:05:20", { time: { start: { hour: 10, minute: 5, second: 20 } } });
+example("clock", "10:05:20", {
+  time: { start: { hour: 10, minute: 5, second: 20 } },
+});
 
 // 10. clock-meridiem
 example("clock-meridiem", "3 giờ chiều", { time: clock(15) });
@@ -355,7 +300,11 @@ example("open-clock", "sau 6 giờ tối", {
   time: { start: { hour: 18, minute: 0 }, open: "end" },
 });
 example("open-clock", "trước 9h sáng", {
-  time: { start: { hour: 0, minute: 0 }, end: { hour: 9, minute: 0 }, open: "start" },
+  time: {
+    start: { hour: 0, minute: 0 },
+    end: { hour: 9, minute: 0 },
+    open: "start",
+  },
 });
 example("open-clock", "từ 6 giờ tối", {
   time: { start: { hour: 18, minute: 0 }, open: "end" },
@@ -381,7 +330,9 @@ example("calendar-date", "2/9", { date: calendar(9, 2) });
 // 17. calendar-month
 example("calendar-month", "tháng 3", { date: calendar(3) });
 example("calendar-month", "tháng tư", { date: calendar(4) });
-example("calendar-month", "tháng 3 năm 2026", { date: calendar(3, undefined, 2026) });
+example("calendar-month", "tháng 3 năm 2026", {
+  date: calendar(3, undefined, 2026),
+});
 example("calendar-month", "3/2026", { date: calendar(3, undefined, 2026) });
 example("calendar-month", "tháng 3 năm sau", {
   date: { kind: "calendarPeriod", month: 3, modifier: "next" },
@@ -391,8 +342,12 @@ example("calendar-month", "tháng 12 năm ngoái", {
 });
 
 // 18. calendar-year
-example("calendar-year", "năm 2026", { date: { kind: "calendar", year: 2026 } });
-example("calendar-year", "năm 2030", { date: { kind: "calendar", year: 2030 } });
+example("calendar-year", "năm 2026", {
+  date: { kind: "calendar", year: 2026 },
+});
+example("calendar-year", "năm 2030", {
+  date: { kind: "calendar", year: 2030 },
+});
 
 // 19. calendar-period
 example("calendar-period", "đầu tháng 3", {
@@ -441,6 +396,9 @@ example("holiday-solar", "ngày Nhà giáo Việt Nam", {
 example("holiday-solar", "Quốc tế phụ nữ", { date: holiday("womens-day") });
 example("holiday-solar", "lễ 30/4", { date: calendar(4, 30) });
 example("holiday-solar", "Valentine", { date: holiday("valentines") });
+example("holiday-solar", "Quốc tế thiếu nhi", {
+  date: holiday("childrens-day"),
+});
 
 // 22. holiday-lunar
 example("holiday-lunar", "Tết", { date: holiday("tet") });
@@ -491,19 +449,25 @@ example("shift", "cách đây 3 ngày", shift(3, "day", "before"));
 example("shift", "2 tuần nữa", shift(2, "week", "after"));
 example("shift", "3 tháng sau", shift(3, "month", "after"));
 example("shift", "1 năm nữa", shift(1, "year", "after"));
+// The head quantity is the amount; the rest follow in `components`.
 example("shift", "1 tiếng 30 phút nữa", {
   shift: {
-    components: [
-      { amount: 1, unit: "hour" },
-      { amount: 30, unit: "minute" },
-    ],
-    amount: 90,
-    unit: "minute",
+    amount: 1,
+    unit: "hour",
+    components: [{ amount: 30, unit: "minute" }],
     direction: "after",
   },
 });
-example("shift", "khoảng 2 tiếng nữa", shift(2, "hour", "after", { approximate: true }));
-example("shift", "vài ngày nữa", shift(3, "day", "after", { approximate: true }));
+example(
+  "shift",
+  "khoảng 2 tiếng nữa",
+  shift(2, "hour", "after", { approximate: true }),
+);
+example(
+  "shift",
+  "vài ngày nữa",
+  shift(3, "day", "after", { approximate: true }),
+);
 example("shift", "hai tuần trước", shift(2, "week", "before"));
 example("shift", "2 ngày tới", shift(2, "day", "after"));
 example("shift", "3 tuần kể từ bây giờ", {
@@ -536,21 +500,16 @@ example("duration", "trong vòng 3 ngày", duration(3, "day"));
 example("duration", "kéo dài 2 tuần", duration(2, "week"));
 example("duration", "suốt 1 tiếng", duration(1, "hour"));
 example("duration", "trong 90 phút", duration(90, "minute"));
-example("duration", "trong 2 tiếng rưỡi", {
-  duration: {
-    components: [
-      { amount: 2, unit: "hour" },
-      { amount: 30, unit: "minute" },
-    ],
-    amount: 150,
-    unit: "minute",
-  },
-});
+example("duration", "trong 2 tiếng rưỡi", duration(2.5, "hour"));
 
 // 27. recurrence
 example("recurrence", "mỗi thứ hai", recurrence("weekly", { byDay: ["MO"] }));
 example("recurrence", "các thứ hai", recurrence("weekly", { byDay: ["MO"] }));
-example("recurrence", "thứ hai hàng tuần", recurrence("weekly", { byDay: ["MO"] }));
+example(
+  "recurrence",
+  "thứ hai hàng tuần",
+  recurrence("weekly", { byDay: ["MO"] }),
+);
 example("recurrence", "mỗi ngày", recurrence("daily"));
 example("recurrence", "hàng ngày", recurrence("daily"));
 example("recurrence", "hằng ngày", recurrence("daily"));
@@ -567,8 +526,16 @@ example("recurrence", "cách ngày", recurrence("daily", { interval: 2 }));
 example("recurrence", "3 lần một tuần", recurrence("weekly", { timesPer: 3 }));
 example("recurrence", "3 lần/tuần", recurrence("weekly", { timesPer: 3 }));
 example("recurrence", "2 lần một ngày", recurrence("daily", { timesPer: 2 }));
-example("recurrence", "mỗi thứ hai và thứ tư", recurrence("weekly", { byDay: ["MO", "WE"] }));
-example("recurrence", "thứ hai, tư, sáu hàng tuần", recurrence("weekly", { byDay: ["MO", "WE", "FR"] }));
+example(
+  "recurrence",
+  "mỗi thứ hai và thứ tư",
+  recurrence("weekly", { byDay: ["MO", "WE"] }),
+);
+example(
+  "recurrence",
+  "thứ hai, tư, sáu hàng tuần",
+  recurrence("weekly", { byDay: ["MO", "WE", "FR"] }),
+);
 example("recurrence", "mỗi thứ hai lúc 8 giờ tối", {
   ...recurrence("weekly", { byDay: ["MO"] }),
   time: clock(20),
@@ -577,50 +544,167 @@ example("recurrence", "hàng ngày lúc 7h sáng", {
   ...recurrence("daily"),
   time: clock(7),
 });
-example("recurrence", "mỗi cuối tuần", recurrence("weekly", { byDay: WEEKEND }));
-example("recurrence", "mỗi ngày thường", recurrence("weekly", { byDay: WEEKDAYS }));
+example(
+  "recurrence",
+  "mỗi cuối tuần",
+  recurrence("weekly", { byDay: WEEKEND }),
+);
+example(
+  "recurrence",
+  "mỗi ngày thường",
+  recurrence("weekly", { byDay: WEEKDAYS }),
+);
 
 // 28. recurrence-monthly-yearly
-example("recurrence-monthly-yearly", "ngày 15 hàng tháng", recurrence("monthly", { byMonthDay: [15] }));
-example("recurrence-monthly-yearly", "mỗi tháng ngày 15", recurrence("monthly", { byMonthDay: [15] }));
-example("recurrence-monthly-yearly", "ngày 1 và 15 hàng tháng", recurrence("monthly", { byMonthDay: [1, 15] }));
-example("recurrence-monthly-yearly", "thứ hai đầu tiên hàng tháng", recurrence("monthly", { byDay: ["MO"], bySetPos: [1] }));
-example("recurrence-monthly-yearly", "thứ sáu cuối cùng mỗi tháng", recurrence("monthly", { byDay: ["FR"], bySetPos: [-1] }));
-example("recurrence-monthly-yearly", "26/3 hàng năm", recurrence("yearly", { byMonth: [3], byMonthDay: [26] }));
-example("recurrence-monthly-yearly", "hàng năm vào ngày 26 tháng 3", recurrence("yearly", { byMonth: [3], byMonthDay: [26] }));
-example("recurrence-monthly-yearly", "cuối tháng hàng tháng", recurrence("monthly", { byMonthDay: [-1] }));
+example(
+  "recurrence-monthly-yearly",
+  "ngày 15 hàng tháng",
+  recurrence("monthly", { byMonthDay: [15] }),
+);
+example(
+  "recurrence-monthly-yearly",
+  "mỗi tháng ngày 15",
+  recurrence("monthly", { byMonthDay: [15] }),
+);
+example(
+  "recurrence-monthly-yearly",
+  "ngày 1 và 15 hàng tháng",
+  recurrence("monthly", { byMonthDay: [1, 15] }),
+);
+example(
+  "recurrence-monthly-yearly",
+  "thứ hai đầu tiên hàng tháng",
+  recurrence("monthly", { byDay: ["MO"], bySetPos: [1] }),
+);
+example(
+  "recurrence-monthly-yearly",
+  "thứ sáu cuối cùng mỗi tháng",
+  recurrence("monthly", { byDay: ["FR"], bySetPos: [-1] }),
+);
+example(
+  "recurrence-monthly-yearly",
+  "26/3 hàng năm",
+  recurrence("yearly", { byMonth: [3], byMonthDay: [26] }),
+);
+example(
+  "recurrence-monthly-yearly",
+  "hàng năm vào ngày 26 tháng 3",
+  recurrence("yearly", { byMonth: [3], byMonthDay: [26] }),
+);
+example(
+  "recurrence-monthly-yearly",
+  "cuối tháng hàng tháng",
+  recurrence("monthly", { byMonthDay: [-1] }),
+);
 
 // 29. recurrence-bound
-example("recurrence-bound", "mỗi thứ hai bắt đầu từ 1/10", recurrence("weekly", { byDay: ["MO"], start: calendar(10, 1) }));
-example("recurrence-bound", "hàng tuần kể từ tuần sau", recurrence("weekly", { start: unit("week", "next") }));
-example("recurrence-bound", "mỗi thứ hai đến hết tháng 12", recurrence("weekly", { byDay: ["MO"], until: calendar(12) }));
-example("recurrence-bound", "mỗi thứ hai cho đến 31/12", recurrence("weekly", { byDay: ["MO"], until: calendar(12, 31) }));
-example("recurrence-bound", "mỗi ngày tới thứ sáu", recurrence("daily", { until: weekday("FR") }));
-example("recurrence-bound", "mỗi thứ hai trong 10 tuần", recurrence("weekly", { byDay: ["MO"], span: { amount: 10, unit: "week" } }));
-example("recurrence-bound", "mỗi thứ hai, 6 lần", recurrence("weekly", { byDay: ["MO"], count: 6 }));
-example("recurrence-bound", "hàng ngày từ nay đến cuối tháng", recurrence("daily", { start: { kind: "now" }, until: unit("month", "this", "end") }));
+example(
+  "recurrence-bound",
+  "mỗi thứ hai bắt đầu từ 1/10",
+  recurrence("weekly", { byDay: ["MO"], start: calendar(10, 1) }),
+);
+example(
+  "recurrence-bound",
+  "hàng tuần kể từ tuần sau",
+  recurrence("weekly", { start: unit("week", "next") }),
+);
+example(
+  "recurrence-bound",
+  "mỗi thứ hai đến hết tháng 12",
+  recurrence("weekly", { byDay: ["MO"], until: calendar(12) }),
+);
+example(
+  "recurrence-bound",
+  "mỗi thứ hai cho đến 31/12",
+  recurrence("weekly", { byDay: ["MO"], until: calendar(12, 31) }),
+);
+example(
+  "recurrence-bound",
+  "mỗi ngày tới thứ sáu",
+  recurrence("daily", { until: weekday("FR") }),
+);
+example(
+  "recurrence-bound",
+  "mỗi thứ hai trong 10 tuần",
+  recurrence("weekly", { byDay: ["MO"], span: { amount: 10, unit: "week" } }),
+);
+example(
+  "recurrence-bound",
+  "mỗi thứ hai, 6 lần",
+  recurrence("weekly", { byDay: ["MO"], count: 6 }),
+);
+example(
+  "recurrence-bound",
+  "hàng ngày từ nay đến cuối tháng",
+  recurrence("daily", {
+    start: { kind: "now" },
+    until: unit("month", "this", "end"),
+  }),
+);
 
 // 30. recurrence-except
-example("recurrence-except", "mỗi ngày trừ chủ nhật", recurrence("daily", { except: [weekday("SU")] }));
-example("recurrence-except", "các ngày thường trừ thứ sáu", recurrence("weekly", { byDay: WEEKDAYS, except: [weekday("FR")] }));
-example("recurrence-except", "mỗi ngày ngoại trừ cuối tuần", recurrence("daily", { except: [{ kind: "dayGroup", group: "weekend" }] }));
-example("recurrence-except", "mỗi thứ bảy trừ tuần cuối tháng", recurrence("weekly", {
-  byDay: ["SA"],
-  except: [{ kind: "ordinalWeekday", ordinal: -1, day: "SA", of: { kind: "relativeUnit", unit: "month", modifier: "this" }, recurring: true }],
-}));
+example(
+  "recurrence-except",
+  "mỗi ngày trừ chủ nhật",
+  recurrence("daily", { except: [weekday("SU")] }),
+);
+example(
+  "recurrence-except",
+  "các ngày thường trừ thứ sáu",
+  recurrence("weekly", { byDay: WEEKDAYS, except: [weekday("FR")] }),
+);
+example(
+  "recurrence-except",
+  "mỗi ngày ngoại trừ cuối tuần",
+  recurrence("daily", { except: [{ kind: "dayGroup", group: "weekend" }] }),
+);
+example(
+  "recurrence-except",
+  "mỗi thứ bảy trừ tuần cuối tháng",
+  recurrence("weekly", {
+    byDay: ["SA"],
+    except: [
+      {
+        kind: "ordinalWeekday",
+        ordinal: -1,
+        day: "SA",
+        of: { kind: "relativeUnit", unit: "month", modifier: "this" },
+        recurring: true,
+      },
+    ],
+  }),
+);
 
 // 31. combined
 example("combined", "3 giờ chiều mai", { date: relative(1), time: clock(15) });
 example("combined", "mai 3 giờ chiều", { date: relative(1), time: clock(15) });
 example("combined", "9h sáng thứ hai", { date: weekday("MO"), time: clock(9) });
-example("combined", "thứ sáu tuần sau lúc 9h", { date: weekdayMod("next", "FR"), time: clock(9) });
+example("combined", "thứ sáu tuần sau lúc 9h", {
+  date: weekdayMod("next", "FR"),
+  time: clock(9),
+});
 example("combined", "15/3 lúc 14h", { date: calendar(3, 15), time: clock(14) });
 example("combined", "tối mai 8 giờ", { date: relative(1), time: clock(20) });
-example("combined", "chiều thứ tư lúc 2 giờ", { date: weekday("WE"), time: clock(14) });
-example("combined", "ngày 20 tháng 11 lúc 7 giờ sáng", { date: calendar(11, 20), time: clock(7) });
-example("combined", "sáng mai từ 8h đến 10h", { date: relative(1), time: window(8, 10) });
-example("combined", "mùng 1 Tết lúc 12 giờ đêm", { date: lunar(1, 1), time: clock(0) });
-example("combined", "Giáng sinh lúc 7 giờ tối", { date: holiday("christmas"), time: clock(19) });
+example("combined", "chiều thứ tư lúc 2 giờ", {
+  date: weekday("WE"),
+  time: clock(14),
+});
+example("combined", "ngày 20 tháng 11 lúc 7 giờ sáng", {
+  date: calendar(11, 20),
+  time: clock(7),
+});
+example("combined", "sáng mai từ 8h đến 10h", {
+  date: relative(1),
+  time: window(8, 10),
+});
+example("combined", "mùng 1 Tết lúc 12 giờ đêm", {
+  date: lunar(1, 1),
+  time: clock(0),
+});
+example("combined", "Giáng sinh lúc 7 giờ tối", {
+  date: holiday("christmas"),
+  time: clock(19),
+});
 example("combined", "cuối tuần sau lúc 10h sáng", {
   date: { kind: "dayGroup", group: "weekend", modifier: "next" },
   time: clock(10),
@@ -648,16 +732,44 @@ example(
 );
 
 // 33. prose
-example("prose", "nhắc tôi họp lúc 3 giờ chiều mai", { date: relative(1), time: clock(15) });
-example("prose", "hẹn bác sĩ vào thứ hai tuần sau lúc 9h sáng", { date: weekdayMod("next", "MO"), time: clock(9) });
-example("prose", "deadline nộp báo cáo là 17h thứ sáu", { date: weekday("FR"), time: clock(17) });
-example("prose", "họp nhóm mỗi thứ tư lúc 2 giờ chiều", { ...recurrence("weekly", { byDay: ["WE"] }), time: clock(14) });
+example("prose", "nhắc tôi họp lúc 3 giờ chiều mai", {
+  date: relative(1),
+  time: clock(15),
+});
+example("prose", "hẹn bác sĩ vào thứ hai tuần sau lúc 9h sáng", {
+  date: weekdayMod("next", "MO"),
+  time: clock(9),
+});
+example("prose", "deadline nộp báo cáo là 17h thứ sáu", {
+  date: weekday("FR"),
+  time: clock(17),
+});
+example("prose", "họp nhóm mỗi thứ tư lúc 2 giờ chiều", {
+  ...recurrence("weekly", { byDay: ["WE"] }),
+  time: clock(14),
+});
 example("prose", "cả nhà về quê ăn Tết", { date: holiday("tet") });
-example("prose", "sinh nhật em ấy là ngày 20 tháng 11", { date: calendar(11, 20) });
-example("prose", "tàu khởi hành lúc 6 giờ 15 sáng mai", { date: relative(1), time: clock(6, 15) });
-example("prose", "đặt bàn 4 người tối thứ bảy lúc 7 giờ", { date: weekday("SA"), time: clock(19) });
-example("prose", "gọi lại cho anh sau 30 phút nữa", shift(30, "minute", "after"));
-example("prose", "lớp yoga diễn ra 3 lần một tuần", recurrence("weekly", { timesPer: 3 }));
+example("prose", "sinh nhật em ấy là ngày 20 tháng 11", {
+  date: calendar(11, 20),
+});
+example("prose", "tàu khởi hành lúc 6 giờ 15 sáng mai", {
+  date: relative(1),
+  time: clock(6, 15),
+});
+example("prose", "đặt bàn 4 người tối thứ bảy lúc 7 giờ", {
+  date: weekday("SA"),
+  time: clock(19),
+});
+example(
+  "prose",
+  "gọi lại cho anh sau 30 phút nữa",
+  shift(30, "minute", "after"),
+);
+example(
+  "prose",
+  "lớp yoga diễn ra 3 lần một tuần",
+  recurrence("weekly", { timesPer: 3 }),
+);
 
 // 34. chat-short
 example("chat-short", "t2 9h", { date: weekday("MO"), time: clock(9) });
@@ -667,7 +779,10 @@ example("chat-short", "tối nay 8h", { date: relative(0), time: clock(20) });
 example("chat-short", "t6 tuần sau", { date: weekdayMod("next", "FR") });
 example("chat-short", "15/3 14h", { date: calendar(3, 15), time: clock(14) });
 example("chat-short", "2h nữa", shift(2, "hour", "after"));
-example("chat-short", "sáng mai 7h30", { date: relative(1), time: clock(7, 30) });
+example("chat-short", "sáng mai 7h30", {
+  date: relative(1),
+  time: clock(7, 30),
+});
 
 // 35. negative — no time expression at all
 negative("năm người đi ăn tối");

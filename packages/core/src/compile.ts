@@ -20,7 +20,6 @@ import type {
   ParserOptions,
 } from "./types.js";
 import {
-  compoundOrdinal,
   dayNames,
   holidayNames,
   month,
@@ -631,7 +630,7 @@ function compileDateAndTime(
           tokens[index + 1]?.text === "-" ? index + 2 : index + 1;
         const ones = tokens[onesIndex];
         if (ones) {
-          const combined = compoundOrdinal(word, ones.text);
+          const combined = NaN; // English compound ordinals; rewritten in Task 5.
           if (Number.isInteger(combined)) {
             value = combined;
             index = onesIndex;

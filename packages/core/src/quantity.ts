@@ -1,87 +1,115 @@
 import { Role } from "./labels.js";
-import { number, unit } from "./lexicon.js";
+import {
+  key,
+  number,
+  quarterWords,
+  spelledNumber,
+  unit,
+  vagueQuantities,
+} from "./lexicon.js";
 import type { Duration, PredictionToken as Token } from "./types.js";
 
-/** Read the numeric pieces selected by the model, preserving their source tokens. */
+const skip = (tokens: Token[], index: number) =>
+  tokens[index]?.kind === 3 ? index + 1 : index;
+
+/**
+ * Read one number starting at `index` and return where it ends. Digits read
+ * as they are, with "1,5" and "1.5" as decimals; words combine as spoken:
+ * "hai mươi mốt", "mười lăm", "hai tiếng rưỡi" (the trailing "rưỡi" is read
+ * by the caller once the unit is known). `approximate` marks "vài"/"mấy".
+ */
 export function readNumber(tokens: Token[], index: number, label = Role.NUM) {
-  // "a few" and "a couple" carry the article as its own number token.
-  if (
-    /^an?$/i.test(tokens[index]?.text ?? "") &&
-    tokens[index + 1]?.label === label &&
-    Number.isFinite(number(tokens[index + 1].text))
-  )
-    index += 1;
-  let value = number(tokens[index]?.text ?? "");
-  let next = index + 1;
-  if (tokens[next]?.text === "." && tokens[next + 1]?.label === label) {
-    value = Number(`${value}.${tokens[next + 1].text}`);
-    next += 2;
-  } else {
-    if (tokens[next]?.text === "-" && tokens[next + 1]?.label === label) next++;
-    if (/^of$/i.test(tokens[next]?.text ?? "") && tokens[next]?.label === label)
-      next++;
-    const suffix =
-      tokens[next]?.label === label ? number(tokens[next].text) : NaN;
-    if (value >= 20 && value % 10 === 0 && suffix > 0 && suffix < 10) {
-      value += suffix;
-      next++;
+  const words: string[] = [];
+  let next = index;
+  let approximate = false;
+  for (;;) {
+    // Peek past whitespace; `next` only advances over consumed tokens.
+    const cursor = skip(tokens, next);
+    if (tokens[cursor]?.label !== label || tokens[cursor].kind === 3) break;
+    const word = key(tokens[cursor].text);
+    // Digits after digits are two numbers ("15 3"), never one.
+    if (words.length && /^\d+$/.test(word) && /^\d+$/.test(words.at(-1)!))
+      break;
+    if (vagueQuantities.has(word)) approximate = true;
+    words.push(word);
+    next = cursor + 1;
+    // A decimal mark between two digit tokens: "1,5", "2.5".
+    if (
+      /^\d+$/.test(word) &&
+      /^[.,]$/.test(tokens[next]?.text ?? "") &&
+      tokens[next + 1]?.label === label &&
+      /^\d+$/.test(tokens[next + 1].text)
+    ) {
+      words[words.length - 1] = `${word}.${tokens[next + 1].text}`;
+      next += 2;
+      break;
     }
   }
-  return { value, next };
+  if (!words.length) return { value: NaN, next: index, approximate };
+  const last = words[words.length - 1];
+  const value =
+    words.length === 1 && /^\d+\.\d+$/.test(last)
+      ? Number(last)
+      : spelledNumber(words);
+  return { value, next, approximate };
 }
 
+const clockUnits = new Set(["hour", "minute", "second"]);
+
+/**
+ * Read `NUM UNIT [rưỡi] [NUM UNIT]...` as one duration: "1 tiếng 30 phút",
+ * "2 tiếng rưỡi", "3 ngày". Nothing when the run is not a duration.
+ */
 export function readDuration(
   tokens: Token[],
   index: number,
-): { duration: Duration; next: number } | undefined {
+): { duration: Duration; next: number; approximate?: boolean } | undefined {
   const components = [];
   let next = index;
+  let approximate = false;
   while (tokens[next]?.label === Role.NUM) {
     const quantity = readNumber(tokens, next);
-    next = quantity.next;
-    // "half an hour": the article belongs to the same quantity.
-    if (quantity.value < 1 && /^(a|an)$/i.test(tokens[next]?.text ?? ""))
-      next++;
+    approximate ||= quantity.approximate;
+    next = skip(tokens, quantity.next);
+    const word = key(tokens[next]?.text ?? "");
+    const quarter = quarterWords.has(word);
     const durationUnit =
-      tokens[next]?.label === Role.UNIT ? unit(tokens[next].text) : undefined;
+      tokens[next]?.label === Role.UNIT
+        ? quarter
+          ? "month"
+          : unit(word)
+        : undefined;
     if (
       !durationUnit ||
       !Number.isFinite(quantity.value) ||
       quantity.value <= 0
     )
       return;
-    let amount = quantity.value;
-    if (/^fortnights?$/i.test(tokens[next].text)) amount *= 2;
-    next++;
-    if (tokens[next]?.text.toLowerCase() === "and") {
-      let tail = next + 1;
-      if (/^(a|an)$/i.test(tokens[tail]?.text ?? "")) tail++;
-      if (
-        tokens[tail]?.label === Role.NUM &&
-        tokens[tail].text.toLowerCase() === "half"
-      ) {
-        amount += 0.5;
-        next = tail + 1;
-      }
+    let amount = quantity.value * (quarter ? 3 : 1);
+    next = skip(tokens, next + 1);
+    // "hai tiếng rưỡi": the half follows the unit.
+    if (key(tokens[next]?.text ?? "") === "rưỡi") {
+      amount += 0.5;
+      next = skip(tokens, next + 1);
     }
-    // Fractions of calendar months/days need a separate policy. Clock units are exact.
-    if (
-      !Number.isInteger(amount) &&
-      !["hour", "minute", "second"].includes(durationUnit)
-    )
-      return;
+    // Fractions of calendar days and longer need a policy of their own. Clock
+    // units are exact.
+    if (!Number.isInteger(amount) && !clockUnits.has(durationUnit)) return;
     components.push({ amount, unit: durationUnit });
-    const candidate =
-      tokens[next]?.text.toLowerCase() === "and" ? next + 1 : next;
-    if (tokens[candidate]?.label !== Role.NUM) break;
-    const following = readNumber(tokens, candidate).next;
-    if (tokens[following]?.label !== Role.UNIT) break;
-    next = candidate;
+    if (tokens[next]?.label !== Role.NUM) break;
+    const following = readNumber(tokens, next).next;
+    if (tokens[skip(tokens, following)]?.label !== Role.UNIT) break;
   }
   if (!components.length) return;
   const [first, ...rest] = components;
   return {
     duration: { ...first, ...(rest.length ? { components: rest } : {}) },
     next,
+    ...(approximate ? { approximate } : {}),
   };
+}
+
+/** Whole-number read of a single token; NaN otherwise. */
+export function tokenNumber(token: Token | undefined): number {
+  return token ? number(token.text) : NaN;
 }

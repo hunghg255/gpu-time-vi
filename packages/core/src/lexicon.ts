@@ -1,259 +1,414 @@
-import type { DateSpec, Unit, Weekday } from "./types.js";
+import type { DayPart, HolidayName, Modifier, Unit, Weekday } from "./types.js";
+
+// Every table keys on a phrase that has been lowercased, NFC-composed and
+// collapsed to single spaces. `key()` below is the one way to build such a key.
+export function key(text: string): string {
+  return text.normalize("NFC").toLowerCase().trim().replace(/\s+/g, " ");
+}
 
 export const weekdays: Weekday[] = ["MO", "TU", "WE", "TH", "FR", "SA", "SU"];
 
 export const dayNames = [
-  "monday",
-  "tuesday",
-  "wednesday",
-  "thursday",
-  "friday",
-  "saturday",
-  "sunday",
+  "thứ hai",
+  "thứ ba",
+  "thứ tư",
+  "thứ năm",
+  "thứ sáu",
+  "thứ bảy",
+  "chủ nhật",
 ];
 
-export const monthNames = [
-  "january",
-  "february",
-  "march",
-  "april",
-  "may",
-  "june",
-  "july",
-  "august",
-  "september",
-  "october",
-  "november",
-  "december",
-];
-
+/** Single words with a numeric value. Compounds go through `spelledNumber`. */
 export const quantities: Record<string, number> = {
-  zero: 0,
-  a: 1,
-  an: 1,
-  one: 1,
-  two: 2,
-  three: 3,
-  four: 4,
-  five: 5,
-  six: 6,
-  seven: 7,
-  eight: 8,
-  nine: 9,
-  ten: 10,
-  eleven: 11,
-  twelve: 12,
-  thirteen: 13,
-  fourteen: 14,
-  fifteen: 15,
-  sixteen: 16,
-  seventeen: 17,
-  eighteen: 18,
-  nineteen: 19,
-  twenty: 20,
-  thirty: 30,
-  forty: 40,
-  fifty: 50,
-  sixty: 60,
-  seventy: 70,
-  eighty: 80,
-  ninety: 90,
-  half: 0.5,
-  quarter: 0.25,
-  couple: 2,
-  few: 3,
-  several: 3,
-  other: 2,
-  once: 1,
-  twice: 2,
-  thrice: 3,
-  first: 1,
-  second: 2,
-  third: 3,
-  fourth: 4,
-  fifth: 5,
-  sixth: 6,
-  seventh: 7,
-  eighth: 8,
-  ninth: 9,
-  tenth: 10,
-  eleventh: 11,
-  twelfth: 12,
-  thirteenth: 13,
-  fourteenth: 14,
-  fifteenth: 15,
-  sixteenth: 16,
-  seventeenth: 17,
-  eighteenth: 18,
-  nineteenth: 19,
-  twentieth: 20,
-  thirtieth: 30,
-  fortieth: 40,
-  fiftieth: 50,
-  sixtieth: 60,
-  seventieth: 70,
-  eightieth: 80,
-  ninetieth: 90,
-  last: -1,
+  không: 0,
+  một: 1,
+  mốt: 1,
+  hai: 2,
+  đôi: 2,
+  ba: 3,
+  bốn: 4,
+  tư: 4,
+  năm: 5,
+  lăm: 5,
+  nhăm: 5,
+  sáu: 6,
+  bảy: 7,
+  bẩy: 7,
+  tám: 8,
+  chín: 9,
+  mười: 10,
+  chục: 10,
+  nửa: 0.5,
+  rưỡi: 0.5,
+  vài: 3,
+  mấy: 3,
+  dăm: 3,
 };
-
-// "twenty-first" reaches the compiler as three tokens, so the tens word and the
-// ones ordinal are combined rather than listed as thirty more entries.
-const tensWords: Record<string, number> = {
-  twenty: 20,
-  thirty: 30,
-  forty: 40,
-  fifty: 50,
-  sixty: 60,
-  seventy: 70,
-  eighty: 80,
-  ninety: 90,
+const multipliers: Record<string, number> = {
+  mươi: 10,
+  trăm: 100,
+  nghìn: 1000,
+  ngàn: 1000,
 };
+/** These spellings mean "roughly": the compiler marks the quantity approximate. */
+export const vagueQuantities = new Set(["vài", "mấy", "dăm"]);
 
-export function compoundOrdinal(tens: string, ones: string): number {
-  const base = tensWords[tens.toLowerCase()];
-  const unit = quantities[ones.toLowerCase()];
-  if (base === undefined || unit === undefined || unit < 1 || unit > 9)
-    return NaN;
-  return base + unit;
+/**
+ * "hai mươi mốt" → 21, "mười lăm" → 15, "một trăm hai mươi" → 120, "hai
+ * nghìn không trăm hai mươi sáu" → 2026. A single digit string or word also
+ * reads. NaN when the words do not form one number.
+ */
+export function spelledNumber(words: string[]): number {
+  if (words.length === 1) return number(words[0]);
+  let total = 0;
+  let current: number | undefined;
+  let previous = Infinity;
+  for (const raw of words) {
+    const word = key(raw);
+    if (Object.hasOwn(multipliers, word)) {
+      const scale = multipliers[word];
+      if (scale === 10) {
+        // "mươi" needs a preceding ones digit: "hai mươi".
+        if (current === undefined || current < 1 || current > 9) return NaN;
+        current *= 10;
+      } else {
+        // "trăm" with no digit before it is one hundred; "không trăm" is none.
+        const digits = current ?? 1;
+        if (scale > previous) total = (total + digits) * scale;
+        else total += digits * scale;
+        current = undefined;
+      }
+      previous = scale;
+      continue;
+    }
+    if (!Object.hasOwn(quantities, word) && !/^\d+$/.test(word)) return NaN;
+    const value = number(word);
+    if (word === "mười") {
+      if (current !== undefined) return NaN;
+      current = 10;
+    } else if (word === "mốt" || word === "lăm" || word === "nhăm") {
+      // Only after a tens word: "hai mươi mốt", "mười lăm".
+      if (current === undefined || current < 10 || current % 10 !== 0)
+        return NaN;
+      current += value;
+    } else if (word === "rưỡi") {
+      if (current === undefined && total === 0) return NaN;
+      current = (current ?? 0) + 0.5;
+    } else if (word === "nửa") {
+      if (current !== undefined) return NaN;
+      current = 0.5;
+    } else if (
+      current !== undefined &&
+      current >= 10 &&
+      current % 10 === 0 &&
+      value < 10
+    ) {
+      current += value;
+    } else if (current === undefined) {
+      current = value;
+    } else return NaN;
+  }
+  return total + (current ?? 0);
 }
-const unitNames = [
-  "second",
-  "minute",
-  "hour",
-  "day",
-  "week",
-  "month",
-  "year",
-] as const;
-const unitAbbreviations: Record<string, Unit> = {
-  // No bare "s": the tokenizer leaves one behind from possessives like "Monday's".
-  sec: "second",
-  secs: "second",
-  min: "minute",
-  mins: "minute",
-  hr: "hour",
-  hrs: "hour",
-  wk: "week",
-  wks: "week",
-  week: "week",
-  weeks: "week",
-  d: "day",
-  m: "minute",
-  h: "hour",
-  mo: "month",
-  mos: "month",
-  // "eod", "eow", and "eom" also carry an end edge; the compiler adds it.
-  eod: "day",
-  eow: "week",
-  eom: "month",
-  yr: "year",
-  yrs: "year",
-  // A fortnight is two weeks; readDuration doubles the amount.
-  fortnight: "week",
-  fortnights: "week",
-};
 
 export function number(text: string): number {
-  const word = text.toLowerCase();
+  const word = key(text);
   const spelledOut = Object.hasOwn(quantities, word)
     ? quantities[word]
     : undefined;
   if (spelledOut !== undefined) return spelledOut;
-  return /^-?\d+$/.test(text) ? Number(text) : NaN;
+  return /^-?\d+$/.test(word) ? Number(word) : NaN;
 }
 
+const weekdayWords: Record<string, number> = {
+  hai: 0,
+  ba: 1,
+  tư: 2,
+  bốn: 2,
+  năm: 3,
+  sáu: 4,
+  bảy: 5,
+  bẩy: 5,
+};
+/** "thứ hai", "thứ 2", "t2", "T2", "cn", "chủ nhật", "chúa nhật" → weekday. */
 export function weekday(text: string): Weekday | undefined {
-  const word = text.toLowerCase().replace(/\.$/, "").replace(/s$/, "");
-  const index = dayNames.findIndex((name) => {
-    if (name === word || name.slice(0, 3) === word) return true;
-    return name === "thursday" && ["thur", "thurs"].includes(word);
-  });
-
-  return weekdays[index];
+  const word = key(text).replace(/\.$/, "");
+  if (["cn", "chủ nhật", "chúa nhật", "chủ nhựt"].includes(word)) return "SU";
+  const match = /^(?:thứ|t)\s*(\d|\p{L}+)$/u.exec(word);
+  if (!match) return undefined;
+  const value = /^\d$/.test(match[1])
+    ? Number(match[1]) - 2
+    : (weekdayWords[match[1]] ?? -1);
+  return value >= 0 && value <= 5 ? weekdays[value] : undefined;
 }
 
+/** The weekday number that follows "thứ": "hai" → MO, "7" → SA. */
+export function weekdayAfterThu(text: string): Weekday | undefined {
+  return weekday(`thứ ${text}`);
+}
+
+const monthWords: Record<string, number> = {
+  giêng: 1,
+  một: 1,
+  hai: 2,
+  ba: 3,
+  tư: 4,
+  bốn: 4,
+  năm: 5,
+  sáu: 6,
+  bảy: 7,
+  bẩy: 7,
+  tám: 8,
+  chín: 9,
+  mười: 10,
+  "mười một": 11,
+  "mười hai": 12,
+  chạp: 12,
+};
+/** Months that default to the lunar calendar when named this way. */
+export const lunarMonthWords = new Set(["giêng", "chạp"]);
+/** "3", "tháng 3", "giêng", "tháng tư" → month number. */
 export function month(text: string): number | undefined {
-  const word = text.toLowerCase().replace(/\.$/, "");
-  const index = monthNames.findIndex((name) => {
-    if (name === word || name.slice(0, 3) === word) return true;
-    return name === "september" && word === "sept";
-  });
-
-  return index < 0 ? undefined : index + 1;
+  const word = key(text).replace(/^tháng\s+/, "");
+  if (/^\d{1,2}$/.test(word)) {
+    const value = Number(word);
+    return value >= 1 && value <= 12 ? value : undefined;
+  }
+  return monthWords[word];
 }
 
+const unitWords: Record<string, Unit> = {
+  giây: "second",
+  phút: "minute",
+  giờ: "hour",
+  tiếng: "hour",
+  ngày: "day",
+  hôm: "day",
+  bữa: "day",
+  tuần: "week",
+  tháng: "month",
+  năm: "year",
+  // Chat spellings glued to a number: "2h", "30p".
+  h: "hour",
+  p: "minute",
+  ph: "minute",
+};
 export function unit(text: string): Unit | undefined {
-  const word = text.toLowerCase();
-  const abbreviation = Object.hasOwn(unitAbbreviations, word)
-    ? unitAbbreviations[word]
-    : undefined;
-  if (abbreviation !== undefined) return abbreviation;
+  return unitWords[key(text)];
+}
+/** "quý" is three months; the compiler scales the amount. */
+export const quarterWords = new Set(["quý"]);
 
-  const singular = word.replace(/s$/, "");
-  return unitNames.find((name) => name === singular);
+export const relativeDays: Record<string, number> = {
+  "hôm nay": 0,
+  nay: 0,
+  "bữa nay": 0,
+  "ngày hôm nay": 0,
+  "ngày mai": 1,
+  mai: 1,
+  "ngày kia": 2,
+  "ngày mốt": 2,
+  mốt: 2,
+  kia: 2,
+  "ngày kìa": 3,
+  "hôm qua": -1,
+  qua: -1,
+  "ngày hôm qua": -1,
+  "hôm kia": -2,
+  "hôm kìa": -3,
+};
+export const nowWords = new Set([
+  "bây giờ",
+  "hiện tại",
+  "ngay bây giờ",
+  "hiện giờ",
+  "lúc này",
+  "ngay",
+  "giờ",
+]);
+
+export const dayParts: Record<string, DayPart> = {
+  sáng: "morning",
+  "buổi sáng": "morning",
+  "sáng sớm": "morning",
+  trưa: "noon",
+  "buổi trưa": "noon",
+  chiều: "afternoon",
+  "buổi chiều": "afternoon",
+  tối: "evening",
+  "buổi tối": "evening",
+  đêm: "night",
+  "ban đêm": "night",
+  "buổi đêm": "night",
+  khuya: "night",
+  "đêm khuya": "night",
+};
+export const namedTimes: Record<string, "noon" | "midnight"> = {
+  "nửa đêm": "midnight",
+  "giữa đêm": "midnight",
+  "giữa trưa": "noon",
+  "đúng trưa": "noon",
+  "chính ngọ": "noon",
+};
+
+export const modifiers: Record<string, Modifier> = {
+  này: "this",
+  nay: "this",
+  sau: "next",
+  tới: "next",
+  kế: "next",
+  "kế tiếp": "next",
+  "sắp tới": "next",
+  "tiếp theo": "next",
+  trước: "last",
+  rồi: "last",
+  qua: "last",
+  ngoái: "last",
+  "vừa rồi": "last",
+  "vừa qua": "last",
+};
+
+export const edges: Record<string, "start" | "end" | "middle"> = {
+  đầu: "start",
+  "đầu tiên": "start",
+  cuối: "end",
+  "cuối cùng": "end",
+  giữa: "middle",
+};
+
+export const dayGroups: Record<string, "weekday" | "weekend"> = {
+  "cuối tuần": "weekend",
+  "ngày thường": "weekday",
+  "ngày làm việc": "weekday",
+  "ngày trong tuần": "weekday",
+  "ngày đi làm": "weekday",
+};
+
+export const holidayNames: Record<string, HolidayName> = {
+  // Solar
+  "tết dương lịch": "new-year",
+  "tết tây": "new-year",
+  "năm mới": "new-year",
+  "tết dương": "new-year",
+  valentine: "valentines",
+  valentines: "valentines",
+  "lễ tình nhân": "valentines",
+  "tình nhân": "valentines",
+  "quốc tế phụ nữ": "womens-day",
+  "phụ nữ quốc tế": "womens-day",
+  "giải phóng miền nam": "liberation-day",
+  "giải phóng": "liberation-day",
+  "thống nhất đất nước": "liberation-day",
+  "quốc tế lao động": "labour-day",
+  "lao động": "labour-day",
+  "quốc tế thiếu nhi": "childrens-day",
+  "thiếu nhi": "childrens-day",
+  "quốc khánh": "national-day",
+  "phụ nữ việt nam": "vn-womens-day",
+  "nhà giáo việt nam": "teachers-day",
+  "nhà giáo": "teachers-day",
+  "hiến chương nhà giáo": "teachers-day",
+  "giáng sinh": "christmas",
+  noel: "christmas",
+  "nô en": "christmas",
+  "nô-en": "christmas",
+  "đêm giáng sinh": "christmas-eve",
+  "đêm noel": "christmas-eve",
+  "giao thừa tây": "new-years-eve",
+  "giao thừa dương lịch": "new-years-eve",
+  // Lunar
+  tết: "tet",
+  "tết nguyên đán": "tet",
+  "tết âm lịch": "tet",
+  "tết ta": "tet",
+  "tết cổ truyền": "tet",
+  "tết âm": "tet",
+  "nguyên đán": "tet",
+  "giao thừa": "tet-eve",
+  "đêm giao thừa": "tet-eve",
+  "tết nguyên tiêu": "lantern-festival",
+  "nguyên tiêu": "lantern-festival",
+  "thượng nguyên": "lantern-festival",
+  "giỗ tổ": "hung-kings",
+  "giỗ tổ hùng vương": "hung-kings",
+  "hùng vương": "hung-kings",
+  "tết đoan ngọ": "doan-ngo",
+  "đoan ngọ": "doan-ngo",
+  "diệt sâu bọ": "doan-ngo",
+  "vu lan": "vu-lan",
+  "lễ vu lan": "vu-lan",
+  "xá tội vong nhân": "vu-lan",
+  "trung thu": "mid-autumn",
+  "tết trung thu": "mid-autumn",
+  "rằm trung thu": "mid-autumn",
+  "ông táo": "kitchen-gods",
+  "tết ông táo": "kitchen-gods",
+  "ông công ông táo": "kitchen-gods",
+  "táo quân": "kitchen-gods",
+};
+/** Holidays fixed on the lunar calendar. */
+export const lunarHolidays = new Set<HolidayName>([
+  "tet",
+  "tet-eve",
+  "lantern-festival",
+  "hung-kings",
+  "doan-ngo",
+  "vu-lan",
+  "mid-autumn",
+  "kitchen-gods",
+]);
+/** Look a holiday up by phrase, ignoring a leading "ngày", "lễ", "dịp", "kỳ nghỉ". */
+export function holiday(text: string): HolidayName | undefined {
+  const word = key(text).replace(/^(ngày|lễ|dịp|kỳ nghỉ|nghỉ)\s+/, "");
+  return holidayNames[word];
 }
 
-// Relative days, day parts, and recurrence words live in the compiler's own
-// tables; these are the ones that make a bare string look like it is about time.
+export const lunarWords = new Set([
+  "âm lịch",
+  "âm",
+  "âl",
+  "lịch âm",
+  "lịch ta",
+  "mùng",
+  "mồng",
+  "rằm",
+  "nhuận",
+]);
+
+// Every word that makes a bare string look like it is about time. Used only
+// by `mentionsTime()`, which gates the no-expression warning.
 const timeWords = new Set([
-  "today",
-  "tonight",
-  "tonite",
-  "tomorrow",
-  "tmrw",
-  "tmr",
-  "yesterday",
-  "now",
-  "noon",
-  "midday",
-  "midnight",
-  "morning",
-  "afternoon",
-  "evening",
-  "night",
-  "weekend",
-  "weekends",
-  "weekday",
-  "weekdays",
-  "every",
+  ...Object.keys(unitWords),
+  ...Object.keys(dayParts),
+  ...Object.keys(relativeDays),
+  ...Object.keys(dayGroups),
+  ...lunarWords,
+  "thứ",
+  "cn",
+  "hàng",
+  "hằng",
+  "mỗi",
+  "tết",
+  "lịch",
   "am",
   "pm",
+  "hôm",
+  "hẹn",
+  "lúc",
 ]);
+const timeSyllables = new Set(
+  [...timeWords].flatMap((phrase) => phrase.split(" ")),
+);
 
 /** A cheap check for input that mentions time but compiled to no expression. */
 export function mentionsTime(text: string): boolean {
-  return text
-    .toLowerCase()
-    .split(/[^\p{L}\p{N}]+/u)
-    .some(
-      (word) =>
-        word !== "" &&
-        (/\d/.test(word) ||
-          timeWords.has(word) ||
-          weekday(word) !== undefined ||
-          month(word) !== undefined ||
-          unit(word) !== undefined ||
-          Object.hasOwn(holidayNames, word)),
-    );
+  const words = key(text).split(/[^\p{L}\p{N}]+/u);
+  return words.some(
+    (word) =>
+      word !== "" &&
+      (/\d/.test(word) ||
+        timeSyllables.has(word) ||
+        weekday(word) !== undefined ||
+        Object.hasOwn(holidayNames, word)),
+  );
 }
-
-export const holidayNames: Record<
-  string,
-  Extract<DateSpec, { kind: "holiday" }>["name"]
-> = {
-  christmas: "christmas",
-  christmaseve: "christmas-eve",
-  newyear: "new-year",
-  newyearsday: "new-year",
-  newyearseve: "new-years-eve",
-  halloween: "halloween",
-  valentinesday: "valentines",
-  valentines: "valentines",
-  july4th: "july-4th",
-  julyfourth: "july-4th",
-  fourthofjuly: "july-4th",
-  independenceday: "july-4th",
-  thanksgiving: "thanksgiving",
-  thanksgivingday: "thanksgiving",
-};

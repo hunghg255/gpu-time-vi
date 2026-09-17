@@ -49,9 +49,13 @@ it("validates schedule structure and rejects empty clauses or invalid clock comp
 it("accepts every hand-authored gold schedule", () => {
   const schema = JSON.parse(readFileSync(schemaPath, "utf8"));
   const validate = new Ajv2020({ strict: true }).compile(schema);
-  // grammar.jsonl already carries the lunar kind and Vietnamese holidays; it
-  // joins this list once the schema learns them in Task 4.
-  for (const file of ["adversarial", "labels", "prose", "negatives"]) {
+  for (const file of [
+    "grammar",
+    "adversarial",
+    "labels",
+    "prose",
+    "negatives",
+  ]) {
     for (const record of readGold<{ id: string; schedule: unknown }>(file)) {
       if (record.schedule === null) continue;
       expect(

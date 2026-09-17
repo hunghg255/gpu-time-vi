@@ -10,7 +10,11 @@ import type {
   ParseResult as ScheduleResult,
 } from "./types.js";
 
-export type ParseContext = ResolveOptions;
+/** The resolution context; `timeZone` defaults to Asia/Ho_Chi_Minh. */
+export type ParseContext = Omit<ResolveOptions, "timeZone"> & {
+  timeZone?: string;
+};
+export const defaultTimeZone = "Asia/Ho_Chi_Minh";
 export type ParserOptions = Pick<ModelOptions, "backend" | "dateOrder">;
 export type TimeRange = Omit<Occurrence, "clause">;
 export type { Diagnostic } from "./types.js";
@@ -37,19 +41,21 @@ export interface ParseResult {
 export async function defineParser(options: ParserOptions = {}) {
   const parser = await defineScheduleParser(options);
 
-  function validate(context: ParseContext): number {
+  function validate(context: ParseContext): {
+    options: ResolveOptions;
+    limit: number;
+  } {
     // Context belongs to calendar resolution and never enters the model.
-    if (
-      !context ||
-      typeof context.timeZone !== "string" ||
-      !context.timeZone.trim()
-    )
-      throw new TypeError("timeZone is required.");
-    civil(instant(context.reference), context.timeZone);
+    if (!context || typeof context.reference !== "string")
+      throw new TypeError("reference is required.");
+    const timeZone = context.timeZone ?? defaultTimeZone;
+    if (typeof timeZone !== "string" || !timeZone.trim())
+      throw new TypeError("timeZone must be an IANA zone name.");
+    civil(instant(context.reference), timeZone);
     const limit = context.limit ?? 30;
     if (!Number.isInteger(limit) || limit < 1 || limit > 1000)
       throw new RangeError("limit must be an integer from 1 through 1000.");
-    return limit;
+    return { options: { ...context, timeZone }, limit };
   }
 
   function finish(
@@ -129,10 +135,10 @@ export async function defineParser(options: ParserOptions = {}) {
 
   return {
     async parse(text: string, context: ParseContext): Promise<ParseResult> {
-      const limit = validate(context);
+      const { options, limit } = validate(context);
       return finish(
         await parser.parse(text),
-        createResolver(context),
+        createResolver(options),
         limit,
         text,
       );
@@ -142,9 +148,9 @@ export async function defineParser(options: ParserOptions = {}) {
       context: ParseContext,
     ): Promise<ParseResult[]> {
       if (!texts.length) return [];
-      const limit = validate(context);
+      const { options, limit } = validate(context);
       const parsed = await parser.parseMany(texts);
-      const resolveSchedule = createResolver(context);
+      const resolveSchedule = createResolver(options);
       return parsed.map((result, index) =>
         finish(result, resolveSchedule, limit, texts[index]),
       );

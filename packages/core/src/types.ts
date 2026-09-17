@@ -9,6 +9,28 @@ export interface CalendarDate {
   month?: number;
   day?: number;
 }
+/** Solar holidays carry a fixed month and day; lunar ones a fixed lunar date. */
+export type HolidayName =
+  | "new-year"
+  | "valentines"
+  | "womens-day"
+  | "liberation-day"
+  | "labour-day"
+  | "childrens-day"
+  | "national-day"
+  | "vn-womens-day"
+  | "teachers-day"
+  | "christmas"
+  | "christmas-eve"
+  | "new-years-eve"
+  | "tet"
+  | "tet-eve"
+  | "lantern-festival"
+  | "hung-kings"
+  | "doan-ngo"
+  | "vu-lan"
+  | "mid-autumn"
+  | "kitchen-gods";
 export type MonthRef =
   | { kind: "calendar"; year?: number; month?: number }
   | { kind: "relativeUnit"; unit: "month" | "year"; modifier: Modifier };
@@ -19,7 +41,13 @@ export type DateSpec =
   | { kind: "weekdayRange"; from: Weekday; to: Weekday }
   | { kind: "dayGroup"; group: "weekday" | "weekend"; modifier?: Modifier }
   | ({ kind: "calendar" } & CalendarDate)
-  | { kind: "calendarRange"; from: CalendarDate; to: CalendarDate }
+  | {
+      kind: "calendarRange";
+      from: CalendarDate;
+      to: CalendarDate;
+      /** Both ends are lunar dates. */
+      lunar?: boolean;
+    }
   | {
       kind: "calendarPeriod";
       month: number;
@@ -41,19 +69,19 @@ export type DateSpec =
       of: MonthRef;
       recurring?: boolean;
     }
+  | { kind: "holiday"; name: HolidayName }
+  /**
+   * A Vietnamese lunar calendar date. The resolver converts it with the
+   * Vietnamese (UTC+7) lunar calendar; `leap` names the intercalary month.
+   */
   | {
-      kind: "holiday";
-      name:
-        | "christmas"
-        | "christmas-eve"
-        | "new-year"
-        | "new-years-eve"
-        | "halloween"
-        | "valentines"
-        | "july-4th"
-        | "thanksgiving";
+      kind: "lunar";
+      year?: number;
+      month?: number;
+      day?: number;
+      leap?: boolean;
     };
-export type DayPart = "morning" | "afternoon" | "evening" | "night";
+export type DayPart = "morning" | "noon" | "afternoon" | "evening" | "night";
 export type ClockTime =
   | { hour: number; minute: number; second?: number }
   | { named: "noon" | "midnight" }

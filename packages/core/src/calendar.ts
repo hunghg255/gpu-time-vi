@@ -1,6 +1,7 @@
 import type {
   CalendarDate,
   DateSpec,
+  HolidayName,
   Modifier,
   ResolveOptions,
   Unit,
@@ -25,16 +26,34 @@ export interface LocalPeriod {
   end?: Civil;
 }
 
-const holidays = {
+// Solar holidays are [month, day]. Lunar ones carry a lunar month and day
+// and resolve through lunar.ts (Task 9); until then they raise.
+const holidays: Record<
+  HolidayName,
+  readonly [number, number] | { lunarMonth: number; lunarDay: number }
+> = {
+  "new-year": [1, 1],
+  valentines: [2, 14],
+  "womens-day": [3, 8],
+  "liberation-day": [4, 30],
+  "labour-day": [5, 1],
+  "childrens-day": [6, 1],
+  "national-day": [9, 2],
+  "vn-womens-day": [10, 20],
+  "teachers-day": [11, 20],
   christmas: [12, 25],
   "christmas-eve": [12, 24],
-  "new-year": [1, 1],
   "new-years-eve": [12, 31],
-  halloween: [10, 31],
-  valentines: [2, 14],
-  "july-4th": [7, 4],
-  thanksgiving: { month: 11, day: "TH", ordinal: 4 },
-} as const;
+  tet: { lunarMonth: 1, lunarDay: 1 },
+  // Resolved as the day before Tết, so the lunar day is only a placeholder.
+  "tet-eve": { lunarMonth: 1, lunarDay: 0 },
+  "lantern-festival": { lunarMonth: 1, lunarDay: 15 },
+  "hung-kings": { lunarMonth: 3, lunarDay: 10 },
+  "doan-ngo": { lunarMonth: 5, lunarDay: 5 },
+  "vu-lan": { lunarMonth: 7, lunarDay: 15 },
+  "mid-autumn": { lunarMonth: 8, lunarDay: 15 },
+  "kitchen-gods": { lunarMonth: 12, lunarDay: 23 },
+};
 
 export function weekBeginning(
   date: Civil,
@@ -230,20 +249,15 @@ export function resolveDates(
     case "relativeUnit":
       return [relativePeriod(spec, reference, options)];
 
+    case "lunar":
+      throw new Error("Lunar dates resolve in Task 9.");
+
     case "holiday": {
       const entry = holidays[spec.name];
+      if ("lunarMonth" in entry)
+        throw new Error("Lunar holidays resolve in Task 9.");
       const inYear = (year: number): Civil =>
-        "ordinal" in entry
-          ? resolveDates(
-              {
-                kind: "ordinalWeekday",
-                ...entry,
-                of: { kind: "calendar", year, month: entry.month },
-              },
-              reference,
-              options,
-            )[0].start
-          : calendarDate({ year, month: entry[0], day: entry[1] }, reference);
+        calendarDate({ year, month: entry[0], day: entry[1] }, reference);
       let date = inYear(reference.year);
       if (utc(date) < utc(today)) date = inYear(reference.year + 1);
       return [{ start: date }];

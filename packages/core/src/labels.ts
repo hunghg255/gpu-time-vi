@@ -34,6 +34,7 @@ export const LABELS = [
   "GLUE",
   "EDGE",
   "CLOCK_OFFSET",
+  "LUNAR",
 ] as const;
 export type Label = (typeof LABELS)[number];
 export const labelId = /* @__PURE__ */ Object.fromEntries(
@@ -77,4 +78,5 @@ export const enum Role {
   GLUE = 32,
   EDGE = 33,
   CLOCK_OFFSET = 34,
+  LUNAR = 35,
 }
