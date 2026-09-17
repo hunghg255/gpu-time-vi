@@ -19,11 +19,22 @@ jobs:
         with:
           node-version: 24
           cache: pnpm
+      - uses: astral-sh/setup-uv@v5
+        with:
+          python-version: "3.13"
       - run: pnpm install --frozen-lockfile
       - name: Build publishable core
         run: pnpm build:core
       - name: Core tests
         run: pnpm test:core
+      - name: Benchmark utility tests
+        run: pnpm test:benchmark
+      - name: Generator tests
+        run: pnpm test:training
+      - name: Generator round trip through the compiler
+        run: |
+          uv run --project packages/training python packages/training/torch/generate-semantic.py --count 2000
+          pnpm --filter @gpu-time-vi/training check:semantic
       - name: Inspect npm package contents
         run: pnpm check:package
       - name: Release size gate
