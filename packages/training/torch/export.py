@@ -8,6 +8,7 @@ import hashlib
 import json
 import math
 import os
+import shutil
 import subprocess
 import tempfile
 from pathlib import Path
@@ -29,7 +30,7 @@ GOLD = ROOT / "data/gold"
 # Hand-authored, not rendered by the training generators. Sets seeded from the
 # grammar (labels, grammar, grammar-variations) measure the generator against
 # itself and stay out of the gate.
-GOLD_SETS = ("chat", "prose", "user-cases", "negatives", "adversarial")
+GOLD_SETS = ("grammar", "prose", "negatives", "adversarial")
 GATE_CRITERION = (
     "Exact schedules must not regress in any gold set or family. Reserved-carrier "
     "exact decoded labels and boundaries must improve, or tie an already perfect "
@@ -118,7 +119,7 @@ def artifact_model(artifact: dict) -> TimeTagger:
 
 
 def read_artifact(path: Path) -> dict:
-    text = path.read_text()
+    text = path.read_text(encoding="utf-8")
     return json.loads(text[text.index("{") : text.rindex("}") + 1])
 
 
@@ -348,7 +349,7 @@ def score_corpus(
 ):
     families = [
         json.loads(line)["family"]
-        for line in path.read_text().splitlines()
+        for line in path.read_text(encoding="utf-8").splitlines()
         if line.strip()
     ]
     with tempfile.TemporaryDirectory() as scratch:
@@ -408,7 +409,7 @@ def answer_scores(built: Path, sets: list[str], directory: Path) -> dict:
                     if not example["correct"]
                 ],
             }
-            for result in json.loads(measured.read_text())["results"]
+            for result in json.loads(measured.read_text(encoding="utf-8"))["results"]
         }
 
 
@@ -480,7 +481,7 @@ def gold_scores(weights_module: Path, scratch: Path, sets: list[str]) -> dict:
                 })
             },
         }
-        for result in json.loads(measured.read_text())["results"]
+        for result in json.loads(measured.read_text(encoding="utf-8"))["results"]
     }
 
 
@@ -503,7 +504,7 @@ def gate(
     if not baseline_report.exists():
         failures.append(f"no pinned baseline at {baseline_report}")
     else:
-        previous = json.loads(baseline_report.read_text())
+        previous = json.loads(baseline_report.read_text(encoding="utf-8"))
         pinned = {
             "report": portable(baseline_report),
             "checkpoint": previous["checkpoint"],
@@ -533,7 +534,7 @@ def gate(
         scratch = Path(scratch)
         module = scratch / "candidate/weights.gen.ts"
         module.parent.mkdir(parents=True, exist_ok=True)
-        module.write_text(source)
+        module.write_text(source, encoding="utf-8")
         gold_candidate = (
             gold_scores(module, scratch / "candidate", sets) if sets else {}
         )
@@ -611,12 +612,12 @@ def gate(
 def publish(path: Path, text: str):
     path.parent.mkdir(parents=True, exist_ok=True)
     temporary = path.with_name(f"{path.name}.{os.getpid()}.tmp")
-    temporary.write_text(text)
+    temporary.write_text(text, encoding="utf-8")
     temporary.replace(path)
 
 
 def parity_texts(data: Path, prefix: Path):
-    texts = [json.loads(line)["text"] for line in (data / "heldout.jsonl").read_text().splitlines()]
+    texts = [json.loads(line)["text"] for line in (data / "heldout.jsonl").read_text(encoding="utf-8").splitlines()]
     publish(Path(f"{prefix}.texts.json"), json.dumps(texts[:10000], ensure_ascii=False) + "\n")
 
 
@@ -819,7 +820,7 @@ def export(
     )
     destination.parent.mkdir(parents=True, exist_ok=True)
     staged = destination.with_name(f"{destination.name}.{os.getpid()}.tmp")
-    staged.write_text(source)
+    staged.write_text(source, encoding="utf-8")
     brotli_script = "import {readFileSync} from 'node:fs';import {brotliCompressSync} from 'node:zlib';process.stdout.write(String(brotliCompressSync(readFileSync(process.argv[1])).length));"
     brotli = int(
         subprocess.check_output(

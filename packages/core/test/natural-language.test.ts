@@ -3,12 +3,12 @@ import { defineParser } from "../src/index.js";
 import { resolve } from "../src/resolve.js";
 import { RRule } from "rrule";
 
-import { vietnameseModel } from "./gold.ts";
+import { promotedModel } from "./gold.ts";
 
 // English fixtures against the interim English weights. The Vietnamese
 // tokenizer moves their feature classes, so they wait for the Vietnamese
 // model and are rewritten in Vietnamese in Task 10.
-describe.skipIf(!vietnameseModel)("english fixtures", () => {
+describe.skipIf(!promotedModel)("english fixtures", () => {
   const context = {
     reference: "2026-09-09T00:00:00Z",
     timeZone: "UTC",

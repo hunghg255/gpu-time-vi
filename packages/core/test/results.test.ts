@@ -1,12 +1,12 @@
 import { afterAll, beforeAll, describe, expect, it } from "vitest";
 import { defineParser } from "../src/index.js";
 
-import { vietnameseModel } from "./gold.ts";
+import { promotedModel } from "./gold.ts";
 
 // English fixtures against the interim English weights. The Vietnamese
 // tokenizer moves their feature classes, so they wait for the Vietnamese
 // model and are rewritten in Vietnamese in Task 10.
-describe.skipIf(!vietnameseModel)("english fixtures", () => {
+describe.skipIf(!promotedModel)("english fixtures", () => {
   let parser: Awaited<ReturnType<typeof defineParser>>;
   const context = {
     reference: "2026-09-09T12:00:00+06:00",

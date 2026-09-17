@@ -2,12 +2,12 @@ import { describe, expect, it } from "vitest";
 import { defineParser, resolve } from "../src/schedule.js";
 import type { Clause } from "../src/types.js";
 
-import { vietnameseModel } from "./gold.ts";
+import { promotedModel } from "./gold.ts";
 
 // English fixtures against the interim English weights. The Vietnamese
 // tokenizer moves their feature classes, so they wait for the Vietnamese
 // model and are rewritten in Vietnamese in Task 16.
-describe.skipIf(!vietnameseModel)("english fixtures", () => {
+describe.skipIf(!promotedModel)("english fixtures", () => {
   it("preserves every clause when a schedule spans several inference windows", async () => {
     const forms = ["Monday at 9am", "Tuesday at 10am", "Wednesday at 11am"];
     const days = ["MO", "TU", "WE"] as const;

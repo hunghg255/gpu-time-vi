@@ -1,7 +1,7 @@
 import { afterAll, beforeAll, describe, expect, it } from "vitest";
 import { defineParser } from "../src/schedule.js";
 import type { Schedule } from "../src/types.js";
-import { readGold, vietnameseModel } from "./gold.ts";
+import { promotedModel, readGold } from "./gold.ts";
 
 interface Example {
   id: string;
@@ -18,7 +18,7 @@ const examples: Example[] = [
 
 // The gold corpora are Vietnamese; the shipped model is not until Task 16
 // promotes one. Everything below waits for that export.
-describe.skipIf(!vietnameseModel)("gold corpora against the model", () => {
+describe.skipIf(!promotedModel)("gold corpora against the model", () => {
   let parser: Awaited<ReturnType<typeof defineParser>>;
   beforeAll(async () => {
     parser = await defineParser({ backend: "cpu" });

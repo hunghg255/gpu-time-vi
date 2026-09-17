@@ -9,6 +9,7 @@ import { weights as sourceWeights } from "../src/model/weights.gen.ts";
 import type { EncodedWeights } from "../src/model/decode.js";
 import { resolve as resolvePath, join } from "node:path";
 import { createRequire } from "node:module";
+import { pathToFileURL } from "node:url";
 
 const packageRoot = resolvePath(import.meta.dirname, "..");
 const typescriptBin = createRequire(import.meta.url).resolve(
@@ -29,7 +30,7 @@ const outputDirectory = resolvePath(
   argument("--outdir") ?? "dist",
 );
 const weights: EncodedWeights = modelPath
-  ? (await import(resolvePath(modelPath))).weights
+  ? (await import(pathToFileURL(resolvePath(modelPath)).href)).weights
   : sourceWeights;
 
 await initialize();

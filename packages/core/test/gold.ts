@@ -18,9 +18,15 @@ export function readGold<T>(name: string): T[] {
 
 // The shipped weights stay English until Task 15 exports a Vietnamese model.
 // That export lists LUNAR among its labels; the English one never does.
-const report = `${import.meta.dirname}/../../training/active/export-report.json`;
-export const vietnameseModel: boolean = existsSync(report)
-  ? (JSON.parse(readFileSync(report, "utf8")).labels as string[]).includes(
-      "LUNAR",
-    )
-  : false;
+const reportPath = `${import.meta.dirname}/../../training/active/export-report.json`;
+const report = existsSync(reportPath)
+  ? JSON.parse(readFileSync(reportPath, "utf8"))
+  : undefined;
+export const vietnameseModel: boolean =
+  (report?.labels as string[] | undefined)?.includes("LUNAR") ?? false;
+// A smoke export can be forced past the promotion gate; accuracy suites wait
+// for one that passed it on its own.
+export const promotedModel: boolean =
+  vietnameseModel &&
+  report?.promotion?.accepted === true &&
+  report?.promotion?.criterion !== "explicit-user-override";

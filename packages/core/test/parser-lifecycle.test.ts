@@ -3,12 +3,12 @@ import { defineParser } from "../src/schedule.js";
 import { inferCPU, type Predictions } from "../src/model/cpu.js";
 import type { RawToken } from "../src/types.js";
 
-import { vietnameseModel } from "./gold.ts";
+import { promotedModel } from "./gold.ts";
 
 // English fixtures against the interim English weights. The Vietnamese
 // tokenizer moves their feature classes, so they wait for the Vietnamese
 // model and are rewritten in Vietnamese in Task 16.
-describe.skipIf(!vietnameseModel)("english fixtures", () => {
+describe.skipIf(!promotedModel)("english fixtures", () => {
   const createGPU = vi.hoisted(() => vi.fn());
   vi.mock("../src/model/gpu.js", () => ({ GPUModel: { create: createGPU } }));
 

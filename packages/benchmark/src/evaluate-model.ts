@@ -34,14 +34,11 @@ const parser = await defineParser({ backend: "cpu", tokens: true });
 // The generated corpora share the gold {text, schedule} shape.
 const directory = argument("--dir") ? resolve(argument("--dir")!) : gold;
 const sets = argument("--sets")?.split(",") ?? [
-  "adversarial",
-  "user-cases",
-  "labels",
   "grammar",
+  "labels",
+  "adversarial",
   "negatives",
-  "grammar-variations",
   "prose",
-  "chat",
 ];
 const results = [];
 try {

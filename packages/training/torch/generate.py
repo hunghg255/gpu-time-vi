@@ -114,7 +114,7 @@ def generate(
     span_counts: Counter = Counter()
     templates = set()
     signatures = set()
-    reserved = {key for one in exclude or [] for key in json.loads(one.read_text())}
+    reserved = {key for one in exclude or [] for key in json.loads(one.read_text(encoding="utf-8"))}
     rejected = 0
     heldout = split == "heldout"
     path.parent.mkdir(parents=True, exist_ok=True)
@@ -208,5 +208,5 @@ if __name__ == "__main__":
     report = generate(args.out, args.count, args.seed, args.split, args.exclude)
     args.out.with_suffix(".manifest.json").write_text(
         json.dumps(report, indent=2) + "\n"
-    )
+    , encoding="utf-8")
     print(json.dumps(report))

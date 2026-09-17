@@ -8,7 +8,7 @@ import {
 import { resolve } from "../src/resolve.js";
 import { tokenize } from "../src/tokenizer.js";
 import type { Occurrence, Token } from "../src/types.js";
-import { readGold, vietnameseModel } from "./gold.ts";
+import { promotedModel, readGold } from "./gold.ts";
 
 interface ResultCase {
   id: string;
@@ -69,7 +69,7 @@ describe.skipIf(!cases.length)("resolved gold through oracle labels", () => {
   });
 });
 
-describe.skipIf(!cases.length || !vietnameseModel)(
+describe.skipIf(!cases.length || !promotedModel)(
   "resolved gold through the model",
   () => {
     let parser: Awaited<ReturnType<typeof defineParser>>;

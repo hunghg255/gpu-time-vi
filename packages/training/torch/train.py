@@ -6,6 +6,7 @@ import argparse
 import json
 import hashlib
 import math
+import shutil
 import subprocess
 import time
 from functools import cache
@@ -31,7 +32,8 @@ def featurize(source: Path, prefix: Path):
             # tsx, not node --experimental-strip-types: featurize imports core's
             # source, whose internal ".js" specifiers and const enum Node cannot
             # handle. See AGENTS.md.
-            "npx",
+            # shutil.which resolves npx.cmd on Windows, which CreateProcess needs.
+            shutil.which("npx") or "npx",
             "tsx",
             str(ROOT / "src" / "featurize.ts"),
             str(source),
@@ -69,7 +71,7 @@ class Dataset:
         )
         self.offsets = np.fromfile(f"{prefix}.offsets.bin", dtype=np.uint32)
         self.lengths = np.diff(self.offsets)
-        self.manifest = json.loads(Path(f"{prefix}.json").read_text())
+        self.manifest = json.loads(Path(f"{prefix}.json").read_text(encoding="utf-8"))
 
     def __len__(self):
         return len(self.lengths)
@@ -224,9 +226,9 @@ def featurize_real(real: Path, directory: Path) -> Dataset:
     with real.open("rb") as handle:
         key = hashlib.file_digest(handle, "sha256").hexdigest()
     stamp = directory / "real.key"
-    if not (stamp.exists() and stamp.read_text() == key):
+    if not (stamp.exists() and stamp.read_text(encoding="utf-8") == key):
         featurize(real, prefix)
-        stamp.write_text(key)
+        stamp.write_text(key, encoding="utf-8")
     return Dataset(prefix)
 
 
@@ -235,7 +237,7 @@ def prepare(
 ) -> Dataset:
     prefix = directory / split
     command = [
-        "uv",
+        shutil.which("uv") or "uv",
         "run",
         "--project",
         str(ROOT),
@@ -647,7 +649,7 @@ def main():
         # config carries Path values for --init, --distill and --real.
         (run / "report.json").write_text(
             json.dumps(report, indent=2, default=str) + "\n"
-        )
+        , encoding="utf-8")
         print(json.dumps(entry, default=str), flush=True)
     print(
         json.dumps(
