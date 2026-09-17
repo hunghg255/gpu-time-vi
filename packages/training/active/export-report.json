@@ -1,8 +1,8 @@
 {
-  "checkpoint": "runs\\smoke\\best.pt",
+  "checkpoint": "runs/smoke/best.pt",
   "checkpointSha256": "2a822428234b29fcbbdce317501fac6cf7c5448d2dbc7068ec2944b667a02788",
   "artifactSha256": "98abca98bd30c848e25a124e49a3309d77c058ef48c27ff3a1dee63351bb7e55",
-  "exportSourceDirectory": "exports\\98abca98bd30c848e25a124e49a3309d77c058ef48c27ff3a1dee63351bb7e55\\d2408413adde31a8f95e3f50d49215008e9b066fb2f96d135e858c62cd2f9aa0\\source",
+  "exportSourceDirectory": "exports/98abca98bd30c848e25a124e49a3309d77c058ef48c27ff3a1dee63351bb7e55/d2408413adde31a8f95e3f50d49215008e9b066fb2f96d135e858c62cd2f9aa0/source",
   "exportSourceHashes": {
     "training/export.py": "1c206fc0d422be20e814e154dd895d609a4121411ae79b4dccc110825ce37688",
     "training/calibrate.py": "a36888bf0f01f8b92b56d35c9d2417276a6bd896666402513ec60362e8d4ab74",
@@ -378,7 +378,7 @@
   "tokensSeenAtCheckpoint": 176490,
   "lineage": [
     {
-      "checkpoint": "runs\\smoke\\best.pt",
+      "checkpoint": "runs/smoke/best.pt",
       "sha256": "2a822428234b29fcbbdce317501fac6cf7c5448d2dbc7068ec2944b667a02788",
       "epoch": 2,
       "trainingTokens": 176490
@@ -598,15 +598,15 @@
             "adversarial-028"
           ],
           "families": {
-            "chi\u1ec1u": {
+            "chiều": {
               "total": 2,
               "correct": 0
             },
-            "cu\u1ed1i": {
+            "cuối": {
               "total": 1,
               "correct": 0
             },
-            "gi\u1edd": {
+            "giờ": {
               "total": 1,
               "correct": 0
             },
@@ -614,7 +614,7 @@
               "total": 1,
               "correct": 0
             },
-            "l\u1ea7n": {
+            "lần": {
               "total": 1,
               "correct": 0
             },
@@ -626,11 +626,11 @@
               "total": 2,
               "correct": 0
             },
-            "ng\u00e0y": {
+            "ngày": {
               "total": 1,
               "correct": 0
             },
-            "n\u0103m": {
+            "năm": {
               "total": 4,
               "correct": 0
             },
@@ -642,31 +642,31 @@
               "total": 1,
               "correct": 0
             },
-            "s\u00e1ng": {
+            "sáng": {
               "total": 1,
               "correct": 0
             },
-            "s\u1ed1": {
+            "số": {
               "total": 6,
               "correct": 0
             },
-            "th\u1ee9": {
+            "thứ": {
               "total": 1,
               "correct": 0
             },
-            "tr\u01b0\u1edbc": {
+            "trước": {
               "total": 1,
               "correct": 0
             },
-            "t\u01b0": {
+            "tư": {
               "total": 1,
               "correct": 0
             },
-            "t\u1ed1i": {
+            "tối": {
               "total": 1,
               "correct": 0
             },
-            "\u0111\u1ea7u": {
+            "đầu": {
               "total": 1,
               "correct": 0
             }
@@ -813,15 +813,15 @@
             "adversarial-028"
           ],
           "families": {
-            "chi\u1ec1u": {
+            "chiều": {
               "total": 2,
               "correct": 0
             },
-            "cu\u1ed1i": {
+            "cuối": {
               "total": 1,
               "correct": 0
             },
-            "gi\u1edd": {
+            "giờ": {
               "total": 1,
               "correct": 0
             },
@@ -829,7 +829,7 @@
               "total": 1,
               "correct": 0
             },
-            "l\u1ea7n": {
+            "lần": {
               "total": 1,
               "correct": 0
             },
@@ -841,11 +841,11 @@
               "total": 2,
               "correct": 0
             },
-            "ng\u00e0y": {
+            "ngày": {
               "total": 1,
               "correct": 0
             },
-            "n\u0103m": {
+            "năm": {
               "total": 4,
               "correct": 0
             },
@@ -857,31 +857,31 @@
               "total": 1,
               "correct": 0
             },
-            "s\u00e1ng": {
+            "sáng": {
               "total": 1,
               "correct": 0
             },
-            "s\u1ed1": {
+            "số": {
               "total": 6,
               "correct": 0
             },
-            "th\u1ee9": {
+            "thứ": {
               "total": 1,
               "correct": 0
             },
-            "tr\u01b0\u1edbc": {
+            "trước": {
               "total": 1,
               "correct": 0
             },
-            "t\u01b0": {
+            "tư": {
               "total": 1,
               "correct": 0
             },
-            "t\u1ed1i": {
+            "tối": {
               "total": 1,
               "correct": 0
             },
-            "\u0111\u1ea7u": {
+            "đầu": {
               "total": 1,
               "correct": 0
             }
@@ -903,7 +903,7 @@
       "user-cases"
     ],
     "baselineIdentity": {
-      "report": "active\\export-report.json",
+      "report": "active/export-report.json",
       "checkpoint": "runs/shorthand/epoch-39.pt",
       "checkpointSha256": "53cf3708eddb080a259defbe77936cd382f30e68f8f1f6eeccd6584afde3d23b",
       "artifactSha256": "168f22682e6f62cc09697f9acad8a396ef44240825cd8634777f9e6cf8e77410",
@@ -2987,7 +2987,7 @@
                 "correct": 1
               }
             },
-            "report": "active\\export-report.json",
+            "report": "active/export-report.json",
             "checkpoint": "runs/shorthand/epoch-39.pt",
             "checkpointSha256": "53cf3708eddb080a259defbe77936cd382f30e68f8f1f6eeccd6584afde3d23b",
             "artifactSha256": "168f22682e6f62cc09697f9acad8a396ef44240825cd8634777f9e6cf8e77410",
@@ -5086,7 +5086,7 @@
   },
   "scope": "Exact decoded int6 weights, sequential CPU PyTorch inference with the deployed role decoder and recorded intermediate precision. Training uses the mathematically equivalent parallel affine scan. Heldout metrics share the development split used by calibrate(). Promotion requires reserved-carrier improvement or a perfect-baseline tie, with no family regression, preserved bare expressions, and no gold set or family regression through the built parser. These are development checks, not real-user accuracy. Browser parity is a separate gate.",
   "parity": {
-    "prefix": "active\\parity",
+    "prefix": "active/parity",
     "sequences": 512,
     "tokens": 9954,
     "rowsPerToken": 17,

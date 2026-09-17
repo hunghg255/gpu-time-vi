@@ -128,7 +128,8 @@ def digest(path: Path) -> str:
 
 
 def portable(path: Path) -> str:
-    return str(path.relative_to(ROOT) if path.is_relative_to(ROOT) else path)
+    """A repo-relative POSIX path, the same on every platform."""
+    return (path.relative_to(ROOT) if path.is_relative_to(ROOT) else path).as_posix()
 
 
 def corpus_digest(prefix: Path) -> str:
@@ -534,7 +535,7 @@ def gate(
         scratch = Path(scratch)
         module = scratch / "candidate/weights.gen.ts"
         module.parent.mkdir(parents=True, exist_ok=True)
-        module.write_text(source, encoding="utf-8")
+        module.write_text(source, encoding="utf-8", newline=chr(10))
         gold_candidate = (
             gold_scores(module, scratch / "candidate", sets) if sets else {}
         )
@@ -612,7 +613,7 @@ def gate(
 def publish(path: Path, text: str):
     path.parent.mkdir(parents=True, exist_ok=True)
     temporary = path.with_name(f"{path.name}.{os.getpid()}.tmp")
-    temporary.write_text(text, encoding="utf-8")
+    temporary.write_text(text, encoding="utf-8", newline=chr(10))
     temporary.replace(path)
 
 
@@ -820,7 +821,7 @@ def export(
     )
     destination.parent.mkdir(parents=True, exist_ok=True)
     staged = destination.with_name(f"{destination.name}.{os.getpid()}.tmp")
-    staged.write_text(source, encoding="utf-8")
+    staged.write_text(source, encoding="utf-8", newline=chr(10))
     brotli_script = "import {readFileSync} from 'node:fs';import {brotliCompressSync} from 'node:zlib';process.stdout.write(String(brotliCompressSync(readFileSync(process.argv[1])).length));"
     brotli = int(
         subprocess.check_output(

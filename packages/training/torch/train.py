@@ -228,7 +228,7 @@ def featurize_real(real: Path, directory: Path) -> Dataset:
     stamp = directory / "real.key"
     if not (stamp.exists() and stamp.read_text(encoding="utf-8") == key):
         featurize(real, prefix)
-        stamp.write_text(key, encoding="utf-8")
+        stamp.write_text(key, encoding="utf-8", newline=chr(10))
     return Dataset(prefix)
 
 
@@ -649,7 +649,7 @@ def main():
         # config carries Path values for --init, --distill and --real.
         (run / "report.json").write_text(
             json.dumps(report, indent=2, default=str) + "\n"
-        , encoding="utf-8")
+        , encoding="utf-8", newline=chr(10))
         print(json.dumps(entry, default=str), flush=True)
     print(
         json.dumps(

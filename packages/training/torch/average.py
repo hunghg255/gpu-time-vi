@@ -118,7 +118,7 @@ def average(base_path: Path, checkpoint_path: Path, fraction: float, run_name: s
         "derivation": derived["derivation"],
         "checkpointSha256": digest(output),
     }
-    (run / "report.json").write_text(json.dumps(report, indent=2) + "\n", encoding="utf-8")
+    (run / "report.json").write_text(json.dumps(report, indent=2) + "\n", encoding="utf-8", newline=chr(10))
     return output
 
 
