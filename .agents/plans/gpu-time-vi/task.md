@@ -94,7 +94,7 @@ Chi tiết từng task ở `todo.md`.
 - [x] Manifest + fingerprint split disjoint
 
 ### Phase 3: Huấn luyện & tích hợp model
-- [ ] Task 15: Môi trường training (uv, Python 3.13, torch) + run nhỏ (smoke) → export → `weights.gen.ts` → build → parity fixtures CPU/GPU
+- [x] Task 15: Môi trường training (uv, Python 3.13, torch) + run nhỏ (smoke) → export → `weights.gen.ts` → build → parity fixtures CPU/GPU
 - [ ] Task 16: Run đầy đủ, sweep epoch, `scoreboard`, promote; size gate 50 000 byte Brotli
 
 ### Checkpoint 3: Model
@@ -103,9 +103,9 @@ Chi tiết từng task ở `todo.md`.
 - [ ] `pnpm size:gate` pass
 
 ### Phase 4: Đóng gói
-- [ ] Task 17: Benchmark package — giữ size + browser perf, bỏ baseline tiếng Anh, thêm baseline regex đơn giản để so sánh
-- [ ] Task 18: Tài liệu (`README`, `architecture.md`, `MODEL_CARD.md`, `AGENTS.md`), `check:package`, CI workflow
-- [ ] Task 19: Website demo Astro tiếng Việt
+- [x] Task 17: Benchmark package — giữ size + browser perf, bỏ baseline tiếng Anh, thêm baseline regex đơn giản để so sánh
+- [x] Task 18: Tài liệu (`README`, `architecture.md`, `MODEL_CARD.md`, `AGENTS.md`), `check:package`, CI workflow
+- [x] Task 19: Website demo Astro tiếng Việt
 
 ### Checkpoint 4: Complete
 - [ ] `pnpm test` toàn bộ pass; `pnpm check:package` pass

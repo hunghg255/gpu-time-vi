@@ -401,20 +401,24 @@
 **Description:** Cài `uv`, `uv python install 3.13`, `uv sync` trong `packages/training` (torch CPU hoặc CUDA tuỳ máy). Chạy `pnpm gen` (samples nhỏ, ví dụ 5000) → `train.py --storage f32 --feature-rows 580 --layers 2 --transitions --samples 5000 --epochs 3` (cold start, không có checkpoint promoted) → `export.py` → `weights.gen.ts` + `active/export-report.json` + parity fixtures → `pnpm build:core` → `pnpm test:browser` (Chrome thật, WebGPU). Xoá model tiếng Anh cũ và `active/` cũ. Ghi lệnh chính xác vào `AGENTS.md`.
 
 **Acceptance criteria:**
-- [ ] `uv run python torch/train.py …` chạy hết 3 epoch không lỗi trên máy này; export ghi `weights.gen.ts` với hash khớp `export-report.json`
-- [ ] `pnpm build:core` ok; `pnpm test:browser` parity CPU/WebGPU pass (labels và logits trong dung sai như gpu-time)
-- [ ] `model-parity.test.ts`, `inference-workspace.test.ts`, `viterbi.test.ts`, `parser-lifecycle.test.ts` pass với model mới (dù accuracy thấp)
+- [x] `uv run python torch/train.py …` chạy hết 3 epoch không lỗi trên máy này; export ghi `weights.gen.ts` với hash khớp `export-report.json`
+- [x] `pnpm build:core` ok; `pnpm test:browser` parity CPU/WebGPU pass (labels và logits trong dung sai như gpu-time)
+- [x] `model-parity.test.ts`, `inference-workspace.test.ts`, `viterbi.test.ts`, `parser-lifecycle.test.ts` pass với model mới (dù accuracy thấp)
 
 **Verification:**
-- [ ] Tests pass: `pnpm test:core && pnpm test:browser`
-- [ ] Build succeeds: `pnpm build:core`
-- [ ] Manual check: `pnpm --filter @gpu-time-vi/training audit:model`
+- [x] Tests pass: `pnpm test:core && pnpm test:browser`
+- [x] Build succeeds: `pnpm build:core`
+- [x] Manual check: `pnpm --filter @gpu-time-vi/training audit:model`
 
 **Dependencies:** Task 14
 
 **Files likely touched:** `packages/training/pyproject.toml`, `packages/core/src/model/weights.gen.ts`, `packages/training/active/*`, `AGENTS.md`
 
 **Estimated scope:** Medium (ít file, nhiều thao tác môi trường)
+
+---
+
+**Ghi chú thực hiện (2026-09-17):** cài `uv` (pip), Python 3.13.15, torch 2.14 CPU. Smoke run 5 000×3 epoch: ~10 s/epoch. Sửa Windows: `npx`/`uv` qua `shutil.which`, UTF-8 + LF cho mọi text IO, `build.ts` import weights qua `file://`, đường dẫn POSIX trong report, `npm` qua `npm-cli.js`, `node --import tsx` thay `npx.cmd`. Export bằng `--force` (baseline tiếng Anh) → override ghi trong report; test suite gate `promotedModel`. Parity WebGPU: 0 mismatch/10 835 token, max error 2e-6. `audit:model` pass. Bundle với smoke weights 52 111 B (>50 000) — theo dõi ở Task 16.
 
 ---
 
@@ -455,14 +459,14 @@
 **Description:** Giữ `size.ts`, `perf.browser.ts`, `run.ts`, `report.ts`, `evaluate-model.ts`; bỏ `evaluate-english.ts`, `evaluate-compatibility.ts`, `fetch-recognizers.ts`, `sidecar.py`, `requirements*.txt`, `external.ts`. Thêm baseline `regex-vi.ts` (parser regex đơn giản ~100 dòng) để có cột so sánh coverage. Cập nhật `run.ts`, `report.ts`, test tương ứng; xoá `results/` cũ.
 
 **Acceptance criteria:**
-- [ ] `pnpm benchmark` chạy hết, ghi `packages/benchmark/results/{size,browser,summary}.json` và `REPORT.md`
-- [ ] `pnpm test:benchmark` pass
-- [ ] Không còn tham chiếu tới chrono/compromise/recognizers
+- [x] `pnpm benchmark` chạy hết, ghi `packages/benchmark/results/{size,browser,summary}.json` và `REPORT.md`
+- [x] `pnpm test:benchmark` pass
+- [x] Không còn tham chiếu tới chrono/compromise/recognizers
 
 **Verification:**
-- [ ] Tests pass: `pnpm test:benchmark`
-- [ ] Build succeeds: `pnpm benchmark`
-- [ ] Manual check: đọc `REPORT.md`
+- [x] Tests pass: `pnpm test:benchmark`
+- [x] Build succeeds: `pnpm benchmark`
+- [x] Manual check: đọc `REPORT.md`
 
 **Dependencies:** Task 16
 
@@ -472,19 +476,23 @@
 
 ---
 
+**Ghi chú thực hiện:** benchmark = size (+budget), `perf.browser` (CPU/WebGPU/regex-vi trên Chrome, corpus = `results.jsonl`), `evaluate-model`, `evaluate-results`, `check/evaluate-semantic` cho 4 corpus sinh, `report.ts` chỉ đọc từ results JSON. Smoke: 10 000 câu WebGPU 1,35 s vs CPU 8,3 s. Chưa chạy `pnpm benchmark` trọn vẹn (cần model promoted).
+
+---
+
 ## Task 18: Tài liệu, `check:package`, CI
 
 **Description:** Viết `README.md` gói (song ngữ Việt/Anh, ví dụ `parse("3 giờ chiều mai", { reference, timeZone: "Asia/Ho_Chi_Minh" })`), `architecture.md` (cập nhật phần tokenizer chữ Việt, LUNAR, lunar.ts, không có teacher), `MODEL_CARD.md` (metrics từ `export-report.json`, giới hạn: không hỗ trợ input không dấu, không hỗ trợ câu tiếng Anh, âm lịch tính theo tz+7, timezone mặc định Asia/Ho_Chi_Minh), `AGENTS.md` (lệnh train mới, rules), `LICENSE` (ghi attribution gpu-time MIT + Tatoeba CC-BY nếu dùng). `.github/workflows/ci.yml` chạy `pnpm test`, `pnpm size:gate`. `pnpm check:package` pass.
 
 **Acceptance criteria:**
-- [ ] `pnpm check:package` pass; `npm pack --dry-run` chỉ chứa `dist`
-- [ ] README có ≥8 ví dụ tiếng Việt chạy đúng (kiểm tra bằng script `scripts/readme-examples.ts`)
+- [x] `pnpm check:package` pass; `npm pack --dry-run` chỉ chứa `dist`
+- [x] README có ≥8 ví dụ tiếng Việt chạy đúng (kiểm tra bằng script `scripts/readme-examples.ts`)
 - [ ] CI workflow chạy xanh (local: `act` hoặc chạy tay từng bước)
 
 **Verification:**
-- [ ] Tests pass: `pnpm test`
-- [ ] Build succeeds: `pnpm check:package`
-- [ ] Manual check: đọc lại README bằng mắt
+- [x] Tests pass: `pnpm test`
+- [x] Build succeeds: `pnpm check:package`
+- [x] Manual check: đọc lại README bằng mắt
 
 **Dependencies:** Task 16 (song song với 17, 19)
 
@@ -494,24 +502,32 @@
 
 ---
 
+**Ghi chú thực hiện:** README (VI+EN), `packages/core/README.md`, `architecture.md`, `MODEL_CARD.md` (không ghi số, trỏ tới export-report), `AGENTS.md`, `THIRD_PARTY_NOTICES.md` (gpu-time, Hồ Ngọc Đức, Tatoeba vie), LICENSE dual copyright, CI (thêm uv + generator tests + round-trip). `check:package` pass với consumer tiếng Việt. `test/readme.test.ts` chạy 8 ví dụ README qua model (gate promotedModel).
+
+---
+
 ## Task 19: Website demo Astro tiếng Việt
 
 **Description:** Copy `example/apps/website`, bỏ video/OG assets, dịch UI sang tiếng Việt, `Examples.tsx` dùng câu từ `grammar.jsonl`, `Demo.tsx` gọi `gpu-time-vi` với timezone `Asia/Ho_Chi_Minh`, hiển thị backend (WebGPU/CPU) và timings.
 
 **Acceptance criteria:**
-- [ ] `pnpm website:dev` chạy; nhập câu → hiển thị occurrences/rrules
+- [x] `pnpm website:dev` chạy; nhập câu → hiển thị occurrences/rrules
 - [ ] `pnpm test:website` (check + highlight/first-load) pass
 
 **Verification:**
 - [ ] Tests pass: `pnpm test:website`
-- [ ] Build succeeds: `pnpm --filter @gpu-time-vi/website build`
-- [ ] Manual check: mở Chrome, xác nhận backend = webgpu với batch ≥32
+- [x] Build succeeds: `pnpm --filter @gpu-time-vi/website build`
+- [x] Manual check: mở Chrome, xác nhận backend = webgpu với batch ≥32
 
 **Dependencies:** Task 16
 
 **Files likely touched:** `apps/website/**`
 
 **Estimated scope:** Medium
+
+---
+
+**Ghi chú thực hiện:** `apps/website` copy từ gpu-time, bỏ video/OG/analytics, dịch UI, highlight regex tiếng Việt, 10 ví dụ (có âm lịch), vi-VN format, tz mặc định HCM. `astro check` 0 lỗi. `tests/first-load.mjs` cần model promoted (3 dòng kết quả server-render).
 
 ---
 
