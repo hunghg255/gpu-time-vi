@@ -9,6 +9,7 @@ import { Examples } from '../components/Examples';
 import { Pipeline } from '../components/Pipeline';
 import Model from '../components/Model.astro';
 import Benchmark from '../components/Benchmark.astro';
+import Tradeoffs from '../components/Tradeoffs.astro';
 
 const reference = new Date();
 const timeZone = 'Asia/Ho_Chi_Minh';
@@ -91,6 +92,12 @@ const canonical = new URL(Astro.url.pathname, Astro.site);
         <h2 id="bench-title" class="text-heading font-medium">Số liệu</h2>
         <p class="mx-auto mb-5 mt-1.5 max-w-note text-center text-note leading-normal text-neutral-500">Đọc từ kết quả của <code>pnpm benchmark</code>, không ghi tay. Thử luôn trên máy bạn ở cuối mục</p>
         <Benchmark />
+      </section>
+
+      <section class="mt-14" aria-labelledby="tradeoffs-title">
+        <h2 id="tradeoffs-title" class="text-heading font-medium">Ưu và nhược điểm</h2>
+        <p class="mx-auto mb-5 mt-1.5 max-w-note text-center text-note leading-normal text-neutral-500">Để bạn quyết định có dùng được cho việc của mình không, trước khi đọc code</p>
+        <Tradeoffs />
       </section>
 
       <section class="mt-14" aria-labelledby="use-title">
