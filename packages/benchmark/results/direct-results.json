@@ -1,0 +1,2599 @@
+{
+  "model": "a84dea681b361148c942159c7eaf2816bba786820a98e22420d4562bd121302c",
+  "sourceSha256": "6231f77b442d1c3d42a4a2f5eccff110c19149c8426c80cdde06597e177475a5",
+  "total": 61,
+  "correct": 61,
+  "cases": [
+    {
+      "id": "result-001",
+      "text": "hôm nay",
+      "context": {
+        "reference": "2026-09-17T09:00:00+07:00"
+      },
+      "occurrences": [
+        {
+          "start": "2026-09-17T00:00:00+07:00",
+          "allDay": true
+        }
+      ],
+      "actual": {
+        "occurrences": [
+          {
+            "start": "2026-09-17T00:00:00+07:00",
+            "allDay": true
+          }
+        ],
+        "rrules": [],
+        "spans": [
+          {
+            "start": 0,
+            "end": 7,
+            "text": "hôm nay",
+            "confidence": 0.9974684119224548
+          }
+        ],
+        "truncated": false,
+        "diagnostics": [],
+        "backend": "cpu",
+        "timings": {
+          "tokenizeMs": 1.780799999999985,
+          "inferMs": 2.786200000000008,
+          "resolveMs": 2.5039999999999907
+        }
+      },
+      "correct": true
+    },
+    {
+      "id": "result-002",
+      "text": "ngày mai",
+      "context": {
+        "reference": "2026-09-17T09:00:00+07:00"
+      },
+      "occurrences": [
+        {
+          "start": "2026-09-18T00:00:00+07:00",
+          "allDay": true
+        }
+      ],
+      "actual": {
+        "occurrences": [
+          {
+            "start": "2026-09-18T00:00:00+07:00",
+            "allDay": true
+          }
+        ],
+        "rrules": [],
+        "spans": [
+          {
+            "start": 0,
+            "end": 8,
+            "text": "ngày mai",
+            "confidence": 0.9980801939964294
+          }
+        ],
+        "truncated": false,
+        "diagnostics": [],
+        "backend": "cpu",
+        "timings": {
+          "tokenizeMs": 0.10890000000000555,
+          "inferMs": 1.9429000000000087,
+          "resolveMs": 0.21659999999998547
+        }
+      },
+      "correct": true
+    },
+    {
+      "id": "result-003",
+      "text": "hôm kia",
+      "context": {
+        "reference": "2026-09-17T09:00:00+07:00"
+      },
+      "occurrences": [
+        {
+          "start": "2026-09-15T00:00:00+07:00",
+          "allDay": true
+        }
+      ],
+      "actual": {
+        "occurrences": [
+          {
+            "start": "2026-09-15T00:00:00+07:00",
+            "allDay": true
+          }
+        ],
+        "rrules": [],
+        "spans": [
+          {
+            "start": 0,
+            "end": 7,
+            "text": "hôm kia",
+            "confidence": 0.9995936751365662
+          }
+        ],
+        "truncated": false,
+        "diagnostics": [],
+        "backend": "cpu",
+        "timings": {
+          "tokenizeMs": 0.0519999999999925,
+          "inferMs": 1.5910999999999973,
+          "resolveMs": 0.2464000000000084
+        }
+      },
+      "correct": true
+    },
+    {
+      "id": "result-004",
+      "text": "3 giờ chiều mai",
+      "context": {
+        "reference": "2026-09-17T09:00:00+07:00"
+      },
+      "occurrences": [
+        {
+          "start": "2026-09-18T15:00:00+07:00",
+          "allDay": false
+        }
+      ],
+      "actual": {
+        "occurrences": [
+          {
+            "start": "2026-09-18T15:00:00+07:00",
+            "allDay": false
+          }
+        ],
+        "rrules": [],
+        "spans": [
+          {
+            "start": 0,
+            "end": 15,
+            "text": "3 giờ chiều mai",
+            "confidence": 0.9990283250808716
+          }
+        ],
+        "truncated": false,
+        "diagnostics": [],
+        "backend": "cpu",
+        "timings": {
+          "tokenizeMs": 1.1810999999999865,
+          "inferMs": 4.175699999999992,
+          "resolveMs": 1.4446000000000083
+        }
+      },
+      "correct": true
+    },
+    {
+      "id": "result-005",
+      "text": "tối nay",
+      "context": {
+        "reference": "2026-09-17T09:00:00+07:00"
+      },
+      "occurrences": [
+        {
+          "start": "2026-09-17T18:00:00+07:00",
+          "end": "2026-09-17T22:00:00+07:00",
+          "allDay": false
+        }
+      ],
+      "actual": {
+        "occurrences": [
+          {
+            "start": "2026-09-17T18:00:00+07:00",
+            "allDay": false,
+            "end": "2026-09-17T22:00:00+07:00"
+          }
+        ],
+        "rrules": [],
+        "spans": [
+          {
+            "start": 0,
+            "end": 7,
+            "text": "tối nay",
+            "confidence": 0.9121049642562866
+          }
+        ],
+        "truncated": false,
+        "diagnostics": [],
+        "backend": "cpu",
+        "timings": {
+          "tokenizeMs": 0.07849999999999113,
+          "inferMs": 0.4228999999999985,
+          "resolveMs": 0.8150000000000119
+        }
+      },
+      "correct": true
+    },
+    {
+      "id": "result-006",
+      "text": "đêm nay",
+      "context": {
+        "reference": "2026-09-17T09:00:00+07:00"
+      },
+      "occurrences": [
+        {
+          "start": "2026-09-17T22:00:00+07:00",
+          "end": "2026-09-18T05:00:00+07:00",
+          "allDay": false
+        }
+      ],
+      "actual": {
+        "occurrences": [
+          {
+            "start": "2026-09-17T22:00:00+07:00",
+            "allDay": false,
+            "end": "2026-09-18T05:00:00+07:00"
+          }
+        ],
+        "rrules": [],
+        "spans": [
+          {
+            "start": 0,
+            "end": 7,
+            "text": "đêm nay",
+            "confidence": 0.9429567456245422
+          }
+        ],
+        "truncated": false,
+        "diagnostics": [],
+        "backend": "cpu",
+        "timings": {
+          "tokenizeMs": 0.16049999999999898,
+          "inferMs": 0.6049000000000007,
+          "resolveMs": 0.3581000000000074
+        }
+      },
+      "correct": true
+    },
+    {
+      "id": "result-007",
+      "text": "sáng mai",
+      "context": {
+        "reference": "2026-09-17T09:00:00+07:00"
+      },
+      "occurrences": [
+        {
+          "start": "2026-09-18T06:00:00+07:00",
+          "end": "2026-09-18T11:00:00+07:00",
+          "allDay": false
+        }
+      ],
+      "actual": {
+        "occurrences": [
+          {
+            "start": "2026-09-18T06:00:00+07:00",
+            "allDay": false,
+            "end": "2026-09-18T11:00:00+07:00"
+          }
+        ],
+        "rrules": [],
+        "spans": [
+          {
+            "start": 0,
+            "end": 8,
+            "text": "sáng mai",
+            "confidence": 0.9880965948104858
+          }
+        ],
+        "truncated": false,
+        "diagnostics": [],
+        "backend": "cpu",
+        "timings": {
+          "tokenizeMs": 0.061800000000005184,
+          "inferMs": 0.7576999999999998,
+          "resolveMs": 0.556200000000004
+        }
+      },
+      "correct": true
+    },
+    {
+      "id": "result-008",
+      "text": "trưa mai",
+      "context": {
+        "reference": "2026-09-17T09:00:00+07:00"
+      },
+      "occurrences": [
+        {
+          "start": "2026-09-18T11:00:00+07:00",
+          "end": "2026-09-18T13:00:00+07:00",
+          "allDay": false
+        }
+      ],
+      "actual": {
+        "occurrences": [
+          {
+            "start": "2026-09-18T11:00:00+07:00",
+            "allDay": false,
+            "end": "2026-09-18T13:00:00+07:00"
+          }
+        ],
+        "rrules": [],
+        "spans": [
+          {
+            "start": 0,
+            "end": 8,
+            "text": "trưa mai",
+            "confidence": 0.4845464527606964
+          }
+        ],
+        "truncated": false,
+        "diagnostics": [
+          {
+            "code": "low-confidence",
+            "message": "The model is uncertain about this expression.",
+            "start": 0,
+            "end": 4,
+            "severity": "warning"
+          }
+        ],
+        "backend": "cpu",
+        "timings": {
+          "tokenizeMs": 0.08050000000000068,
+          "inferMs": 0.6760000000000019,
+          "resolveMs": 0.439399999999992
+        }
+      },
+      "correct": true
+    },
+    {
+      "id": "result-009",
+      "text": "thứ hai",
+      "context": {
+        "reference": "2026-09-17T09:00:00+07:00"
+      },
+      "occurrences": [
+        {
+          "start": "2026-09-21T00:00:00+07:00",
+          "allDay": true
+        }
+      ],
+      "actual": {
+        "occurrences": [
+          {
+            "start": "2026-09-21T00:00:00+07:00",
+            "allDay": true
+          }
+        ],
+        "rrules": [],
+        "spans": [
+          {
+            "start": 0,
+            "end": 7,
+            "text": "thứ hai",
+            "confidence": 0.9988910555839539
+          }
+        ],
+        "truncated": false,
+        "diagnostics": [],
+        "backend": "cpu",
+        "timings": {
+          "tokenizeMs": 0.10270000000001289,
+          "inferMs": 0.46760000000000446,
+          "resolveMs": 2.0471999999999753
+        }
+      },
+      "correct": true
+    },
+    {
+      "id": "result-010",
+      "text": "tối thứ sáu",
+      "context": {
+        "reference": "2026-09-17T09:00:00+07:00"
+      },
+      "occurrences": [
+        {
+          "start": "2026-09-18T18:00:00+07:00",
+          "end": "2026-09-18T22:00:00+07:00",
+          "allDay": false
+        }
+      ],
+      "actual": {
+        "occurrences": [
+          {
+            "start": "2026-09-18T18:00:00+07:00",
+            "allDay": false,
+            "end": "2026-09-18T22:00:00+07:00"
+          }
+        ],
+        "rrules": [],
+        "spans": [
+          {
+            "start": 0,
+            "end": 11,
+            "text": "tối thứ sáu",
+            "confidence": 0.987007737159729
+          }
+        ],
+        "truncated": false,
+        "diagnostics": [],
+        "backend": "cpu",
+        "timings": {
+          "tokenizeMs": 0.07740000000001146,
+          "inferMs": 0.47860000000000014,
+          "resolveMs": 1.2828000000000372
+        }
+      },
+      "correct": true
+    },
+    {
+      "id": "result-011",
+      "text": "thứ hai tuần sau",
+      "context": {
+        "reference": "2026-09-17T09:00:00+07:00"
+      },
+      "occurrences": [
+        {
+          "start": "2026-09-21T00:00:00+07:00",
+          "allDay": true
+        }
+      ],
+      "actual": {
+        "occurrences": [
+          {
+            "start": "2026-09-21T00:00:00+07:00",
+            "allDay": true
+          }
+        ],
+        "rrules": [],
+        "spans": [
+          {
+            "start": 0,
+            "end": 16,
+            "text": "thứ hai tuần sau",
+            "confidence": 0.9984912276268005
+          }
+        ],
+        "truncated": false,
+        "diagnostics": [],
+        "backend": "cpu",
+        "timings": {
+          "tokenizeMs": 0.2545000000000073,
+          "inferMs": 1.0720000000000027,
+          "resolveMs": 0.7840000000000202
+        }
+      },
+      "correct": true
+    },
+    {
+      "id": "result-012",
+      "text": "thứ sáu tuần này",
+      "context": {
+        "reference": "2026-09-17T09:00:00+07:00"
+      },
+      "occurrences": [
+        {
+          "start": "2026-09-18T00:00:00+07:00",
+          "allDay": true
+        }
+      ],
+      "actual": {
+        "occurrences": [
+          {
+            "start": "2026-09-18T00:00:00+07:00",
+            "allDay": true
+          }
+        ],
+        "rrules": [],
+        "spans": [
+          {
+            "start": 0,
+            "end": 16,
+            "text": "thứ sáu tuần này",
+            "confidence": 0.998262882232666
+          }
+        ],
+        "truncated": false,
+        "diagnostics": [],
+        "backend": "cpu",
+        "timings": {
+          "tokenizeMs": 0.056199999999989814,
+          "inferMs": 0.8229999999999791,
+          "resolveMs": 0.19080000000002428
+        }
+      },
+      "correct": true
+    },
+    {
+      "id": "result-013",
+      "text": "thứ ba tuần trước",
+      "context": {
+        "reference": "2026-09-17T09:00:00+07:00"
+      },
+      "occurrences": [
+        {
+          "start": "2026-09-15T00:00:00+07:00",
+          "allDay": true
+        }
+      ],
+      "actual": {
+        "occurrences": [
+          {
+            "start": "2026-09-15T00:00:00+07:00",
+            "allDay": true
+          }
+        ],
+        "rrules": [],
+        "spans": [
+          {
+            "start": 0,
+            "end": 17,
+            "text": "thứ ba tuần trước",
+            "confidence": 0.9978547692298889
+          }
+        ],
+        "truncated": false,
+        "diagnostics": [],
+        "backend": "cpu",
+        "timings": {
+          "tokenizeMs": 0.10550000000000637,
+          "inferMs": 1.2229999999999848,
+          "resolveMs": 0.38630000000000564
+        }
+      },
+      "correct": true
+    },
+    {
+      "id": "result-014",
+      "text": "cn tuần sau",
+      "context": {
+        "reference": "2026-09-17T09:00:00+07:00"
+      },
+      "occurrences": [
+        {
+          "start": "2026-09-27T00:00:00+07:00",
+          "allDay": true
+        }
+      ],
+      "actual": {
+        "occurrences": [
+          {
+            "start": "2026-09-27T00:00:00+07:00",
+            "allDay": true
+          }
+        ],
+        "rrules": [],
+        "spans": [
+          {
+            "start": 0,
+            "end": 11,
+            "text": "cn tuần sau",
+            "confidence": 0.9930043816566467
+          }
+        ],
+        "truncated": false,
+        "diagnostics": [],
+        "backend": "cpu",
+        "timings": {
+          "tokenizeMs": 0.07739999999998304,
+          "inferMs": 0.4130999999999858,
+          "resolveMs": 0.38040000000000873
+        }
+      },
+      "correct": true
+    },
+    {
+      "id": "result-015",
+      "text": "tuần sau",
+      "context": {
+        "reference": "2026-09-17T09:00:00+07:00"
+      },
+      "occurrences": [
+        {
+          "start": "2026-09-21T00:00:00+07:00",
+          "end": "2026-09-28T00:00:00+07:00",
+          "allDay": true
+        }
+      ],
+      "actual": {
+        "occurrences": [
+          {
+            "start": "2026-09-21T00:00:00+07:00",
+            "allDay": true,
+            "end": "2026-09-28T00:00:00+07:00"
+          }
+        ],
+        "rrules": [],
+        "spans": [
+          {
+            "start": 0,
+            "end": 8,
+            "text": "tuần sau",
+            "confidence": 0.9984027147293091
+          }
+        ],
+        "truncated": false,
+        "diagnostics": [],
+        "backend": "cpu",
+        "timings": {
+          "tokenizeMs": 0.01630000000000109,
+          "inferMs": 0.2850999999999999,
+          "resolveMs": 0.4245999999999981
+        }
+      },
+      "correct": true
+    },
+    {
+      "id": "result-016",
+      "text": "tháng sau",
+      "context": {
+        "reference": "2026-09-17T09:00:00+07:00"
+      },
+      "occurrences": [
+        {
+          "start": "2026-10-01T00:00:00+07:00",
+          "end": "2026-11-01T00:00:00+07:00",
+          "allDay": true
+        }
+      ],
+      "actual": {
+        "occurrences": [
+          {
+            "start": "2026-10-01T00:00:00+07:00",
+            "allDay": true,
+            "end": "2026-11-01T00:00:00+07:00"
+          }
+        ],
+        "rrules": [],
+        "spans": [
+          {
+            "start": 0,
+            "end": 9,
+            "text": "tháng sau",
+            "confidence": 0.9872010946273804
+          }
+        ],
+        "truncated": false,
+        "diagnostics": [],
+        "backend": "cpu",
+        "timings": {
+          "tokenizeMs": 0.054099999999976944,
+          "inferMs": 0.33029999999999404,
+          "resolveMs": 0.3066000000000031
+        }
+      },
+      "correct": true
+    },
+    {
+      "id": "result-017",
+      "text": "cuối tháng",
+      "context": {
+        "reference": "2026-09-17T09:00:00+07:00"
+      },
+      "occurrences": [
+        {
+          "start": "2026-09-30T00:00:00+07:00",
+          "allDay": true
+        }
+      ],
+      "actual": {
+        "occurrences": [
+          {
+            "start": "2026-09-30T00:00:00+07:00",
+            "allDay": true
+          }
+        ],
+        "rrules": [],
+        "spans": [
+          {
+            "start": 0,
+            "end": 10,
+            "text": "cuối tháng",
+            "confidence": 0.3213782012462616
+          }
+        ],
+        "truncated": false,
+        "diagnostics": [
+          {
+            "code": "low-confidence",
+            "message": "The model is uncertain about this expression.",
+            "start": 0,
+            "end": 4,
+            "severity": "warning"
+          }
+        ],
+        "backend": "cpu",
+        "timings": {
+          "tokenizeMs": 0.04609999999999559,
+          "inferMs": 0.35870000000002733,
+          "resolveMs": 0.1817000000000064
+        }
+      },
+      "correct": true
+    },
+    {
+      "id": "result-018",
+      "text": "cuối tuần",
+      "context": {
+        "reference": "2026-09-17T09:00:00+07:00"
+      },
+      "occurrences": [
+        {
+          "start": "2026-09-19T00:00:00+07:00",
+          "allDay": true
+        },
+        {
+          "start": "2026-09-20T00:00:00+07:00",
+          "allDay": true
+        }
+      ],
+      "actual": {
+        "occurrences": [
+          {
+            "start": "2026-09-19T00:00:00+07:00",
+            "allDay": true
+          },
+          {
+            "start": "2026-09-20T00:00:00+07:00",
+            "allDay": true
+          }
+        ],
+        "rrules": [],
+        "spans": [
+          {
+            "start": 0,
+            "end": 9,
+            "text": "cuối tuần",
+            "confidence": 0.3321899175643921
+          }
+        ],
+        "truncated": false,
+        "diagnostics": [
+          {
+            "code": "low-confidence",
+            "message": "The model is uncertain about this expression.",
+            "start": 0,
+            "end": 4,
+            "severity": "warning"
+          }
+        ],
+        "backend": "cpu",
+        "timings": {
+          "tokenizeMs": 0.015199999999992997,
+          "inferMs": 0.5335000000000036,
+          "resolveMs": 0.3710000000000093
+        }
+      },
+      "correct": true
+    },
+    {
+      "id": "result-019",
+      "text": "15h30",
+      "context": {
+        "reference": "2026-09-17T09:00:00+07:00"
+      },
+      "occurrences": [
+        {
+          "start": "2026-09-17T15:30:00+07:00",
+          "allDay": false
+        }
+      ],
+      "actual": {
+        "occurrences": [
+          {
+            "start": "2026-09-17T15:30:00+07:00",
+            "allDay": false
+          }
+        ],
+        "rrules": [],
+        "spans": [
+          {
+            "start": 0,
+            "end": 5,
+            "text": "15h30",
+            "confidence": 0.9947229623794556
+          }
+        ],
+        "truncated": false,
+        "diagnostics": [],
+        "backend": "cpu",
+        "timings": {
+          "tokenizeMs": 0.10529999999999973,
+          "inferMs": 0.42919999999998026,
+          "resolveMs": 0.29939999999999145
+        }
+      },
+      "correct": true
+    },
+    {
+      "id": "result-020",
+      "text": "3 giờ kém 15",
+      "context": {
+        "reference": "2026-09-17T09:00:00+07:00"
+      },
+      "occurrences": [
+        {
+          "start": "2026-09-18T02:45:00+07:00",
+          "allDay": false
+        }
+      ],
+      "actual": {
+        "occurrences": [
+          {
+            "start": "2026-09-18T02:45:00+07:00",
+            "allDay": false
+          }
+        ],
+        "rrules": [],
+        "spans": [
+          {
+            "start": 0,
+            "end": 12,
+            "text": "3 giờ kém 15",
+            "confidence": 0.9841429591178894
+          }
+        ],
+        "truncated": false,
+        "diagnostics": [],
+        "backend": "cpu",
+        "timings": {
+          "tokenizeMs": 0.02960000000001628,
+          "inferMs": 0.5748000000000104,
+          "resolveMs": 0.2476000000000056
+        }
+      },
+      "correct": true
+    },
+    {
+      "id": "result-021",
+      "text": "12 giờ đêm",
+      "context": {
+        "reference": "2026-09-17T09:00:00+07:00"
+      },
+      "occurrences": [
+        {
+          "start": "2026-09-18T00:00:00+07:00",
+          "allDay": false
+        }
+      ],
+      "actual": {
+        "occurrences": [
+          {
+            "start": "2026-09-18T00:00:00+07:00",
+            "allDay": false
+          }
+        ],
+        "rrules": [],
+        "spans": [
+          {
+            "start": 0,
+            "end": 10,
+            "text": "12 giờ đêm",
+            "confidence": 0.9992561936378479
+          }
+        ],
+        "truncated": false,
+        "diagnostics": [],
+        "backend": "cpu",
+        "timings": {
+          "tokenizeMs": 0.03300000000001546,
+          "inferMs": 1.690499999999986,
+          "resolveMs": 0.2630999999999801
+        }
+      },
+      "correct": true
+    },
+    {
+      "id": "result-022",
+      "text": "từ 9h đến 17h",
+      "context": {
+        "reference": "2026-09-17T09:00:00+07:00"
+      },
+      "occurrences": [
+        {
+          "start": "2026-09-17T09:00:00+07:00",
+          "end": "2026-09-17T17:00:00+07:00",
+          "allDay": false
+        }
+      ],
+      "actual": {
+        "occurrences": [
+          {
+            "start": "2026-09-17T09:00:00+07:00",
+            "allDay": false,
+            "end": "2026-09-17T17:00:00+07:00"
+          }
+        ],
+        "rrules": [],
+        "spans": [
+          {
+            "start": 0,
+            "end": 13,
+            "text": "từ 9h đến 17h",
+            "confidence": 0.9973094463348389
+          }
+        ],
+        "truncated": false,
+        "diagnostics": [],
+        "backend": "cpu",
+        "timings": {
+          "tokenizeMs": 0.16270000000000095,
+          "inferMs": 1.4121999999999844,
+          "resolveMs": 1.0612000000000137
+        }
+      },
+      "correct": true
+    },
+    {
+      "id": "result-023",
+      "text": "từ 8 giờ tối đến 12 giờ đêm",
+      "context": {
+        "reference": "2026-09-17T09:00:00+07:00"
+      },
+      "occurrences": [
+        {
+          "start": "2026-09-17T20:00:00+07:00",
+          "end": "2026-09-18T00:00:00+07:00",
+          "allDay": false
+        }
+      ],
+      "actual": {
+        "occurrences": [
+          {
+            "start": "2026-09-17T20:00:00+07:00",
+            "allDay": false,
+            "end": "2026-09-18T00:00:00+07:00"
+          }
+        ],
+        "rrules": [],
+        "spans": [
+          {
+            "start": 0,
+            "end": 27,
+            "text": "từ 8 giờ tối đến 12 giờ đêm",
+            "confidence": 0.9975836873054504
+          }
+        ],
+        "truncated": false,
+        "diagnostics": [],
+        "backend": "cpu",
+        "timings": {
+          "tokenizeMs": 0.16650000000001342,
+          "inferMs": 1.6750999999999863,
+          "resolveMs": 0.537399999999991
+        }
+      },
+      "correct": true
+    },
+    {
+      "id": "result-024",
+      "text": "sau 6 giờ tối",
+      "context": {
+        "reference": "2026-09-17T09:00:00+07:00"
+      },
+      "occurrences": [
+        {
+          "start": "2026-09-17T18:00:00+07:00",
+          "open": "end",
+          "allDay": false
+        }
+      ],
+      "actual": {
+        "occurrences": [
+          {
+            "start": "2026-09-17T18:00:00+07:00",
+            "allDay": false,
+            "open": "end"
+          }
+        ],
+        "rrules": [],
+        "spans": [
+          {
+            "start": 0,
+            "end": 13,
+            "text": "sau 6 giờ tối",
+            "confidence": 0.9660142660140991
+          }
+        ],
+        "truncated": false,
+        "diagnostics": [],
+        "backend": "cpu",
+        "timings": {
+          "tokenizeMs": 0.07420000000001892,
+          "inferMs": 0.915300000000002,
+          "resolveMs": 0.3397000000000219
+        }
+      },
+      "correct": true
+    },
+    {
+      "id": "result-025",
+      "text": "trước 9h sáng",
+      "context": {
+        "reference": "2026-09-17T09:00:00+07:00"
+      },
+      "occurrences": [
+        {
+          "start": "2026-09-17T00:00:00+07:00",
+          "end": "2026-09-17T09:00:00+07:00",
+          "open": "start",
+          "allDay": false
+        }
+      ],
+      "actual": {
+        "occurrences": [
+          {
+            "start": "2026-09-17T00:00:00+07:00",
+            "allDay": false,
+            "open": "start",
+            "end": "2026-09-17T09:00:00+07:00"
+          }
+        ],
+        "rrules": [],
+        "spans": [
+          {
+            "start": 0,
+            "end": 13,
+            "text": "trước 9h sáng",
+            "confidence": 0.9970929026603699
+          }
+        ],
+        "truncated": false,
+        "diagnostics": [],
+        "backend": "cpu",
+        "timings": {
+          "tokenizeMs": 0.09299999999998931,
+          "inferMs": 1.538499999999999,
+          "resolveMs": 0.33910000000000196
+        }
+      },
+      "correct": true
+    },
+    {
+      "id": "result-026",
+      "text": "ngày 15",
+      "context": {
+        "reference": "2026-09-17T09:00:00+07:00"
+      },
+      "occurrences": [
+        {
+          "start": "2026-10-15T00:00:00+07:00",
+          "allDay": true
+        }
+      ],
+      "actual": {
+        "occurrences": [
+          {
+            "start": "2026-10-15T00:00:00+07:00",
+            "allDay": true
+          }
+        ],
+        "rrules": [],
+        "spans": [
+          {
+            "start": 5,
+            "end": 7,
+            "text": "15",
+            "confidence": 0.9997578859329224
+          }
+        ],
+        "truncated": false,
+        "diagnostics": [],
+        "backend": "cpu",
+        "timings": {
+          "tokenizeMs": 0.06920000000002346,
+          "inferMs": 0.505500000000012,
+          "resolveMs": 1.8608000000000118
+        }
+      },
+      "correct": true
+    },
+    {
+      "id": "result-027",
+      "text": "15/3",
+      "context": {
+        "reference": "2026-09-17T09:00:00+07:00"
+      },
+      "occurrences": [
+        {
+          "start": "2027-03-15T00:00:00+07:00",
+          "allDay": true
+        }
+      ],
+      "actual": {
+        "occurrences": [
+          {
+            "start": "2027-03-15T00:00:00+07:00",
+            "allDay": true
+          }
+        ],
+        "rrules": [],
+        "spans": [
+          {
+            "start": 0,
+            "end": 4,
+            "text": "15/3",
+            "confidence": 0.9995352625846863
+          }
+        ],
+        "truncated": false,
+        "diagnostics": [],
+        "backend": "cpu",
+        "timings": {
+          "tokenizeMs": 0.14330000000001064,
+          "inferMs": 0.3720000000000141,
+          "resolveMs": 0.6336000000000013
+        }
+      },
+      "correct": true
+    },
+    {
+      "id": "result-028",
+      "text": "15/3/2026",
+      "context": {
+        "reference": "2026-09-17T09:00:00+07:00"
+      },
+      "occurrences": [
+        {
+          "start": "2026-03-15T00:00:00+07:00",
+          "allDay": true
+        }
+      ],
+      "actual": {
+        "occurrences": [
+          {
+            "start": "2026-03-15T00:00:00+07:00",
+            "allDay": true
+          }
+        ],
+        "rrules": [],
+        "spans": [
+          {
+            "start": 0,
+            "end": 9,
+            "text": "15/3/2026",
+            "confidence": 0.999721348285675
+          }
+        ],
+        "truncated": false,
+        "diagnostics": [],
+        "backend": "cpu",
+        "timings": {
+          "tokenizeMs": 0.03159999999999741,
+          "inferMs": 0.49490000000000123,
+          "resolveMs": 0.32169999999999277
+        }
+      },
+      "correct": true
+    },
+    {
+      "id": "result-029",
+      "text": "đầu tháng 3",
+      "context": {
+        "reference": "2026-09-17T09:00:00+07:00"
+      },
+      "occurrences": [
+        {
+          "start": "2027-03-01T00:00:00+07:00",
+          "allDay": true
+        }
+      ],
+      "actual": {
+        "occurrences": [
+          {
+            "start": "2027-03-01T00:00:00+07:00",
+            "allDay": true
+          }
+        ],
+        "rrules": [],
+        "spans": [
+          {
+            "start": 0,
+            "end": 11,
+            "text": "đầu tháng 3",
+            "confidence": 0.9903116822242737
+          }
+        ],
+        "truncated": false,
+        "diagnostics": [],
+        "backend": "cpu",
+        "timings": {
+          "tokenizeMs": 0.05720000000002301,
+          "inferMs": 0.470799999999997,
+          "resolveMs": 0.39349999999998886
+        }
+      },
+      "correct": true
+    },
+    {
+      "id": "result-030",
+      "text": "giữa tháng 3",
+      "context": {
+        "reference": "2026-09-17T09:00:00+07:00"
+      },
+      "occurrences": [
+        {
+          "start": "2027-03-15T00:00:00+07:00",
+          "allDay": true
+        }
+      ],
+      "actual": {
+        "occurrences": [
+          {
+            "start": "2027-03-15T00:00:00+07:00",
+            "allDay": true
+          }
+        ],
+        "rrules": [],
+        "spans": [
+          {
+            "start": 0,
+            "end": 12,
+            "text": "giữa tháng 3",
+            "confidence": 0.9797611236572266
+          }
+        ],
+        "truncated": false,
+        "diagnostics": [],
+        "backend": "cpu",
+        "timings": {
+          "tokenizeMs": 0.05689999999998463,
+          "inferMs": 0.5134000000000185,
+          "resolveMs": 0.25430000000000064
+        }
+      },
+      "correct": true
+    },
+    {
+      "id": "result-031",
+      "text": "từ ngày 10 đến ngày 15 tháng 3",
+      "context": {
+        "reference": "2026-09-17T09:00:00+07:00"
+      },
+      "occurrences": [
+        {
+          "start": "2027-03-10T00:00:00+07:00",
+          "end": "2027-03-16T00:00:00+07:00",
+          "allDay": true
+        }
+      ],
+      "actual": {
+        "occurrences": [
+          {
+            "start": "2027-03-10T00:00:00+07:00",
+            "allDay": true,
+            "end": "2027-03-16T00:00:00+07:00"
+          }
+        ],
+        "rrules": [],
+        "spans": [
+          {
+            "start": 0,
+            "end": 30,
+            "text": "từ ngày 10 đến ngày 15 tháng 3",
+            "confidence": 0.978715181350708
+          }
+        ],
+        "truncated": false,
+        "diagnostics": [],
+        "backend": "cpu",
+        "timings": {
+          "tokenizeMs": 0.07910000000001105,
+          "inferMs": 1.2735000000000127,
+          "resolveMs": 0.6317000000000235
+        }
+      },
+      "correct": true
+    },
+    {
+      "id": "result-032",
+      "text": "từ 25/12/2026 đến 2/1/2027",
+      "context": {
+        "reference": "2026-09-17T09:00:00+07:00"
+      },
+      "occurrences": [
+        {
+          "start": "2026-12-25T00:00:00+07:00",
+          "end": "2027-01-03T00:00:00+07:00",
+          "allDay": true
+        }
+      ],
+      "actual": {
+        "occurrences": [
+          {
+            "start": "2026-12-25T00:00:00+07:00",
+            "allDay": true,
+            "end": "2027-01-03T00:00:00+07:00"
+          }
+        ],
+        "rrules": [],
+        "spans": [
+          {
+            "start": 0,
+            "end": 26,
+            "text": "từ 25/12/2026 đến 2/1/2027",
+            "confidence": 0.9220320582389832
+          }
+        ],
+        "truncated": false,
+        "diagnostics": [],
+        "backend": "cpu",
+        "timings": {
+          "tokenizeMs": 0.0595000000000141,
+          "inferMs": 2.02170000000001,
+          "resolveMs": 0.45590000000001396
+        }
+      },
+      "correct": true
+    },
+    {
+      "id": "result-033",
+      "text": "Giáng sinh",
+      "context": {
+        "reference": "2026-09-17T09:00:00+07:00"
+      },
+      "occurrences": [
+        {
+          "start": "2026-12-25T00:00:00+07:00",
+          "allDay": true
+        }
+      ],
+      "actual": {
+        "occurrences": [
+          {
+            "start": "2026-12-25T00:00:00+07:00",
+            "allDay": true
+          }
+        ],
+        "rrules": [],
+        "spans": [
+          {
+            "start": 0,
+            "end": 10,
+            "text": "Giáng sinh",
+            "confidence": 0.9472545981407166
+          }
+        ],
+        "truncated": false,
+        "diagnostics": [],
+        "backend": "cpu",
+        "timings": {
+          "tokenizeMs": 0.05690000000001305,
+          "inferMs": 0.2814000000000192,
+          "resolveMs": 0.5433999999999912
+        }
+      },
+      "correct": true
+    },
+    {
+      "id": "result-034",
+      "text": "Quốc khánh",
+      "context": {
+        "reference": "2026-09-17T09:00:00+07:00"
+      },
+      "occurrences": [
+        {
+          "start": "2027-09-02T00:00:00+07:00",
+          "allDay": true
+        }
+      ],
+      "actual": {
+        "occurrences": [
+          {
+            "start": "2027-09-02T00:00:00+07:00",
+            "allDay": true
+          }
+        ],
+        "rrules": [],
+        "spans": [
+          {
+            "start": 0,
+            "end": 10,
+            "text": "Quốc khánh",
+            "confidence": 0.9815720915794373
+          }
+        ],
+        "truncated": false,
+        "diagnostics": [],
+        "backend": "cpu",
+        "timings": {
+          "tokenizeMs": 0.0589999999999975,
+          "inferMs": 0.3725000000000023,
+          "resolveMs": 0.3348000000000013
+        }
+      },
+      "correct": true
+    },
+    {
+      "id": "result-035",
+      "text": "Tết",
+      "context": {
+        "reference": "2026-09-17T09:00:00+07:00"
+      },
+      "occurrences": [
+        {
+          "start": "2027-02-06T00:00:00+07:00",
+          "allDay": true
+        }
+      ],
+      "actual": {
+        "occurrences": [
+          {
+            "start": "2027-02-06T00:00:00+07:00",
+            "allDay": true
+          }
+        ],
+        "rrules": [],
+        "spans": [
+          {
+            "start": 0,
+            "end": 3,
+            "text": "Tết",
+            "confidence": 0.9945202469825745
+          }
+        ],
+        "truncated": false,
+        "diagnostics": [],
+        "backend": "cpu",
+        "timings": {
+          "tokenizeMs": 0.04290000000000305,
+          "inferMs": 0.1383000000000152,
+          "resolveMs": 1.7940000000000111
+        }
+      },
+      "correct": true
+    },
+    {
+      "id": "result-036",
+      "text": "giao thừa",
+      "context": {
+        "reference": "2026-09-17T09:00:00+07:00"
+      },
+      "occurrences": [
+        {
+          "start": "2027-02-05T00:00:00+07:00",
+          "allDay": true
+        }
+      ],
+      "actual": {
+        "occurrences": [
+          {
+            "start": "2027-02-05T00:00:00+07:00",
+            "allDay": true
+          }
+        ],
+        "rrules": [],
+        "spans": [
+          {
+            "start": 0,
+            "end": 9,
+            "text": "giao thừa",
+            "confidence": 0.9754197597503662
+          }
+        ],
+        "truncated": false,
+        "diagnostics": [],
+        "backend": "cpu",
+        "timings": {
+          "tokenizeMs": 0.18000000000000682,
+          "inferMs": 0.33959999999999013,
+          "resolveMs": 0.35549999999997794
+        }
+      },
+      "correct": true
+    },
+    {
+      "id": "result-037",
+      "text": "Trung thu",
+      "context": {
+        "reference": "2026-09-17T09:00:00+07:00"
+      },
+      "occurrences": [
+        {
+          "start": "2026-09-25T00:00:00+07:00",
+          "allDay": true
+        }
+      ],
+      "actual": {
+        "occurrences": [
+          {
+            "start": "2026-09-25T00:00:00+07:00",
+            "allDay": true
+          }
+        ],
+        "rrules": [],
+        "spans": [
+          {
+            "start": 0,
+            "end": 9,
+            "text": "Trung thu",
+            "confidence": 0.9882627725601196
+          }
+        ],
+        "truncated": false,
+        "diagnostics": [],
+        "backend": "cpu",
+        "timings": {
+          "tokenizeMs": 0.056199999999989814,
+          "inferMs": 0.3383000000000038,
+          "resolveMs": 0.2965000000000373
+        }
+      },
+      "correct": true
+    },
+    {
+      "id": "result-038",
+      "text": "mùng 1 Tết",
+      "context": {
+        "reference": "2026-09-17T09:00:00+07:00"
+      },
+      "occurrences": [
+        {
+          "start": "2027-02-06T00:00:00+07:00",
+          "allDay": true
+        }
+      ],
+      "actual": {
+        "occurrences": [
+          {
+            "start": "2027-02-06T00:00:00+07:00",
+            "allDay": true
+          }
+        ],
+        "rrules": [],
+        "spans": [
+          {
+            "start": 0,
+            "end": 10,
+            "text": "mùng 1 Tết",
+            "confidence": 0.9975090622901917
+          }
+        ],
+        "truncated": false,
+        "diagnostics": [],
+        "backend": "cpu",
+        "timings": {
+          "tokenizeMs": 0.04069999999998686,
+          "inferMs": 0.49020000000001573,
+          "resolveMs": 0.27430000000001087
+        }
+      },
+      "correct": true
+    },
+    {
+      "id": "result-039",
+      "text": "15/8 âm lịch",
+      "context": {
+        "reference": "2026-09-17T09:00:00+07:00"
+      },
+      "occurrences": [
+        {
+          "start": "2026-09-25T00:00:00+07:00",
+          "allDay": true
+        }
+      ],
+      "actual": {
+        "occurrences": [
+          {
+            "start": "2026-09-25T00:00:00+07:00",
+            "allDay": true
+          }
+        ],
+        "rrules": [],
+        "spans": [
+          {
+            "start": 0,
+            "end": 12,
+            "text": "15/8 âm lịch",
+            "confidence": 0.9970971941947937
+          }
+        ],
+        "truncated": false,
+        "diagnostics": [],
+        "backend": "cpu",
+        "timings": {
+          "tokenizeMs": 0.10020000000000095,
+          "inferMs": 1.0993999999999744,
+          "resolveMs": 0.31670000000002574
+        }
+      },
+      "correct": true
+    },
+    {
+      "id": "result-040",
+      "text": "2 tiếng nữa",
+      "context": {
+        "reference": "2026-09-17T09:00:00+07:00"
+      },
+      "occurrences": [
+        {
+          "start": "2026-09-17T11:00:00+07:00",
+          "allDay": false
+        }
+      ],
+      "actual": {
+        "occurrences": [
+          {
+            "start": "2026-09-17T11:00:00+07:00",
+            "allDay": false
+          }
+        ],
+        "rrules": [],
+        "spans": [
+          {
+            "start": 0,
+            "end": 11,
+            "text": "2 tiếng nữa",
+            "confidence": 0.9989586472511292
+          }
+        ],
+        "truncated": false,
+        "diagnostics": [],
+        "backend": "cpu",
+        "timings": {
+          "tokenizeMs": 0.05920000000000414,
+          "inferMs": 0.5190000000000055,
+          "resolveMs": 0.6009000000000242
+        }
+      },
+      "correct": true
+    },
+    {
+      "id": "result-041",
+      "text": "cách đây 3 ngày",
+      "context": {
+        "reference": "2026-09-17T09:00:00+07:00"
+      },
+      "occurrences": [
+        {
+          "start": "2026-09-14T09:00:00+07:00",
+          "allDay": false
+        }
+      ],
+      "actual": {
+        "occurrences": [
+          {
+            "start": "2026-09-14T09:00:00+07:00",
+            "allDay": false
+          }
+        ],
+        "rrules": [],
+        "spans": [
+          {
+            "start": 0,
+            "end": 15,
+            "text": "cách đây 3 ngày",
+            "confidence": 0.9643350839614868
+          }
+        ],
+        "truncated": false,
+        "diagnostics": [],
+        "backend": "cpu",
+        "timings": {
+          "tokenizeMs": 0.03640000000001464,
+          "inferMs": 0.386099999999999,
+          "resolveMs": 0.19890000000003738
+        }
+      },
+      "correct": true
+    },
+    {
+      "id": "result-042",
+      "text": "1 tiếng 30 phút nữa",
+      "context": {
+        "reference": "2026-09-17T09:00:00+07:00"
+      },
+      "occurrences": [
+        {
+          "start": "2026-09-17T10:30:00+07:00",
+          "allDay": false
+        }
+      ],
+      "actual": {
+        "occurrences": [
+          {
+            "start": "2026-09-17T10:30:00+07:00",
+            "allDay": false
+          }
+        ],
+        "rrules": [],
+        "spans": [
+          {
+            "start": 0,
+            "end": 19,
+            "text": "1 tiếng 30 phút nữa",
+            "confidence": 0.981300950050354
+          }
+        ],
+        "truncated": false,
+        "diagnostics": [],
+        "backend": "cpu",
+        "timings": {
+          "tokenizeMs": 0.0852000000000146,
+          "inferMs": 1.3588000000000022,
+          "resolveMs": 1.0030000000000143
+        }
+      },
+      "correct": true
+    },
+    {
+      "id": "result-043",
+      "text": "2 ngày sau Tết",
+      "context": {
+        "reference": "2026-09-17T09:00:00+07:00"
+      },
+      "occurrences": [
+        {
+          "start": "2027-02-08T00:00:00+07:00",
+          "allDay": true
+        }
+      ],
+      "actual": {
+        "occurrences": [
+          {
+            "start": "2027-02-08T00:00:00+07:00",
+            "allDay": true
+          }
+        ],
+        "rrules": [],
+        "spans": [
+          {
+            "start": 0,
+            "end": 14,
+            "text": "2 ngày sau Tết",
+            "confidence": 0.9852707982063293
+          }
+        ],
+        "truncated": false,
+        "diagnostics": [],
+        "backend": "cpu",
+        "timings": {
+          "tokenizeMs": 0.04570000000001073,
+          "inferMs": 0.6756000000000029,
+          "resolveMs": 0.48320000000001073
+        }
+      },
+      "correct": true
+    },
+    {
+      "id": "result-044",
+      "text": "2 tiếng trước trưa mai",
+      "context": {
+        "reference": "2026-09-17T09:00:00+07:00"
+      },
+      "occurrences": [
+        {
+          "start": "2026-09-18T10:00:00+07:00",
+          "allDay": false
+        }
+      ],
+      "actual": {
+        "occurrences": [
+          {
+            "start": "2026-09-18T10:00:00+07:00",
+            "allDay": false
+          }
+        ],
+        "rrules": [],
+        "spans": [
+          {
+            "start": 0,
+            "end": 22,
+            "text": "2 tiếng trước trưa mai",
+            "confidence": 0.764178991317749
+          }
+        ],
+        "truncated": false,
+        "diagnostics": [],
+        "backend": "cpu",
+        "timings": {
+          "tokenizeMs": 0.03720000000001278,
+          "inferMs": 0.8850999999999942,
+          "resolveMs": 0.4104000000000383
+        }
+      },
+      "correct": true
+    },
+    {
+      "id": "result-045",
+      "text": "trong 2 tiếng",
+      "context": {
+        "reference": "2026-09-17T09:00:00+07:00"
+      },
+      "occurrences": [
+        {
+          "start": "2026-09-17T09:00:00+07:00",
+          "end": "2026-09-17T11:00:00+07:00",
+          "allDay": false
+        }
+      ],
+      "actual": {
+        "occurrences": [
+          {
+            "start": "2026-09-17T09:00:00+07:00",
+            "allDay": false,
+            "end": "2026-09-17T11:00:00+07:00"
+          }
+        ],
+        "rrules": [],
+        "spans": [
+          {
+            "start": 0,
+            "end": 13,
+            "text": "trong 2 tiếng",
+            "confidence": 0.9977984428405762
+          }
+        ],
+        "truncated": false,
+        "diagnostics": [],
+        "backend": "cpu",
+        "timings": {
+          "tokenizeMs": 0.06340000000000146,
+          "inferMs": 1.1941000000000201,
+          "resolveMs": 0.3692999999999813
+        }
+      },
+      "correct": true
+    },
+    {
+      "id": "result-046",
+      "text": "3 tuần kể từ bây giờ",
+      "context": {
+        "reference": "2026-09-17T09:00:00+07:00"
+      },
+      "occurrences": [
+        {
+          "start": "2026-10-08T09:00:00+07:00",
+          "allDay": false
+        }
+      ],
+      "actual": {
+        "occurrences": [
+          {
+            "start": "2026-10-08T09:00:00+07:00",
+            "allDay": false
+          }
+        ],
+        "rrules": [],
+        "spans": [
+          {
+            "start": 0,
+            "end": 20,
+            "text": "3 tuần kể từ bây giờ",
+            "confidence": 0.9205729365348816
+          }
+        ],
+        "truncated": false,
+        "diagnostics": [],
+        "backend": "cpu",
+        "timings": {
+          "tokenizeMs": 0.13400000000001455,
+          "inferMs": 0.930800000000005,
+          "resolveMs": 0.2768000000000086
+        }
+      },
+      "correct": true
+    },
+    {
+      "id": "result-047",
+      "text": "thứ hai 9h và thứ tư 10h",
+      "context": {
+        "reference": "2026-09-17T09:00:00+07:00"
+      },
+      "occurrences": [
+        {
+          "start": "2026-09-21T09:00:00+07:00",
+          "allDay": false
+        },
+        {
+          "start": "2026-09-23T10:00:00+07:00",
+          "allDay": false
+        }
+      ],
+      "actual": {
+        "occurrences": [
+          {
+            "start": "2026-09-21T09:00:00+07:00",
+            "allDay": false
+          },
+          {
+            "start": "2026-09-23T10:00:00+07:00",
+            "allDay": false
+          }
+        ],
+        "rrules": [],
+        "spans": [
+          {
+            "start": 0,
+            "end": 24,
+            "text": "thứ hai 9h và thứ tư 10h",
+            "confidence": 0.9958244562149048
+          }
+        ],
+        "truncated": false,
+        "diagnostics": [],
+        "backend": "cpu",
+        "timings": {
+          "tokenizeMs": 0.0689000000000135,
+          "inferMs": 1.0962000000000103,
+          "resolveMs": 0.34039999999998827
+        }
+      },
+      "correct": true
+    },
+    {
+      "id": "result-048",
+      "text": "sáng mai từ 8h đến 10h",
+      "context": {
+        "reference": "2026-09-17T09:00:00+07:00"
+      },
+      "occurrences": [
+        {
+          "start": "2026-09-18T08:00:00+07:00",
+          "end": "2026-09-18T10:00:00+07:00",
+          "allDay": false
+        }
+      ],
+      "actual": {
+        "occurrences": [
+          {
+            "start": "2026-09-18T08:00:00+07:00",
+            "allDay": false,
+            "end": "2026-09-18T10:00:00+07:00"
+          }
+        ],
+        "rrules": [],
+        "spans": [
+          {
+            "start": 0,
+            "end": 22,
+            "text": "sáng mai từ 8h đến 10h",
+            "confidence": 0.6864362359046936
+          }
+        ],
+        "truncated": false,
+        "diagnostics": [],
+        "backend": "cpu",
+        "timings": {
+          "tokenizeMs": 0.023099999999999454,
+          "inferMs": 0.7084999999999866,
+          "resolveMs": 0.3200999999999681
+        }
+      },
+      "correct": true
+    },
+    {
+      "id": "result-049",
+      "text": "mùng 1 Tết lúc 12 giờ đêm",
+      "context": {
+        "reference": "2026-09-17T09:00:00+07:00"
+      },
+      "occurrences": [
+        {
+          "start": "2027-02-06T00:00:00+07:00",
+          "allDay": false
+        }
+      ],
+      "actual": {
+        "occurrences": [
+          {
+            "start": "2027-02-06T00:00:00+07:00",
+            "allDay": false
+          }
+        ],
+        "rrules": [],
+        "spans": [
+          {
+            "start": 0,
+            "end": 25,
+            "text": "mùng 1 Tết lúc 12 giờ đêm",
+            "confidence": 0.9971967339515686
+          }
+        ],
+        "truncated": false,
+        "diagnostics": [],
+        "backend": "cpu",
+        "timings": {
+          "tokenizeMs": 0.045199999999994134,
+          "inferMs": 1.1565000000000225,
+          "resolveMs": 0.1565999999999974
+        }
+      },
+      "correct": true
+    },
+    {
+      "id": "result-050",
+      "text": "cuối tuần sau lúc 10h sáng",
+      "context": {
+        "reference": "2026-09-17T09:00:00+07:00"
+      },
+      "occurrences": [
+        {
+          "start": "2026-09-26T10:00:00+07:00",
+          "allDay": false
+        },
+        {
+          "start": "2026-09-27T10:00:00+07:00",
+          "allDay": false
+        }
+      ],
+      "actual": {
+        "occurrences": [
+          {
+            "start": "2026-09-26T10:00:00+07:00",
+            "allDay": false
+          },
+          {
+            "start": "2026-09-27T10:00:00+07:00",
+            "allDay": false
+          }
+        ],
+        "rrules": [],
+        "spans": [
+          {
+            "start": 0,
+            "end": 26,
+            "text": "cuối tuần sau lúc 10h sáng",
+            "confidence": 0.9127510190010071
+          }
+        ],
+        "truncated": false,
+        "diagnostics": [],
+        "backend": "cpu",
+        "timings": {
+          "tokenizeMs": 0.025300000000015643,
+          "inferMs": 0.6096000000000004,
+          "resolveMs": 0.28180000000000405
+        }
+      },
+      "correct": true
+    },
+    {
+      "id": "result-051",
+      "text": "mỗi thứ hai",
+      "context": {
+        "reference": "2026-09-17T09:00:00+07:00",
+        "limit": 2
+      },
+      "occurrences": [
+        {
+          "start": "2026-09-21T00:00:00+07:00",
+          "allDay": true
+        },
+        {
+          "start": "2026-09-28T00:00:00+07:00",
+          "allDay": true
+        }
+      ],
+      "rrules": [
+        "DTSTART;VALUE=DATE:20260921\nRRULE:FREQ=WEEKLY;INTERVAL=1;BYDAY=MO"
+      ],
+      "truncated": true,
+      "actual": {
+        "occurrences": [
+          {
+            "start": "2026-09-21T00:00:00+07:00",
+            "allDay": true
+          },
+          {
+            "start": "2026-09-28T00:00:00+07:00",
+            "allDay": true
+          }
+        ],
+        "rrules": [
+          "DTSTART;VALUE=DATE:20260921\nRRULE:FREQ=WEEKLY;INTERVAL=1;BYDAY=MO"
+        ],
+        "spans": [
+          {
+            "start": 0,
+            "end": 11,
+            "text": "mỗi thứ hai",
+            "confidence": 0.9991779923439026
+          }
+        ],
+        "truncated": true,
+        "diagnostics": [],
+        "backend": "cpu",
+        "timings": {
+          "tokenizeMs": 0.039600000000007185,
+          "inferMs": 0.2997000000000014,
+          "resolveMs": 1.0851999999999862
+        }
+      },
+      "correct": true
+    },
+    {
+      "id": "result-052",
+      "text": "hàng ngày lúc 7h sáng",
+      "context": {
+        "reference": "2026-09-17T09:00:00+07:00",
+        "limit": 2
+      },
+      "occurrences": [
+        {
+          "start": "2026-09-18T07:00:00+07:00",
+          "allDay": false
+        },
+        {
+          "start": "2026-09-19T07:00:00+07:00",
+          "allDay": false
+        }
+      ],
+      "rrules": [
+        "DTSTART;TZID=Asia/Ho_Chi_Minh:20260918T070000\nRRULE:FREQ=DAILY;INTERVAL=1"
+      ],
+      "truncated": true,
+      "actual": {
+        "occurrences": [
+          {
+            "start": "2026-09-18T07:00:00+07:00",
+            "allDay": false
+          },
+          {
+            "start": "2026-09-19T07:00:00+07:00",
+            "allDay": false
+          }
+        ],
+        "rrules": [
+          "DTSTART;TZID=Asia/Ho_Chi_Minh:20260918T070000\nRRULE:FREQ=DAILY;INTERVAL=1"
+        ],
+        "spans": [
+          {
+            "start": 0,
+            "end": 21,
+            "text": "hàng ngày lúc 7h sáng",
+            "confidence": 0.9893415570259094
+          }
+        ],
+        "truncated": true,
+        "diagnostics": [],
+        "backend": "cpu",
+        "timings": {
+          "tokenizeMs": 0.03170000000002915,
+          "inferMs": 0.5506000000000029,
+          "resolveMs": 0.3930000000000007
+        }
+      },
+      "correct": true
+    },
+    {
+      "id": "result-053",
+      "text": "ngày 15 hàng tháng",
+      "context": {
+        "reference": "2026-09-17T09:00:00+07:00",
+        "limit": 2
+      },
+      "occurrences": [
+        {
+          "start": "2026-10-15T00:00:00+07:00",
+          "allDay": true
+        },
+        {
+          "start": "2026-11-15T00:00:00+07:00",
+          "allDay": true
+        }
+      ],
+      "rrules": [
+        "DTSTART;VALUE=DATE:20261015\nRRULE:FREQ=MONTHLY;INTERVAL=1;BYMONTHDAY=15"
+      ],
+      "truncated": true,
+      "actual": {
+        "occurrences": [
+          {
+            "start": "2026-10-15T00:00:00+07:00",
+            "allDay": true
+          },
+          {
+            "start": "2026-11-15T00:00:00+07:00",
+            "allDay": true
+          }
+        ],
+        "rrules": [
+          "DTSTART;VALUE=DATE:20261015\nRRULE:FREQ=MONTHLY;INTERVAL=1;BYMONTHDAY=15"
+        ],
+        "spans": [
+          {
+            "start": 5,
+            "end": 18,
+            "text": "15 hàng tháng",
+            "confidence": 0.9977384805679321
+          }
+        ],
+        "truncated": true,
+        "diagnostics": [],
+        "backend": "cpu",
+        "timings": {
+          "tokenizeMs": 0.014399999999994861,
+          "inferMs": 0.4633000000000038,
+          "resolveMs": 1.5715000000000146
+        }
+      },
+      "correct": true
+    },
+    {
+      "id": "result-054",
+      "text": "thứ hai đầu tiên hàng tháng",
+      "context": {
+        "reference": "2026-09-17T09:00:00+07:00",
+        "limit": 2
+      },
+      "occurrences": [
+        {
+          "start": "2026-10-05T00:00:00+07:00",
+          "allDay": true
+        },
+        {
+          "start": "2026-11-02T00:00:00+07:00",
+          "allDay": true
+        }
+      ],
+      "rrules": [
+        "DTSTART;VALUE=DATE:20261005\nRRULE:FREQ=MONTHLY;INTERVAL=1;BYDAY=MO;BYSETPOS=1"
+      ],
+      "truncated": true,
+      "actual": {
+        "occurrences": [
+          {
+            "start": "2026-10-05T00:00:00+07:00",
+            "allDay": true
+          },
+          {
+            "start": "2026-11-02T00:00:00+07:00",
+            "allDay": true
+          }
+        ],
+        "rrules": [
+          "DTSTART;VALUE=DATE:20261005\nRRULE:FREQ=MONTHLY;INTERVAL=1;BYDAY=MO;BYSETPOS=1"
+        ],
+        "spans": [
+          {
+            "start": 0,
+            "end": 27,
+            "text": "thứ hai đầu tiên hàng tháng",
+            "confidence": 0.8268499374389648
+          }
+        ],
+        "truncated": true,
+        "diagnostics": [],
+        "backend": "cpu",
+        "timings": {
+          "tokenizeMs": 0.06759999999997035,
+          "inferMs": 0.8473999999999933,
+          "resolveMs": 1.4104999999999848
+        }
+      },
+      "correct": true
+    },
+    {
+      "id": "result-055",
+      "text": "mỗi thứ hai đến hết tháng 12",
+      "context": {
+        "reference": "2026-09-17T09:00:00+07:00",
+        "limit": 2
+      },
+      "occurrences": [
+        {
+          "start": "2026-09-21T00:00:00+07:00",
+          "allDay": true
+        },
+        {
+          "start": "2026-09-28T00:00:00+07:00",
+          "allDay": true
+        }
+      ],
+      "rrules": [
+        "DTSTART;VALUE=DATE:20260921\nRRULE:FREQ=WEEKLY;INTERVAL=1;BYDAY=MO;UNTIL=20261231"
+      ],
+      "truncated": true,
+      "actual": {
+        "occurrences": [
+          {
+            "start": "2026-09-21T00:00:00+07:00",
+            "allDay": true
+          },
+          {
+            "start": "2026-09-28T00:00:00+07:00",
+            "allDay": true
+          }
+        ],
+        "rrules": [
+          "DTSTART;VALUE=DATE:20260921\nRRULE:FREQ=WEEKLY;INTERVAL=1;BYDAY=MO;UNTIL=20261231"
+        ],
+        "spans": [
+          {
+            "start": 0,
+            "end": 28,
+            "text": "mỗi thứ hai đến hết tháng 12",
+            "confidence": 0.9911986589431763
+          }
+        ],
+        "truncated": true,
+        "diagnostics": [],
+        "backend": "cpu",
+        "timings": {
+          "tokenizeMs": 0.07800000000000296,
+          "inferMs": 1.241199999999992,
+          "resolveMs": 0.5555000000000234
+        }
+      },
+      "correct": true
+    },
+    {
+      "id": "result-056",
+      "text": "mỗi thứ hai, 6 lần",
+      "context": {
+        "reference": "2026-09-17T09:00:00+07:00",
+        "limit": 2
+      },
+      "occurrences": [
+        {
+          "start": "2026-09-21T00:00:00+07:00",
+          "allDay": true
+        },
+        {
+          "start": "2026-09-28T00:00:00+07:00",
+          "allDay": true
+        }
+      ],
+      "rrules": [
+        "DTSTART;VALUE=DATE:20260921\nRRULE:FREQ=WEEKLY;INTERVAL=1;BYDAY=MO;COUNT=6"
+      ],
+      "truncated": true,
+      "actual": {
+        "occurrences": [
+          {
+            "start": "2026-09-21T00:00:00+07:00",
+            "allDay": true
+          },
+          {
+            "start": "2026-09-28T00:00:00+07:00",
+            "allDay": true
+          }
+        ],
+        "rrules": [
+          "DTSTART;VALUE=DATE:20260921\nRRULE:FREQ=WEEKLY;INTERVAL=1;BYDAY=MO;COUNT=6"
+        ],
+        "spans": [
+          {
+            "start": 0,
+            "end": 18,
+            "text": "mỗi thứ hai, 6 lần",
+            "confidence": 0.9277317523956299
+          }
+        ],
+        "truncated": true,
+        "diagnostics": [],
+        "backend": "cpu",
+        "timings": {
+          "tokenizeMs": 0.1471000000000231,
+          "inferMs": 0.7823999999999955,
+          "resolveMs": 0.37760000000000105
+        }
+      },
+      "correct": true
+    },
+    {
+      "id": "result-057",
+      "text": "mỗi ngày trừ chủ nhật",
+      "context": {
+        "reference": "2026-09-17T09:00:00+07:00",
+        "limit": 2
+      },
+      "occurrences": [
+        {
+          "start": "2026-09-17T00:00:00+07:00",
+          "allDay": true
+        },
+        {
+          "start": "2026-09-18T00:00:00+07:00",
+          "allDay": true
+        }
+      ],
+      "rrules": [
+        "DTSTART;VALUE=DATE:20260917\nRRULE:FREQ=DAILY;INTERVAL=1;BYDAY=MO,TU,WE,TH,FR,SA"
+      ],
+      "truncated": true,
+      "actual": {
+        "occurrences": [
+          {
+            "start": "2026-09-17T00:00:00+07:00",
+            "allDay": true
+          },
+          {
+            "start": "2026-09-18T00:00:00+07:00",
+            "allDay": true
+          }
+        ],
+        "rrules": [
+          "DTSTART;VALUE=DATE:20260917\nRRULE:FREQ=DAILY;INTERVAL=1;BYDAY=MO,TU,WE,TH,FR,SA"
+        ],
+        "spans": [
+          {
+            "start": 0,
+            "end": 21,
+            "text": "mỗi ngày trừ chủ nhật",
+            "confidence": 0.9790512919425964
+          }
+        ],
+        "truncated": true,
+        "diagnostics": [],
+        "backend": "cpu",
+        "timings": {
+          "tokenizeMs": 0.059599999999988995,
+          "inferMs": 0.8442000000000007,
+          "resolveMs": 0.4060000000000059
+        }
+      },
+      "correct": true
+    },
+    {
+      "id": "result-058",
+      "text": "hàng ngày từ nay đến cuối tháng",
+      "context": {
+        "reference": "2026-09-17T09:00:00+07:00",
+        "limit": 2
+      },
+      "occurrences": [
+        {
+          "start": "2026-09-17T00:00:00+07:00",
+          "allDay": true
+        },
+        {
+          "start": "2026-09-18T00:00:00+07:00",
+          "allDay": true
+        }
+      ],
+      "rrules": [
+        "DTSTART;VALUE=DATE:20260917\nRRULE:FREQ=DAILY;INTERVAL=1;UNTIL=20260930"
+      ],
+      "truncated": true,
+      "actual": {
+        "occurrences": [
+          {
+            "start": "2026-09-17T00:00:00+07:00",
+            "allDay": true
+          },
+          {
+            "start": "2026-09-18T00:00:00+07:00",
+            "allDay": true
+          }
+        ],
+        "rrules": [
+          "DTSTART;VALUE=DATE:20260917\nRRULE:FREQ=DAILY;INTERVAL=1;UNTIL=20260930"
+        ],
+        "spans": [
+          {
+            "start": 0,
+            "end": 31,
+            "text": "hàng ngày từ nay đến cuối tháng",
+            "confidence": 0.4448757767677307
+          }
+        ],
+        "truncated": true,
+        "diagnostics": [
+          {
+            "code": "low-confidence",
+            "message": "The model is uncertain about this expression.",
+            "start": 0,
+            "end": 4,
+            "severity": "warning"
+          }
+        ],
+        "backend": "cpu",
+        "timings": {
+          "tokenizeMs": 0.026900000000011914,
+          "inferMs": 0.6525000000000034,
+          "resolveMs": 0.2412000000000205
+        }
+      },
+      "correct": true
+    },
+    {
+      "id": "result-059",
+      "text": "ngày mai 3 giờ chiều",
+      "context": {
+        "reference": "2026-10-24T12:00:00+02:00",
+        "timeZone": "Europe/Berlin"
+      },
+      "occurrences": [
+        {
+          "start": "2026-10-25T15:00:00+01:00",
+          "allDay": false
+        }
+      ],
+      "actual": {
+        "occurrences": [
+          {
+            "start": "2026-10-25T15:00:00+01:00",
+            "allDay": false
+          }
+        ],
+        "rrules": [],
+        "spans": [
+          {
+            "start": 0,
+            "end": 20,
+            "text": "ngày mai 3 giờ chiều",
+            "confidence": 0.9989452362060547
+          }
+        ],
+        "truncated": false,
+        "diagnostics": [],
+        "backend": "cpu",
+        "timings": {
+          "tokenizeMs": 0.029100000000028103,
+          "inferMs": 0.47649999999998727,
+          "resolveMs": 0.24349999999998317
+        }
+      },
+      "correct": true
+    },
+    {
+      "id": "result-060",
+      "text": "2 ngày nữa",
+      "context": {
+        "reference": "2026-10-24T12:00:00+02:00",
+        "timeZone": "Europe/Berlin"
+      },
+      "occurrences": [
+        {
+          "start": "2026-10-26T12:00:00+01:00",
+          "allDay": false
+        }
+      ],
+      "actual": {
+        "occurrences": [
+          {
+            "start": "2026-10-26T12:00:00+01:00",
+            "allDay": false
+          }
+        ],
+        "rrules": [],
+        "spans": [
+          {
+            "start": 0,
+            "end": 10,
+            "text": "2 ngày nữa",
+            "confidence": 0.9954195022583008
+          }
+        ],
+        "truncated": false,
+        "diagnostics": [],
+        "backend": "cpu",
+        "timings": {
+          "tokenizeMs": 0.017600000000015825,
+          "inferMs": 0.26779999999999404,
+          "resolveMs": 0.1646000000000356
+        }
+      },
+      "correct": true
+    },
+    {
+      "id": "result-061",
+      "text": "24 tiếng nữa",
+      "context": {
+        "reference": "2026-10-24T12:00:00+02:00",
+        "timeZone": "Europe/Berlin"
+      },
+      "occurrences": [
+        {
+          "start": "2026-10-25T11:00:00+01:00",
+          "allDay": false
+        }
+      ],
+      "actual": {
+        "occurrences": [
+          {
+            "start": "2026-10-25T11:00:00+01:00",
+            "allDay": false
+          }
+        ],
+        "rrules": [],
+        "spans": [
+          {
+            "start": 0,
+            "end": 12,
+            "text": "24 tiếng nữa",
+            "confidence": 0.9969057440757751
+          }
+        ],
+        "truncated": false,
+        "diagnostics": [],
+        "backend": "cpu",
+        "timings": {
+          "tokenizeMs": 0.024499999999989086,
+          "inferMs": 0.2857999999999947,
+          "resolveMs": 0.08199999999999363
+        }
+      },
+      "correct": true
+    }
+  ],
+  "scope": "Hand-authored final date/range expectations through the packaged public API, including recurrence and DST. A development gate, not a general-language accuracy claim."
+}

@@ -42,13 +42,15 @@ for (const [name, flag] of [
       "--out",
       corpus,
     ]);
+  // check-semantic and evaluate-semantic resolve their arguments against the
+  // training package, so they take package-relative POSIX paths.
   tsx(join(training, "src", "check-semantic.ts"), [
-    corpus,
-    join("results", `${name}-roundtrip.json`),
+    `data/synth/${name}.jsonl`,
+    `results/${name}-roundtrip.json`,
   ]);
   tsx(join(training, "src", "evaluate-semantic.ts"), [
-    join(training, "results", `${name}.json`),
-    corpus,
+    `results/${name}.json`,
+    `data/synth/${name}.jsonl`,
   ]);
 }
 if (refreshCorpus || !existsSync(join(synth, "semantic-checks.jsonl")))

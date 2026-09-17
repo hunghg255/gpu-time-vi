@@ -65,7 +65,7 @@ it.each([40_000, 50_001])(
     vi.mocked(readFile).mockImplementation(async (path) => {
       const name = basename(path);
       if (name === "results.jsonl")
-        return JSON.stringify({ id: "result-001", occurrences: [occurrence] });
+        return JSON.stringify({ id: "result-001", context: {}, occurrences: [occurrence] });
       if (!(name in artifacts)) throw new Error(`unexpected read ${name}`);
       return JSON.stringify(artifacts[name]);
     });

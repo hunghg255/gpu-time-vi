@@ -22,7 +22,8 @@
     "test:benchmark": "pnpm --filter @gpu-time-vi/benchmark test",
     "evaluate": "pnpm --filter @gpu-time-vi/benchmark evaluate:model",
     "test:website": "pnpm --filter @gpu-time-vi/website check",
-    "website:dev": "pnpm --filter @gpu-time-vi/website dev"
+    "website:dev": "pnpm --filter @gpu-time-vi/website dev",
+    "benchmark": "pnpm --filter @gpu-time-vi/benchmark benchmark"
   },
   "devDependencies": {
     "bumpp": "12.3.0",

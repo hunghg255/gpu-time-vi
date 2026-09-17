@@ -4,10 +4,10 @@
   "results": [
     {
       "library": "gpu-time-vi",
-      "bytes": 117677,
-      "gzipBytes": 58477,
-      "brotliBytes": 52111,
-      "weightsBrotliBytes": 27058,
+      "bytes": 118787,
+      "gzipBytes": 56805,
+      "brotliBytes": 49543,
+      "weightsBrotliBytes": 24152,
       "parameters": 38745
     }
   ]

@@ -13,18 +13,27 @@ const trained = (name: string) =>
   read(join(training, "results", `${name}.json`));
 
 const model = await read(join(training, "active", "export-report.json"));
-const [browser, sizes, structure, direct, gpu, semantic, natural, reserved, bare] =
-  await Promise.all([
-    local("browser"),
-    local("size"),
-    local("model-structure"),
-    local("direct-results"),
-    trained("parity-gpu"),
-    trained("semantic-evaluation"),
-    trained("natural-evaluation"),
-    trained("natural-reserved"),
-    trained("natural-bare"),
-  ]);
+const [
+  browser,
+  sizes,
+  structure,
+  direct,
+  gpu,
+  semantic,
+  natural,
+  reserved,
+  bare,
+] = await Promise.all([
+  local("browser"),
+  local("size"),
+  local("model-structure"),
+  local("direct-results"),
+  trained("parity-gpu"),
+  trained("semantic-evaluation"),
+  trained("natural-evaluation"),
+  trained("natural-reserved"),
+  trained("natural-bare"),
+]);
 const goldSource = await readFile(
   join(training, "data", "gold", "results.jsonl"),
   "utf8",
@@ -62,23 +71,34 @@ interface Output {
   occurrences?: { start: string; end?: string; allDay?: boolean }[];
 }
 
-// Agreement with the resolved gold through each browser worker: the same
-// occurrences as results.jsonl.
+// Agreement with the resolved gold through each browser worker. The worker
+// previews 12 occurrences in the default zone, so a gold case counts when its
+// occurrences are a prefix of the worker's; cases in another zone are skipped.
 function agreement(outputs: Output[]) {
+  const comparable = gold.filter(
+    (example) =>
+      !example.context.timeZone ||
+      example.context.timeZone === "Asia/Ho_Chi_Minh",
+  );
   let correct = 0;
-  for (const example of gold) {
+  for (const example of comparable) {
     const output = outputs.find((value) => value.id === example.id);
-    const expected = JSON.stringify(example.occurrences);
-    const actual = JSON.stringify(
-      output?.occurrences?.map(({ start, end, allDay }) => ({
+    const actual = (output?.occurrences ?? []).map(
+      ({ start, end, allDay }) => ({
         start,
         ...(end ? { end } : {}),
         allDay,
-      })) ?? [],
+      }),
     );
-    if (expected === actual) correct++;
+    const expected = example.occurrences as typeof actual;
+    const prefix = actual.slice(0, expected.length);
+    if (
+      JSON.stringify(prefix) === JSON.stringify(expected) &&
+      (example.rrules || actual.length === expected.length)
+    )
+      correct++;
   }
-  return percent(correct, gold.length);
+  return percent(correct, comparable.length);
 }
 
 const row = (result: any) =>
