@@ -664,6 +664,30 @@ example("combined", "ngày mai 3 giờ chiều", {
 example("shift", "2 ngày nữa", shift(2, "day", "after"));
 example("shift", "24 tiếng nữa", shift(24, "hour", "after"));
 
+example("relative-unit", "sang tuần", { date: unit("week", "next") });
+example("relative-unit", "sang năm", { date: unit("year", "next") });
+example("holiday-lunar", "Tết này", { date: holiday("tet") });
+example("holiday-lunar", "Trung thu năm nay", { date: holiday("mid-autumn") });
+example("lunar-date", "từ 27 tháng chạp đến mùng 6", {
+  date: {
+    kind: "calendarRange",
+    from: { month: 12, day: 27 },
+    to: { month: 1, day: 6 },
+    lunar: true,
+  },
+});
+example("weekday", "thứ 2 4 6", { date: weekday("MO", "WE", "FR") });
+example("combined", "thứ 2 4 6 lúc 6h chiều", {
+  date: weekday("MO", "WE", "FR"),
+  time: clock(18),
+});
+example("chat-short", "sau 30p", shift(30, "minute", "after"));
+example("prose", "mai họp lúc 9h nhé", { date: relative(1), time: clock(9) });
+example("prose", "20h thứ bảy có trận Việt Nam", {
+  date: weekday("SA"),
+  time: clock(20),
+});
+
 // 32. multi-clause
 example(
   "multi-clause",

@@ -256,6 +256,7 @@ export const modifiers: Record<string, Modifier> = {
   này: "this",
   nay: "this",
   sau: "next",
+  sang: "next",
   tới: "next",
   kế: "next",
   "kế tiếp": "next",
@@ -360,7 +361,11 @@ export const lunarHolidays = new Set<HolidayName>([
 ]);
 /** Look a holiday up by phrase, ignoring a leading "ngày", "lễ", "dịp", "kỳ nghỉ". */
 export function holiday(text: string): HolidayName | undefined {
-  const word = key(text).replace(/^(ngày|lễ|dịp|kỳ nghỉ|nghỉ)\s+/, "");
+  // "Tết này", "Giáng sinh năm nay", "Trung thu tới": the modifier adds nothing
+  // to a holiday, which is always its next occurrence.
+  const word = key(text)
+    .replace(/^(ngày|lễ|dịp|kỳ nghỉ|nghỉ)\s+/, "")
+    .replace(/\s+(này|nay|năm nay|năm này|tới|sắp tới|sau|năm sau|năm tới)$/, "");
   return holidayNames[word];
 }
 

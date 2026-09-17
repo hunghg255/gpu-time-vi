@@ -463,6 +463,16 @@ function readDate(reader: Reader): DateState {
           `Unknown holiday ${segment.text}.`,
         );
       state.holiday = { kind: "holiday", name };
+      // "Tết năm tới", "Quốc khánh năm nay": a holiday is always its next
+      // occurrence, so the year modifier adds nothing.
+      if (
+        reader.role() === Role.UNIT &&
+        readUnit(reader.peek()!) === "year" &&
+        reader.role(1) === Role.DEICTIC
+      ) {
+        reader.take();
+        reader.take();
+      }
       return state;
     }
     case Role.DAYGROUP: {
@@ -830,6 +840,13 @@ function compileClause(tokens: Token[], diagnostics: Diagnostic[]): Clause {
     } else if (date && date.days && state.days && !state.modifier) {
       date.days.push(...state.days);
     } else if (
+      date?.holiday &&
+      state.unit === "year" &&
+      state.modifier &&
+      state.day === undefined
+    ) {
+      // "Trung thu năm nay": the holiday already names the year.
+    } else if (
       date &&
       date.day !== undefined &&
       state.day !== undefined &&
@@ -938,6 +955,15 @@ function compileClause(tokens: Token[], diagnostics: Diagnostic[]): Clause {
         break;
       }
       case Role.NUM: {
+        // "30p", "2h": a clock letter the model left as glue is the unit.
+        const glued = reader.segments[reader.segments.indexOf(next) + 1];
+        if (
+          glued?.role === Role.GLUE &&
+          reader.role(1) !== Role.UNIT &&
+          ["h", "p", "ph", "g"].includes(glued.text) &&
+          unitName(glued.text)
+        )
+          glued.role = Role.UNIT;
         if (reader.role(1) === Role.UNIT) {
           const quantity = readDuration(reader.segmentsFrom(), 0);
           if (!quantity)
@@ -1099,6 +1125,12 @@ function compileClause(tokens: Token[], diagnostics: Diagnostic[]): Clause {
       case Role.FREQ:
         fail(token, "unsupported", "Frequency words are not supported.");
       case Role.DEICTIC:
+        if (reader.role(1) === Role.UNIT) {
+          // "sang tuần", "sang năm": the modifier leads the unit.
+          const modifier = readModifier(reader.take());
+          setDate({ token, unit: readUnit(reader.take()), modifier });
+          break;
+        }
         fail(
           token,
           "invalid-modifier",
@@ -1111,6 +1143,19 @@ function compileClause(tokens: Token[], diagnostics: Diagnostic[]): Clause {
           `${next.text} needs a weekday before it.`,
         );
       default:
+        if (next.role === Role.HOLIDAY && !holidayName(next.text)) {
+          // A capitalised name the model took for a holiday ("trận Việt Nam").
+          reader.take();
+          diagnostics.push(
+            diagnostic(
+              token,
+              "unknown-holiday",
+              `Ignored ${next.text}: not a known holiday.`,
+              "warning",
+            ),
+          );
+          break;
+        }
         if (dateRoles.has(next.role)) setDate(readDate(reader));
         else fail(token, "unsupported", `Unsupported role at ${next.text}.`);
     }
@@ -1268,6 +1313,15 @@ function compileClause(tokens: Token[], diagnostics: Diagnostic[]): Clause {
       // "từ 10 đến 15 tháng 3": the start shares the end's month and year.
       if (from.month === undefined && to.month !== undefined)
         from.month = to.month;
+      // "từ 27 tháng chạp đến mùng 6": a smaller end day is next month's.
+      if (
+        to.month === undefined &&
+        from.month !== undefined &&
+        to.day !== undefined &&
+        from.day !== undefined &&
+        to.day < from.day
+      )
+        to.month = (from.month % 12) + 1;
       if (
         from.year === undefined &&
         to.year !== undefined &&

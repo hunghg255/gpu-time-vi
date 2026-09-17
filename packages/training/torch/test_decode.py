@@ -22,11 +22,11 @@ class DecodeTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)
             texts = ["next Monday", "June 3 at 4pm", "Sam’s appointment tomorrow"]
-            (root / "heldout.jsonl").write_text(
+            (root / "heldout.jsonl").write_text(encoding="utf-8", data=
                 "\n".join(json.dumps({"text": text}) for text in texts) + "\n"
             )
             parity_texts(root, root / "parity")
-            self.assertEqual(json.loads((root / "parity.texts.json").read_text()), texts)
+            self.assertEqual(json.loads((root / "parity.texts.json").read_text(encoding="utf-8")), texts)
 
     def test_matches_exhaustive_paths_with_whitespace_and_padding(self):
         emissions = torch.randn(4, 5, 3)

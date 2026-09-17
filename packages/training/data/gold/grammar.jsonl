@@ -265,36 +265,46 @@
 {"id":"grammar-265","family":"combined","text":"ngày mai 3 giờ chiều","schedule":{"clauses":[{"date":{"kind":"relativeDay","offset":1},"time":{"start":{"hour":15,"minute":0}}}]}}
 {"id":"grammar-266","family":"shift","text":"2 ngày nữa","schedule":{"clauses":[{"shift":{"amount":2,"unit":"day","direction":"after"}}]}}
 {"id":"grammar-267","family":"shift","text":"24 tiếng nữa","schedule":{"clauses":[{"shift":{"amount":24,"unit":"hour","direction":"after"}}]}}
-{"id":"grammar-268","family":"multi-clause","text":"thứ hai 9h và thứ tư 10h","schedule":{"clauses":[{"date":{"kind":"weekday","days":["MO"]},"time":{"start":{"hour":9,"minute":0}}},{"date":{"kind":"weekday","days":["WE"]},"time":{"start":{"hour":10,"minute":0}}}]}}
-{"id":"grammar-269","family":"multi-clause","text":"thứ hai 9h, thứ tư 10h, thứ sáu 11h","schedule":{"clauses":[{"date":{"kind":"weekday","days":["MO"]},"time":{"start":{"hour":9,"minute":0}}},{"date":{"kind":"weekday","days":["WE"]},"time":{"start":{"hour":10,"minute":0}}},{"date":{"kind":"weekday","days":["FR"]},"time":{"start":{"hour":11,"minute":0}}}]}}
-{"id":"grammar-270","family":"multi-clause","text":"thứ bảy chủ nhật từ 1 giờ đến 8 giờ tối và thứ hai từ 10 giờ tối đến 12 giờ đêm","schedule":{"clauses":[{"date":{"kind":"weekday","days":["SA","SU"]},"time":{"start":{"hour":13,"minute":0},"end":{"hour":20,"minute":0}}},{"date":{"kind":"weekday","days":["MO"]},"time":{"start":{"hour":22,"minute":0},"end":{"hour":0,"minute":0}}}]}}
-{"id":"grammar-271","family":"prose","text":"nhắc tôi họp lúc 3 giờ chiều mai","schedule":{"clauses":[{"date":{"kind":"relativeDay","offset":1},"time":{"start":{"hour":15,"minute":0}}}]}}
-{"id":"grammar-272","family":"prose","text":"hẹn bác sĩ vào thứ hai tuần sau lúc 9h sáng","schedule":{"clauses":[{"date":{"kind":"weekday","days":["MO"],"modifier":"next"},"time":{"start":{"hour":9,"minute":0}}}]}}
-{"id":"grammar-273","family":"prose","text":"deadline nộp báo cáo là 17h thứ sáu","schedule":{"clauses":[{"date":{"kind":"weekday","days":["FR"]},"time":{"start":{"hour":17,"minute":0}}}]}}
-{"id":"grammar-274","family":"prose","text":"họp nhóm mỗi thứ tư lúc 2 giờ chiều","schedule":{"clauses":[{"recurrence":{"freq":"weekly","interval":1,"byDay":["WE"]},"time":{"start":{"hour":14,"minute":0}}}]}}
-{"id":"grammar-275","family":"prose","text":"cả nhà về quê ăn Tết","schedule":{"clauses":[{"date":{"kind":"holiday","name":"tet"}}]}}
-{"id":"grammar-276","family":"prose","text":"sinh nhật em ấy là ngày 20 tháng 11","schedule":{"clauses":[{"date":{"kind":"calendar","month":11,"day":20}}]}}
-{"id":"grammar-277","family":"prose","text":"tàu khởi hành lúc 6 giờ 15 sáng mai","schedule":{"clauses":[{"date":{"kind":"relativeDay","offset":1},"time":{"start":{"hour":6,"minute":15}}}]}}
-{"id":"grammar-278","family":"prose","text":"đặt bàn 4 người tối thứ bảy lúc 7 giờ","schedule":{"clauses":[{"date":{"kind":"weekday","days":["SA"]},"time":{"start":{"hour":19,"minute":0}}}]}}
-{"id":"grammar-279","family":"prose","text":"gọi lại cho anh sau 30 phút nữa","schedule":{"clauses":[{"shift":{"amount":30,"unit":"minute","direction":"after"}}]}}
-{"id":"grammar-280","family":"prose","text":"lớp yoga diễn ra 3 lần một tuần","schedule":{"clauses":[{"recurrence":{"freq":"weekly","interval":1,"timesPer":3}}]}}
-{"id":"grammar-281","family":"chat-short","text":"t2 9h","schedule":{"clauses":[{"date":{"kind":"weekday","days":["MO"]},"time":{"start":{"hour":9,"minute":0}}}]}}
-{"id":"grammar-282","family":"chat-short","text":"cn 3h chiều","schedule":{"clauses":[{"date":{"kind":"weekday","days":["SU"]},"time":{"start":{"hour":15,"minute":0}}}]}}
-{"id":"grammar-283","family":"chat-short","text":"mai 8h","schedule":{"clauses":[{"date":{"kind":"relativeDay","offset":1},"time":{"start":{"hour":8,"minute":0}}}]}}
-{"id":"grammar-284","family":"chat-short","text":"tối nay 8h","schedule":{"clauses":[{"date":{"kind":"relativeDay","offset":0},"time":{"start":{"hour":20,"minute":0}}}]}}
-{"id":"grammar-285","family":"chat-short","text":"t6 tuần sau","schedule":{"clauses":[{"date":{"kind":"weekday","days":["FR"],"modifier":"next"}}]}}
-{"id":"grammar-286","family":"chat-short","text":"15/3 14h","schedule":{"clauses":[{"date":{"kind":"calendar","month":3,"day":15},"time":{"start":{"hour":14,"minute":0}}}]}}
-{"id":"grammar-287","family":"chat-short","text":"2h nữa","schedule":{"clauses":[{"shift":{"amount":2,"unit":"hour","direction":"after"}}]}}
-{"id":"grammar-288","family":"chat-short","text":"sáng mai 7h30","schedule":{"clauses":[{"date":{"kind":"relativeDay","offset":1},"time":{"start":{"hour":7,"minute":30}}}]}}
-{"id":"grammar-289","family":"negative","text":"năm người đi ăn tối","schedule":null}
-{"id":"grammar-290","family":"negative","text":"chiều cao của anh ấy là 1m75","schedule":null}
-{"id":"grammar-291","family":"negative","text":"tối đa 3 người một phòng","schedule":null}
-{"id":"grammar-292","family":"negative","text":"hoa mai nở rộ","schedule":null}
-{"id":"grammar-293","family":"negative","text":"số 15 đường 3/2","schedule":null}
-{"id":"grammar-294","family":"negative","text":"giá 15k một ly","schedule":null}
-{"id":"grammar-295","family":"negative","text":"gọi số 0912 345 678","schedule":null}
-{"id":"grammar-296","family":"negative","text":"phiên bản v2.3 đã phát hành","schedule":null}
-{"id":"grammar-297","family":"negative","text":"thứ này rất tốt","schedule":null}
-{"id":"grammar-298","family":"negative","text":"sáng tạo là chìa khoá","schedule":null}
-{"id":"grammar-299","family":"negative","text":"tôi 30 tuổi","schedule":null}
-{"id":"grammar-300","family":"negative","text":"đầu tư vào giáo dục","schedule":null}
+{"id":"grammar-268","family":"relative-unit","text":"sang tuần","schedule":{"clauses":[{"date":{"kind":"relativeUnit","unit":"week","modifier":"next"}}]}}
+{"id":"grammar-269","family":"relative-unit","text":"sang năm","schedule":{"clauses":[{"date":{"kind":"relativeUnit","unit":"year","modifier":"next"}}]}}
+{"id":"grammar-270","family":"holiday-lunar","text":"Tết này","schedule":{"clauses":[{"date":{"kind":"holiday","name":"tet"}}]}}
+{"id":"grammar-271","family":"holiday-lunar","text":"Trung thu năm nay","schedule":{"clauses":[{"date":{"kind":"holiday","name":"mid-autumn"}}]}}
+{"id":"grammar-272","family":"lunar-date","text":"từ 27 tháng chạp đến mùng 6","schedule":{"clauses":[{"date":{"kind":"calendarRange","from":{"month":12,"day":27},"to":{"month":1,"day":6},"lunar":true}}]}}
+{"id":"grammar-273","family":"weekday","text":"thứ 2 4 6","schedule":{"clauses":[{"date":{"kind":"weekday","days":["MO","WE","FR"]}}]}}
+{"id":"grammar-274","family":"combined","text":"thứ 2 4 6 lúc 6h chiều","schedule":{"clauses":[{"date":{"kind":"weekday","days":["MO","WE","FR"]},"time":{"start":{"hour":18,"minute":0}}}]}}
+{"id":"grammar-275","family":"chat-short","text":"sau 30p","schedule":{"clauses":[{"shift":{"amount":30,"unit":"minute","direction":"after"}}]}}
+{"id":"grammar-276","family":"prose","text":"mai họp lúc 9h nhé","schedule":{"clauses":[{"date":{"kind":"relativeDay","offset":1},"time":{"start":{"hour":9,"minute":0}}}]}}
+{"id":"grammar-277","family":"prose","text":"20h thứ bảy có trận Việt Nam","schedule":{"clauses":[{"date":{"kind":"weekday","days":["SA"]},"time":{"start":{"hour":20,"minute":0}}}]}}
+{"id":"grammar-278","family":"multi-clause","text":"thứ hai 9h và thứ tư 10h","schedule":{"clauses":[{"date":{"kind":"weekday","days":["MO"]},"time":{"start":{"hour":9,"minute":0}}},{"date":{"kind":"weekday","days":["WE"]},"time":{"start":{"hour":10,"minute":0}}}]}}
+{"id":"grammar-279","family":"multi-clause","text":"thứ hai 9h, thứ tư 10h, thứ sáu 11h","schedule":{"clauses":[{"date":{"kind":"weekday","days":["MO"]},"time":{"start":{"hour":9,"minute":0}}},{"date":{"kind":"weekday","days":["WE"]},"time":{"start":{"hour":10,"minute":0}}},{"date":{"kind":"weekday","days":["FR"]},"time":{"start":{"hour":11,"minute":0}}}]}}
+{"id":"grammar-280","family":"multi-clause","text":"thứ bảy chủ nhật từ 1 giờ đến 8 giờ tối và thứ hai từ 10 giờ tối đến 12 giờ đêm","schedule":{"clauses":[{"date":{"kind":"weekday","days":["SA","SU"]},"time":{"start":{"hour":13,"minute":0},"end":{"hour":20,"minute":0}}},{"date":{"kind":"weekday","days":["MO"]},"time":{"start":{"hour":22,"minute":0},"end":{"hour":0,"minute":0}}}]}}
+{"id":"grammar-281","family":"prose","text":"nhắc tôi họp lúc 3 giờ chiều mai","schedule":{"clauses":[{"date":{"kind":"relativeDay","offset":1},"time":{"start":{"hour":15,"minute":0}}}]}}
+{"id":"grammar-282","family":"prose","text":"hẹn bác sĩ vào thứ hai tuần sau lúc 9h sáng","schedule":{"clauses":[{"date":{"kind":"weekday","days":["MO"],"modifier":"next"},"time":{"start":{"hour":9,"minute":0}}}]}}
+{"id":"grammar-283","family":"prose","text":"deadline nộp báo cáo là 17h thứ sáu","schedule":{"clauses":[{"date":{"kind":"weekday","days":["FR"]},"time":{"start":{"hour":17,"minute":0}}}]}}
+{"id":"grammar-284","family":"prose","text":"họp nhóm mỗi thứ tư lúc 2 giờ chiều","schedule":{"clauses":[{"recurrence":{"freq":"weekly","interval":1,"byDay":["WE"]},"time":{"start":{"hour":14,"minute":0}}}]}}
+{"id":"grammar-285","family":"prose","text":"cả nhà về quê ăn Tết","schedule":{"clauses":[{"date":{"kind":"holiday","name":"tet"}}]}}
+{"id":"grammar-286","family":"prose","text":"sinh nhật em ấy là ngày 20 tháng 11","schedule":{"clauses":[{"date":{"kind":"calendar","month":11,"day":20}}]}}
+{"id":"grammar-287","family":"prose","text":"tàu khởi hành lúc 6 giờ 15 sáng mai","schedule":{"clauses":[{"date":{"kind":"relativeDay","offset":1},"time":{"start":{"hour":6,"minute":15}}}]}}
+{"id":"grammar-288","family":"prose","text":"đặt bàn 4 người tối thứ bảy lúc 7 giờ","schedule":{"clauses":[{"date":{"kind":"weekday","days":["SA"]},"time":{"start":{"hour":19,"minute":0}}}]}}
+{"id":"grammar-289","family":"prose","text":"gọi lại cho anh sau 30 phút nữa","schedule":{"clauses":[{"shift":{"amount":30,"unit":"minute","direction":"after"}}]}}
+{"id":"grammar-290","family":"prose","text":"lớp yoga diễn ra 3 lần một tuần","schedule":{"clauses":[{"recurrence":{"freq":"weekly","interval":1,"timesPer":3}}]}}
+{"id":"grammar-291","family":"chat-short","text":"t2 9h","schedule":{"clauses":[{"date":{"kind":"weekday","days":["MO"]},"time":{"start":{"hour":9,"minute":0}}}]}}
+{"id":"grammar-292","family":"chat-short","text":"cn 3h chiều","schedule":{"clauses":[{"date":{"kind":"weekday","days":["SU"]},"time":{"start":{"hour":15,"minute":0}}}]}}
+{"id":"grammar-293","family":"chat-short","text":"mai 8h","schedule":{"clauses":[{"date":{"kind":"relativeDay","offset":1},"time":{"start":{"hour":8,"minute":0}}}]}}
+{"id":"grammar-294","family":"chat-short","text":"tối nay 8h","schedule":{"clauses":[{"date":{"kind":"relativeDay","offset":0},"time":{"start":{"hour":20,"minute":0}}}]}}
+{"id":"grammar-295","family":"chat-short","text":"t6 tuần sau","schedule":{"clauses":[{"date":{"kind":"weekday","days":["FR"],"modifier":"next"}}]}}
+{"id":"grammar-296","family":"chat-short","text":"15/3 14h","schedule":{"clauses":[{"date":{"kind":"calendar","month":3,"day":15},"time":{"start":{"hour":14,"minute":0}}}]}}
+{"id":"grammar-297","family":"chat-short","text":"2h nữa","schedule":{"clauses":[{"shift":{"amount":2,"unit":"hour","direction":"after"}}]}}
+{"id":"grammar-298","family":"chat-short","text":"sáng mai 7h30","schedule":{"clauses":[{"date":{"kind":"relativeDay","offset":1},"time":{"start":{"hour":7,"minute":30}}}]}}
+{"id":"grammar-299","family":"negative","text":"năm người đi ăn tối","schedule":null}
+{"id":"grammar-300","family":"negative","text":"chiều cao của anh ấy là 1m75","schedule":null}
+{"id":"grammar-301","family":"negative","text":"tối đa 3 người một phòng","schedule":null}
+{"id":"grammar-302","family":"negative","text":"hoa mai nở rộ","schedule":null}
+{"id":"grammar-303","family":"negative","text":"số 15 đường 3/2","schedule":null}
+{"id":"grammar-304","family":"negative","text":"giá 15k một ly","schedule":null}
+{"id":"grammar-305","family":"negative","text":"gọi số 0912 345 678","schedule":null}
+{"id":"grammar-306","family":"negative","text":"phiên bản v2.3 đã phát hành","schedule":null}
+{"id":"grammar-307","family":"negative","text":"thứ này rất tốt","schedule":null}
+{"id":"grammar-308","family":"negative","text":"sáng tạo là chìa khoá","schedule":null}
+{"id":"grammar-309","family":"negative","text":"tôi 30 tuổi","schedule":null}
+{"id":"grammar-310","family":"negative","text":"đầu tư vào giáo dục","schedule":null}

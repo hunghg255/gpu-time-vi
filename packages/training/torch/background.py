@@ -23,7 +23,7 @@ TIME_WORDS = frozenset(
     """giây phút giờ tiếng ngày hôm bữa tuần tháng năm quý sáng trưa chiều tối đêm khuya
     nay mai mốt kia kìa qua thứ cn hàng hằng mỗi tết âm rằm mùng mồng nhuận am pm
     lúc noel valentine giáng trung thu giỗ tổ đoan ngọ vu lan táo khánh
-    nửa giữa cuối đầu sau trước tới nữa cách kể""".split()
+    nửa giữa cuối đầu sau trước tới nữa cách kể sang""".split()
 )
 
 # Spoken numbers read as quantities next to a unit; alone they are nothing.
@@ -125,6 +125,11 @@ NEUTRAL = [
     "cà phê ở đây được đấy",
     "code đã merge",
     "mình sẽ gửi link",
+    "có trận Việt Nam đấu Thái Lan",
+    "cổ vũ tuyển Việt Nam",
+    "sang Nhật công tác",
+    "sang đường cẩn thận",
+    "gặp anh Nam ở Sài Gòn",
     "cái này để mai tính",  # "mai" here is temporal; excluded below
 ]
 NEUTRAL = [text for text in NEUTRAL if not set(text.split()) & TIME_WORDS]
@@ -288,6 +293,9 @@ HARD = [
     "sáng mắt ra chưa",
     "anh ấy sáu mươi ký",
     "tuổi tư",
+    "đội Hà Nội thắng {n}-0",
+    "chị Thu gửi hàng rồi",
+    "bạn Lan và bạn Trung đến",
     "ngày công lao động",
 ]
 _last_hard = False

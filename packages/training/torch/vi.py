@@ -163,6 +163,18 @@ def weekday(s: Sentence, code: str, style: int | None = None) -> None:
 
 def weekdays(s: Sentence, codes: list[str]) -> None:
     style = s.rng.randrange(6)
+    # "thứ 2 4 6", "thứ 2, 4, 6": the first day carries "thứ", the rest are bare.
+    if len(codes) > 1 and "SU" not in codes and s.rng.random() < 0.25:
+        for position, code in enumerate(codes):
+            index = DAY_CODES.index(code)
+            if position:
+                connector = s.rng.choice([",", "", ""])
+                if connector:
+                    s.add(connector, "JOIN", separator="")
+                s.add(str(index + 2), "WEEKDAY")
+            else:
+                s.add(f"thứ {index + 2}", "WEEKDAY")
+        return
     for position, code in enumerate(codes):
         if position:
             connector = s.rng.choice(["và", ",", ",", "&", ""])
@@ -209,6 +221,13 @@ def holiday(s: Sentence, name: str) -> None:
         s.add(tail, "HOLIDAY")
     else:
         s.add(text, "HOLIDAY")
+    # "Tết này", "Giáng sinh năm nay": the holiday is always its next one.
+    draw = s.rng.random()
+    if draw < 0.12:
+        s.add(s.rng.choice(["này", "tới", "sắp tới"]), "HOLIDAY")
+    elif draw < 0.2:
+        s.add("năm", "UNIT")
+        s.add(s.rng.choice(["nay", "này", "tới", "sau"]), "DEICTIC")
 
 
 def twelve_hour(hour: int, rng: random.Random) -> tuple[int, str]:

@@ -199,6 +199,11 @@ def sample_clause(family: str, rng: random.Random) -> dict | list[dict]:
             if other == month:
                 other = month % 12 + 1
             return {"date": {"kind": "calendarRange", "from": {"month": month, "day": first}, "to": {"month": other, "day": last}}}
+        if draw < 0.9:
+            # Around Tết: "từ 27 tháng chạp đến mùng 6"; or a plain lunar range.
+            if rng.random() < 0.5:
+                return {"date": {"kind": "calendarRange", "from": {"month": 12, "day": rng.randint(23, 29)}, "to": {"month": 1, "day": rng.randint(3, 10)}, "lunar": True}}
+            return {"date": {"kind": "calendarRange", "from": {"month": month, "day": first}, "to": {"month": month, "day": last}, "lunar": True}}
         other = rng.randint(month, 12)
         if other == month:
             other = min(12, month + 1) if month < 12 else 12
@@ -379,6 +384,17 @@ def render_clause(clause: dict, s: Sentence, style: int, chat: bool) -> None:
             render_duration(duration, s, chat)
         return
     time_first = time and date and style % 3 == 0 and not clause.get("_middle")
+    if time and date and not time_first and not chat and r.random() < 0.15:
+        # "mai họp lúc 9h": the date opens the sentence, the verb sits between.
+        render_date(date, s, style, chat, middle=bool(clause.get("_middle")))
+        s.in_expression = False
+        s.add(r.choice(["họp", "gặp nhau", "đi ăn", "nhớ gọi", "em qua", "mình chốt", "có lịch", "bay"]))
+        s.in_expression = True
+        s.glue(r.choice(["lúc", "lúc", "vào", "vào lúc"]))
+        render_time(time, s, style, chat)
+        if duration:
+            render_duration(duration, s, chat)
+        return
     if time_first:
         render_time(time, s, style, chat)
         render_date(date, s, style, chat, middle=bool(clause.get("_middle")))
@@ -457,6 +473,11 @@ def render_date(date: dict, s: Sentence, style: int, chat: bool, middle: bool = 
             else:
                 vi.modifier(s, date["modifier"])
     elif kind == "relativeUnit":
+        if "edge" not in date and date["modifier"] == "next" and r.random() < 0.15:
+            # "sang tuần", "sang năm": the modifier leads.
+            s.add("sang", "DEICTIC")
+            s.add(r.choice(vi.UNIT_WORDS[date["unit"]][:1]), "UNIT")
+            return
         if "edge" in date:
             s.add(r.choice(["đầu", "đầu"]) if date["edge"] == "start" else r.choice(["cuối", "cuối"]), "EDGE")
         s.add(r.choice(vi.UNIT_WORDS[date["unit"]][:1]), "UNIT")
@@ -502,6 +523,24 @@ def render_date(date: dict, s: Sentence, style: int, chat: bool, middle: bool = 
             s.add(vi.month_name(r, date["month"]), "MONTH")
             s.add("năm", "UNIT")
             vi.modifier(s, date["modifier"], "year")
+    elif kind == "calendarRange" and date.get("lunar"):
+        frm, to = date["from"], date["to"]
+        if r.random() < 0.8:
+            s.add("từ", "RANGE_START")
+        if frm["month"] == 12 and to["month"] == 1:
+            s.add(str(frm["day"]), "DOM")
+            s.glue("tháng")
+            s.add("chạp", "MONTH")
+            s.add(r.choice(["đến", "đến hết", "tới"]), "RANGE_END")
+            s.add(r.choice(["mùng", "mồng"]), "LUNAR")
+            s.add(str(to["day"]), "DOM")
+            if r.random() < 0.5:
+                s.glue("tháng")
+                s.add("giêng", "MONTH")
+        else:
+            vi.calendar(s, frm, style=4, lunar=True)
+            s.add(r.choice(["đến", "tới"]), "RANGE_END")
+            vi.calendar(s, to, style=4, lunar=True)
     elif kind == "calendarRange":
         frm, to = date["from"], date["to"]
         if r.random() < 0.7:
