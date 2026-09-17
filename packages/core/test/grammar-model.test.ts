@@ -27,17 +27,15 @@ describe.skipIf(!promotedModel)("gold corpora against the model", () => {
 
   // Gold is right, model is behind. Runs under it.fails so a retrain that
   // closes one turns red and the id comes off the list. Recorded against the
-  // first promoted model (run "full", epoch 36, 2026-09-17): weekday ranges
-  // and lists, spelled hours, seconds, "sang", split date-verb-time, a few
+  // promoted model (run "warm1", fine-tuned from "full", 2026-09-17): weekday
+  // ranges and lists, spelled hours, seconds, "cuối tuần sau", "cn này", a few
   // hard negatives, and sentence-initial capitals.
   const knownGaps = new Set<string>([
     "adversarial-004",
     "adversarial-010",
-    "adversarial-015",
     "adversarial-017",
-    "adversarial-018",
     "adversarial-019",
-    "adversarial-025",
+    "grammar-051",
     "grammar-054",
     "grammar-067",
     "grammar-070",
@@ -45,22 +43,16 @@ describe.skipIf(!promotedModel)("gold corpora against the model", () => {
     "grammar-088",
     "grammar-227",
     "grammar-252",
-    "grammar-268",
-    "grammar-269",
-    "grammar-273",
-    "grammar-274",
-    "grammar-276",
     "grammar-285",
     "grammar-288",
     "grammar-299",
     "grammar-303",
     "negative-037",
-    "negative-042",
+    "prose-005",
     "prose-014",
     "prose-015",
-    "prose-016",
-    "prose-021",
     "prose-034",
+    "prose-041",
     "prose-045",
   ]);
   const isGap = (example: Example) => knownGaps.has(example.id);

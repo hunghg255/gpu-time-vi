@@ -1,10 +1,15 @@
 {
-  "model": "98abca98bd30c848e25a124e49a3309d77c058ef48c27ff3a1dee63351bb7e55",
+  "model": "d17a5b60817270b6d4205d19128a74187d49b341155450d8f237c61b60603053",
   "generatedWeightsHashMatches": true,
   "matchingExportFiles": 5,
   "results": [
     {
-      "checkpoint": "runs/smoke/best.pt",
+      "checkpoint": "runs/warm1/best.pt",
+      "checkpointHashMatches": true,
+      "matchingSourceFiles": 10
+    },
+    {
+      "checkpoint": "runs/full/best.pt",
       "checkpointHashMatches": true,
       "matchingSourceFiles": 10
     }
