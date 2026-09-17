@@ -6,11 +6,13 @@ import Logo from '../components/Logo.astro';
 import Code from '../components/Code.astro';
 import { Demo } from '../components/Demo';
 import { Examples } from '../components/Examples';
+import { Pipeline } from '../components/Pipeline';
+import Model from '../components/Model.astro';
 
 const reference = new Date();
 const timeZone = 'Asia/Ho_Chi_Minh';
 const initial = format(await parse(demoDefault, {
-  reference: reference.toISOString(), timeZone, limit: 3,
+  reference: reference.toISOString(), timeZone, limit: 6,
 }), reference, timeZone);
 
 const title = 'gpu-time-vi — Tiếng Việt thành ngày giờ';
@@ -72,6 +74,16 @@ const canonical = new URL(Astro.url.pathname, Astro.site);
         <h2 id="examples-title" class="text-heading font-medium">Chạm một câu, xem ngày giờ</h2>
         <p class="mx-auto mb-5 mt-1.5 max-w-note text-center text-note leading-normal text-neutral-500">Mỗi câu sẽ chạy trong ô phía trên</p>
         <Examples client:load />
+      </section>
+
+      <section class="mt-14" aria-labelledby="inside-title">
+        <h2 id="inside-title" class="text-heading font-medium">Bên trong mô hình</h2>
+        <p class="mx-auto mb-5 mt-1.5 max-w-note text-center text-note leading-normal text-neutral-500">Bốn bước từ chữ đến ngày giờ, chạy thật trên câu bạn đang gõ ở ô phía trên</p>
+        <Pipeline client:visible />
+        <div class="mt-5 rounded-box border border-neutral-100 p-4">
+          <Model />
+        </div>
+        <p class="mx-auto mt-3 max-w-note text-center text-note leading-normal text-neutral-500">Mô hình chỉ làm bước 2. Tách token, lắp lịch và tính ngày là mã TypeScript thường, nên múi giờ, DST và âm lịch luôn chính xác</p>
       </section>
 
       <section class="mt-14" aria-labelledby="use-title">

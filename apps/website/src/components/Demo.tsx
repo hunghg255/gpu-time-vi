@@ -47,12 +47,16 @@ export function Demo({ initial }: { initial: Formatted }) {
     if (!value.trim()) return;
     const ticket = ++seq.current;
     setBusy(true);
+    // The pipeline section below follows whatever the demo is parsing.
+    window.dispatchEvent(
+      new CustomEvent("demo:text", { detail: value.trim() }),
+    );
     const reference = new Date();
     try {
       const parsed = await parseWith(value.trim(), {
         reference: reference.toISOString(),
         timeZone: "Asia/Ho_Chi_Minh",
-        limit: 3,
+        limit: 6,
       });
       if (ticket !== seq.current) return;
       setResult(format(parsed, reference, "Asia/Ho_Chi_Minh"));

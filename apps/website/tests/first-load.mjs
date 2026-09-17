@@ -111,7 +111,7 @@ try {
       const after = await snapshot();
       assert.equal(
         before.rows,
-        3,
+        6,
         `${width}px: render the example before JavaScript loads`,
       );
       assert.deepEqual(
